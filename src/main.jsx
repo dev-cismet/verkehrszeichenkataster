@@ -5,6 +5,8 @@ import "./index.css";
 import { ConfigProvider } from "antd";
 import locale from "antd/locale/de_DE";
 import { RouterProvider, createHashRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store";
 
 const router = createHashRouter([
   {
@@ -16,7 +18,9 @@ const router = createHashRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ConfigProvider locale={locale}>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </ConfigProvider>
   </React.StrictMode>
 );
