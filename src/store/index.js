@@ -1,6 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
 
+import authSlice from "./slices/auth";
+
 console.log("store initializing ....");
 
 const devToolsEnabled =
@@ -60,7 +62,9 @@ if (stateLoggingEnabled === true) {
 }
 
 export default configureStore({
-  reducer: {},
+  reducer: {
+    auth: authSlice.reducer,
+  },
   devTools: devToolsEnabled === true && inProduction === false,
   middleware,
 });
