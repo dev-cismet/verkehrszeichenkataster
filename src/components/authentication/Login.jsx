@@ -1,27 +1,13 @@
 import { Button, Input, message, Form } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useDevSecrets from "../../hooks/useDevSecrets";
 import { useLocation, useNavigate } from "react-router-dom";
-import { DOMAIN, REST_SERVICE } from "../../constants/verdis";
-import {
-  setLoginRequested,
-  storeJWT,
-  storeLogin,
-} from "../../store/slices/auth";
-import { useEffect, useState } from "react";
+import { getIsLoading, login } from "../../store/slices/auth";
+import { useEffect } from "react";
 
-const mockExtractor = (input) => {
-  return {};
-};
-
-const Login = ({
-  dataIn,
-  extractor = mockExtractor,
-  width = 300,
-  height = 200,
-}) => {
+const Login = () => {
   const dispatch = useDispatch();
   const { user, password } = useDevSecrets();
   const navigate = useNavigate();
@@ -29,49 +15,8 @@ const Login = ({
   const from = location.state?.from?.pathname || "/";
   const search = location.state?.from?.search || "";
   const [messageApi, contextHolder] = message.useMessage();
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector(getIsLoading);
   const [form] = Form.useForm();
-
-  const login = (values) => {
-    setLoading(true);
-    fetch(REST_SERVICE + "/users", {
-      method: "GET",
-      headers: {
-        Authorization:
-          "Basic " +
-          btoa(values.username + "@" + DOMAIN + ":" + values.password),
-        "Content-Type": "application/json",
-      },
-    })
-      .then(function (response) {
-        if (response.status >= 200 && response.status < 300) {
-          response.json().then(function (responseWithJWT) {
-            const jwt = responseWithJWT.jwt;
-
-            setTimeout(() => {
-              setLoading(false);
-              dispatch(storeJWT(jwt));
-              dispatch(storeLogin(user));
-              dispatch(setLoginRequested(false));
-              navigate(from + search, { replace: true });
-            }, 500);
-          });
-        } else {
-          setLoading(false);
-          messageApi.open({
-            type: "error",
-            content: "Bei der Anmeldung ist ein Fehler aufgetreten.",
-          });
-        }
-      })
-      .catch(function (err) {
-        setLoading(false);
-        messageApi.open({
-          type: "error",
-          content: "Bei der Anmeldung ist ein Fehler aufgetreten. " + err,
-        });
-      });
-  };
 
   useEffect(() => {
     form.setFieldsValue({ username: user, password: password });
@@ -84,7 +29,19 @@ const Login = ({
         Verkehrszeichen Kataster
       </h1>
 
-      <Form className="w-full" form={form} onFinish={login}>
+      <Form
+        className="w-full"
+        form={form}
+        onFinish={(values) => {
+          dispatch(
+            login({
+              username: values.username,
+              password: values.password,
+              navigate: () => navigate(from + search, { replace: true }),
+            })
+          );
+        }}
+      >
         <div className="flex flex-col gap-6 w-full">
           <h3 className="text-white/90 border-b-2 border-0 w-fit border-solid">
             Anmeldung
