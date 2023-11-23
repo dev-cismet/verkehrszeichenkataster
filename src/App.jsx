@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { getJWT } from "./store/slices/auth";
+import Map from "./components/commons/Map";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const jwt = useSelector(getJWT);
-
-  return <div>{jwt}</div>;
+  return (
+    <div>
+      <Map key={"overview.map"} width={500} height={500} />
+    </div>
+  );
 }
 
 export default App;

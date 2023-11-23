@@ -14,10 +14,21 @@ import {
 } from "react-router-dom";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "./store";
+import TopicMapContextProvider from "react-cismap/contexts/TopicMapContextProvider";
+import {
+  additionalLayerConfiguration,
+  backgroundConfigurations,
+  backgroundModes,
+  extendBaseLayerConf,
+  offlineConfig,
+} from "./constants/background.jsx";
+import { defaultLayerConf } from "react-cismap/tools/layerFactory";
 
 import LoginPage from "./pages/LoginPage.jsx";
 import { checkJWTValidation, getJWT } from "./store/slices/auth.js";
 import { useEffect } from "react";
+
+const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
 const AuthWrapper = () => {
   const jwt = useSelector(getJWT);
@@ -76,7 +87,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ConfigProvider locale={locale}>
       <Provider store={store}>
-        <RouterProvider router={router} />
+        <TopicMapContextProvider
+          appKey="verdis-desktop.map"
+          backgroundModes={backgroundModes}
+          backgroundConfigurations={backgroundConfigurations}
+          baseLayerConf={baseLayerConf}
+          offlineCacheConfig={offlineConfig}
+          additionalLayerConfiguration={additionalLayerConfiguration}
+        >
+          <RouterProvider router={router} />
+        </TopicMapContextProvider>
       </Provider>
     </ConfigProvider>
   </React.StrictMode>
