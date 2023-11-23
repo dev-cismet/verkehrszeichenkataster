@@ -20,7 +20,7 @@ const Page = () => {
         </div>
         <div className="absolute bottom-6 right-6 text-white/80 font-semibold flex flex-col gap-2 items-end">
           <span>
-            VerDIS Desktop v:{packageJson.version}{" "}
+            Verkehrszeichen Kataster v:{packageJson.version}{" "}
             <a href="https://cismet.de" className="text-white/50 no-underline">
               cismet GmbH
             </a>{" "}
@@ -39,7 +39,7 @@ const Page = () => {
               className="text-white/50 no-underline"
             >
               cids | react cismap v
-              {/* {packageJson.dependencies["react-cismap"].slice(1)} | */}
+              {packageJson.dependencies["react-cismap"].slice(1)} |
             </a>
           </span>
           <a
