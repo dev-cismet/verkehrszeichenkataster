@@ -91,8 +91,6 @@ const Map = ({
     }
   }, [refRoutedMap]);
 
-  console.log(_backgroundLayers);
-
   return (
     <Card
       size="small"
