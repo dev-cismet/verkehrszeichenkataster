@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getBBPoly, setHoveredProperties } from "../../store/slices/mapping";
 import { getJWT } from "../../store/slices/auth";
-import { ENDPOINT, landParcelQuery } from "../../constants/verdis";
+import { ENDPOINT, landParcelQuery } from "../../constants/vkz";
 
 import GraphqlMapLayer from "./GraphqlMapLayer";
 import { createFeatureArray } from "../../tools/mappingTools";

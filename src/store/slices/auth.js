@@ -4,7 +4,7 @@ import {
   ENDPOINT,
   REST_SERVICE,
   jwtTestQuery,
-} from "../../constants/verdis";
+} from "../../constants/vkz";
 
 const initialState = {
   jwt: undefined,
