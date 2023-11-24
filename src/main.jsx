@@ -27,6 +27,7 @@ import { defaultLayerConf } from "react-cismap/tools/layerFactory";
 import LoginPage from "./pages/LoginPage.jsx";
 import { checkJWTValidation, getJWT } from "./store/slices/auth.js";
 import { useEffect } from "react";
+import NavBar from "./components/commons/Navbar.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
@@ -45,6 +46,7 @@ const AuthWrapper = () => {
 
   return (
     <div className="h-screen w-full">
+      <NavBar />
       <ConfigProvider>
         <Outlet />
       </ConfigProvider>
