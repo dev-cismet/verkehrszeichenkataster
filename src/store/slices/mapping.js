@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   leafletElement: undefined,
   bbPoly: undefined,
+  hoveredProperties: {},
 };
 
 const slice = createSlice({
@@ -17,12 +18,17 @@ const slice = createSlice({
       state.bbPoly = action.payload;
       return state;
     },
+    setHoveredProperties(state, action) {
+      state.hoveredProperties = action.payload;
+      return state;
+    },
   },
 });
 
 export default slice;
 
-export const { setLeafletElement, setBBPoly } = slice.actions;
+export const { setLeafletElement, setBBPoly, setHoveredProperties } =
+  slice.actions;
 
 export const getLeafletElement = (state) => {
   return state.mapping.leafletElement;
@@ -30,4 +36,8 @@ export const getLeafletElement = (state) => {
 
 export const getBBPoly = (state) => {
   return state.mapping.bbPoly;
+};
+
+export const getHoveredProperties = (state) => {
+  return state.mapping.hoveredProperties;
 };
