@@ -10,6 +10,8 @@ import { createQueryGeomFromBB, getArea25832 } from "../../tools/mappingTools";
 
 import { setBBPoly, setLeafletElement } from "../../store/slices/mapping";
 import { useDispatch } from "react-redux";
+import Toolbar from "./Toolbar";
+import LandparcelLayer from "./LandparcelLayer";
 
 const mockExtractor = (input) => {
   return {
@@ -155,7 +157,10 @@ const Map = ({
             data.ondblclick(event);
           }
         }}
-      ></RoutedMap>
+      >
+        <LandparcelLayer />
+      </RoutedMap>
+      <Toolbar />
     </Card>
   );
 };
