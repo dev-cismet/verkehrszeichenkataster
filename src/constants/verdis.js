@@ -11,3 +11,7 @@ export const STORAGE_POSTFIX = "1";
 export const jwtTestQuery = gql`
   ${queries.jwtTestQuery}
 `;
+
+export const landParcelQuery = gql`
+  ${queries.landParcel}
+`;

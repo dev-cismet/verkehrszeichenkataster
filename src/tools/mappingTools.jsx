@@ -3,6 +3,7 @@ import bboxPolygon from "@turf/bbox-polygon";
 import { reproject } from "reproject";
 import proj4 from "proj4";
 import { projectionData } from "react-cismap/constants/gis";
+import { concat, flatten } from "lodash";
 
 export const getArea25832 = (geoJSON) => {
   const wGS84GeoJSON = getWGS84GeoJSON(geoJSON);
@@ -56,4 +57,45 @@ export const createQueryGeomFromBB = (boundingBox) => {
   };
 
   return updatedGeom;
+};
+
+export const createFeatureArray = (data) => {
+  const result = [];
+
+  data.alkis_landparcel.forEach((landparcel, index) => {
+    const feature = {
+      type: "Feature",
+      featureType: "flaeche",
+      id: landparcel.id,
+      hovered: false,
+      weight: 0.5,
+      geometry: {
+        type: "Polygon",
+        coordinates: [],
+      },
+      properties: {
+        gemarkung: landparcel.gemarkung,
+        flur: landparcel.flur,
+        fstck_zaehler: landparcel.fstck_zaehler,
+        fstck_nenner: landparcel.fstck_nenner,
+      },
+      crs: {
+        type: "name",
+        properties: {
+          name: "urn:ogc:def:crs:EPSG::25832",
+        },
+      },
+    };
+
+    let coordinates = [];
+
+    coordinates = concat(
+      coordinates,
+      flatten(landparcel.geom.geo_field.coordinates)
+    );
+    feature.geometry.coordinates = coordinates;
+    result.push(feature);
+  });
+
+  return result;
 };
