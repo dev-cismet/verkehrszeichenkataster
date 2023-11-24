@@ -20,6 +20,7 @@
     "antd": "^5.11.2",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
+    "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-cismap": "^1.16.11",
