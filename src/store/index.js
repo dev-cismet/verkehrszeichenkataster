@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
+import { persistReducer } from "redux-persist";
+import localForage from "localforage";
 
 import authSlice from "./slices/auth";
 import mappingSlice from "./slices/mapping";
+import { APP_KEY, STORAGE_PREFIX } from "../constants/vkz";
 
 console.log("store initializing ....");
 
@@ -62,9 +65,15 @@ if (stateLoggingEnabled === true) {
     });
 }
 
+const authConfig = {
+  key: "@" + APP_KEY + "." + STORAGE_PREFIX + ".app.auth",
+  storage: localForage,
+  whitelist: ["jwt", "login"],
+};
+
 export default configureStore({
   reducer: {
-    auth: authSlice.reducer,
+    auth: persistReducer(authConfig, authSlice.reducer),
     mapping: mappingSlice.reducer,
   },
   devTools: devToolsEnabled === true && inProduction === false,

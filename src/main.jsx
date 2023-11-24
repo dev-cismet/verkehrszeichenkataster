@@ -23,6 +23,8 @@ import {
   offlineConfig,
 } from "./constants/background.jsx";
 import { defaultLayerConf } from "react-cismap/tools/layerFactory";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 
 import LoginPage from "./pages/LoginPage.jsx";
 import { checkJWTValidation, getJWT } from "./store/slices/auth.js";
@@ -30,6 +32,8 @@ import { useEffect } from "react";
 import NavBar from "./components/commons/Navbar.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
+
+const persistor = persistStore(store);
 
 const AuthWrapper = () => {
   const jwt = useSelector(getJWT);
@@ -87,19 +91,21 @@ const router = createHashRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ConfigProvider locale={locale}>
-      <Provider store={store}>
-        <TopicMapContextProvider
-          appKey="verdis-desktop.map"
-          backgroundModes={backgroundModes}
-          backgroundConfigurations={backgroundConfigurations}
-          baseLayerConf={baseLayerConf}
-          offlineCacheConfig={offlineConfig}
-          additionalLayerConfiguration={additionalLayerConfiguration}
-        >
-          <RouterProvider router={router} />
-        </TopicMapContextProvider>
-      </Provider>
-    </ConfigProvider>
+    <PersistGate loading={null} persistor={persistor}>
+      <ConfigProvider locale={locale}>
+        <Provider store={store}>
+          <TopicMapContextProvider
+            appKey="verdis-desktop.map"
+            backgroundModes={backgroundModes}
+            backgroundConfigurations={backgroundConfigurations}
+            baseLayerConf={baseLayerConf}
+            offlineCacheConfig={offlineConfig}
+            additionalLayerConfiguration={additionalLayerConfiguration}
+          >
+            <RouterProvider router={router} />
+          </TopicMapContextProvider>
+        </Provider>
+      </ConfigProvider>
+    </PersistGate>
   </React.StrictMode>
 );
