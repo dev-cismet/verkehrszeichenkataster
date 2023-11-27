@@ -30,6 +30,8 @@ import LoginPage from "./pages/LoginPage.jsx";
 import { checkJWTValidation, getJWT } from "./store/slices/auth.js";
 import { useEffect } from "react";
 import NavBar from "./components/commons/Navbar.jsx";
+import TablePage from "./pages/TablePage.jsx";
+import DetailsPage from "./pages/DetailsPage.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
@@ -80,6 +82,14 @@ const router = createHashRouter([
       {
         path: "/",
         element: <App />,
+      },
+      {
+        path: "/tabelle",
+        element: <TablePage />,
+      },
+      {
+        path: "/antrag/:id",
+        element: <DetailsPage />,
       },
     ],
   },
