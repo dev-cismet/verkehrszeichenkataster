@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import "antd/dist/reset.css";
-import { ConfigProvider, Result } from "antd";
+import { Button, ConfigProvider, Result } from "antd";
 import locale from "antd/locale/de_DE";
 import {
   Navigate,
