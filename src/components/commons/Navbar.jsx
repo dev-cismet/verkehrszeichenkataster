@@ -8,15 +8,12 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { storeJWT, storeLogin } from "../../store/slices/auth";
+import { getSelectedApplications } from "../../store/slices/navigation";
 
 const navLinks = () => {
   return [
-    {
-      title: "Übersicht",
-      href: "/uebersicht",
-    },
     {
       title: "Tabelle",
       href: "/tabelle",
@@ -30,6 +27,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
   const links = navLinks();
   const location = useLocation();
   const [urlParams, setUrlParams] = useSearchParams();
+  const selectedApplications = useSelector(getSelectedApplications);
 
   let storyStyle = {};
   if (inStory) {
@@ -84,6 +82,23 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                 {link.icon}
               </div>
               <div className="hidden xl:block">{link.title}</div>
+            </Button>
+          </Link>
+        ))}
+        {selectedApplications?.map((application, i) => (
+          <Link
+            to={"antrag/" + application.key + `?${urlParams}`}
+            key={`applicationLink_${i}`}
+          >
+            <Button
+              type="text"
+              className={`${
+                location.pathname.includes("antrag/" + application.key)
+                  ? "text-primary"
+                  : ""
+              } font-semibold no-underline`}
+            >
+              <div className="hidden xl:block">{application.name}</div>
             </Button>
           </Link>
         ))}
