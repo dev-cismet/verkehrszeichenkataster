@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        backgroundImage: "url('/images/background.jpg')",
+        backgroundImage: "url('/images/anatol-rurac-XM776JMGLoY-unsplash.jpg')",
       },
     },
   },
