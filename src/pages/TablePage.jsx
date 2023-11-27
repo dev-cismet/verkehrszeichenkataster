@@ -14,35 +14,25 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    key: "1",
-    name: "Kataster 1",
-    anzahl: 32,
-    id: "1",
-  },
-  {
-    key: "2",
-    name: "Kataster 2",
-    anzahl: 42,
-    id: "2",
-  },
-  {
-    key: "3",
-    name: "Kataster 3",
-    anzahl: 32,
-    id: "3",
-  },
-  {
-    key: "4",
-    name: "Kataster 4",
-    anzahl: 99,
-    id: "4",
-  },
-];
-
 const TablePage = () => {
   const dispatch = useDispatch();
+
+  const generateObjectsArray = (number) => {
+    let objectsArray = [];
+    for (let i = 1; i <= number; i++) {
+      let randomAnzahl = Math.floor(Math.random() * 101); // Random number between 0 and 100
+      let obj = {
+        key: i,
+        name: "Anordnung " + i,
+        anzahl: randomAnzahl,
+        id: i,
+      };
+      objectsArray.push(obj);
+    }
+    return objectsArray;
+  };
+
+  const data = generateObjectsArray(30);
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -60,7 +50,7 @@ const TablePage = () => {
 
   return (
     <div className="h-full max-h-[calc(100vh-73px)] w-full bg-zinc-200 p-2 flex flex-col items-center gap-2">
-      <Card className="h-full w-full" title="Tabelle">
+      <Card className="h-full w-full overflow-clip" title="Anträge">
         <Table
           columns={columns}
           dataSource={data}
