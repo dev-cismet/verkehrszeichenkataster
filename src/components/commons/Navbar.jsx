@@ -1,6 +1,6 @@
-import { Button, Tooltip } from "antd";
+import { Button, Dropdown } from "antd";
 
-import { LogoutOutlined } from "@ant-design/icons";
+import { EllipsisOutlined, LogoutOutlined } from "@ant-design/icons";
 
 import {
   Link,
@@ -11,6 +11,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { storeJWT, storeLogin } from "../../store/slices/auth";
 import { getSelectedApplications } from "../../store/slices/navigation";
+import { useEffect, useRef, useState } from "react";
+import { getNumberOfItemsThatFit } from "../../tools/helper";
 
 const navLinks = () => {
   return [
@@ -28,6 +30,19 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
   const location = useLocation();
   const [urlParams, setUrlParams] = useSearchParams();
   const selectedApplications = useSelector(getSelectedApplications);
+  const selectedApplicationsOuterRef = useRef(null);
+  const [selectedApplicationsWidth, setSelectedApplicationsWidth] = useState(0);
+  const items = selectedApplications
+    ?.slice(
+      getNumberOfItemsThatFit(selectedApplicationsWidth, 112),
+      selectedApplications?.length
+    )
+    .map((item, i) => {
+      return {
+        label: item.name,
+        key: i,
+      };
+    });
 
   let storyStyle = {};
   if (inStory) {
@@ -43,17 +58,32 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
     dispatch(storeLogin(undefined));
   };
 
+  useEffect(() => {
+    setSelectedApplicationsWidth(
+      selectedApplicationsOuterRef.current.offsetWidth
+    );
+
+    const getWidth = () => {
+      setSelectedApplicationsWidth(
+        selectedApplicationsOuterRef.current.offsetWidth
+      );
+    };
+
+    window.addEventListener("resize", getWidth);
+
+    return () => window.removeEventListener("resize", getWidth);
+  }, []);
+
   return (
     <header
-      className="flex items-center justify-between bg-white p-2 gap-3 "
+      className="flex items-center justify-between bg-white p-2 gap-3 max-w-full"
       style={{ ...style, ...storyStyle, width, height }}
     >
-      <div className="md:flex hidden items-center gap-3">
+      <div className="md:flex hidden items-center gap-3 overflow-clip w-full">
         <div
           className="flex gap-2 items-center h-full cursor-pointer"
           onClick={() => navigate("/" + `?${urlParams}`)}
         >
-          {/* <img src={Logo} alt="Logo" className="h-10" /> */}
           <span
             className={`${
               location.pathname === "/" ? "text-primary" : ""
@@ -81,27 +111,44 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
               >
                 {link.icon}
               </div>
-              <div className="hidden xl:block">{link.title}</div>
+              <div className="hidden md:block">{link.title}</div>
             </Button>
           </Link>
         ))}
-        {selectedApplications?.map((application, i) => (
-          <Link
-            to={"antrag/" + application.key + `?${urlParams}`}
-            key={`applicationLink_${i}`}
-          >
-            <Button
-              type="text"
-              className={`${
-                location.pathname.includes("antrag/" + application.key)
-                  ? "text-primary"
-                  : ""
-              } font-semibold no-underline`}
-            >
-              <div className="hidden xl:block">{application.name}</div>
-            </Button>
-          </Link>
-        ))}
+        <div
+          className="flex items-center overflow-clip w-full gap-2"
+          ref={selectedApplicationsOuterRef}
+        >
+          {selectedApplications
+            ?.slice(0, getNumberOfItemsThatFit(selectedApplicationsWidth, 112))
+            .map((application, i) => (
+              <Link
+                to={"antrag/" + application.key + `?${urlParams}`}
+                key={`applicationLink_${i}`}
+              >
+                <Button
+                  type="text"
+                  className={`${
+                    location.pathname.includes("antrag/" + application.key)
+                      ? "text-primary"
+                      : ""
+                  } font-semibold no-underline w-32`}
+                >
+                  <div className="hidden md:block truncate text-sm">
+                    {application.name}
+                  </div>
+                </Button>
+              </Link>
+            ))}
+          {selectedApplications.length >
+            getNumberOfItemsThatFit(selectedApplicationsWidth, 112) && (
+            <Dropdown trigger={["click"]} menu={{ items }}>
+              <Button type="text">
+                <EllipsisOutlined />
+              </Button>
+            </Dropdown>
+          )}
+        </div>
       </div>
 
       <div className="flex items-center gap-3">
