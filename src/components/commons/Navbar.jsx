@@ -111,7 +111,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
               >
                 {link.icon}
               </div>
-              <div className="hidden md:block">{link.title}</div>
+              <div className="hidden md:block text-sm">{link.title}</div>
             </Button>
           </Link>
         ))}
@@ -123,7 +123,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
             ?.slice(0, getNumberOfItemsThatFit(selectedApplicationsWidth, 112))
             .map((application, i) => (
               <Link
-                to={"antrag/" + application.key + `?${urlParams}`}
+                to={"antrag/" + application.key + "/uebersicht"}
                 key={`applicationLink_${i}`}
               >
                 <Button
