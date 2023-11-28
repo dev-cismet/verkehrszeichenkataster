@@ -8,6 +8,7 @@ import {
 import { Collapse } from "antd";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import "./collapsible.css";
 
 const SidebarItem = ({ link, text, icon, isCollapsed }) => {
   const location = useLocation();
@@ -29,13 +30,34 @@ const SidebarItem = ({ link, text, icon, isCollapsed }) => {
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
-  const text = "Lorem ipsum";
+  const location = useLocation();
 
   const items = [
     {
       key: "1",
       label: "Kataster",
-      children: <p>{text}</p>,
+      children: (
+        <div className="flex flex-col gap-1">
+          <Link relative="path" to="kataster/1">
+            <span
+              className={`${
+                location.pathname.includes("kataster/1") && "text-primary"
+              } w-full p-2`}
+            >
+              Kataster 1
+            </span>
+          </Link>
+          <Link relative="path" to="kataster/2">
+            <span
+              className={`${
+                location.pathname.includes("kataster/2") && "text-primary"
+              } w-full p-2`}
+            >
+              Kataster 2
+            </span>
+          </Link>
+        </div>
+      ),
     },
   ];
 
