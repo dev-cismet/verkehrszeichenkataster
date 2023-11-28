@@ -8,11 +8,27 @@ import { Collapse } from "antd";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
+const SidebarItem = ({ link, text, icon, isCollapsed }) => {
+  const location = useLocation();
+
+  return (
+    <Link relative="path" to={link}>
+      <div
+        className={`flex gap-4 items-center py-2 px-3 hover:bg-zinc-100 cursor-pointer ${
+          location.pathname.includes(link) && "text-primary"
+        }`}
+      >
+        {icon}
+        {!isCollapsed && <h4 className="mb-0">{text}</h4>}
+      </div>
+    </Link>
+  );
+};
+
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const text = "Lorem ipsum";
-  const location = useLocation();
 
   const items = [
     {
@@ -44,26 +60,19 @@ const Sidebar = () => {
       </div>
 
       <h2 className="font-semibold text-lg truncate">Anordnung</h2>
-      <Link relative="path" to="uebersicht">
-        <div
-          className={`flex gap-4 items-center py-2 px-3 hover:bg-zinc-100 cursor-pointer ${
-            location.pathname.includes("/uebersicht") && "text-primary"
-          }`}
-        >
-          <HomeOutlined className="text-lg" />
-          {!isCollapsed && <h4 className="mb-0">Übersicht</h4>}
-        </div>
-      </Link>
-      <Link relative="path" to="timeline">
-        <div
-          className={`flex gap-4 items-center py-2 px-3 hover:bg-zinc-100 cursor-pointer ${
-            location.pathname.includes("/timeline") && "text-primary"
-          }`}
-        >
-          <StockOutlined className="text-lg" />
-          {!isCollapsed && <h4 className="mb-0">Timeline</h4>}
-        </div>
-      </Link>
+      <SidebarItem
+        link="uebersicht"
+        icon={<HomeOutlined className="text-lg" />}
+        isCollapsed={isCollapsed}
+        text="Übersicht"
+      />
+      <SidebarItem
+        link="timeline"
+        icon={<StockOutlined className="text-lg" />}
+        isCollapsed={isCollapsed}
+        text="Timeline"
+      />
+
       <Collapse
         items={items}
         ghost
