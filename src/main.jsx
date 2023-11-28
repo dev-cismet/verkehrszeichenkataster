@@ -114,7 +114,16 @@ const router = createHashRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <PersistGate loading={null} persistor={persistor}>
-      <ConfigProvider locale={locale}>
+      <ConfigProvider
+        locale={locale}
+        theme={{
+          components: {
+            Timeline: {
+              dotBg: "inherit",
+            },
+          },
+        }}
+      >
         <Provider store={store}>
           <TopicMapContextProvider
             appKey="verdis-desktop.map"
