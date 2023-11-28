@@ -72,11 +72,17 @@ const authConfig = {
   whitelist: ["jwt", "login"],
 };
 
+const navigationConfig = {
+  key: "@" + APP_KEY + "." + STORAGE_PREFIX + ".app.navigation",
+  storage: localForage,
+  whitelist: ["selectedApplications"],
+};
+
 export default configureStore({
   reducer: {
     auth: persistReducer(authConfig, authSlice.reducer),
     mapping: mappingSlice.reducer,
-    navigation: navigationSlice.reducer,
+    navigation: persistReducer(navigationConfig, navigationSlice.reducer),
   },
   devTools: devToolsEnabled === true && inProduction === false,
   middleware,
