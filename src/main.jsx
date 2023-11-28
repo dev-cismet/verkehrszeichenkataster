@@ -32,6 +32,8 @@ import { useEffect } from "react";
 import NavBar from "./components/commons/Navbar.jsx";
 import TablePage from "./pages/TablePage.jsx";
 import DetailsPage from "./pages/DetailsPage.jsx";
+import DetailsWrapper from "./pages/DetailsWrapper.jsx";
+import TimelinePage from "./pages/TimelinePage.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
@@ -89,7 +91,17 @@ const router = createHashRouter([
       },
       {
         path: "/antrag/:id",
-        element: <DetailsPage />,
+        element: <DetailsWrapper />,
+        children: [
+          {
+            path: "uebersicht",
+            element: <DetailsPage />,
+          },
+          {
+            path: "timeline",
+            element: <TimelinePage />,
+          },
+        ],
       },
     ],
   },
