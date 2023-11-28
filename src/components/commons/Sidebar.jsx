@@ -46,7 +46,7 @@ const Sidebar = () => {
       <h2 className="font-semibold text-lg truncate">Anordnung</h2>
       <Link relative="path" to="uebersicht">
         <div
-          className={`flex gap-4 items-center p-2 hover:bg-zinc-100 cursor-pointer ${
+          className={`flex gap-4 items-center py-2 px-3 hover:bg-zinc-100 cursor-pointer ${
             location.pathname.includes("/uebersicht") && "text-primary"
           }`}
         >
@@ -56,7 +56,7 @@ const Sidebar = () => {
       </Link>
       <Link relative="path" to="timeline">
         <div
-          className={`flex gap-4 items-center p-2 hover:bg-zinc-100 cursor-pointer ${
+          className={`flex gap-4 items-center py-2 px-3 hover:bg-zinc-100 cursor-pointer ${
             location.pathname.includes("/timeline") && "text-primary"
           }`}
         >
@@ -64,7 +64,12 @@ const Sidebar = () => {
           {!isCollapsed && <h4 className="mb-0">Timeline</h4>}
         </div>
       </Link>
-      <Collapse items={items} ghost />
+      <Collapse
+        items={items}
+        ghost
+        className="hover:bg-zinc-100"
+        size="small"
+      />
     </aside>
   );
 };
