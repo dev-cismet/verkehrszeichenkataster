@@ -34,6 +34,7 @@ import TablePage from "./pages/TablePage.jsx";
 import DetailsPage from "./pages/DetailsPage.jsx";
 import DetailsWrapper from "./pages/DetailsWrapper.jsx";
 import TimelinePage from "./pages/TimelinePage.jsx";
+import KatasterPage from "./pages/KatasterPage.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
@@ -104,6 +105,10 @@ const router = createHashRouter([
           {
             path: "zeichnen",
             element: <></>,
+          },
+          {
+            path: "kataster/:katasterId",
+            element: <KatasterPage />,
           },
         ],
       },
