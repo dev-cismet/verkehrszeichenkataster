@@ -35,7 +35,7 @@ const Sidebar = () => {
   const items = [
     {
       key: "1",
-      label: "Kataster",
+      label: isCollapsed ? "" : "Kataster",
       children: (
         <div className="flex flex-col gap-1">
           <Link relative="path" to="kataster/1">
@@ -63,9 +63,9 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`relative flex h-full ${isCollapsed ? "w-20" : "w-60"} ${
+      className={`relative flex h-full ${isCollapsed ? "w-16" : "w-56"} ${
         isResetting && "transition-all duration-300 ease-in-out"
-      } flex-col gap-2 overflow-y-auto bg-white p-2 text-lg`}
+      } flex-col gap-4 overflow-y-auto bg-white p-2 text-lg`}
     >
       <div
         role="button"
@@ -76,13 +76,19 @@ const Sidebar = () => {
         }}
       >
         {isCollapsed ? (
-          <RightOutlined className="absolute right-2 top-3 h-6 w-6 p-1 cursor-pointer hover:bg-zinc-100" />
+          <RightOutlined className="absolute right-2 top-6 h-6 w-6 p-1 cursor-pointer hover:bg-zinc-100" />
         ) : (
-          <LeftOutlined className="absolute right-2 top-3 h-6 w-6 p-1 cursor-pointer hover:bg-zinc-100" />
+          <LeftOutlined className="absolute right-2 top-6 h-6 w-6 p-1 cursor-pointer hover:bg-zinc-100" />
         )}
       </div>
 
-      <h2 className="font-semibold text-lg truncate">Anordnung</h2>
+      <h2
+        className={`font-semibold text-lg truncate ${
+          isCollapsed && "invisible"
+        }`}
+      >
+        Anordnung
+      </h2>
       <SidebarItem
         link="uebersicht"
         icon={<HomeOutlined className="text-lg" />}
