@@ -98,8 +98,12 @@ const router = createHashRouter([
             element: <DetailsPage />,
           },
           {
-            path: "timeline",
+            path: "verlauf",
             element: <TimelinePage />,
+          },
+          {
+            path: "zeichnen",
+            element: <></>,
           },
         ],
       },

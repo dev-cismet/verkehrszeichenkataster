@@ -1,4 +1,5 @@
 import {
+  EditOutlined,
   HomeOutlined,
   LeftOutlined,
   RightOutlined,
@@ -14,7 +15,7 @@ const SidebarItem = ({ link, text, icon, isCollapsed }) => {
   return (
     <Link relative="path" to={link}>
       <div
-        className={`flex gap-4 items-center py-2 px-3 hover:bg-zinc-100 cursor-pointer ${
+        className={`flex gap-4 items-center py-2 px-3 hover:bg-zinc-100 cursor-pointer rounded-lg ${
           location.pathname.includes(link) && "text-primary"
         }`}
       >
@@ -67,10 +68,10 @@ const Sidebar = () => {
         text="Übersicht"
       />
       <SidebarItem
-        link="timeline"
+        link="verlauf"
         icon={<StockOutlined className="text-lg" />}
         isCollapsed={isCollapsed}
-        text="Timeline"
+        text="Verlauf"
       />
 
       <Collapse
@@ -78,6 +79,12 @@ const Sidebar = () => {
         ghost
         className="hover:bg-zinc-100"
         size="small"
+      />
+      <SidebarItem
+        link="zeichnen"
+        icon={<EditOutlined className="text-lg" />}
+        isCollapsed={isCollapsed}
+        text="Zeichnen"
       />
     </aside>
   );
