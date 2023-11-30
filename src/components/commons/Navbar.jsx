@@ -135,7 +135,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                   } font-semibold no-underline w-32`}
                 >
                   <div className="hidden md:block truncate text-sm">
-                    {application.name}
+                    {"Anordnung " + application.name}
                   </div>
                 </Button>
               </Link>
