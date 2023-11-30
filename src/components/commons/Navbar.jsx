@@ -63,7 +63,11 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
     const parts = pathname.split("/");
     const currentId = parts[2];
 
-    const newPath = pathname.replace(`/${currentId}/`, `/${id}/`);
+    let newPath = pathname.replace(`/${currentId}/`, `/${id}/`);
+    console.log(newPath);
+    if (newPath === "/") {
+      newPath = "/anordnung/" + id;
+    }
     return newPath;
   };
 
@@ -138,7 +142,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                 <Button
                   type="text"
                   className={`${
-                    location.pathname.includes("antrag/" + application.key)
+                    location.pathname.includes("anordnung/" + application.key)
                       ? "text-primary"
                       : ""
                   } font-semibold no-underline w-32`}

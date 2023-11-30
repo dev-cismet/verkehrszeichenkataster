@@ -91,7 +91,7 @@ const router = createHashRouter([
         element: <TablePage />,
       },
       {
-        path: "/antrag/:id",
+        path: "/anordnung/:id",
         element: <DetailsWrapper />,
         children: [
           {
