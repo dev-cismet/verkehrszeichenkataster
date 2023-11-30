@@ -1,7 +1,20 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import Sidebar from "../components/commons/Sidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { getSelectedApplications } from "../store/slices/navigation";
+import { storeSelectedApplication } from "../store/slices/application";
 
 const DetailsWrapper = () => {
+  const { id } = useParams();
+  const selectedApplications = useSelector(getSelectedApplications);
+  const dispatch = useDispatch();
+
+  const selectedApplication = selectedApplications.find(
+    (element) => element.id.toString() === id
+  );
+
+  dispatch(storeSelectedApplication(selectedApplication));
+
   return (
     <div className="h-full max-h-[calc(100vh-73px)] flex w-full bg-zinc-200">
       <Sidebar />
