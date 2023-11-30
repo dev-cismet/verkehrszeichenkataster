@@ -29,6 +29,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
   const links = navLinks();
   const location = useLocation();
   const [urlParams, setUrlParams] = useSearchParams();
+  const { pathname } = useLocation();
   const selectedApplications = useSelector(getSelectedApplications);
   const selectedApplicationsOuterRef = useRef(null);
   const [selectedApplicationsWidth, setSelectedApplicationsWidth] = useState(0);
@@ -56,6 +57,14 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
   const logout = () => {
     dispatch(storeJWT(undefined));
     dispatch(storeLogin(undefined));
+  };
+
+  const getApplicationPath = (id) => {
+    const parts = pathname.split("/");
+    const currentId = parts[2];
+
+    const newPath = pathname.replace(`/${currentId}/`, `/${id}/`);
+    return newPath;
   };
 
   useEffect(() => {
@@ -123,7 +132,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
             ?.slice(0, getNumberOfItemsThatFit(selectedApplicationsWidth, 112))
             .map((application, i) => (
               <Link
-                to={"antrag/" + application.key + "/uebersicht"}
+                to={getApplicationPath(application.key)}
                 key={`applicationLink_${i}`}
               >
                 <Button
