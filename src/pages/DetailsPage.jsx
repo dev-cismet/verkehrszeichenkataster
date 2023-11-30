@@ -1,8 +1,11 @@
-import Sidebar from "../components/commons/Sidebar";
 import { Card } from "antd";
 import Map from "../components/commons/Map";
+import { useSelector } from "react-redux";
+import { getSelectedApplication } from "../store/slices/application";
 
 const DetailsPage = () => {
+  const selectedApplication = useSelector(getSelectedApplication);
+
   return (
     <>
       <div className="w-full flex gap-2 items-center h-1/3">
@@ -10,7 +13,7 @@ const DetailsPage = () => {
           <h3 className="font-semibold text-xl">24</h3>
         </Card>
         <Card title="Antrag gestartet" className="w-full h-full">
-          <h3 className="font-semibold text-xl">01.01.2020</h3>
+          <h3 className="font-semibold text-xl">{selectedApplication.date}</h3>
         </Card>
         <Card title="Letzte Änderung" className="w-full h-full">
           <h3 className="font-semibold text-xl">20.11.2023</h3>

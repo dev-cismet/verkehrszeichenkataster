@@ -9,6 +9,8 @@ import { Collapse } from "antd";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./collapsible.css";
+import { useSelector } from "react-redux";
+import { getSelectedApplication } from "../../store/slices/application";
 
 const SidebarItem = ({ link, text, icon, isCollapsed }) => {
   const location = useLocation();
@@ -31,6 +33,8 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const location = useLocation();
+
+  const selectedApplication = useSelector(getSelectedApplication);
 
   const items = [
     {
@@ -87,7 +91,7 @@ const Sidebar = () => {
           isCollapsed && "invisible"
         }`}
       >
-        Anordnung
+        {"Anordnung " + selectedApplication?.name}
       </h2>
       <SidebarItem
         link="uebersicht"
