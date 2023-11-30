@@ -35,6 +35,7 @@ import DetailsWrapper from "./pages/DetailsWrapper.jsx";
 import TimelinePage from "./pages/TimelinePage.jsx";
 import KatasterPage from "./pages/KatasterPage.jsx";
 import DetailsOverviewPage from "./pages/DetailsOverviewPage.jsx";
+import FormPage from "./pages/FormPage.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
@@ -105,6 +106,10 @@ const router = createHashRouter([
           {
             path: "zeichnen",
             element: <></>,
+          },
+          {
+            path: "form",
+            element: <FormPage />,
           },
           {
             path: "kataster/:katasterId",

@@ -1,5 +1,6 @@
 import {
   EditOutlined,
+  FormOutlined,
   HomeOutlined,
   LeftOutlined,
   RightOutlined,
@@ -117,6 +118,12 @@ const Sidebar = () => {
         icon={<EditOutlined className="text-lg" />}
         isCollapsed={isCollapsed}
         text="Zeichnen"
+      />
+      <SidebarItem
+        link="form"
+        icon={<FormOutlined className="text-lg" />}
+        isCollapsed={isCollapsed}
+        text="Form"
       />
     </aside>
   );
