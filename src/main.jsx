@@ -31,10 +31,10 @@ import { checkJWTValidation, getJWT } from "./store/slices/auth.js";
 import { useEffect } from "react";
 import NavBar from "./components/commons/Navbar.jsx";
 import TablePage from "./pages/TablePage.jsx";
-import DetailsPage from "./pages/DetailsPage.jsx";
 import DetailsWrapper from "./pages/DetailsWrapper.jsx";
 import TimelinePage from "./pages/TimelinePage.jsx";
 import KatasterPage from "./pages/KatasterPage.jsx";
+import DetailsOverviewPage from "./pages/DetailsOverviewPage.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
@@ -96,7 +96,7 @@ const router = createHashRouter([
         children: [
           {
             path: "uebersicht",
-            element: <DetailsPage />,
+            element: <DetailsOverviewPage />,
           },
           {
             path: "verlauf",
