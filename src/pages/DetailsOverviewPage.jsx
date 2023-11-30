@@ -3,14 +3,16 @@ import Map from "../components/commons/Map";
 import { useSelector } from "react-redux";
 import { getSelectedApplication } from "../store/slices/application";
 
-const DetailsPage = () => {
+const DetailsOverviewPage = () => {
   const selectedApplication = useSelector(getSelectedApplication);
 
   return (
     <>
       <div className="w-full flex gap-2 items-center h-1/3">
         <Card title="Anzahl Kataster" className="w-full h-full">
-          <h3 className="font-semibold text-xl">24</h3>
+          <h3 className="font-semibold text-xl">
+            {selectedApplication.anzahl}
+          </h3>
         </Card>
         <Card title="Antrag gestartet" className="w-full h-full">
           <h3 className="font-semibold text-xl">{selectedApplication.date}</h3>
@@ -24,4 +26,4 @@ const DetailsPage = () => {
   );
 };
 
-export default DetailsPage;
+export default DetailsOverviewPage;

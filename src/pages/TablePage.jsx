@@ -2,6 +2,13 @@ import { Card, Table } from "antd";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { storeSelectedApplications } from "../store/slices/navigation";
+import {
+  dates,
+  maßnahmen,
+  sachverhalte,
+  streets,
+  timelines,
+} from "../assets/_data";
 
 const columns = [
   {
@@ -22,32 +29,6 @@ const columns = [
   },
 ];
 
-const dates = [
-  "5/1/23",
-  "11/1/23",
-  "16/1/23",
-  "3/2/23",
-  "13/2/23",
-  "1/2/23",
-  "23/3/23",
-  "21/3/23",
-  "22/3/23",
-  "24/3/23",
-  "6/4/23",
-];
-
-const streets = [
-  "Neukuchhausen",
-  "Am Schmalenhof",
-  "Luisenstr.",
-  "Löhrerlen",
-  "Zum Lohbusch",
-  "Pfeilstraße",
-  "Querstr.",
-  "Neumarkt",
-  "Gerstenstr.",
-];
-
 const TablePage = () => {
   const dispatch = useDispatch();
 
@@ -62,6 +43,10 @@ const TablePage = () => {
         date: dates[Math.floor(Math.random() * dates.length)],
         street: streets[Math.floor(Math.random() * streets.length)],
         id: i,
+        timeLineItems: timelines[Math.floor(Math.random() * timelines.length)],
+        sachverhalt:
+          sachverhalte[Math.floor(Math.random() * sachverhalte.length)],
+        maßnahmen: maßnahmen[Math.floor(Math.random() * maßnahmen.length)],
       };
       objectsArray.push(obj);
     }

@@ -31,10 +31,11 @@ import { checkJWTValidation, getJWT } from "./store/slices/auth.js";
 import { useEffect } from "react";
 import NavBar from "./components/commons/Navbar.jsx";
 import TablePage from "./pages/TablePage.jsx";
-import DetailsPage from "./pages/DetailsPage.jsx";
 import DetailsWrapper from "./pages/DetailsWrapper.jsx";
 import TimelinePage from "./pages/TimelinePage.jsx";
 import KatasterPage from "./pages/KatasterPage.jsx";
+import DetailsOverviewPage from "./pages/DetailsOverviewPage.jsx";
+import FormPage from "./pages/FormPage.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
@@ -91,12 +92,12 @@ const router = createHashRouter([
         element: <TablePage />,
       },
       {
-        path: "/antrag/:id",
+        path: "/anordnung/:id",
         element: <DetailsWrapper />,
         children: [
           {
             path: "uebersicht",
-            element: <DetailsPage />,
+            element: <DetailsOverviewPage />,
           },
           {
             path: "verlauf",
@@ -105,6 +106,10 @@ const router = createHashRouter([
           {
             path: "zeichnen",
             element: <></>,
+          },
+          {
+            path: "form",
+            element: <FormPage />,
           },
           {
             path: "kataster/:katasterId",
