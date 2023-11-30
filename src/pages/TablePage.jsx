@@ -131,6 +131,20 @@ const timelines = [
   ],
 ];
 
+const sachverhalte = [
+  "Im Wendehammer des Claudiusweg wird regelmäßig geparkt. Das Gebäude im Wendehammer ist ein Technikgebäude für den dahinter liegenden Autobahntunnel „Großer Busch“ auf der A 535. Im Falle eines Brandes im Tunnel oder im Technikgebäude muss der Bereich andienbar sein. Daher muss der Wendehammer durch VZ 283 dauerhaft freigehalten werden.",
+  "Mit der Anordnung 359/2022 wurden VZ 283 vor der KiTA aufgestellt (Team Verkehrssicherheit: Planung Umbau des Bereiches vor dem Eingang). Durch einige Nachfragen/Beschwerden werden die VZ 283 bis zum Umbau des Bereiches zeitlich auf die Öffnungszeiten der KiTA befristet.",
+  "Durch in diesem Straßenabschnitt haltende bzw. parkende Fahrzeuge, zum Großteil LKW, muss der fließende Verkehr in den Gegenverkehr ausscheren. Grade in Verbindung mit dem Busverkehr sowie der dort befindlichen LZA können Gefahrensituationen entstehen.",
+  "Im Bereich Wiesenstr. ggü. Hausnr. 32, zwischen Hausnr. 17 und 21 wurde auf städtischer Fläche, nach vorheriger erfolgter Absprache, eine Mobilstation des Car-Sharing Anbieters „Cambio“ eingerichtet. Nach Angaben des Anbieters bestehen häufig Probleme im zuge der Ausfahrt aufgrund parkender Fahrzeuge zwischen der Ausfahrt des Mobilstation und der privaten Ausfahrt neben Hausnr. 21. Nach Prüfung vor Ort mit 104.2 (H. Garbe), sowie erfolgter Rücksprache mit der Polizei wird die Aufbringung des VZ 298 StVO empfohlen um den Ausfahrtsbereich beider Ausfahrten freizuhalten.",
+];
+
+const maßnahmen = [
+  "1. Aufstellen der VZ 283-10, 283-20 und 283-30 StVO samt Masten gemäß beiliegendem Plan.",
+  "Anbringen von ZZ 1042-33 StVO (Mo-Fr. 7-17h) unter die vorhandenen VZ 283 vor der Tür der KiTA.",
+  "Einrichtung einer Haltverbotstrecke VZ 283 auf beiden Straßenseiten samt Mittelzeichen 283-30 StVO gemäß beigefügtem Plan. VZ an neuen Masten anbringen (Ausnahme: nördliche Straßenseite im Bereich LZA).",
+  "1. Aufbringung VZ 298 StVO gemäß Anlage 1. 2. Aufstellung VZ 283-10/20 + ZZ 1060-31 StVO.",
+];
+
 const TablePage = () => {
   const dispatch = useDispatch();
 
@@ -146,6 +160,9 @@ const TablePage = () => {
         street: streets[Math.floor(Math.random() * streets.length)],
         id: i,
         timeLineItems: timelines[Math.floor(Math.random() * timelines.length)],
+        sachverhalt:
+          sachverhalte[Math.floor(Math.random() * sachverhalte.length)],
+        maßnahmen: maßnahmen[Math.floor(Math.random() * maßnahmen.length)],
       };
       objectsArray.push(obj);
     }
