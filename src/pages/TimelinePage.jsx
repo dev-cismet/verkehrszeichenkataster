@@ -1,48 +1,13 @@
-import { ClockCircleOutlined } from "@ant-design/icons";
-import { Timeline } from "antd";
+import Timeline from "../components/application/Timeline";
+import { getSelectedApplication } from "../store/slices/application";
+import { useSelector } from "react-redux";
 
 const TimelinePage = () => {
+  const selectedApplication = useSelector(getSelectedApplication);
+
   return (
     <div className="flex w-full h-full justify-center items-center">
-      <Timeline
-        mode="alternate"
-        items={[
-          {
-            children: "Create a services site 2015-09-01",
-          },
-          {
-            children: "Solve initial network problems 2015-09-01",
-            color: "green",
-          },
-          {
-            dot: (
-              <ClockCircleOutlined
-                style={{
-                  fontSize: "16px",
-                }}
-              />
-            ),
-            children: `Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
-          },
-          {
-            color: "red",
-            children: "Network problems being solved 2015-09-01",
-          },
-          {
-            children: "Create a services site 2015-09-01",
-          },
-          {
-            dot: (
-              <ClockCircleOutlined
-                style={{
-                  fontSize: "16px",
-                }}
-              />
-            ),
-            children: "Technical testing 2015-09-01",
-          },
-        ]}
-      />
+      <Timeline dataIn={selectedApplication} />
     </div>
   );
 };
