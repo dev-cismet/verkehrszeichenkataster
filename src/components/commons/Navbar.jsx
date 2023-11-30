@@ -64,9 +64,8 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
     const currentId = parts[2];
 
     let newPath = pathname.replace(`/${currentId}/`, `/${id}/`);
-    console.log(newPath);
-    if (newPath === "/") {
-      newPath = "/anordnung/" + id;
+    if (!newPath.includes("/anordnung/")) {
+      newPath = "/anordnung/" + id + "/uebersicht";
     }
     return newPath;
   };
