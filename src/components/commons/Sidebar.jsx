@@ -87,19 +87,9 @@ const Sidebar = () => {
   const location = useLocation();
   const [timelineItems, setTimelineItems] = useState([
     {
-      link: "1",
-      icon: <StockOutlined className="text-lg" />,
-      text: "Test 1",
-    },
-    {
-      link: "2",
-      icon: <StockOutlined className="text-lg" />,
-      text: "Test 2",
-    },
-    {
-      link: "3",
-      icon: <StockOutlined className="text-lg" />,
-      text: "Test 3",
+      link: "Antrag",
+      icon: <FormOutlined className="text-lg" />,
+      text: "Antrag",
     },
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
