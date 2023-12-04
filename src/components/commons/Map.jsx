@@ -8,7 +8,11 @@ import { TopicMapStylingContext } from "react-cismap/contexts/TopicMapStylingCon
 import { useLocation, useSearchParams } from "react-router-dom";
 import { createQueryGeomFromBB, getArea25832 } from "../../tools/mappingTools";
 
-import { setBBPoly, setLeafletElement } from "../../store/slices/mapping";
+import {
+  setBBPoly,
+  setHoveredProperties,
+  setLeafletElement,
+} from "../../store/slices/mapping";
 import { useDispatch } from "react-redux";
 import Toolbar from "./Toolbar";
 import LandparcelLayer from "./LandparcelLayer";
@@ -144,6 +148,7 @@ const Map = ({
               dispatch(setBBPoly(bbPoly));
             } else {
               dispatch(setBBPoly(undefined));
+              dispatch(setHoveredProperties({}));
             }
           } catch (e) {
             console.log("error in boundingBoxChangedHandler", e);
