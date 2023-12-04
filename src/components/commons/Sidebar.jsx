@@ -30,6 +30,7 @@ const SidebarItem = ({
 }) => {
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const [showCustomAction, setShowCustomAction] = useState(false);
 
   return (
     <>
@@ -38,12 +39,18 @@ const SidebarItem = ({
           className={`flex gap-4 items-center py-2 px-3 hover:bg-zinc-100 cursor-pointer rounded-lg ${
             location.pathname.includes(link) && "text-primary"
           }`}
+          onMouseEnter={() => setShowCustomAction(true)}
+          onMouseLeave={() => setShowCustomAction(false)}
         >
           {icon}
           {!isSidebarCollapsed && <h4 className="mb-0">{text}</h4>}
           {collapsable && (
             <div className="flex w-full items-center gap-1 justify-end">
-              {customAction}
+              {showCustomAction && (
+                <div className="p-1 hover:bg-zinc-200 rounded-lg">
+                  {customAction}
+                </div>
+              )}
               <div className="p-1 hover:bg-zinc-200 rounded-lg">
                 {isCollapsed ? (
                   <DownOutlined onClick={() => setIsCollapsed(false)} />
