@@ -12,7 +12,7 @@ import {
   RightOutlined,
   StockOutlined,
 } from "@ant-design/icons";
-import { Collapse, Modal } from "antd";
+import { Button, Collapse, Modal } from "antd";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./collapsible.css";
@@ -198,7 +198,9 @@ const Sidebar = () => {
       <Modal
         title="Anhang hinzufügen"
         open={isModalOpen}
-        onOk={() => setIsModalOpen(false)}
+        footer={[
+          <Button onClick={() => setIsModalOpen(false)}>Abbrechen</Button>,
+        ]}
         onCancel={() => setIsModalOpen(false)}
       >
         <div className="grid grid-cols-3 gap-2">
