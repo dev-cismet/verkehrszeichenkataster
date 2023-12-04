@@ -4,10 +4,11 @@ import {
   FormOutlined,
   HomeOutlined,
   LeftOutlined,
+  PlusOutlined,
   RightOutlined,
   StockOutlined,
 } from "@ant-design/icons";
-import { Collapse } from "antd";
+import { Collapse, Modal } from "antd";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./collapsible.css";
@@ -20,6 +21,7 @@ const SidebarItem = ({
   icon,
   isSidebarCollapsed,
   collapsable,
+  customAction,
   children,
 }) => {
   const location = useLocation();
@@ -36,7 +38,8 @@ const SidebarItem = ({
           {icon}
           {!isSidebarCollapsed && <h4 className="mb-0">{text}</h4>}
           {collapsable && (
-            <div className="flex w-full items-center justify-end">
+            <div className="flex w-full items-center gap-1 justify-end">
+              {customAction}
               <div className="p-1 hover:bg-zinc-200 rounded-lg">
                 {isCollapsed ? (
                   <DownOutlined onClick={() => setIsCollapsed(false)} />
@@ -59,6 +62,24 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const location = useLocation();
+  const [timelineItems, setTimelineItems] = useState([
+    {
+      link: "1",
+      icon: <StockOutlined className="text-lg" />,
+      text: "Test 1",
+    },
+    {
+      link: "2",
+      icon: <StockOutlined className="text-lg" />,
+      text: "Test 2",
+    },
+    {
+      link: "3",
+      icon: <StockOutlined className="text-lg" />,
+      text: "Test 3",
+    },
+  ]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const selectedApplication = useSelector(getSelectedApplication);
 
@@ -131,25 +152,16 @@ const Sidebar = () => {
         isSidebarCollapsed={isCollapsed}
         text="Verlauf"
         collapsable={true}
+        customAction={<PlusOutlined onClick={() => setIsModalOpen(true)} />}
       >
-        <SidebarItem
-          link="verlauf"
-          icon={<StockOutlined className="text-lg" />}
-          isSidebarCollapsed={isCollapsed}
-          text="Verlauf"
-        />
-        <SidebarItem
-          link="verlauf"
-          icon={<StockOutlined className="text-lg" />}
-          isSidebarCollapsed={isCollapsed}
-          text="Verlauf"
-        />
-        <SidebarItem
-          link="verlauf"
-          icon={<StockOutlined className="text-lg" />}
-          isSidebarCollapsed={isCollapsed}
-          text="Verlauf"
-        />
+        {timelineItems.map((item) => (
+          <SidebarItem
+            link={item.link}
+            icon={item.icon}
+            isSidebarCollapsed={isCollapsed}
+            text={item.text}
+          />
+        ))}
       </SidebarItem>
 
       <Collapse
@@ -170,6 +182,18 @@ const Sidebar = () => {
         isSidebarCollapsed={isCollapsed}
         text="Form"
       />
+      <Modal
+        title="Anhang hinzufügen"
+        open={isModalOpen}
+        onOk={() => setIsModalOpen(false)}
+        onCancel={() => setIsModalOpen(false)}
+      >
+        <p>Zeichnung</p>
+        <p>Datei</p>
+        <p>Anfrage</p>
+        <p>Text</p>
+        <p>Entscheidung</p>
+      </Modal>
     </aside>
   );
 };
