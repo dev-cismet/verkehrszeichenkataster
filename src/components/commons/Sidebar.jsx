@@ -87,7 +87,7 @@ const Sidebar = () => {
   const location = useLocation();
   const [timelineItems, setTimelineItems] = useState([
     {
-      link: "Antrag",
+      link: "verlauf/antrag",
       icon: <FormOutlined className="text-lg" />,
       text: "Antrag",
     },
