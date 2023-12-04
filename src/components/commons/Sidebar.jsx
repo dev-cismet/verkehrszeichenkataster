@@ -1,4 +1,5 @@
 import {
+  DownOutlined,
   EditOutlined,
   FormOutlined,
   HomeOutlined,
@@ -13,20 +14,44 @@ import "./collapsible.css";
 import { useSelector } from "react-redux";
 import { getSelectedApplication } from "../../store/slices/application";
 
-const SidebarItem = ({ link, text, icon, isCollapsed }) => {
+const SidebarItem = ({
+  link,
+  text,
+  icon,
+  isSidebarCollapsed,
+  collapsable,
+  children,
+}) => {
   const location = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   return (
-    <Link relative="path" to={link}>
-      <div
-        className={`flex gap-4 items-center py-2 px-3 hover:bg-zinc-100 cursor-pointer rounded-lg ${
-          location.pathname.includes(link) && "text-primary"
-        }`}
-      >
-        {icon}
-        {!isCollapsed && <h4 className="mb-0">{text}</h4>}
-      </div>
-    </Link>
+    <>
+      <Link relative="path" to={link}>
+        <div
+          className={`flex gap-4 items-center py-2 px-3 hover:bg-zinc-100 cursor-pointer rounded-lg ${
+            location.pathname.includes(link) && "text-primary"
+          }`}
+        >
+          {icon}
+          {!isSidebarCollapsed && <h4 className="mb-0">{text}</h4>}
+          {collapsable && (
+            <div className="flex w-full items-center justify-end">
+              <div className="p-1 hover:bg-zinc-200 rounded-lg">
+                {isCollapsed ? (
+                  <DownOutlined onClick={() => setIsCollapsed(false)} />
+                ) : (
+                  <RightOutlined onClick={() => setIsCollapsed(true)} />
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </Link>
+      {collapsable && isCollapsed && (
+        <div className="ml-2 flex flex-col gap-1">{children}</div>
+      )}
+    </>
   );
 };
 
@@ -97,15 +122,35 @@ const Sidebar = () => {
       <SidebarItem
         link="uebersicht"
         icon={<HomeOutlined className="text-lg" />}
-        isCollapsed={isCollapsed}
+        isSidebarCollapsed={isCollapsed}
         text="Übersicht"
       />
       <SidebarItem
         link="verlauf"
         icon={<StockOutlined className="text-lg" />}
-        isCollapsed={isCollapsed}
+        isSidebarCollapsed={isCollapsed}
         text="Verlauf"
-      />
+        collapsable={true}
+      >
+        <SidebarItem
+          link="verlauf"
+          icon={<StockOutlined className="text-lg" />}
+          isSidebarCollapsed={isCollapsed}
+          text="Verlauf"
+        />
+        <SidebarItem
+          link="verlauf"
+          icon={<StockOutlined className="text-lg" />}
+          isSidebarCollapsed={isCollapsed}
+          text="Verlauf"
+        />
+        <SidebarItem
+          link="verlauf"
+          icon={<StockOutlined className="text-lg" />}
+          isSidebarCollapsed={isCollapsed}
+          text="Verlauf"
+        />
+      </SidebarItem>
 
       <Collapse
         items={items}
@@ -116,13 +161,13 @@ const Sidebar = () => {
       <SidebarItem
         link="zeichnen"
         icon={<EditOutlined className="text-lg" />}
-        isCollapsed={isCollapsed}
+        isSidebarCollapsed={isCollapsed}
         text="Zeichnen"
       />
       <SidebarItem
         link="form"
         icon={<FormOutlined className="text-lg" />}
-        isCollapsed={isCollapsed}
+        isSidebarCollapsed={isCollapsed}
         text="Form"
       />
     </aside>
