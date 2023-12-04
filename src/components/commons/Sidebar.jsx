@@ -1,10 +1,14 @@
 import {
+  CheckOutlined,
   DownOutlined,
   EditOutlined,
+  FileOutlined,
+  FileTextOutlined,
   FormOutlined,
   HomeOutlined,
   LeftOutlined,
   PlusOutlined,
+  PullRequestOutlined,
   RightOutlined,
   StockOutlined,
 } from "@ant-design/icons";
@@ -55,6 +59,18 @@ const SidebarItem = ({
         <div className="ml-2 flex flex-col gap-1">{children}</div>
       )}
     </>
+  );
+};
+
+const ModalItem = ({ icon, text, onClick }) => {
+  return (
+    <div
+      className="rounded-lg p-2 flex flex-col gap-1 items-center justify-center hover:bg-zinc-100 cursor-pointer"
+      onClick={onClick}
+    >
+      {icon}
+      <p className="mb-0">{text}</p>
+    </div>
   );
 };
 
@@ -188,11 +204,83 @@ const Sidebar = () => {
         onOk={() => setIsModalOpen(false)}
         onCancel={() => setIsModalOpen(false)}
       >
-        <p>Zeichnung</p>
-        <p>Datei</p>
-        <p>Anfrage</p>
-        <p>Text</p>
-        <p>Entscheidung</p>
+        <div className="grid grid-cols-3 gap-2">
+          <ModalItem
+            icon={<EditOutlined className="text-lg" />}
+            text="Zeichnung"
+            onClick={() => {
+              setTimelineItems((items) => [
+                ...items,
+                {
+                  link: "Zeichnung 1",
+                  icon: <EditOutlined className="text-lg" />,
+                  text: "Zeichnung 1",
+                },
+              ]);
+              setIsModalOpen(false);
+            }}
+          />
+          <ModalItem
+            icon={<FileOutlined className="text-lg" />}
+            text="Datei"
+            onClick={() => {
+              setTimelineItems((items) => [
+                ...items,
+                {
+                  link: "Datei 1",
+                  icon: <FileOutlined className="text-lg" />,
+                  text: "Datei 1",
+                },
+              ]);
+              setIsModalOpen(false);
+            }}
+          />
+          <ModalItem
+            icon={<PullRequestOutlined className="text-lg" />}
+            text="Anfrage"
+            onClick={() => {
+              setTimelineItems((items) => [
+                ...items,
+                {
+                  link: "Anfrage 1",
+                  icon: <PullRequestOutlined className="text-lg" />,
+                  text: "Anfrage 1",
+                },
+              ]);
+              setIsModalOpen(false);
+            }}
+          />
+          <ModalItem
+            icon={<FileTextOutlined className="text-lg" />}
+            text="Text"
+            onClick={() => {
+              setTimelineItems((items) => [
+                ...items,
+                {
+                  link: "Text 1",
+                  icon: <FileTextOutlined className="text-lg" />,
+                  text: "Text 1",
+                },
+              ]);
+              setIsModalOpen(false);
+            }}
+          />
+          <ModalItem
+            icon={<CheckOutlined className="text-lg" />}
+            text="Entscheidung"
+            onClick={() => {
+              setTimelineItems((items) => [
+                ...items,
+                {
+                  link: "Entscheidung 1",
+                  icon: <CheckOutlined className="text-lg" />,
+                  text: "Entscheidung 1",
+                },
+              ]);
+              setIsModalOpen(false);
+            }}
+          />
+        </div>
       </Modal>
     </aside>
   );
