@@ -36,6 +36,11 @@ import TimelinePage from "./pages/TimelinePage.jsx";
 import KatasterPage from "./pages/KatasterPage.jsx";
 import DetailsOverviewPage from "./pages/DetailsOverviewPage.jsx";
 import FormPage from "./pages/FormPage.jsx";
+import ZeichnungsPage from "./pages/Attachments/ZeichnungsPage.jsx";
+import DateiPage from "./pages/Attachments/DateiPage.jsx";
+import AnfragePage from "./pages/Attachments/AnfragePage.jsx";
+import TextPage from "./pages/Attachments/TextPage.jsx";
+import EntscheidungsPage from "./pages/Attachments/EntscheidungsPage.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
@@ -112,8 +117,32 @@ const router = createHashRouter([
             element: <FormPage />,
           },
           {
+            path: "verlauf/antrag",
+            element: <></>,
+          },
+          {
             path: "kataster/:katasterId",
             element: <KatasterPage />,
+          },
+          {
+            path: "verlauf/zeichnung/:zeichnungId",
+            element: <ZeichnungsPage />,
+          },
+          {
+            path: "verlauf/datei/:dateiId",
+            element: <DateiPage />,
+          },
+          {
+            path: "verlauf/anfrage/:anfrageId",
+            element: <AnfragePage />,
+          },
+          {
+            path: "verlauf/text/:textId",
+            element: <TextPage />,
+          },
+          {
+            path: "verlauf/entscheidung/:entscheidungsId",
+            element: <EntscheidungsPage />,
           },
         ],
       },

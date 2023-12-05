@@ -211,7 +211,7 @@ const Sidebar = () => {
               setTimelineItems((items) => [
                 ...items,
                 {
-                  link: "Zeichnung 1",
+                  link: "verlauf/zeichnung/1",
                   icon: <EditOutlined className="text-lg" />,
                   text: "Zeichnung 1",
                 },
@@ -226,7 +226,7 @@ const Sidebar = () => {
               setTimelineItems((items) => [
                 ...items,
                 {
-                  link: "Datei 1",
+                  link: "verlauf/datei/1",
                   icon: <FileOutlined className="text-lg" />,
                   text: "Datei 1",
                 },
@@ -241,7 +241,7 @@ const Sidebar = () => {
               setTimelineItems((items) => [
                 ...items,
                 {
-                  link: "Anfrage 1",
+                  link: "verlauf/anfrage/1",
                   icon: <PullRequestOutlined className="text-lg" />,
                   text: "Anfrage 1",
                 },
@@ -256,7 +256,7 @@ const Sidebar = () => {
               setTimelineItems((items) => [
                 ...items,
                 {
-                  link: "Text 1",
+                  link: "verlauf/text/1",
                   icon: <FileTextOutlined className="text-lg" />,
                   text: "Text 1",
                 },
