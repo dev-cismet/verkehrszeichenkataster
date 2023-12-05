@@ -14,7 +14,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Collapse, Modal } from "antd";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./collapsible.css";
 import { useSelector } from "react-redux";
 import { getSelectedApplication } from "../../store/slices/application";
@@ -93,6 +93,7 @@ const Sidebar = () => {
     },
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const selectedApplication = useSelector(getSelectedApplication);
 
@@ -217,6 +218,7 @@ const Sidebar = () => {
                 },
               ]);
               setIsModalOpen(false);
+              navigate("verlauf/zeichnung/1", { relative: "path" });
             }}
           />
           <ModalItem
@@ -232,6 +234,7 @@ const Sidebar = () => {
                 },
               ]);
               setIsModalOpen(false);
+              navigate("verlauf/datei/1", { relative: "path" });
             }}
           />
           <ModalItem
@@ -247,6 +250,7 @@ const Sidebar = () => {
                 },
               ]);
               setIsModalOpen(false);
+              navigate("verlauf/anfrage/1", { relative: "path" });
             }}
           />
           <ModalItem
@@ -262,6 +266,7 @@ const Sidebar = () => {
                 },
               ]);
               setIsModalOpen(false);
+              navigate("verlauf/text/1", { relative: "path" });
             }}
           />
           <ModalItem
@@ -271,12 +276,13 @@ const Sidebar = () => {
               setTimelineItems((items) => [
                 ...items,
                 {
-                  link: "Entscheidung 1",
+                  link: "/verlauf/entscheidung/1",
                   icon: <CheckOutlined className="text-lg" />,
                   text: "Entscheidung 1",
                 },
               ]);
               setIsModalOpen(false);
+              navigate("verlauf/entscheidung/1", { relative: "path" });
             }}
           />
         </div>
