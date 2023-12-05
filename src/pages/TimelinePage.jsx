@@ -33,7 +33,7 @@ const TimelinePage = () => {
         maxHeight: "94%",
       }}
       className="h-full w-full"
-      title="Verlauf"
+      title={<span className="text-2xl">Verlauf</span>}
     >
       <div className="h-full w-full flex justify-between">
         <div className="flex flex-col w-3/4 gap-2">
@@ -82,7 +82,7 @@ const TimelinePage = () => {
           </div>
         </div>
         <div className="w-80">
-          <Timeline dataIn={selectedApplication} />
+          <Timeline dataIn={timeline} />
         </div>
       </div>
     </Card>
