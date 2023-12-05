@@ -6,7 +6,7 @@ const Decision = ({ id }) => {
   return (
     <div className="w-full">
       <Form form={form} labelCol={{ span: 2 }} wrapperCol={{ span: 10 }}>
-        <Form.Item label="Beschreibung">
+        <Form.Item label="Entscheidung">
           <Select defaultValue={"Abgeschlossen"} id={id} />
         </Form.Item>
       </Form>
