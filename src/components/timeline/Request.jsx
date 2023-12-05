@@ -5,9 +5,8 @@ const Request = () => {
   const [form] = Form.useForm();
 
   return (
-    <div id="Antrag" className="w-1/2">
-      <h1>Antrag</h1>
-      <Form layout="vertical" form={form}>
+    <div id="Antrag" className="w-full">
+      <Form form={form} labelCol={{ span: 2 }} wrapperCol={{ span: 10 }}>
         <Form.Item label="Ort">
           <Input />
         </Form.Item>
@@ -16,9 +15,6 @@ const Request = () => {
         </Form.Item>
         <Form.Item label="Name">
           <Input />
-        </Form.Item>
-        <Form.Item label="Beschreibung">
-          <TextArea rows={4} />
         </Form.Item>
         <Form.Item label="Mail">
           <Input />

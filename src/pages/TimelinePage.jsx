@@ -1,13 +1,11 @@
-import { Button, Card, Select } from "antd";
+import { Button, Card } from "antd";
 import Timeline from "../components/application/Timeline";
-import { getSelectedApplication } from "../store/slices/application";
-import { useSelector } from "react-redux";
 import Request from "../components/timeline/Request";
 import { useEffect, useState } from "react";
 import Text from "../components/timeline/Text";
+import Decision from "../components/timeline/Decision";
 
 const TimelinePage = () => {
-  const selectedApplication = useSelector(getSelectedApplication);
   const [timeline, setTimeline] = useState([
     {
       type: "antrag",
@@ -36,25 +34,21 @@ const TimelinePage = () => {
       title={<span className="text-2xl">Verlauf</span>}
     >
       <div className="h-full w-full flex justify-between">
-        <div className="flex flex-col w-3/4 gap-2">
+        <div className="flex flex-col w-3/4 gap-4">
           {timeline.map((attachment, i) => {
             switch (attachment.type) {
               case "antrag":
-                return <Request />;
+                return <Request key={i} />;
               case "text":
                 return (
-                  <Text value={attachment.values?.text} id={i.toString()} />
-                );
-              case "entscheidung":
-                return (
-                  <Select
-                    className="w-1/2"
-                    defaultValue={"Abgeschlossen"}
+                  <Text
+                    value={attachment.values?.text}
                     id={i.toString()}
+                    key={i}
                   />
                 );
-              default:
-                return <></>;
+              case "entscheidung":
+                return <Decision id={i.toString()} />;
             }
           })}
           <div className="w-full flex gap-2">
