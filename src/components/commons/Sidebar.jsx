@@ -14,7 +14,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Collapse, Modal } from "antd";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./collapsible.css";
 import { useSelector } from "react-redux";
 import { getSelectedApplication } from "../../store/slices/application";
@@ -93,6 +93,7 @@ const Sidebar = () => {
     },
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const selectedApplication = useSelector(getSelectedApplication);
 
@@ -211,12 +212,13 @@ const Sidebar = () => {
               setTimelineItems((items) => [
                 ...items,
                 {
-                  link: "Zeichnung 1",
+                  link: "verlauf/zeichnung/1",
                   icon: <EditOutlined className="text-lg" />,
                   text: "Zeichnung 1",
                 },
               ]);
               setIsModalOpen(false);
+              navigate("verlauf/zeichnung/1", { relative: "path" });
             }}
           />
           <ModalItem
@@ -226,12 +228,13 @@ const Sidebar = () => {
               setTimelineItems((items) => [
                 ...items,
                 {
-                  link: "Datei 1",
+                  link: "verlauf/datei/1",
                   icon: <FileOutlined className="text-lg" />,
                   text: "Datei 1",
                 },
               ]);
               setIsModalOpen(false);
+              navigate("verlauf/datei/1", { relative: "path" });
             }}
           />
           <ModalItem
@@ -241,12 +244,13 @@ const Sidebar = () => {
               setTimelineItems((items) => [
                 ...items,
                 {
-                  link: "Anfrage 1",
+                  link: "verlauf/anfrage/1",
                   icon: <PullRequestOutlined className="text-lg" />,
                   text: "Anfrage 1",
                 },
               ]);
               setIsModalOpen(false);
+              navigate("verlauf/anfrage/1", { relative: "path" });
             }}
           />
           <ModalItem
@@ -256,12 +260,13 @@ const Sidebar = () => {
               setTimelineItems((items) => [
                 ...items,
                 {
-                  link: "Text 1",
+                  link: "verlauf/text/1",
                   icon: <FileTextOutlined className="text-lg" />,
                   text: "Text 1",
                 },
               ]);
               setIsModalOpen(false);
+              navigate("verlauf/text/1", { relative: "path" });
             }}
           />
           <ModalItem
@@ -271,12 +276,13 @@ const Sidebar = () => {
               setTimelineItems((items) => [
                 ...items,
                 {
-                  link: "Entscheidung 1",
+                  link: "/verlauf/entscheidung/1",
                   icon: <CheckOutlined className="text-lg" />,
                   text: "Entscheidung 1",
                 },
               ]);
               setIsModalOpen(false);
+              navigate("verlauf/entscheidung/1", { relative: "path" });
             }}
           />
         </div>
