@@ -34,7 +34,7 @@ const TimelinePage = () => {
       title={<span className="text-2xl">Verlauf</span>}
     >
       <div className="h-full w-full flex justify-between">
-        <div className="flex flex-col w-3/4 gap-4">
+        <div className="flex flex-col w-3/4">
           {timeline.map((attachment, i) => {
             switch (attachment.type) {
               case "antrag":
