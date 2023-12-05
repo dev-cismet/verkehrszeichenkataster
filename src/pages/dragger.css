@@ -1,0 +1,5 @@
+.ant-upload-drag {
+  border: 0px !important;
+  background-color: inherit !important;
+  cursor: default !important;
+}
