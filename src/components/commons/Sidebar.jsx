@@ -1,18 +1,18 @@
 import {
   DownOutlined,
-  EditOutlined,
   FormOutlined,
   HomeOutlined,
   LeftOutlined,
   RightOutlined,
   StockOutlined,
 } from "@ant-design/icons";
-import { Collapse } from "antd";
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./collapsible.css";
 import { useSelector } from "react-redux";
 import { getSelectedApplication } from "../../store/slices/application";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignsPost } from "@fortawesome/free-solid-svg-icons";
 
 const SidebarItem = ({
   link,
@@ -31,7 +31,7 @@ const SidebarItem = ({
     <>
       <Link relative="path" to={link}>
         <div
-          className={`flex gap-4 items-center py-2 px-3 hover:bg-zinc-100 cursor-pointer rounded-lg ${
+          className={`flex gap-4 items-center relative py-2 px-3 hover:bg-zinc-100 cursor-pointer rounded-lg ${
             location.pathname.includes(link) && "text-primary"
           }`}
           onMouseEnter={() => setShowCustomAction(true)}
@@ -48,9 +48,19 @@ const SidebarItem = ({
               )}
               <div className="p-1 hover:bg-zinc-200 rounded-lg">
                 {isCollapsed ? (
-                  <DownOutlined onClick={() => setIsCollapsed(false)} />
+                  <DownOutlined
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsCollapsed(false);
+                    }}
+                  />
                 ) : (
-                  <RightOutlined onClick={() => setIsCollapsed(true)} />
+                  <RightOutlined
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsCollapsed(true);
+                    }}
+                  />
                 )}
               </div>
             </div>
@@ -58,7 +68,7 @@ const SidebarItem = ({
         </div>
       </Link>
       {collapsable && isCollapsed && (
-        <div className="ml-2 flex flex-col gap-1">{children}</div>
+        <div className="ml-3 flex flex-col gap-1">{children}</div>
       )}
     </>
   );
@@ -79,7 +89,6 @@ const ModalItem = ({ icon, text, onClick }) => {
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
-  const location = useLocation();
   const [timelineItems, setTimelineItems] = useState([
     {
       link: "verlauf/antrag",
@@ -87,39 +96,8 @@ const Sidebar = () => {
       text: "Antrag",
     },
   ]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = useNavigate();
 
   const selectedApplication = useSelector(getSelectedApplication);
-
-  const items = [
-    {
-      key: "1",
-      label: isCollapsed ? "" : "Kataster",
-      children: (
-        <div className="flex flex-col gap-1">
-          <Link relative="path" to="kataster/1">
-            <span
-              className={`${
-                location.pathname.includes("kataster/1") && "text-primary"
-              } w-full p-2`}
-            >
-              Kataster 1
-            </span>
-          </Link>
-          <Link relative="path" to="kataster/2">
-            <span
-              className={`${
-                location.pathname.includes("kataster/2") && "text-primary"
-              } w-full p-2`}
-            >
-              Kataster 2
-            </span>
-          </Link>
-        </div>
-      ),
-    },
-  ];
 
   return (
     <aside
@@ -172,12 +150,26 @@ const Sidebar = () => {
         ))}
       </SidebarItem>
 
-      <Collapse
-        items={items}
-        ghost
-        className="hover:bg-zinc-100"
-        size="small"
-      />
+      <SidebarItem
+        link="kataster/1"
+        icon={<FontAwesomeIcon icon={faSignsPost} />}
+        isSidebarCollapsed={isCollapsed}
+        text="Kataster"
+        collapsable={true}
+      >
+        <SidebarItem
+          link="kataster/1"
+          icon={<FontAwesomeIcon icon={faSignsPost} />}
+          isSidebarCollapsed={isCollapsed}
+          text="Standort 5903"
+        />
+        <SidebarItem
+          link="kataster/2"
+          icon={<FontAwesomeIcon icon={faSignsPost} />}
+          isSidebarCollapsed={isCollapsed}
+          text="Standort 5904"
+        />
+      </SidebarItem>
     </aside>
   );
 };
