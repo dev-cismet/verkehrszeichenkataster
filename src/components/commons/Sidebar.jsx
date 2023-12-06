@@ -31,7 +31,7 @@ const SidebarItem = ({
     <>
       <Link relative="path" to={link}>
         <div
-          className={`flex gap-4 items-center py-2 px-3 hover:bg-zinc-100 cursor-pointer rounded-lg ${
+          className={`flex gap-4 items-center relative py-2 px-3 hover:bg-zinc-100 cursor-pointer rounded-lg ${
             location.pathname.includes(link) && "text-primary"
           }`}
           onMouseEnter={() => setShowCustomAction(true)}
@@ -48,9 +48,19 @@ const SidebarItem = ({
               )}
               <div className="p-1 hover:bg-zinc-200 rounded-lg">
                 {isCollapsed ? (
-                  <DownOutlined onClick={() => setIsCollapsed(false)} />
+                  <DownOutlined
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsCollapsed(false);
+                    }}
+                  />
                 ) : (
-                  <RightOutlined onClick={() => setIsCollapsed(true)} />
+                  <RightOutlined
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsCollapsed(true);
+                    }}
+                  />
                 )}
               </div>
             </div>
@@ -58,7 +68,7 @@ const SidebarItem = ({
         </div>
       </Link>
       {collapsable && isCollapsed && (
-        <div className="ml-2 flex flex-col gap-1">{children}</div>
+        <div className="ml-3 flex flex-col gap-1">{children}</div>
       )}
     </>
   );
