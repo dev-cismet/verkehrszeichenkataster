@@ -41,7 +41,18 @@ const TimelinePage = () => {
       <Dragger
         openFileDialogOnClick={false}
         className="h-full w-full"
-        onDrop={(e) => console.log(e)}
+        beforeUpload={(file) => {
+          setTimeline((currentTimeline) => [
+            ...currentTimeline,
+            {
+              type: "file",
+              values: {
+                name: file.name,
+              },
+            },
+          ]);
+        }}
+        fileList={[]}
       >
         <div className="h-full w-full flex justify-between">
           <div className="flex flex-col w-3/4">
@@ -58,7 +69,9 @@ const TimelinePage = () => {
                     />
                   );
                 case "entscheidung":
-                  return <Decision id={i.toString()} />;
+                  return <Decision key={i} id={i.toString()} />;
+                case "file":
+                  return <span key={i}>{attachment.values?.name}</span>;
               }
             })}
             <div className="w-full flex gap-2">

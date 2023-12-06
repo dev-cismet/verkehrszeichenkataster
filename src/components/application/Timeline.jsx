@@ -24,6 +24,10 @@ const Timeline = ({ dataIn, extractor = mockExtractor }) => {
             return {
               children: "Antrag abgeschlossen",
             };
+          case "file":
+            return {
+              children: "Datei hochgeladen",
+            };
         }
       })}
     />
