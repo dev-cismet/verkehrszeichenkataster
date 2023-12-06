@@ -178,18 +178,6 @@ const Sidebar = () => {
         className="hover:bg-zinc-100"
         size="small"
       />
-      <SidebarItem
-        link="zeichnen"
-        icon={<EditOutlined className="text-lg" />}
-        isSidebarCollapsed={isCollapsed}
-        text="Zeichnen"
-      />
-      <SidebarItem
-        link="form"
-        icon={<FormOutlined className="text-lg" />}
-        isSidebarCollapsed={isCollapsed}
-        text="Form"
-      />
     </aside>
   );
 };
