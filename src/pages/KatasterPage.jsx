@@ -1,21 +1,21 @@
-import { Card, Select, Input, Checkbox, DatePicker } from "antd";
+import { Card, DatePicker } from "antd";
 import Map from "../components/commons/Map";
-import {
-  ArrowDownOutlined,
-  ArrowUpOutlined,
-  MinusOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
-
-const { TextArea } = Input;
+import SignCard from "../components/kataster/SignCard";
+import { useState } from "react";
 
 const KatasterPage = () => {
+  const [signs, setSigns] = useState([
+    {
+      position: "Vorne",
+    },
+  ]);
+
   return (
     <Card
       bodyStyle={{
         overflowY: "auto",
         overflowX: "clip",
-        maxHeight: "96%",
+        maxHeight: "94%",
         height: "100%",
       }}
       className="h-full w-full"
@@ -41,49 +41,14 @@ const KatasterPage = () => {
           <span>Schilder zum Zeitpunkt:</span>
           <DatePicker className="w-50" format="DD.MM.YYYY" />
         </div>
-        <Card
-          size="small"
-          title="Schild"
-          extra={
-            <div className="flex items-center gap-6">
-              <MinusOutlined className="cursor-pointer" />{" "}
-              <PlusOutlined className="cursor-pointer" />
-            </div>
-          }
-        >
-          <div className="h-full w-full grid grid-cols-12 gap-2 gap-y-4">
-            <span className="col-span-1">Position:</span>
-            <Select className="col-span-8" />
-            <div className="col-span-1 flex items-center">
-              <ArrowDownOutlined />
-              <span className="w-full text-center">2</span>
-              <ArrowUpOutlined />
-            </div>
-            <div className="col-span-2"></div>
-            <span className="col-span-1">Verkehrszeichen:</span>
-            <Select className="col-span-1" />
-            <Select className="col-span-7" />
-            <div className="col-span-1 flex items-center justify-center">
-              <Checkbox>Privat</Checkbox>
-            </div>
-            <div className="col-span-2"></div>
-            <span className="col-span-1">Beschriftung:</span>
-            <TextArea className="col-span-9" rows={4} />
-            <div className="col-span-2"></div>
-            <span className="col-span-1">Verfügungsnummer:</span>
-            <Select className="col-span-7" />
-            <div className="col-span-2 flex gap-2 items-center">
-              <span className="w-full">Gültig von:</span>
-              <Select className="w-full" />
-            </div>
-            <div className="col-span-2 flex gap-2 items-center">
-              <span>bis:</span>
-              <Select className="w-full" />
-            </div>
-            <span className="col-span-1">Bemerkung:</span>
-            <TextArea className="col-span-11" rows={4} />
-          </div>
-        </Card>
+        {signs.map((sign, i) => (
+          <SignCard
+            sign={sign}
+            key={`sign_${i}`}
+            index={i}
+            setSigns={setSigns}
+          />
+        ))}
       </div>
     </Card>
   );
