@@ -116,7 +116,7 @@ const TimelinePage = () => {
                   );
               }
             })}
-            <div className="w-full flex justify-center gap-2 pt-2">
+            <div className="w-full flex justify-center items-center gap-2 pt-2">
               <Button
                 onClick={() => {
                   changeTimeline({
@@ -142,6 +142,14 @@ const TimelinePage = () => {
               >
                 Entscheidung
               </Button>
+              <Upload
+                beforeUpload={(file) => {
+                  handleDrop(file);
+                }}
+                fileList={[]}
+              >
+                <Button>Datei</Button>
+              </Upload>
             </div>
           </div>
           <div className="w-80">
