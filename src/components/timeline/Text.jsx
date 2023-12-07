@@ -7,7 +7,7 @@ const Text = ({ value, id }) => {
 
   return (
     <div className="w-full">
-      <Form form={form} labelCol={{ span: 2 }} wrapperCol={{ span: 10 }}>
+      <Form form={form} labelCol={{ span: 3 }} wrapperCol={{ span: 10 }}>
         <Form.Item label="Bemerkung">
           <TextArea rows={3} defaultValue={value} id={id} />
         </Form.Item>

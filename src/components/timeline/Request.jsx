@@ -6,18 +6,15 @@ const Request = () => {
 
   return (
     <div id="Antrag" className="w-full">
-      <Form form={form} labelCol={{ span: 2 }} wrapperCol={{ span: 10 }}>
+      <Form form={form} labelCol={{ span: 3 }} wrapperCol={{ span: 10 }}>
         <Form.Item label="Ort">
           <Input />
         </Form.Item>
-        <Form.Item label="Postleitzahl">
+        <Form.Item label="Sachverhalt">
           <Input />
         </Form.Item>
-        <Form.Item label="Name">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Mail">
-          <Input />
+        <Form.Item label="Erforderliche Maßnahmen">
+          <TextArea cols={3} />
         </Form.Item>
       </Form>
     </div>
