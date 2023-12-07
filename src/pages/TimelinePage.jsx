@@ -15,13 +15,14 @@ const TimelinePage = () => {
   const currentTimeline = useSelector(getTimeline);
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const changeTimeline = (item) => {
+    dispatch(storeTimeline([...currentTimeline, item]));
     setTimeout(() => {
       document
-        .getElementById(currentTimeline.length.toString() - 1)
+        .getElementById(currentTimeline.length.toString())
         ?.scrollIntoView({ behavior: "smooth" });
     }, 5);
-  }, [currentTimeline]);
+  };
 
   return (
     <Card
@@ -38,17 +39,12 @@ const TimelinePage = () => {
         openFileDialogOnClick={false}
         className="h-full w-full"
         beforeUpload={(file) => {
-          dispatch(
-            storeTimeline([
-              ...currentTimeline,
-              {
-                type: "file",
-                values: {
-                  name: file.name,
-                },
-              },
-            ])
-          );
+          changeTimeline({
+            type: "file",
+            values: {
+              name: file.name,
+            },
+          });
         }}
         fileList={[]}
       >
@@ -75,17 +71,12 @@ const TimelinePage = () => {
             <div className="w-full flex gap-2">
               <Button
                 onClick={() => {
-                  dispatch(
-                    storeTimeline([
-                      ...currentTimeline,
-                      {
-                        type: "text",
-                        values: {
-                          name: "Bemerkung",
-                        },
-                      },
-                    ])
-                  );
+                  changeTimeline({
+                    type: "text",
+                    values: {
+                      name: "Bemerkung",
+                    },
+                  });
                 }}
               >
                 Bemerkung
@@ -93,17 +84,12 @@ const TimelinePage = () => {
               <Button>Zeichnung</Button>
               <Button
                 onClick={() => {
-                  dispatch(
-                    storeTimeline([
-                      ...currentTimeline,
-                      {
-                        type: "entscheidung",
-                        values: {
-                          name: "Entscheidung",
-                        },
-                      },
-                    ])
-                  );
+                  changeTimeline({
+                    type: "entscheidung",
+                    values: {
+                      name: "Entscheidung",
+                    },
+                  });
                 }}
               >
                 Entscheidung
