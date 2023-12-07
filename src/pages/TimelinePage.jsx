@@ -82,7 +82,7 @@ const TimelinePage = () => {
                   return <Decision key={i} id={i.toString()} />;
                 case "file":
                   return (
-                    <div className="flex w-full gap-2 items-center">
+                    <div className="flex w-full gap-2 items-center pb-4">
                       <span className="w-[11.8%] text-end">
                         {attachment.values?.name} :
                       </span>
