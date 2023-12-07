@@ -1,4 +1,4 @@
-import { Button, Card, Input, Upload } from "antd";
+import { Button, Card, Upload } from "antd";
 import Timeline from "../components/application/Timeline";
 import Request from "../components/timeline/Request";
 import Text from "../components/timeline/Text";
@@ -6,13 +6,8 @@ import Decision from "../components/timeline/Decision";
 
 import "./dragger.css";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteTimelineObject,
-  getTimeline,
-  storeTimeline,
-  updateName,
-} from "../store/slices/application";
-import { DeleteOutlined } from "@ant-design/icons";
+import { getTimeline, storeTimeline } from "../store/slices/application";
+import File from "../components/timeline/File";
 
 const { Dragger } = Upload;
 
@@ -81,43 +76,7 @@ const TimelinePage = () => {
                 case "entscheidung":
                   return <Decision key={i} id={i.toString()} />;
                 case "file":
-                  return (
-                    <div
-                      className="flex w-full gap-2 items-center pb-6"
-                      key={i}
-                    >
-                      <div className="h-full border-[1px] border-solid border-black" />
-
-                      <div className="w-[11.5%] flex items-center justify-end">
-                        <Input
-                          bordered={false}
-                          value={attachment.values?.name}
-                          className="w-max text-end"
-                          onChange={(e) => {
-                            dispatch(
-                              updateName({
-                                index: i,
-                                updatedName: e.target.value,
-                              })
-                            );
-                          }}
-                        />
-                        <span>:</span>
-                      </div>
-                      <img
-                        key={i}
-                        alt={attachment.values?.name}
-                        className="w-[42%]"
-                        src={attachment.values?.url}
-                      />
-                      <DeleteOutlined
-                        className="text-lg p-2 hover:bg-zinc-100 cursor-pointer rounded-lg"
-                        onClick={() => {
-                          dispatch(deleteTimelineObject(i));
-                        }}
-                      />
-                    </div>
-                  );
+                  return <File key={i} attachment={attachment} i={i} />;
               }
             })}
             <div className="w-full flex justify-center items-center gap-2 pt-2">
