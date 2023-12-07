@@ -8,7 +8,6 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./collapsible.css";
 import { useSelector } from "react-redux";
 import { getSelectedApplication } from "../../store/slices/application";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
