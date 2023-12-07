@@ -32,7 +32,7 @@ export const AttachmentRow = ({ attachment, index, children }) => {
   );
 };
 
-const AttachmentWrapper = ({ children }) => {
+const AttachmentWrapper = ({ children, index }) => {
   const dispatch = useDispatch();
 
   return (
@@ -42,7 +42,7 @@ const AttachmentWrapper = ({ children }) => {
       <DeleteOutlined
         className="text-lg p-2 hover:bg-zinc-100 cursor-pointer rounded-lg"
         onClick={() => {
-          dispatch(deleteTimelineObject(i));
+          dispatch(deleteTimelineObject(index));
         }}
       />
     </div>

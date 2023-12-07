@@ -4,7 +4,7 @@ const File = ({ attachment, i }) => {
   const url = attachment.values?.url;
 
   return (
-    <AttachmentWrapper>
+    <AttachmentWrapper index={i}>
       <AttachmentRow attachment={attachment} index={i}>
         {url.includes("image") ? (
           <img

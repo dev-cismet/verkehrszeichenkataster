@@ -5,7 +5,7 @@ const { TextArea } = Input;
 
 const Text = ({ attachment, id }) => {
   return (
-    <AttachmentWrapper>
+    <AttachmentWrapper index={id}>
       <AttachmentRow attachment={attachment} index={id}>
         <TextArea
           className="w-[42%]"
