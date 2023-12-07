@@ -39,13 +39,28 @@ const slice = createSlice({
 
       return { ...state, timeline: updatedTimeline };
     },
+    deleteTimelineObject(state, action) {
+      const index = action.payload;
+      const updatedTimeline = [...state.timeline];
+
+      updatedTimeline.splice(index, 1);
+
+      return {
+        ...state,
+        timeline: updatedTimeline,
+      };
+    },
   },
 });
 
 export default slice;
 
-export const { storeSelectedApplication, storeTimeline, updateName } =
-  slice.actions;
+export const {
+  storeSelectedApplication,
+  storeTimeline,
+  updateName,
+  deleteTimelineObject,
+} = slice.actions;
 
 export const getSelectedApplication = (state) => {
   return state.application.selectedApplication;

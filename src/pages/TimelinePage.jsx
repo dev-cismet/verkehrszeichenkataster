@@ -7,10 +7,12 @@ import Decision from "../components/timeline/Decision";
 import "./dragger.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteTimelineObject,
   getTimeline,
   storeTimeline,
   updateName,
 } from "../store/slices/application";
+import { DeleteOutlined } from "@ant-design/icons";
 
 const { Dragger } = Upload;
 
@@ -111,6 +113,12 @@ const TimelinePage = () => {
                         alt={attachment.values?.name}
                         className="w-1/3"
                         src={attachment.values?.url}
+                      />
+                      <DeleteOutlined
+                        className="text-lg p-2 hover:bg-zinc-100 cursor-pointer rounded-lg"
+                        onClick={() => {
+                          dispatch(deleteTimelineObject(i));
+                        }}
                       />
                     </div>
                   );
