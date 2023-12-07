@@ -43,9 +43,11 @@ const SidebarItem = ({
           onMouseLeave={() => setShowCustomAction(false)}
         >
           {icon}
-          {!isSidebarCollapsed && <h4 className="mb-0">{text}</h4>}
+          {!isSidebarCollapsed && (
+            <h4 className="mb-0 w-full truncate">{text}</h4>
+          )}
           {collapsable && (
-            <div className="flex w-full items-center gap-1 justify-end">
+            <div className="flex w-fit items-center gap-1 justify-end">
               {showCustomAction && (
                 <div className="p-1 hover:bg-zinc-200 rounded-lg">
                   {customAction}
@@ -76,18 +78,6 @@ const SidebarItem = ({
         <div className="ml-3 flex flex-col gap-1">{children}</div>
       )}
     </>
-  );
-};
-
-const ModalItem = ({ icon, text, onClick }) => {
-  return (
-    <div
-      className="rounded-lg p-2 flex flex-col gap-1 items-center justify-center hover:bg-zinc-100 cursor-pointer"
-      onClick={onClick}
-    >
-      {icon}
-      <p className="mb-0">{text}</p>
-    </div>
   );
 };
 
