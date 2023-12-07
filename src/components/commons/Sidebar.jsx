@@ -1,15 +1,21 @@
 import {
   DownOutlined,
+  EditOutlined,
+  FileOutlined,
   FormOutlined,
   HomeOutlined,
   LeftOutlined,
+  PullRequestOutlined,
   RightOutlined,
   StockOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getSelectedApplication } from "../../store/slices/application";
+import {
+  getSelectedApplication,
+  getTimeline,
+} from "../../store/slices/application";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignsPost } from "@fortawesome/free-solid-svg-icons";
 
@@ -88,15 +94,22 @@ const ModalItem = ({ icon, text, onClick }) => {
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
-  const [timelineItems, setTimelineItems] = useState([
-    {
-      link: "verlauf/antrag",
-      icon: <FormOutlined className="text-lg" />,
-      text: "Antrag",
-    },
-  ]);
+  const currentTimeline = useSelector(getTimeline);
 
   const selectedApplication = useSelector(getSelectedApplication);
+
+  const getIcon = (type) => {
+    switch (type) {
+      case "antrag":
+        return <FormOutlined className="text-lg" />;
+      case "text":
+        return <EditOutlined className="text-lg" />;
+      case "file":
+        return <FileOutlined className="text-lg" />;
+      case "entscheidung":
+        return <PullRequestOutlined className="text-lg" />;
+    }
+  };
 
   return (
     <aside
@@ -139,12 +152,12 @@ const Sidebar = () => {
         text="Verlauf"
         collapsable={true}
       >
-        {timelineItems.map((item) => (
+        {currentTimeline.map((item) => (
           <SidebarItem
-            link={item.link}
-            icon={item.icon}
+            // link={"verlauf"}
+            icon={getIcon(item.type)}
             isSidebarCollapsed={isCollapsed}
-            text={item.text}
+            text={item.values?.name}
           />
         ))}
       </SidebarItem>

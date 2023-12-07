@@ -1,31 +1,27 @@
 import { Button, Card, Upload } from "antd";
 import Timeline from "../components/application/Timeline";
 import Request from "../components/timeline/Request";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Text from "../components/timeline/Text";
 import Decision from "../components/timeline/Decision";
 
 import "./dragger.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getTimeline, storeTimeline } from "../store/slices/application";
 
 const { Dragger } = Upload;
 
 const TimelinePage = () => {
-  const [timeline, setTimeline] = useState([
-    {
-      type: "antrag",
-      values: {
-        ort: "Barmen",
-      },
-    },
-  ]);
+  const currentTimeline = useSelector(getTimeline);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(() => {
       document
-        .getElementById(timeline.length.toString() - 1)
+        .getElementById(currentTimeline.length.toString() - 1)
         ?.scrollIntoView({ behavior: "smooth" });
     }, 5);
-  }, [timeline]);
+  }, [currentTimeline]);
 
   return (
     <Card
@@ -42,21 +38,23 @@ const TimelinePage = () => {
         openFileDialogOnClick={false}
         className="h-full w-full"
         beforeUpload={(file) => {
-          setTimeline((currentTimeline) => [
-            ...currentTimeline,
-            {
-              type: "file",
-              values: {
-                name: file.name,
+          dispatch(
+            storeTimeline([
+              ...currentTimeline,
+              {
+                type: "file",
+                values: {
+                  name: file.name,
+                },
               },
-            },
-          ]);
+            ])
+          );
         }}
         fileList={[]}
       >
         <div className="h-full w-full flex justify-between">
           <div className="flex flex-col w-3/4">
-            {timeline.map((attachment, i) => {
+            {currentTimeline.map((attachment, i) => {
               switch (attachment.type) {
                 case "antrag":
                   return <Request key={i} />;
@@ -77,29 +75,43 @@ const TimelinePage = () => {
             <div className="w-full flex gap-2">
               <Button
                 onClick={() => {
-                  setTimeline((currentTimeline) => [
-                    ...currentTimeline,
-                    { type: "text" },
-                  ]);
+                  dispatch(
+                    storeTimeline([
+                      ...currentTimeline,
+                      {
+                        type: "text",
+                        values: {
+                          name: "Bemerkung",
+                        },
+                      },
+                    ])
+                  );
                 }}
               >
-                Text
+                Bemerkung
               </Button>
               <Button>Zeichnung</Button>
               <Button
-                onClick={() =>
-                  setTimeline((currentTimeline) => [
-                    ...currentTimeline,
-                    { type: "entscheidung" },
-                  ])
-                }
+                onClick={() => {
+                  dispatch(
+                    storeTimeline([
+                      ...currentTimeline,
+                      {
+                        type: "entscheidung",
+                        values: {
+                          name: "Entscheidung",
+                        },
+                      },
+                    ])
+                  );
+                }}
               >
                 Entscheidung
               </Button>
             </div>
           </div>
           <div className="w-80">
-            <Timeline dataIn={timeline} />
+            <Timeline dataIn={currentTimeline} />
           </div>
         </div>
       </Dragger>
