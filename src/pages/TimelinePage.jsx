@@ -77,22 +77,18 @@ const TimelinePage = () => {
                 case "antrag":
                   return <Request key={i} />;
                 case "text":
-                  return (
-                    <Text
-                      value={attachment.values?.text}
-                      id={i.toString()}
-                      key={i}
-                    />
-                  );
+                  return <Text attachment={attachment} id={i} key={i} />;
                 case "entscheidung":
                   return <Decision key={i} id={i.toString()} />;
                 case "file":
                   return (
                     <div
-                      className="flex w-full gap-2 items-center pb-4"
+                      className="flex w-full gap-2 items-center pb-6"
                       key={i}
                     >
-                      <div className="w-[11.8%] flex items-center justify-end">
+                      <div className="h-full border-[1px] border-solid border-black" />
+
+                      <div className="w-[11.5%] flex items-center justify-end">
                         <Input
                           bordered={false}
                           value={attachment.values?.name}
@@ -111,7 +107,7 @@ const TimelinePage = () => {
                       <img
                         key={i}
                         alt={attachment.values?.name}
-                        className="w-1/3"
+                        className="w-[42%]"
                         src={attachment.values?.url}
                       />
                       <DeleteOutlined

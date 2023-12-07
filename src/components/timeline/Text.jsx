@@ -13,6 +13,7 @@ const Text = ({ attachment, id }) => {
 
   return (
     <div className="w-full flex items-center gap-2 pb-6">
+      <div className="h-full border-[1px] border-solid border-black" />
       <div className="w-[11.5%] flex items-center justify-end">
         <Input
           bordered={false}
