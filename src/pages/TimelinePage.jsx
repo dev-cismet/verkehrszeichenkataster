@@ -74,7 +74,7 @@ const TimelinePage = () => {
                 case "text":
                   return <Text attachment={attachment} id={i} key={i} />;
                 case "entscheidung":
-                  return <Decision key={i} id={i.toString()} />;
+                  return <Decision key={i} id={i} attachment={attachment} />;
                 case "file":
                   return <File key={i} attachment={attachment} i={i} />;
               }

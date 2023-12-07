@@ -1,16 +1,15 @@
 import { Form, Select } from "antd";
+import AttachmentWrapper, { AttachmentRow } from "./AttachmentWrapper";
 
-const Decision = ({ id }) => {
+const Decision = ({ attachment, id }) => {
   const [form] = Form.useForm();
 
   return (
-    <div className="w-full">
-      <Form form={form} labelCol={{ span: 3 }} wrapperCol={{ span: 10 }}>
-        <Form.Item label="Entscheidung">
-          <Select defaultValue={"Abgeschlossen"} id={id} />
-        </Form.Item>
-      </Form>
-    </div>
+    <AttachmentWrapper index={id}>
+      <AttachmentRow attachment={attachment} index={id}>
+        <Select defaultValue={"Abgeschlossen"} className="w-[42%]" id={id} />
+      </AttachmentRow>
+    </AttachmentWrapper>
   );
 };
 
