@@ -6,29 +6,33 @@ import {
 } from "../../store/slices/application";
 import { Input } from "antd";
 
-export const AttachmentRow = ({ attachment, index, children }) => {
+export const AttachmentRow = ({ attachment, index, name, children }) => {
   const dispatch = useDispatch();
 
   return (
-    <>
-      <div className="w-[11.5%] flex items-center justify-end">
-        <Input
-          bordered={false}
-          value={attachment.values?.name}
-          className="w-max text-end"
-          onChange={(e) => {
-            dispatch(
-              updateName({
-                index: index,
-                updatedName: e.target.value,
-              })
-            );
-          }}
-        />
+    <div className="w-2/3 flex items-center gap-2">
+      <div className="w-[22%] flex items-center justify-end">
+        {name ? (
+          <span className="w-full text-end px-2 py-1">{name}</span>
+        ) : (
+          <Input
+            bordered={false}
+            value={attachment.values?.name}
+            className="w-max text-end"
+            onChange={(e) => {
+              dispatch(
+                updateName({
+                  index: index,
+                  updatedName: e.target.value,
+                })
+              );
+            }}
+          />
+        )}
         <span>:</span>
       </div>
       {children}
-    </>
+    </div>
   );
 };
 

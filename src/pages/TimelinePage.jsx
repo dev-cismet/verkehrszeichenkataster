@@ -79,7 +79,7 @@ const TimelinePage = () => {
                   return <File key={i} attachment={attachment} i={i} />;
               }
             })}
-            <div className="w-full flex justify-center items-center gap-2 pt-2">
+            <div className="w-[78%] flex justify-center items-center gap-2 pt-2">
               <Button
                 onClick={() => {
                   changeTimeline({

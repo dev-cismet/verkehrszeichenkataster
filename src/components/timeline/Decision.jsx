@@ -7,7 +7,7 @@ const Decision = ({ attachment, id }) => {
   return (
     <AttachmentWrapper index={id}>
       <AttachmentRow attachment={attachment} index={id}>
-        <Select defaultValue={"Abgeschlossen"} className="w-[42%]" id={id} />
+        <Select defaultValue={"Abgeschlossen"} className="w-full" id={id} />
       </AttachmentRow>
     </AttachmentWrapper>
   );

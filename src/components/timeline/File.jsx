@@ -7,14 +7,16 @@ const File = ({ attachment, i }) => {
     <AttachmentWrapper index={i}>
       <AttachmentRow attachment={attachment} index={i}>
         {url.includes("image") ? (
-          <img
-            key={i}
-            alt={attachment.values?.name}
-            className="w-[42%] rounded-lg"
-            src={url}
-          />
+          <div className="w-full rounded-lg">
+            <img
+              key={i}
+              alt={attachment.values?.name}
+              className="w-full rounded-lg"
+              src={url}
+            />
+          </div>
         ) : (
-          <div className="w-[42%] rounded-lg h-64 flex items-center justify-center border-solid border-zinc-200">
+          <div className="w-full rounded-lg h-64 flex items-center justify-center border-solid border-zinc-200">
             Vorschau für den Dateitypen konnte nicht erstellt werden
           </div>
         )}
