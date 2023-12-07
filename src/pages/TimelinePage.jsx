@@ -1,4 +1,4 @@
-import { Button, Card, Upload } from "antd";
+import { Button, Card, Input, Upload } from "antd";
 import Timeline from "../components/application/Timeline";
 import Request from "../components/timeline/Request";
 import Text from "../components/timeline/Text";
@@ -6,7 +6,11 @@ import Decision from "../components/timeline/Decision";
 
 import "./dragger.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getTimeline, storeTimeline } from "../store/slices/application";
+import {
+  getTimeline,
+  storeTimeline,
+  updateName,
+} from "../store/slices/application";
 
 const { Dragger } = Upload;
 
@@ -82,14 +86,30 @@ const TimelinePage = () => {
                   return <Decision key={i} id={i.toString()} />;
                 case "file":
                   return (
-                    <div className="flex w-full gap-2 items-center pb-4">
-                      <span className="w-[11.8%] text-end">
-                        {attachment.values?.name} :
-                      </span>
+                    <div
+                      className="flex w-full gap-2 items-center pb-4"
+                      key={i}
+                    >
+                      <div className="w-[11.8%] flex items-center justify-end">
+                        <Input
+                          bordered={false}
+                          value={attachment.values?.name}
+                          className="w-max text-end"
+                          onChange={(e) => {
+                            dispatch(
+                              updateName({
+                                index: i,
+                                updatedName: e.target.value,
+                              })
+                            );
+                          }}
+                        />
+                        <span>:</span>
+                      </div>
                       <img
                         key={i}
                         alt={attachment.values?.name}
-                        className="w-96"
+                        className="w-1/3"
                         src={attachment.values?.url}
                       />
                     </div>
