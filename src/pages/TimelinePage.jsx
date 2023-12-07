@@ -1,7 +1,6 @@
 import { Button, Card, Upload } from "antd";
 import Timeline from "../components/application/Timeline";
 import Request from "../components/timeline/Request";
-import { useEffect } from "react";
 import Text from "../components/timeline/Text";
 import Decision from "../components/timeline/Decision";
 
@@ -10,6 +9,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTimeline, storeTimeline } from "../store/slices/application";
 
 const { Dragger } = Upload;
+
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
 
 const TimelinePage = () => {
   const currentTimeline = useSelector(getTimeline);
@@ -22,6 +29,20 @@ const TimelinePage = () => {
         .getElementById(currentTimeline.length.toString())
         ?.scrollIntoView({ behavior: "smooth" });
     }, 5);
+  };
+
+  const handleDrop = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file);
+    }
+
+    changeTimeline({
+      type: "file",
+      values: {
+        name: file.name.replace(/\.[^/.]+$/, ""),
+        url: file.url || file.preview,
+      },
+    });
   };
 
   return (
@@ -39,12 +60,7 @@ const TimelinePage = () => {
         openFileDialogOnClick={false}
         className="h-full w-full"
         beforeUpload={(file) => {
-          changeTimeline({
-            type: "file",
-            values: {
-              name: file.name,
-            },
-          });
+          handleDrop(file);
         }}
         fileList={[]}
       >
@@ -65,10 +81,22 @@ const TimelinePage = () => {
                 case "entscheidung":
                   return <Decision key={i} id={i.toString()} />;
                 case "file":
-                  return <span key={i}>{attachment.values?.name}</span>;
+                  return (
+                    <div className="flex w-full gap-2 items-center">
+                      <span className="w-[11.8%] text-end">
+                        {attachment.values?.name} :
+                      </span>
+                      <img
+                        key={i}
+                        alt={attachment.values?.name}
+                        className="w-96"
+                        src={attachment.values?.url}
+                      />
+                    </div>
+                  );
               }
             })}
-            <div className="w-full flex gap-2">
+            <div className="w-full flex justify-center gap-2 pt-2">
               <Button
                 onClick={() => {
                   changeTimeline({
