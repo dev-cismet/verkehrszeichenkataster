@@ -5,7 +5,7 @@ const File = ({ attachment, i }) => {
 
   return (
     <AttachmentWrapper index={i}>
-      <AttachmentRow attachment={attachment} index={i}>
+      <AttachmentRow attachment={attachment} index={i} alignTop>
         {url.includes("image") ? (
           <div className="w-full rounded-lg">
             <img
