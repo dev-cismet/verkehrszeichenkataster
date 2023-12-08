@@ -79,7 +79,8 @@ const TimelinePage = () => {
                   return <File key={i} attachment={attachment} i={i} />;
               }
             })}
-            <div className="w-[78%] flex justify-center items-center gap-2 pt-2">
+            <div className="w-2/3 flex justify-center items-center gap-2 pt-2">
+              <div className="w-[20%]" />
               <Button
                 onClick={() => {
                   changeTimeline({
@@ -115,7 +116,7 @@ const TimelinePage = () => {
               </Upload>
             </div>
           </div>
-          <div className="w-80">
+          <div className="w-96">
             <Timeline dataIn={currentTimeline} />
           </div>
         </div>
