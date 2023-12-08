@@ -23,7 +23,7 @@ const Request = () => {
       </AttachmentRow>
       <div className="flex">
         <div className="w-[22%]" />
-        <h4 className="w-full">Abrechnung</h4>
+        <h4 className="w-full">Rechnungsadresse</h4>
       </div>
       <AttachmentRow name="Stadt">
         <Input />
