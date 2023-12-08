@@ -6,7 +6,7 @@ const { TextArea } = Input;
 const Text = ({ attachment, id }) => {
   return (
     <AttachmentWrapper index={id}>
-      <AttachmentRow attachment={attachment} index={id}>
+      <AttachmentRow attachment={attachment} index={id} alignTop>
         <TextArea rows={3} defaultValue={attachment.values?.text} id={id} />
       </AttachmentRow>
     </AttachmentWrapper>
