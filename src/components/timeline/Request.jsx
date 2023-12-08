@@ -1,23 +1,20 @@
-import { Form, Input } from "antd";
+import { Input } from "antd";
+import AttachmentWrapper, { AttachmentRow } from "./AttachmentWrapper";
 const { TextArea } = Input;
 
 const Request = () => {
-  const [form] = Form.useForm();
-
   return (
-    <div id="Antrag" className="w-full">
-      <Form form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 10 }}>
-        <Form.Item label="Ort">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Sachverhalt">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Erforderliche Maßnahmen">
-          <TextArea cols={3} />
-        </Form.Item>
-      </Form>
-    </div>
+    <AttachmentWrapper>
+      <AttachmentRow name="Ort">
+        <Input />
+      </AttachmentRow>
+      <AttachmentRow name="Sachverhalt">
+        <Input />
+      </AttachmentRow>
+      <AttachmentRow name="Erforderliche Maßnahmen">
+        <TextArea cols={3} />
+      </AttachmentRow>
+    </AttachmentWrapper>
   );
 };
 

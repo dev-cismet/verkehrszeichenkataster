@@ -17,7 +17,7 @@ import { getNumberOfItemsThatFit } from "../../tools/helper";
 const navLinks = () => {
   return [
     {
-      title: "Tabelle",
+      title: "Anordnungen",
       href: "/tabelle",
     },
   ];

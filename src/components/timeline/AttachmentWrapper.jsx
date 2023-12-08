@@ -10,7 +10,7 @@ export const AttachmentRow = ({ attachment, index, name, children }) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="w-2/3 flex items-center gap-2">
+    <div className="w-full flex items-center gap-2">
       <div className="w-[22%] flex items-center justify-end">
         {name ? (
           <span className="w-full text-end px-2 py-1">{name}</span>
@@ -42,13 +42,15 @@ const AttachmentWrapper = ({ children, index }) => {
   return (
     <div className="flex w-full gap-2 items-center pb-6">
       <div className="h-full border-[1px] border-solid border-black" />
-      {children}
-      <DeleteOutlined
-        className="text-lg p-2 hover:bg-zinc-100 cursor-pointer rounded-lg"
-        onClick={() => {
-          dispatch(deleteTimelineObject(index));
-        }}
-      />
+      <div className="flex flex-col w-2/3 gap-6">{children}</div>
+      {index && (
+        <DeleteOutlined
+          className="text-lg p-2 hover:bg-zinc-100 cursor-pointer rounded-lg"
+          onClick={() => {
+            dispatch(deleteTimelineObject(index));
+          }}
+        />
+      )}
     </div>
   );
 };
