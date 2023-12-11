@@ -142,12 +142,13 @@ const Sidebar = () => {
         text="Verlauf"
         collapsable={true}
       >
-        {currentTimeline.map((item) => (
+        {currentTimeline.map((item, i) => (
           <SidebarItem
             // link={"verlauf"}
             icon={getIcon(item.type)}
             isSidebarCollapsed={isCollapsed}
             text={item.values?.name}
+            key={`sidebar_timeline_${i}`}
           />
         ))}
       </SidebarItem>
