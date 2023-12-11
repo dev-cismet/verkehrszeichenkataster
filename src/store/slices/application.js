@@ -32,8 +32,34 @@ const slice = createSlice({
       return state;
     },
     storeTimeline(state, action) {
-      state.currentApplication.timeline = action.payload;
-      return state;
+      const { id, timeline } = action.payload;
+      const updatedApplications = state.allApplications.map((item) => {
+        if (item.id.toString() === id) {
+          return {
+            ...item,
+            timeline: timeline,
+          };
+        }
+        return item;
+      });
+
+      const updatedSelectedApplications = state.selectedApplications.map(
+        (item) => {
+          if (item.id.toString() === id) {
+            return {
+              ...item,
+              timeline: timeline,
+            };
+          }
+          return item;
+        }
+      );
+
+      return {
+        ...state,
+        allApplications: updatedApplications,
+        selectedApplications: updatedSelectedApplications,
+      };
     },
     updateName(state, action) {
       const { index, updatedName } = action.payload;

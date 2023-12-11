@@ -8,12 +8,10 @@ import "./dragger.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCurrentApplication,
-  getTimeline,
   storeTimeline,
 } from "../store/slices/application";
 import File from "../components/timeline/File";
 import { useParams } from "react-router-dom";
-import { changeApplicationTimeline } from "../store/slices/navigation";
 
 const { Dragger } = Upload;
 
@@ -26,20 +24,13 @@ const getBase64 = (file) =>
   });
 
 const TimelinePage = () => {
-  // const currentTimeline = useSelector(getTimeline);
   const { id } = useParams();
   const currentTimeline = useSelector(getCurrentApplication).timeline;
 
   const dispatch = useDispatch();
 
   const changeTimeline = (item) => {
-    dispatch(storeTimeline([...currentTimeline, item]));
-    dispatch(
-      changeApplicationTimeline({
-        id: id,
-        timeline: [...currentTimeline, item],
-      })
-    );
+    dispatch(storeTimeline({ id: id, timeline: [...currentTimeline, item] }));
     setTimeout(() => {
       document
         .getElementById(currentTimeline.length.toString())
@@ -81,7 +72,7 @@ const TimelinePage = () => {
       >
         <div className="h-full w-full flex justify-between">
           <div className="flex flex-col w-3/4">
-            {currentTimeline.map((attachment, i) => {
+            {currentTimeline?.map((attachment, i) => {
               switch (attachment.typ) {
                 case "request":
                   return <Request key={i} />;
