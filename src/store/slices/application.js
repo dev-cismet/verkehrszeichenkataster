@@ -113,14 +113,42 @@ const slice = createSlice({
       };
     },
     deleteTimelineObject(state, action) {
-      const index = action.payload;
-      const updatedTimeline = [...state.timeline];
+      const { timelineIndex, applicationId } = action.payload;
 
-      updatedTimeline.splice(index, 1);
+      const updatedApplications = state.allApplications.map((item) => {
+        if (item.id.toString() === applicationId) {
+          const updatedTimeline = item.timeline.filter(
+            (value, index) => index !== timelineIndex
+          );
+
+          return {
+            ...item,
+            timeline: updatedTimeline,
+          };
+        }
+        return item;
+      });
+
+      const updatedSelectedApplications = state.selectedApplications.map(
+        (item) => {
+          if (item.id.toString() === applicationId) {
+            const updatedTimeline = item.timeline.filter(
+              (value, index) => index !== timelineIndex
+            );
+
+            return {
+              ...item,
+              timeline: updatedTimeline,
+            };
+          }
+          return item;
+        }
+      );
 
       return {
         ...state,
-        timeline: updatedTimeline,
+        allApplications: updatedApplications,
+        selectedApplications: updatedSelectedApplications,
       };
     },
   },
