@@ -1,8 +1,25 @@
 import { Input } from "antd";
 import AttachmentWrapper, { AttachmentRow } from "./AttachmentWrapper";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { updateTimelineValues } from "../../store/slices/application";
 const { TextArea } = Input;
 
-const Request = () => {
+const Request = ({ attachment, i }) => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
+  const updateValue = (value, property) => {
+    dispatch(
+      updateTimelineValues({
+        timelineIndex: i,
+        itemValue: value,
+        property: property,
+        applicationId: id,
+      })
+    );
+  };
+
   return (
     <AttachmentWrapper>
       <div className="flex">
@@ -10,57 +27,132 @@ const Request = () => {
         <h4 className="w-full">Antragssteller</h4>
       </div>
       <AttachmentRow name="Stadt">
-        <Input />
+        <Input
+          value={attachment?.requester_city}
+          onChange={(e) => {
+            updateValue(e.target.value, "requester_city");
+          }}
+        />
       </AttachmentRow>
       <AttachmentRow name="Postleitzahl">
-        <Input />
+        <Input
+          value={attachment?.requester_postalcode}
+          onChange={(e) => {
+            updateValue(e.target.value, "requester_postalcode");
+          }}
+        />
       </AttachmentRow>
       <AttachmentRow name="Straße">
-        <Input />
+        <Input
+          value={attachment?.requester_street}
+          onChange={(e) => {
+            updateValue(e.target.value, "requester_street");
+          }}
+        />
       </AttachmentRow>
       <AttachmentRow name="Hausnummer">
-        <Input />
+        <Input
+          value={attachment?.requester_street_number}
+          onChange={(e) => {
+            updateValue(e.target.value, "requester_street_number");
+          }}
+        />
       </AttachmentRow>
       <div className="flex">
         <div className="w-[22%]" />
         <h4 className="w-full">Rechnungsadresse</h4>
       </div>
       <AttachmentRow name="Stadt">
-        <Input />
+        <Input
+          value={attachment?.billing_city}
+          onChange={(e) => {
+            updateValue(e.target.value, "billing_city");
+          }}
+        />
       </AttachmentRow>
       <AttachmentRow name="Postleitzahl">
-        <Input />
+        <Input
+          value={attachment?.billing_postal_code}
+          onChange={(e) => {
+            updateValue(e.target.value, "billing_postal_code");
+          }}
+        />
       </AttachmentRow>
       <AttachmentRow name="Straße">
-        <Input />
+        <Input
+          value={attachment?.billing_street}
+          onChange={(e) => {
+            updateValue(e.target.value, "billing_street");
+          }}
+        />
       </AttachmentRow>
       <AttachmentRow name="Hausnummer">
-        <Input />
+        <Input
+          value={attachment?.billing_street_number}
+          onChange={(e) => {
+            updateValue(e.target.value, "billing_street_number");
+          }}
+        />
       </AttachmentRow>
       <div className="flex">
         <div className="w-[22%]" />
         <h4 className="w-full">Weiteres</h4>
       </div>
       <AttachmentRow name="Vorname">
-        <Input />
+        <Input
+          value={attachment?.firstname}
+          onChange={(e) => {
+            updateValue(e.target.value, "firstname");
+          }}
+        />
       </AttachmentRow>
       <AttachmentRow name="Nachname">
-        <Input />
+        <Input
+          value={attachment?.lastname}
+          onChange={(e) => {
+            updateValue(e.target.value, "lastname");
+          }}
+        />
       </AttachmentRow>
       <AttachmentRow name="Telefonnummer">
-        <Input />
+        <Input
+          value={attachment?.phone}
+          onChange={(e) => {
+            updateValue(e.target.value, "phone");
+          }}
+        />
       </AttachmentRow>
       <AttachmentRow name="E-Mail">
-        <Input />
+        <Input
+          value={attachment?.email}
+          onChange={(e) => {
+            updateValue(e.target.value, "email");
+          }}
+        />
       </AttachmentRow>
       <AttachmentRow name="Ort des Schildes">
-        <Input />
+        <Input
+          value={attachment?.sign_location}
+          onChange={(e) => {
+            updateValue(e.target.value, "sign_location");
+          }}
+        />
       </AttachmentRow>
       <AttachmentRow name="Beschreibung">
-        <Input />
+        <Input
+          value={attachment?.description}
+          onChange={(e) => {
+            updateValue(e.target.value, "description");
+          }}
+        />
       </AttachmentRow>
       <AttachmentRow name="Uhrzeit">
-        <Input />
+        <Input
+          value={attachment?.time}
+          onChange={(e) => {
+            updateValue(e.target.value, "time");
+          }}
+        />
       </AttachmentRow>
     </AttachmentWrapper>
   );

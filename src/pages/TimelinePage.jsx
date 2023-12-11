@@ -75,7 +75,7 @@ const TimelinePage = () => {
             {currentTimeline?.map((attachment, i) => {
               switch (attachment.typ) {
                 case "request":
-                  return <Request key={i} />;
+                  return <Request attachment={attachment} key={i} i={i} />;
                 case "text":
                   return <Text attachment={attachment} id={i} key={i} />;
                 case "decision":
