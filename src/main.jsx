@@ -35,7 +35,6 @@ import DetailsWrapper from "./pages/DetailsWrapper.jsx";
 import TimelinePage from "./pages/TimelinePage.jsx";
 import KatasterPage from "./pages/KatasterPage.jsx";
 import DetailsOverviewPage from "./pages/DetailsOverviewPage.jsx";
-import FormPage from "./pages/FormPage.jsx";
 import ZeichnungsPage from "./pages/Attachments/ZeichnungsPage.jsx";
 import DateiPage from "./pages/Attachments/DateiPage.jsx";
 import AnfragePage from "./pages/Attachments/AnfragePage.jsx";
@@ -111,10 +110,6 @@ const router = createHashRouter([
           {
             path: "zeichnen",
             element: <></>,
-          },
-          {
-            path: "form",
-            element: <FormPage />,
           },
           {
             path: "verlauf/antrag",
