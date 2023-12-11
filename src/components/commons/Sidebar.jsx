@@ -13,7 +13,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
-  getSelectedApplication,
+  getCurrentApplication,
   getTimeline,
 } from "../../store/slices/application";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -86,7 +86,7 @@ const Sidebar = () => {
   const [isResetting, setIsResetting] = useState(false);
   const currentTimeline = useSelector(getTimeline);
 
-  const selectedApplication = useSelector(getSelectedApplication);
+  const selectedApplication = useSelector(getCurrentApplication);
 
   const getIcon = (type) => {
     switch (type) {

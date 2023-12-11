@@ -1,10 +1,10 @@
 import { Card } from "antd";
 import Map from "../components/commons/Map";
 import { useSelector } from "react-redux";
-import { getSelectedApplication } from "../store/slices/application";
+import { getCurrentApplication } from "../store/slices/application";
 
 const DetailsOverviewPage = () => {
-  const selectedApplication = useSelector(getSelectedApplication);
+  const selectedApplication = useSelector(getCurrentApplication);
 
   return (
     <>

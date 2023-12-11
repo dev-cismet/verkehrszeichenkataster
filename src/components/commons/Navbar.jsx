@@ -10,9 +10,9 @@ import {
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { storeJWT, storeLogin } from "../../store/slices/auth";
-import { getSelectedApplications } from "../../store/slices/navigation";
 import { useEffect, useRef, useState } from "react";
 import { getNumberOfItemsThatFit } from "../../tools/helper";
+import { getSelectedApplications } from "../../store/slices/application";
 
 const navLinks = () => {
   return [
@@ -40,7 +40,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
     )
     .map((item, i) => {
       return {
-        label: item.name,
+        label: item?.name,
         key: i,
       };
     });
@@ -135,19 +135,19 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
             ?.slice(0, getNumberOfItemsThatFit(selectedApplicationsWidth, 112))
             .map((application, i) => (
               <Link
-                to={getApplicationPath(application.key)}
+                to={getApplicationPath(application?.key)}
                 key={`applicationLink_${i}`}
               >
                 <Button
                   type="text"
                   className={`${
-                    location.pathname.includes("anordnung/" + application.key)
+                    location.pathname.includes("anordnung/" + application?.key)
                       ? "text-primary"
                       : ""
                   } font-semibold no-underline w-32`}
                 >
                   <div className="hidden md:block truncate text-sm">
-                    {"Anordnung " + application.name}
+                    {"Anordnung " + application?.name}
                   </div>
                 </Button>
               </Link>

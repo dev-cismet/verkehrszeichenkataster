@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  selectedApplication: [],
+  allApplications: [],
+  selectedApplications: [],
+  currentApplication: {},
   timeline: [
     {
       type: "antrag",
@@ -17,12 +19,20 @@ const slice = createSlice({
   name: "application",
   initialState,
   reducers: {
-    storeSelectedApplication(state, action) {
-      state.selectedApplication = action.payload;
+    storeAllApplications(state, action) {
+      state.allApplications = action.payload;
+      return state;
+    },
+    storeSelectedApplications(state, action) {
+      state.selectedApplications = action.payload;
+      return state;
+    },
+    storeCurrentApplication(state, action) {
+      state.currentApplication = action.payload;
       return state;
     },
     storeTimeline(state, action) {
-      state.timeline = action.payload;
+      state.currentApplication.timeLineItems = action.payload;
       return state;
     },
     updateName(state, action) {
@@ -56,14 +66,25 @@ const slice = createSlice({
 export default slice;
 
 export const {
-  storeSelectedApplication,
+  storeAllApplications,
+  storeSelectedApplications,
+  storeCurrentApplication,
+  storeSelectedRowKeys,
   storeTimeline,
   updateName,
   deleteTimelineObject,
 } = slice.actions;
 
-export const getSelectedApplication = (state) => {
-  return state.application.selectedApplication;
+export const getAllApplications = (state) => {
+  return state.application.allApplications;
+};
+
+export const getSelectedApplications = (state) => {
+  return state.application.selectedApplications;
+};
+
+export const getCurrentApplication = (state) => {
+  return state.application.currentApplication;
 };
 
 export const getTimeline = (state) => {

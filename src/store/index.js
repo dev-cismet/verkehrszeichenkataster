@@ -5,7 +5,6 @@ import localForage from "localforage";
 
 import authSlice from "./slices/auth";
 import mappingSlice from "./slices/mapping";
-import navigationSlice from "./slices/navigation";
 import applicationSlice from "./slices/application";
 import { APP_KEY, STORAGE_PREFIX } from "../constants/vkz";
 
@@ -73,18 +72,17 @@ const authConfig = {
   whitelist: ["jwt", "login"],
 };
 
-const navigationConfig = {
-  key: "@" + APP_KEY + "." + STORAGE_PREFIX + ".app.navigation",
+const applicationConfig = {
+  key: "@" + APP_KEY + "." + STORAGE_PREFIX + ".app.application",
   storage: localForage,
-  whitelist: ["selectedApplications"],
+  whitelist: ["selectedApplications", "allApplications"],
 };
 
 export default configureStore({
   reducer: {
     auth: persistReducer(authConfig, authSlice.reducer),
     mapping: mappingSlice.reducer,
-    navigation: persistReducer(navigationConfig, navigationSlice.reducer),
-    application: applicationSlice.reducer,
+    application: persistReducer(applicationConfig, applicationSlice.reducer),
   },
   devTools: devToolsEnabled === true && inProduction === false,
   middleware,

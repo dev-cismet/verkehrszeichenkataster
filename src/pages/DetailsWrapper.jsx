@@ -1,8 +1,10 @@
 import { Outlet, useParams } from "react-router-dom";
 import Sidebar from "../components/commons/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { getSelectedApplications } from "../store/slices/navigation";
-import { storeSelectedApplication } from "../store/slices/application";
+import {
+  getSelectedApplications,
+  storeCurrentApplication,
+} from "../store/slices/application";
 
 const DetailsWrapper = () => {
   const { id } = useParams();
@@ -13,7 +15,7 @@ const DetailsWrapper = () => {
     (element) => element.id.toString() === id
   );
 
-  dispatch(storeSelectedApplication(selectedApplication));
+  dispatch(storeCurrentApplication(selectedApplication));
 
   return (
     <div className="h-full max-h-[calc(100vh-73px)] flex w-full bg-zinc-200 overflow-clip">
