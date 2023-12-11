@@ -1,16 +1,16 @@
 import AttachmentWrapper, { AttachmentRow } from "./AttachmentWrapper";
 
 const File = ({ attachment, i }) => {
-  const url = attachment.values?.url;
+  const url = attachment?.file;
 
   return (
     <AttachmentWrapper index={i}>
       <AttachmentRow attachment={attachment} index={i} alignTop>
-        {url.includes("image") ? (
+        {url?.includes("image") ? (
           <div className="w-full rounded-lg">
             <img
               key={i}
-              alt={attachment.values?.name}
+              alt={attachment?.name}
               className="w-full rounded-lg"
               src={url}
             />
