@@ -14,7 +14,7 @@ const Text = ({ attachment, id }) => {
       <AttachmentRow attachment={attachment} index={id} alignTop>
         <TextArea
           rows={3}
-          defaultValue={attachment.text}
+          value={attachment.text}
           id={id}
           onChange={(e) => {
             dispatch(
