@@ -10,9 +10,9 @@ const Timeline = ({ dataIn, extractor = mockExtractor }) => {
   return (
     <AntTimeline
       mode="alternate"
-      items={data.map((item) => {
-        switch (item.type) {
-          case "antrag":
+      items={data?.map((item) => {
+        switch (item.typ) {
+          case "request":
             return {
               children: "Antrag erstellt",
             };
@@ -20,7 +20,7 @@ const Timeline = ({ dataIn, extractor = mockExtractor }) => {
             return {
               children: "Bemerkung hinzugefügt",
             };
-          case "entscheidung":
+          case "decision":
             return {
               children: "Antrag abgeschlossen",
             };
