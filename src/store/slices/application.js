@@ -61,6 +61,58 @@ const slice = createSlice({
         selectedApplications: updatedSelectedApplications,
       };
     },
+    updateTimelineValues(state, action) {
+      const { timelineIndex, itemValue, property, applicationId } =
+        action.payload;
+
+      const updatedApplications = state.allApplications.map((item) => {
+        if (item.id.toString() === applicationId) {
+          const updatedTimeline = item.timeline.map((value, index) => {
+            if (index === timelineIndex) {
+              return {
+                ...value,
+                [property]: itemValue,
+              };
+            }
+            return value;
+          });
+
+          return {
+            ...item,
+            timeline: updatedTimeline,
+          };
+        }
+        return item;
+      });
+
+      const updatedSelectedApplications = state.selectedApplications.map(
+        (item) => {
+          if (item.id.toString() === applicationId) {
+            const updatedTimeline = item.timeline.map((value, index) => {
+              if (index === timelineIndex) {
+                return {
+                  ...value,
+                  [property]: itemValue,
+                };
+              }
+              return value;
+            });
+
+            return {
+              ...item,
+              timeline: updatedTimeline,
+            };
+          }
+          return item;
+        }
+      );
+
+      return {
+        ...state,
+        allApplications: updatedApplications,
+        selectedApplications: updatedSelectedApplications,
+      };
+    },
     updateName(state, action) {
       const { timelineIndex, updatedName, applicationId } = action.payload;
 
@@ -162,6 +214,7 @@ export const {
   storeCurrentApplication,
   storeSelectedRowKeys,
   storeTimeline,
+  updateTimelineValues,
   updateName,
   deleteTimelineObject,
 } = slice.actions;
