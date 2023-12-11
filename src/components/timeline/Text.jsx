@@ -7,7 +7,7 @@ const Text = ({ attachment, id }) => {
   return (
     <AttachmentWrapper index={id}>
       <AttachmentRow attachment={attachment} index={id} alignTop>
-        <TextArea rows={3} defaultValue={attachment.values?.text} id={id} />
+        <TextArea rows={3} defaultValue={attachment.text} id={id} />
       </AttachmentRow>
     </AttachmentWrapper>
   );

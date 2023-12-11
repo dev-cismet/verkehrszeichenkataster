@@ -27,7 +27,7 @@ export const AttachmentRow = ({
         ) : (
           <Input
             bordered={false}
-            value={attachment.values?.name}
+            value={attachment.name}
             className="w-full text-end"
             onChange={(e) => {
               dispatch(

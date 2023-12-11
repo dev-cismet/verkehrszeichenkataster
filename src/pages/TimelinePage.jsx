@@ -6,8 +6,14 @@ import Decision from "../components/timeline/Decision";
 
 import "./dragger.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getTimeline, storeTimeline } from "../store/slices/application";
+import {
+  getCurrentApplication,
+  getTimeline,
+  storeTimeline,
+} from "../store/slices/application";
 import File from "../components/timeline/File";
+import { useParams } from "react-router-dom";
+import { changeApplicationTimeline } from "../store/slices/navigation";
 
 const { Dragger } = Upload;
 
@@ -20,11 +26,20 @@ const getBase64 = (file) =>
   });
 
 const TimelinePage = () => {
-  const currentTimeline = useSelector(getTimeline);
+  // const currentTimeline = useSelector(getTimeline);
+  const { id } = useParams();
+  const currentTimeline = useSelector(getCurrentApplication).timeline;
+
   const dispatch = useDispatch();
 
   const changeTimeline = (item) => {
     dispatch(storeTimeline([...currentTimeline, item]));
+    dispatch(
+      changeApplicationTimeline({
+        id: id,
+        timeline: [...currentTimeline, item],
+      })
+    );
     setTimeout(() => {
       document
         .getElementById(currentTimeline.length.toString())
@@ -38,11 +53,10 @@ const TimelinePage = () => {
     }
 
     changeTimeline({
-      type: "file",
-      values: {
-        name: file.name.replace(/\.[^/.]+$/, ""),
-        url: file.url || file.preview,
-      },
+      typ: "file",
+      name: file.name.replace(/\.[^/.]+$/, ""),
+      file: file.url || file.preview,
+      description: "",
     });
   };
 
@@ -68,12 +82,12 @@ const TimelinePage = () => {
         <div className="h-full w-full flex justify-between">
           <div className="flex flex-col w-3/4">
             {currentTimeline.map((attachment, i) => {
-              switch (attachment.type) {
-                case "antrag":
+              switch (attachment.typ) {
+                case "request":
                   return <Request key={i} />;
                 case "text":
                   return <Text attachment={attachment} id={i} key={i} />;
-                case "entscheidung":
+                case "decision":
                   return <Decision key={i} id={i} attachment={attachment} />;
                 case "file":
                   return <File key={i} attachment={attachment} i={i} />;
@@ -84,10 +98,9 @@ const TimelinePage = () => {
               <Button
                 onClick={() => {
                   changeTimeline({
-                    type: "text",
-                    values: {
-                      name: "Bemerkung",
-                    },
+                    typ: "text",
+                    name: "Bemerkung",
+                    text: "",
                   });
                 }}
               >
@@ -97,10 +110,8 @@ const TimelinePage = () => {
               <Button
                 onClick={() => {
                   changeTimeline({
-                    type: "entscheidung",
-                    values: {
-                      name: "Entscheidung",
-                    },
+                    typ: "decision",
+                    name: "Entscheidung",
                   });
                 }}
               >

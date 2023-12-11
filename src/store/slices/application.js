@@ -32,7 +32,7 @@ const slice = createSlice({
       return state;
     },
     storeTimeline(state, action) {
-      state.currentApplication.timeLineItems = action.payload;
+      state.currentApplication.timeline = action.payload;
       return state;
     },
     updateName(state, action) {

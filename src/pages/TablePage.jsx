@@ -1,14 +1,12 @@
-import { Card, Table } from "antd";
+import { Button, Card, Table } from "antd";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { storeSelectedApplications } from "../store/slices/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { dates, maßnahmen, sachverhalte, streets } from "../assets/_data";
 import {
-  dates,
-  maßnahmen,
-  sachverhalte,
-  streets,
-  timelines,
-} from "../assets/_data";
+  getAllApplications,
+  storeAllApplications,
+  storeSelectedApplications,
+} from "../store/slices/application";
 
 const columns = [
   {
@@ -31,6 +29,7 @@ const columns = [
 
 const TablePage = () => {
   const dispatch = useDispatch();
+  const allApplications = useSelector(getAllApplications);
 
   const generateObjectsArray = (number) => {
     let objectsArray = [];
@@ -43,7 +42,40 @@ const TablePage = () => {
         date: dates[Math.floor(Math.random() * dates.length)],
         street: streets[Math.floor(Math.random() * streets.length)],
         id: i,
-        timeLineItems: timelines[Math.floor(Math.random() * timelines.length)],
+        timeline: [
+          {
+            id: 1,
+            typ: "request",
+            timestamp: "",
+            sign_location: "",
+            requester_postalcode: "",
+            requester_city: "",
+            requester_street: "",
+            requester_street_number: "",
+            billing_street: "",
+            billing_city: "",
+            billing_street_number: "",
+            billing_postal_code: "",
+            firstname: "",
+            lastname: "",
+            description: "",
+            phone: "",
+            time: "",
+            email: "",
+          },
+          {
+            id: 2,
+            typ: "text",
+            name: "Bemerkung",
+            text: "",
+          },
+          {
+            id: 3,
+            typ: "decision",
+            decision: "",
+            name: "Entscheidung",
+          },
+        ],
         sachverhalt:
           sachverhalte[Math.floor(Math.random() * sachverhalte.length)],
         maßnahmen: maßnahmen[Math.floor(Math.random() * maßnahmen.length)],
@@ -66,10 +98,22 @@ const TablePage = () => {
 
   return (
     <div className="h-full max-h-[calc(100vh-73px)] w-full bg-zinc-200 p-2 flex flex-col items-center gap-2">
-      <Card className="h-full w-full overflow-clip" title="Anträge">
+      <Card
+        className="h-full w-full overflow-clip"
+        title="Anträge"
+        extra={
+          <Button
+            onClick={() =>
+              dispatch(storeAllApplications(generateObjectsArray(10)))
+            }
+          >
+            Anträge laden
+          </Button>
+        }
+      >
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={allApplications}
           rowSelection={rowSelection}
           pagination={false}
           className="w-full"
