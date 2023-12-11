@@ -5,6 +5,7 @@ import {
   updateName,
 } from "../../store/slices/application";
 import { Input } from "antd";
+import { useParams } from "react-router-dom";
 
 export const AttachmentRow = ({
   attachment,
@@ -13,6 +14,7 @@ export const AttachmentRow = ({
   alignTop,
   children,
 }) => {
+  const { id } = useParams();
   const dispatch = useDispatch();
 
   return (
@@ -32,8 +34,9 @@ export const AttachmentRow = ({
             onChange={(e) => {
               dispatch(
                 updateName({
-                  index: index,
+                  timelineIndex: index,
                   updatedName: e.target.value,
+                  applicationId: id,
                 })
               );
             }}

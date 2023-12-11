@@ -62,18 +62,55 @@ const slice = createSlice({
       };
     },
     updateName(state, action) {
-      const { index, updatedName } = action.payload;
-      const updatedTimeline = [...state.timeline];
+      const { timelineIndex, updatedName, applicationId } = action.payload;
 
-      updatedTimeline[index] = {
-        ...updatedTimeline[index],
-        values: {
-          ...updatedTimeline[index].values,
-          name: updatedName,
-        },
+      const updatedApplications = state.allApplications.map((item) => {
+        if (item.id.toString() === applicationId) {
+          const updatedTimeline = item.timeline.map((value, index) => {
+            if (index === timelineIndex) {
+              return {
+                ...value,
+                name: updatedName,
+              };
+            }
+            return value;
+          });
+
+          return {
+            ...item,
+            timeline: updatedTimeline,
+          };
+        }
+        return item;
+      });
+
+      const updatedSelectedApplications = state.selectedApplications.map(
+        (item) => {
+          if (item.id.toString() === applicationId) {
+            const updatedTimeline = item.timeline.map((value, index) => {
+              if (index === timelineIndex) {
+                return {
+                  ...value,
+                  name: updatedName,
+                };
+              }
+              return value;
+            });
+
+            return {
+              ...item,
+              timeline: updatedTimeline,
+            };
+          }
+          return item;
+        }
+      );
+
+      return {
+        ...state,
+        allApplications: updatedApplications,
+        selectedApplications: updatedSelectedApplications,
       };
-
-      return { ...state, timeline: updatedTimeline };
     },
     deleteTimelineObject(state, action) {
       const index = action.payload;
