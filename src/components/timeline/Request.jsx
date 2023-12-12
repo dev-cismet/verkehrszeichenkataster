@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { updateTimelineValues } from "../../store/slices/application";
 import { isEqual } from "lodash";
 import { useState } from "react";
+import { SyncOutlined } from "@ant-design/icons";
 const { TextArea } = Input;
 
 const Request = ({ attachment, i }) => {
@@ -12,6 +13,9 @@ const Request = ({ attachment, i }) => {
   const dispatch = useDispatch();
   const [requesterValue, setRequesterValue] = useState("");
   const [billingValue, setBillingValue] = useState("");
+  const [showFullRequesterAddress, setShowFullRequesterAddress] =
+    useState(true);
+  const [showFullBillingAddress, setShowFullBillingAddress] = useState(true);
 
   const options = [
     {
@@ -121,40 +125,56 @@ const Request = ({ attachment, i }) => {
               }
             }}
           />
+          <SyncOutlined
+            className="cursor-pointer"
+            onClick={() =>
+              setShowFullRequesterAddress(!showFullRequesterAddress)
+            }
+          />
         </div>
       </div>
-      <AttachmentRow name="Stadt">
-        <Input
-          value={attachment?.requester_city}
-          onChange={(e) => {
-            updateValue(e.target.value, "requester_city");
-          }}
-        />
-      </AttachmentRow>
-      <AttachmentRow name="Postleitzahl">
-        <Input
-          value={attachment?.requester_postalcode}
-          onChange={(e) => {
-            updateValue(e.target.value, "requester_postalcode");
-          }}
-        />
-      </AttachmentRow>
-      <AttachmentRow name="Straße">
-        <Input
-          value={attachment?.requester_street}
-          onChange={(e) => {
-            updateValue(e.target.value, "requester_street");
-          }}
-        />
-      </AttachmentRow>
-      <AttachmentRow name="Hausnummer">
-        <Input
-          value={attachment?.requester_street_number}
-          onChange={(e) => {
-            updateValue(e.target.value, "requester_street_number");
-          }}
-        />
-      </AttachmentRow>
+      {showFullRequesterAddress ? (
+        <>
+          <AttachmentRow name="Stadt">
+            <Input
+              value={attachment?.requester_city}
+              onChange={(e) => {
+                updateValue(e.target.value, "requester_city");
+              }}
+            />
+          </AttachmentRow>
+          <AttachmentRow name="Postleitzahl">
+            <Input
+              value={attachment?.requester_postalcode}
+              onChange={(e) => {
+                updateValue(e.target.value, "requester_postalcode");
+              }}
+            />
+          </AttachmentRow>
+          <AttachmentRow name="Straße">
+            <Input
+              value={attachment?.requester_street}
+              onChange={(e) => {
+                updateValue(e.target.value, "requester_street");
+              }}
+            />
+          </AttachmentRow>
+          <AttachmentRow name="Hausnummer">
+            <Input
+              value={attachment?.requester_street_number}
+              onChange={(e) => {
+                updateValue(e.target.value, "requester_street_number");
+              }}
+            />
+          </AttachmentRow>
+        </>
+      ) : (
+        <>
+          <AttachmentRow name="Abkürzung">
+            <Input onChange={(e) => {}} />
+          </AttachmentRow>
+        </>
+      )}
       <div className="flex">
         <div className="w-[22%]" />
         <div className="w-full flex items-center justify-center gap-2">
@@ -177,40 +197,54 @@ const Request = ({ attachment, i }) => {
               }
             }}
           />
+          <SyncOutlined
+            className="cursor-pointer"
+            onClick={() => setShowFullBillingAddress(!showFullBillingAddress)}
+          />
         </div>
       </div>
-      <AttachmentRow name="Stadt">
-        <Input
-          value={attachment?.billing_city}
-          onChange={(e) => {
-            updateValue(e.target.value, "billing_city");
-          }}
-        />
-      </AttachmentRow>
-      <AttachmentRow name="Postleitzahl">
-        <Input
-          value={attachment?.billing_postal_code}
-          onChange={(e) => {
-            updateValue(e.target.value, "billing_postal_code");
-          }}
-        />
-      </AttachmentRow>
-      <AttachmentRow name="Straße">
-        <Input
-          value={attachment?.billing_street}
-          onChange={(e) => {
-            updateValue(e.target.value, "billing_street");
-          }}
-        />
-      </AttachmentRow>
-      <AttachmentRow name="Hausnummer">
-        <Input
-          value={attachment?.billing_street_number}
-          onChange={(e) => {
-            updateValue(e.target.value, "billing_street_number");
-          }}
-        />
-      </AttachmentRow>
+      {showFullBillingAddress ? (
+        <>
+          <AttachmentRow name="Stadt">
+            <Input
+              value={attachment?.billing_city}
+              onChange={(e) => {
+                updateValue(e.target.value, "billing_city");
+              }}
+            />
+          </AttachmentRow>
+          <AttachmentRow name="Postleitzahl">
+            <Input
+              value={attachment?.billing_postal_code}
+              onChange={(e) => {
+                updateValue(e.target.value, "billing_postal_code");
+              }}
+            />
+          </AttachmentRow>
+          <AttachmentRow name="Straße">
+            <Input
+              value={attachment?.billing_street}
+              onChange={(e) => {
+                updateValue(e.target.value, "billing_street");
+              }}
+            />
+          </AttachmentRow>
+          <AttachmentRow name="Hausnummer">
+            <Input
+              value={attachment?.billing_street_number}
+              onChange={(e) => {
+                updateValue(e.target.value, "billing_street_number");
+              }}
+            />
+          </AttachmentRow>
+        </>
+      ) : (
+        <>
+          <AttachmentRow name="Abkürzung">
+            <Input onChange={(e) => {}} />
+          </AttachmentRow>
+        </>
+      )}
       <div className="flex">
         <div className="w-[22%]" />
         <h4 className="w-full">Weiteres</h4>
