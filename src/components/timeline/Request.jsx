@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { updateTimelineValues } from "../../store/slices/application";
 import { useState } from "react";
+import { EditOutlined } from "@ant-design/icons";
 const { TextArea } = Input;
 
 const Request = ({ attachment, i }) => {
@@ -33,7 +34,13 @@ const Request = ({ attachment, i }) => {
         <>
           <AttachmentRow name="Absender">
             {requester ? (
-              <span className="w-full">{requester}</span>
+              <span className="w-full">
+                {requester}{" "}
+                <EditOutlined
+                  className="cursor-pointer"
+                  onClick={() => setRequester("")}
+                />
+              </span>
             ) : (
               <div className="flex justify-center items-center gap-2 w-full">
                 <Button onClick={() => setRequester("104.11")}>104.11</Button>
@@ -44,7 +51,13 @@ const Request = ({ attachment, i }) => {
           </AttachmentRow>
           <AttachmentRow name="Empfänger">
             {receiver ? (
-              <span className="w-full">{receiver}</span>
+              <span className="w-full">
+                {receiver}{" "}
+                <EditOutlined
+                  className="cursor-pointer"
+                  onClick={() => setReceiver("")}
+                />
+              </span>
             ) : (
               <div className="flex justify-center items-center gap-2 w-full">
                 <Button onClick={() => setReceiver("104.11")}>104.11</Button>
