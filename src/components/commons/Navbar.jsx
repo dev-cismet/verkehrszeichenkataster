@@ -1,6 +1,10 @@
 import { Button, Dropdown } from "antd";
 
-import { EllipsisOutlined, LogoutOutlined } from "@ant-design/icons";
+import {
+  EllipsisOutlined,
+  LogoutOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 
 import {
   Link,
@@ -12,7 +16,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { storeJWT, storeLogin } from "../../store/slices/auth";
 import { useEffect, useRef, useState } from "react";
 import { getNumberOfItemsThatFit } from "../../tools/helper";
-import { getSelectedApplications } from "../../store/slices/application";
+import {
+  getAllApplications,
+  getSelectedApplications,
+  storeAllApplications,
+  storeSelectedApplications,
+} from "../../store/slices/application";
 
 const navLinks = () => {
   return [
@@ -30,6 +39,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
   const location = useLocation();
   const [urlParams, setUrlParams] = useSearchParams();
   const { pathname } = useLocation();
+  const allApplications = useSelector(getAllApplications);
   const selectedApplications = useSelector(getSelectedApplications);
   const selectedApplicationsOuterRef = useRef(null);
   const [selectedApplicationsWidth, setSelectedApplicationsWidth] = useState(0);
@@ -104,6 +114,110 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
             VZKat
           </span>
         </div>
+        <Button
+          size="small"
+          type="text"
+          className="font-semibold"
+          onClick={() => {
+            const id = allApplications.length + 1;
+            dispatch(
+              storeAllApplications([
+                ...allApplications,
+                {
+                  key: id,
+                  name: id,
+                  id: id,
+                  typ: "internal",
+                  anzahl: 2,
+                  date: "1.2.3",
+                  street: "street",
+                  timeline: [
+                    {
+                      id: 1,
+                      typ: "request",
+                    },
+                  ],
+                },
+              ])
+            );
+            dispatch(
+              storeSelectedApplications([
+                ...selectedApplications,
+                {
+                  key: id,
+                  name: id,
+                  id: id,
+                  typ: "internal",
+                  anzahl: 2,
+                  date: "1.2.3",
+                  street: "street",
+                  timeline: [
+                    {
+                      id: 1,
+                      typ: "request",
+                    },
+                  ],
+                },
+              ])
+            );
+            navigate({ pathname: getApplicationPath(id) });
+          }}
+        >
+          Int. Anordnung
+          <PlusOutlined />
+        </Button>
+        <Button
+          size="small"
+          type="text"
+          className="font-semibold"
+          onClick={() => {
+            const id = allApplications.length + 1;
+            dispatch(
+              storeAllApplications([
+                ...allApplications,
+                {
+                  key: id,
+                  name: id,
+                  id: id,
+                  typ: "external",
+                  anzahl: 2,
+                  date: "1.2.3",
+                  street: "street",
+                  timeline: [
+                    {
+                      id: 1,
+                      typ: "request",
+                    },
+                  ],
+                },
+              ])
+            );
+            dispatch(
+              storeSelectedApplications([
+                ...selectedApplications,
+                {
+                  key: id,
+                  name: id,
+                  id: id,
+                  typ: "external",
+                  anzahl: 2,
+                  date: "1.2.3",
+                  street: "street",
+                  timeline: [
+                    {
+                      id: 1,
+                      typ: "request",
+                    },
+                  ],
+                },
+              ])
+            );
+            navigate({ pathname: getApplicationPath(id) });
+          }}
+        >
+          Ext. Anordnung
+          <PlusOutlined />
+        </Button>
 
         {links.map((link, i) => (
           <Link to={link.href + `?${urlParams}`} key={`navLink_${i}`}>
