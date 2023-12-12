@@ -10,6 +10,8 @@ const Request = ({ attachment, i }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [isInternalRequest, setIsInternalRequest] = useState(false);
+  const [requester, setRequester] = useState("");
+  const [receiver, setReceiver] = useState("");
 
   const updateValue = (value, property) => {
     dispatch(
@@ -28,7 +30,30 @@ const Request = ({ attachment, i }) => {
         Switch
       </Button>
       {isInternalRequest ? (
-        <></>
+        <>
+          <AttachmentRow name="Absender">
+            {requester ? (
+              <span className="w-full">{requester}</span>
+            ) : (
+              <div className="flex justify-center items-center gap-2 w-full">
+                <Button onClick={() => setRequester("104.11")}>104.11</Button>
+                <Button onClick={() => setRequester("104.23")}>104.23</Button>
+                <Button onClick={() => setRequester("GMW")}>GMW</Button>
+              </div>
+            )}
+          </AttachmentRow>
+          <AttachmentRow name="Empfänger">
+            {receiver ? (
+              <span className="w-full">{receiver}</span>
+            ) : (
+              <div className="flex justify-center items-center gap-2 w-full">
+                <Button onClick={() => setReceiver("104.11")}>104.11</Button>
+                <Button onClick={() => setReceiver("104.23")}>104.23</Button>
+                <Button onClick={() => setReceiver("GMW")}>GMW</Button>
+              </div>
+            )}
+          </AttachmentRow>
+        </>
       ) : (
         <>
           <div className="flex">
