@@ -26,6 +26,8 @@ const getBase64 = (file) =>
 const TimelinePage = () => {
   const { id } = useParams();
   const currentTimeline = useSelector(getCurrentApplication).timeline;
+  const isInternalRequest =
+    useSelector(getCurrentApplication).typ === "internal";
 
   const dispatch = useDispatch();
 
@@ -75,7 +77,14 @@ const TimelinePage = () => {
             {currentTimeline?.map((attachment, i) => {
               switch (attachment.typ) {
                 case "request":
-                  return <Request attachment={attachment} key={i} i={i} />;
+                  return (
+                    <Request
+                      attachment={attachment}
+                      key={i}
+                      i={i}
+                      isInternalRequest={isInternalRequest}
+                    />
+                  );
                 case "text":
                   return <Text attachment={attachment} id={i} key={i} />;
                 case "decision":

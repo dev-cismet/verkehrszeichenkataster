@@ -7,10 +7,9 @@ import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 const { TextArea } = Input;
 
-const Request = ({ attachment, i }) => {
+const Request = ({ attachment, i, isInternalRequest }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [isInternalRequest, setIsInternalRequest] = useState(false);
   const [requester, setRequester] = useState("");
   const [receiver, setReceiver] = useState("");
 
@@ -27,9 +26,6 @@ const Request = ({ attachment, i }) => {
 
   return (
     <AttachmentWrapper>
-      <Button onClick={() => setIsInternalRequest(!isInternalRequest)}>
-        Switch
-      </Button>
       {isInternalRequest ? (
         <>
           <AttachmentRow name="Absender">
