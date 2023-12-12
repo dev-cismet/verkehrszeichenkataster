@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Input, Select } from "antd";
 import AttachmentWrapper, { AttachmentRow } from "./AttachmentWrapper";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -8,6 +8,32 @@ const { TextArea } = Input;
 const Request = ({ attachment, i }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
+
+  const options = [
+    {
+      label: "104.23",
+      value: "104.23",
+    },
+    {
+      label: "104.11",
+      value: "104.11",
+    },
+  ];
+
+  const addresses = {
+    104.23: {
+      city: "Wuppertal",
+      postalcode: "12345",
+      street: "Street",
+      street_number: "12",
+    },
+    104.11: {
+      city: "Wuppertal",
+      postalcode: "12345",
+      street: "Street",
+      street_number: "20",
+    },
+  };
 
   const updateValue = (value, property) => {
     dispatch(
@@ -24,7 +50,22 @@ const Request = ({ attachment, i }) => {
     <AttachmentWrapper>
       <div className="flex">
         <div className="w-[22%]" />
-        <h4 className="w-full">Antragssteller</h4>
+        <div className="w-full flex items-center justify-center gap-2">
+          <h4 className="mb-0">Antragssteller</h4>
+          <Select
+            className="w-30"
+            options={options}
+            onChange={(value) => {
+              updateValue(addresses[value].city, "requester_city");
+              updateValue(addresses[value].postalcode, "requester_postalcode");
+              updateValue(addresses[value].street, "requester_street");
+              updateValue(
+                addresses[value].street_number,
+                "requester_street_number"
+              );
+            }}
+          />
+        </div>
       </div>
       <AttachmentRow name="Stadt">
         <Input
@@ -60,7 +101,22 @@ const Request = ({ attachment, i }) => {
       </AttachmentRow>
       <div className="flex">
         <div className="w-[22%]" />
-        <h4 className="w-full">Rechnungsadresse</h4>
+        <div className="w-full flex items-center justify-center gap-2">
+          <h4 className="mb-0">Rechnungsadresse</h4>
+          <Select
+            className="w-30"
+            options={options}
+            onChange={(value) => {
+              updateValue(addresses[value].city, "billing_city");
+              updateValue(addresses[value].postalcode, "billing_postal_code");
+              updateValue(addresses[value].street, "billing_street");
+              updateValue(
+                addresses[value].street_number,
+                "billing_street_number"
+              );
+            }}
+          />
+        </div>
       </div>
       <AttachmentRow name="Stadt">
         <Input
