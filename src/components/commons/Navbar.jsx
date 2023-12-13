@@ -1,6 +1,7 @@
 import { Button, Dropdown } from "antd";
 
 import {
+  CaretDownOutlined,
   EllipsisOutlined,
   LogoutOutlined,
   PlusOutlined,
@@ -63,6 +64,117 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
       padding: "10px",
     };
   }
+
+  const createNewListItems = [
+    {
+      label: (
+        <div
+          role="button"
+          onClick={() => {
+            const id = allApplications.length + 1;
+            dispatch(
+              storeAllApplications([
+                ...allApplications,
+                {
+                  key: id,
+                  name: id,
+                  id: id,
+                  typ: "internal",
+                  anzahl: 2,
+                  date: "1.2.3",
+                  street: "street",
+                  timeline: [
+                    {
+                      id: 1,
+                      typ: "request",
+                    },
+                  ],
+                },
+              ])
+            );
+            dispatch(
+              storeSelectedApplications([
+                ...selectedApplications,
+                {
+                  key: id,
+                  name: id,
+                  id: id,
+                  typ: "internal",
+                  anzahl: 2,
+                  date: "1.2.3",
+                  street: "street",
+                  timeline: [
+                    {
+                      id: 1,
+                      typ: "request",
+                    },
+                  ],
+                },
+              ])
+            );
+            navigate({ pathname: getApplicationPath(id) });
+          }}
+        >
+          Interne Anordnung
+        </div>
+      ),
+      key: "0",
+    },
+    {
+      label: (
+        <div
+          role="button"
+          onClick={() => {
+            const id = allApplications.length + 1;
+            dispatch(
+              storeAllApplications([
+                ...allApplications,
+                {
+                  key: id,
+                  name: id,
+                  id: id,
+                  typ: "external",
+                  anzahl: 2,
+                  date: "1.2.3",
+                  street: "street",
+                  timeline: [
+                    {
+                      id: 1,
+                      typ: "request",
+                    },
+                  ],
+                },
+              ])
+            );
+            dispatch(
+              storeSelectedApplications([
+                ...selectedApplications,
+                {
+                  key: id,
+                  name: id,
+                  id: id,
+                  typ: "external",
+                  anzahl: 2,
+                  date: "1.2.3",
+                  street: "street",
+                  timeline: [
+                    {
+                      id: 1,
+                      typ: "request",
+                    },
+                  ],
+                },
+              ])
+            );
+            navigate({ pathname: getApplicationPath(id) });
+          }}
+        >
+          Externe Anordnung
+        </div>
+      ),
+      key: "1",
+    },
+  ];
 
   const logout = () => {
     dispatch(storeJWT(undefined));
@@ -278,6 +390,14 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
       </div>
 
       <div className="flex items-center gap-3">
+        <Dropdown trigger={["click"]} menu={{ items: createNewListItems }}>
+          <Button className="px-4">
+            <div className="flex items-center gap-2">
+              <PlusOutlined />
+              <CaretDownOutlined />
+            </div>
+          </Button>
+        </Dropdown>
         <LogoutOutlined
           className="text-2xl cursor-pointer"
           onClick={() => logout()}
