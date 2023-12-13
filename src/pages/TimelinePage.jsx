@@ -121,60 +121,42 @@ const TimelinePage = () => {
               <Card tabList={tabListNoTitle} size="small" type="inner">
                 <div className="flex flex-col gap-2">
                   <Input.TextArea placeholder="Kommentar hinzufügen" rows={5} />
-                  <Button
-                    className="w-fit"
-                    onClick={() => {
-                      changeTimeline({
-                        typ: "text",
-                        name: "Widerrufsvorbehalt",
-                        text: "Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigenb Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert.",
-                      });
-                    }}
-                  >
-                    Widerrufsvorbehalt
-                  </Button>
+                  <div className="flex items-center gap-4">
+                    <Button
+                      className="w-fit"
+                      onClick={() => {
+                        changeTimeline({
+                          typ: "text",
+                          name: "Widerrufsvorbehalt",
+                          text: "Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigenb Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert.",
+                        });
+                      }}
+                    >
+                      Widerrufsvorbehalt
+                    </Button>
+                    <Upload
+                      beforeUpload={(file) => {
+                        handleDrop(file);
+                      }}
+                      fileList={[]}
+                    >
+                      <Button className="w-fit">Datei</Button>
+                    </Upload>
+                    <Button>Zeichnung</Button>
+                  </div>
                 </div>
               </Card>
               <div className="w-full flex items-center gap-2 justify-end">
                 <Button>Close</Button>
-                <Button type="primary" disabled>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    changeTimeline({ typ: "text", name: "Text", text: "" });
+                  }}
+                >
                   Comment
                 </Button>
               </div>
-            </div>
-
-            <div className="w-2/3 flex justify-center items-center gap-2 pt-2">
-              <div className="w-[20%]" />
-              <Button
-                onClick={() => {
-                  changeTimeline({
-                    typ: "text",
-                    name: "Bemerkung",
-                    text: "",
-                  });
-                }}
-              >
-                Bemerkung
-              </Button>
-              <Button>Zeichnung</Button>
-              <Button
-                onClick={() => {
-                  changeTimeline({
-                    typ: "decision",
-                    name: "Entscheidung",
-                  });
-                }}
-              >
-                Entscheidung
-              </Button>
-              <Upload
-                beforeUpload={(file) => {
-                  handleDrop(file);
-                }}
-                fileList={[]}
-              >
-                <Button>Datei</Button>
-              </Upload>
             </div>
             <div className="w-2/3 flex justify-center items-center gap-2 pt-2">
               <div className="w-[20%]" />
