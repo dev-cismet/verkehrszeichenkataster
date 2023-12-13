@@ -93,7 +93,7 @@ const TimelinePage = () => {
         fileList={[]}
       >
         <div className="h-full w-3/4 mx-auto flex justify-between">
-          <div className="flex flex-col w-3/4 gap-4">
+          <div className="flex flex-col w-full gap-4">
             {currentTimeline?.map((attachment, i) => {
               switch (attachment.typ) {
                 case "request":
@@ -118,7 +118,7 @@ const TimelinePage = () => {
               <span className="text-start text-lg font-medium">
                 Kommentar Hinzufügen
               </span>
-              <Card tabList={tabListNoTitle}>
+              <Card tabList={tabListNoTitle} size="small" type="inner">
                 <div className="flex flex-col gap-2">
                   <Input.TextArea placeholder="Kommentar hinzufügen" rows={5} />
                   <Button
