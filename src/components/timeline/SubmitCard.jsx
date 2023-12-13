@@ -23,11 +23,16 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
       </span>
       <Card tabList={tabListNoTitle} size="small" type="inner">
         <div className="flex flex-col gap-2">
-          <Input placeholder="Name" onChange={(e) => setName(e.target.value)} />
+          <Input
+            placeholder="Name"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+          />
           <Input.TextArea
             placeholder="Kommentar"
             rows={5}
             onChange={(e) => setText(e.target.value)}
+            value={text}
           />
           <div className="flex items-center gap-4">
             <Button
@@ -60,6 +65,8 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
           type="primary"
           onClick={() => {
             changeTimeline({ typ: "text", name: name, text: text });
+            setText("");
+            setName("");
           }}
           disabled={!text || !name}
         >
