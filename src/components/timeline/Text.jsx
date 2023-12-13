@@ -50,7 +50,7 @@ const Text = ({ attachment, id }) => {
               );
             }}
             value={attachment.name}
-            className="w-full"
+            className="w-full font-normal"
             bordered={false}
           />
           <Dropdown
