@@ -37,6 +37,7 @@ const Text = ({ attachment, id }) => {
   return (
     <Card
       size="small"
+      type="inner"
       title={
         <div className="w-full flex">
           <Input
@@ -50,7 +51,7 @@ const Text = ({ attachment, id }) => {
               );
             }}
             value={attachment.name}
-            className="w-full font-normal"
+            className="w-full font-medium text-lg pl-0"
             bordered={false}
           />
           <Dropdown
@@ -59,7 +60,7 @@ const Text = ({ attachment, id }) => {
             placement="bottomRight"
           >
             <div className="p-2 flex items-center justify-center hover:bg-zinc-100 rounded-lg cursor-pointer">
-              <EllipsisOutlined />
+              <EllipsisOutlined className="text-2xl" />
             </div>
           </Dropdown>
         </div>
