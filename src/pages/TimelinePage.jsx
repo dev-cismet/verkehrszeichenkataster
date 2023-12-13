@@ -126,7 +126,86 @@ const TimelinePage = () => {
                 <Button>Datei</Button>
               </Upload>
             </div>
+            <div className="w-2/3 flex justify-center items-center gap-2 pt-2">
+              <div className="w-[20%]" />
+              <Button
+                onClick={() => {
+                  changeTimeline({
+                    typ: "text",
+                    name: "Ort",
+                    text: "",
+                  });
+                }}
+              >
+                Ort
+              </Button>
+              <Button
+                onClick={() => {
+                  changeTimeline({
+                    typ: "text",
+                    name: "Sachverhalt",
+                    text: "",
+                  });
+                }}
+              >
+                Sachverhalt
+              </Button>
+              <Button
+                onClick={() => {
+                  changeTimeline({
+                    typ: "text",
+                    name: "Erforderliche Maßnahmen",
+                    text: "",
+                  });
+                }}
+              >
+                Erforderliche Maßnahmen
+              </Button>
+              <Button
+                onClick={() => {
+                  changeTimeline({
+                    typ: "text",
+                    name: "Ort",
+                    text: "",
+                  });
+                  changeTimeline({
+                    typ: "text",
+                    name: "Sachverhalt",
+                    text: "",
+                  });
+                  changeTimeline({
+                    typ: "text",
+                    name: "Erforderliche Maßnahmen",
+                    text: "",
+                  });
+                }}
+              >
+                OSEM
+              </Button>
+              <Button
+                onClick={() => {
+                  changeTimeline({
+                    typ: "text",
+                    name: "Widerrufsvorbehalt",
+                    text: "Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigenb Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert.",
+                  });
+                }}
+              >
+                Widerrufsvorbehalt
+              </Button>
+              <Button
+                onClick={() => {
+                  changeTimeline({
+                    typ: "text",
+                    name: "Mit freundlichen Grüßen",
+                  });
+                }}
+              >
+                MfG
+              </Button>
+            </div>
           </div>
+
           <div className="w-96">
             <Timeline dataIn={currentTimeline} />
           </div>
