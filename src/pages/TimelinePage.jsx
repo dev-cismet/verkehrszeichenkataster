@@ -12,6 +12,7 @@ import {
 } from "../store/slices/application";
 import File from "../components/timeline/File";
 import { useParams } from "react-router-dom";
+import SubmitCard from "../components/timeline/SubmitCard";
 
 const { Dragger } = Upload;
 
@@ -23,17 +24,6 @@ const getBase64 = (file) => {
     reader.onerror = (error) => reject(error);
   });
 };
-
-const tabListNoTitle = [
-  {
-    key: "write",
-    label: "write",
-  },
-  {
-    key: "preview",
-    label: "preview",
-  },
-];
 
 const TimelinePage = () => {
   const { id } = useParams();
@@ -114,50 +104,10 @@ const TimelinePage = () => {
               }
             })}
             <hr className="w-full bg-black" />
-            <div className="flex flex-col gap-2 w-full">
-              <span className="text-start text-lg font-medium">
-                Kommentar Hinzufügen
-              </span>
-              <Card tabList={tabListNoTitle} size="small" type="inner">
-                <div className="flex flex-col gap-2">
-                  <Input.TextArea placeholder="Kommentar hinzufügen" rows={5} />
-                  <div className="flex items-center gap-4">
-                    <Button
-                      className="w-fit"
-                      onClick={() => {
-                        changeTimeline({
-                          typ: "text",
-                          name: "Widerrufsvorbehalt",
-                          text: "Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigenb Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert.",
-                        });
-                      }}
-                    >
-                      Widerrufsvorbehalt
-                    </Button>
-                    <Upload
-                      beforeUpload={(file) => {
-                        handleDrop(file);
-                      }}
-                      fileList={[]}
-                    >
-                      <Button className="w-fit">Datei</Button>
-                    </Upload>
-                    <Button>Zeichnung</Button>
-                  </div>
-                </div>
-              </Card>
-              <div className="w-full flex items-center gap-2 justify-end">
-                <Button>Close</Button>
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    changeTimeline({ typ: "text", name: "Text", text: "" });
-                  }}
-                >
-                  Comment
-                </Button>
-              </div>
-            </div>
+            <SubmitCard
+              changeTimeline={changeTimeline}
+              handleDrop={handleDrop}
+            />
             <div className="w-2/3 flex justify-center items-center gap-2 pt-2">
               <div className="w-[20%]" />
               <Button
