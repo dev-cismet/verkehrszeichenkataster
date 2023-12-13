@@ -62,7 +62,15 @@ const TimelinePage = () => {
         height: "100%",
       }}
       className="h-full w-full"
-      title={<span className="text-2xl">Verlauf</span>}
+      title={
+        <div className="w-3/4 mx-auto flex items-center gap-2">
+          <div className="bg-green-400 py-0.5 px-2 rounded-xl flex items-center justify-center">
+            Offen
+          </div>
+          <h1 className="mb-0">Verlauf</h1>
+          <span className="text-zinc-400 text-2xl">#1234</span>
+        </div>
+      }
     >
       <Dragger
         openFileDialogOnClick={false}
@@ -72,7 +80,7 @@ const TimelinePage = () => {
         }}
         fileList={[]}
       >
-        <div className="h-full w-full flex justify-between">
+        <div className="h-full w-3/4 mx-auto flex justify-between">
           <div className="flex flex-col w-3/4">
             {currentTimeline?.map((attachment, i) => {
               switch (attachment.typ) {
