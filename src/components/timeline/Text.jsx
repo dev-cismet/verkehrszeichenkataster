@@ -1,34 +1,86 @@
-import { Input } from "antd";
-import AttachmentWrapper, { AttachmentRow } from "./AttachmentWrapper";
+import { Card, Dropdown, Input } from "antd";
 import { useDispatch } from "react-redux";
-import { updateTimelineValues } from "../../store/slices/application";
+import {
+  deleteTimelineObject,
+  updateName,
+  updateTimelineValues,
+} from "../../store/slices/application";
 import { useParams } from "react-router-dom";
+import { EllipsisOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
 
 const Text = ({ attachment, id }) => {
   const { id: applicationId } = useParams();
   const dispatch = useDispatch();
-  return (
-    <AttachmentWrapper index={id}>
-      <AttachmentRow attachment={attachment} index={id} alignTop>
-        <TextArea
-          rows={3}
-          value={attachment.text}
-          id={id}
-          onChange={(e) => {
+
+  const items = [
+    {
+      label: (
+        <div
+          onClick={() => {
             dispatch(
-              updateTimelineValues({
+              deleteTimelineObject({
                 timelineIndex: id,
-                itemValue: e.target.value,
-                property: "text",
                 applicationId: applicationId,
               })
             );
           }}
-        />
-      </AttachmentRow>
-    </AttachmentWrapper>
+        >
+          Löschen
+        </div>
+      ),
+      key: "0",
+    },
+  ];
+
+  return (
+    <Card
+      size="small"
+      title={
+        <div className="w-full flex">
+          <Input
+            onChange={(e) => {
+              dispatch(
+                updateName({
+                  timelineIndex: id,
+                  updatedName: e.target.value,
+                  applicationId: applicationId,
+                })
+              );
+            }}
+            value={attachment.name}
+            className="w-full"
+            bordered={false}
+          />
+          <Dropdown
+            trigger={["click"]}
+            menu={{ items }}
+            placement="bottomRight"
+          >
+            <div className="p-2 flex items-center justify-center hover:bg-zinc-100 rounded-lg cursor-pointer">
+              <EllipsisOutlined />
+            </div>
+          </Dropdown>
+        </div>
+      }
+    >
+      <TextArea
+        rows={3}
+        value={attachment.text}
+        id={id}
+        onChange={(e) => {
+          dispatch(
+            updateTimelineValues({
+              timelineIndex: id,
+              itemValue: e.target.value,
+              property: "text",
+              applicationId: applicationId,
+            })
+          );
+        }}
+      />
+    </Card>
   );
 };
 
