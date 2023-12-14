@@ -33,7 +33,7 @@ const File = ({ attachment, i }) => {
   ];
 
   return (
-    <div className="w-full relative h-full py-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-1">
+    <div className="w-full relative py-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]">
       <Card
         size="small"
         type="inner"

@@ -130,12 +130,6 @@ const Sidebar = () => {
         {"Anordnung " + selectedApplication?.name}
       </h2>
       <SidebarItem
-        link="uebersicht"
-        icon={<HomeOutlined className="text-lg" />}
-        isSidebarCollapsed={isCollapsed}
-        text="Übersicht"
-      />
-      <SidebarItem
         link="verlauf"
         icon={<StockOutlined className="text-lg" />}
         isSidebarCollapsed={isCollapsed}

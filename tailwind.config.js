@@ -8,6 +8,10 @@ export default {
       },
       colors: {
         primary: "#1677FF",
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
       },
     },
   },
