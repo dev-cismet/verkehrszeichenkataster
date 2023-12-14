@@ -59,7 +59,7 @@ const Heading = () => {
             <>
               <div className="flex items-center gap-2 w-full">
                 <h1 className="my-0 text-4xl">{anordnung.timelineTitle}</h1>
-                <span className="text-[#000000A6] font-normal text-4xl">
+                <span className="text-muted-foreground font-normal text-4xl">
                   #{anordnung.id}
                 </span>
               </div>
@@ -82,7 +82,7 @@ const Heading = () => {
             )}
             <span>{anordnung.timelineStatus}</span>
           </div>
-          <span className="text-[#000000A6] font-normal">
+          <span className="text-muted-foreground font-normal">
             Person hat letzte Woche diese Anordnung erstellt ·{" "}
             {anordnung?.timeline?.length} Baustein
             {(anordnung?.timeline?.length === 0 ||
