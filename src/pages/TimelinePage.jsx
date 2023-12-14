@@ -108,14 +108,14 @@ const TimelinePage = () => {
             </div>
 
             <div className="w-[370px]">
-              <div className="flex flex-col w-full items-start gap-2">
-                <span className="font-semibold text-muted-foreground">
+              <div className="flex flex-col w-full items-start">
+                <span className="font-semibold text-muted-foreground pb-2">
                   Zeitlicher Verlauf
                 </span>
                 <Timeline dataIn={currentTimeline} />
-                <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-0" />
+                <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
                 <TagList changeTimeline={changeTimeline} />
-                <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-0" />
+                <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
               </div>
             </div>
           </div>

@@ -13,7 +13,9 @@ const TagList = ({ changeTimeline }) => {
 
   return (
     <>
-      <span className="font-semibold text-muted-foreground">Textbausteine</span>
+      <span className="font-semibold text-muted-foreground pb-2">
+        Textbausteine
+      </span>
       <div className="flex w-full flex-wrap gap-2">
         <Tag.CheckableTag
           checked={timeline.some((obj) => obj.name === "Ort")}
