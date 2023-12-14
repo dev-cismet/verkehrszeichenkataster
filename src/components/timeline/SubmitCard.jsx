@@ -27,9 +27,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
 
   return (
     <div className="flex flex-col gap-2 w-full py-4">
-      <span className="text-start text-lg font-medium">
-        Kommentar Hinzufügen
-      </span>
+      <span className="text-start text-lg font-medium">Anhang Hinzufügen</span>
       <Card tabList={tabListNoTitle} size="small" type="inner">
         <div className="flex flex-col gap-2">
           <Input
@@ -44,18 +42,6 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
             value={text}
           />
           <div className="flex items-center gap-4">
-            <Button
-              className="w-fit"
-              onClick={() => {
-                changeTimeline({
-                  typ: "text",
-                  name: "Widerrufsvorbehalt",
-                  text: "Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigenb Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert.",
-                });
-              }}
-            >
-              Widerrufsvorbehalt
-            </Button>
             <Upload
               beforeUpload={(file) => {
                 handleDrop(file);
