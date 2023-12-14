@@ -1,4 +1,4 @@
-import { Button, Card, Input, Upload } from "antd";
+import { Card, Upload } from "antd";
 import Timeline from "../components/application/Timeline";
 import Request from "../components/timeline/Request";
 import Text from "../components/timeline/Text";
@@ -15,7 +15,8 @@ import File from "../components/timeline/File";
 import { useParams } from "react-router-dom";
 import SubmitCard from "../components/timeline/SubmitCard";
 import { useState } from "react";
-import { EditOutlined } from "@ant-design/icons";
+import Heading from "../components/timeline/Heading";
+import TagList from "../components/timeline/TagList";
 
 const { Dragger } = Upload;
 
@@ -33,8 +34,6 @@ const TimelinePage = () => {
   const currentTimeline = anordnung.timeline;
   const isInternalRequest =
     useSelector(getCurrentApplication).typ === "internal";
-  const [title, setTitle] = useState(anordnung.timelineTitle);
-  const [editTitle, setEditTitle] = useState(!anordnung.timelineTitle);
 
   const dispatch = useDispatch();
 
@@ -70,51 +69,7 @@ const TimelinePage = () => {
           height: "100%",
         }}
         className="h-full w-full"
-        title={
-          <>
-            <div className="w-3/4 mx-auto flex items-center gap-2">
-              {!editTitle ? (
-                <>
-                  <div
-                    className={`${
-                      anordnung.timelineStatus === "Offen"
-                        ? "bg-green-400"
-                        : "bg-red-400"
-                    } py-0.5 px-2 rounded-xl flex items-center justify-center`}
-                  >
-                    {anordnung.timelineStatus}
-                  </div>
-                  <h1 className="mb-0">{anordnung.timelineTitle}</h1>
-                  <span className="text-zinc-400 text-2xl">
-                    #{anordnung.id}
-                  </span>
-                  <EditOutlined onClick={() => setEditTitle(true)} />
-                </>
-              ) : (
-                <>
-                  <Input
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="w-1/3"
-                  />
-                  <Button
-                    onClick={() => {
-                      dispatch(
-                        updateTimelineTitle({
-                          updatedTitle: title,
-                          applicationId: id,
-                        })
-                      );
-                      setEditTitle(false);
-                    }}
-                  >
-                    Speichern
-                  </Button>
-                </>
-              )}
-            </div>
-          </>
-        }
+        title={<Heading />}
       >
         <Dragger
           openFileDialogOnClick={false}
@@ -124,7 +79,7 @@ const TimelinePage = () => {
           }}
           fileList={[]}
         >
-          <div className="h-full w-3/4 mx-auto flex justify-between">
+          <div className="h-full w-3/4 mx-auto flex gap-4 justify-between">
             <div className="flex flex-col w-full">
               {currentTimeline?.map((attachment, i) => {
                 switch (attachment.typ) {
@@ -145,93 +100,23 @@ const TimelinePage = () => {
                     return <File key={i} attachment={attachment} i={i} />;
                 }
               })}
-              <hr className="w-full border-t-4 border-solid border-zinc-200 my-0" />
+              <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-0" />
               <SubmitCard
                 changeTimeline={changeTimeline}
                 handleDrop={handleDrop}
               />
-              <div className="w-2/3 flex justify-center items-center gap-2 pt-2">
-                <div className="w-[20%]" />
-                <Button
-                  onClick={() => {
-                    changeTimeline({
-                      typ: "text",
-                      name: "Ort",
-                      text: "",
-                    });
-                  }}
-                >
-                  Ort
-                </Button>
-                <Button
-                  onClick={() => {
-                    changeTimeline({
-                      typ: "text",
-                      name: "Sachverhalt",
-                      text: "",
-                    });
-                  }}
-                >
-                  Sachverhalt
-                </Button>
-                <Button
-                  onClick={() => {
-                    changeTimeline({
-                      typ: "text",
-                      name: "Erforderliche Maßnahmen",
-                      text: "",
-                    });
-                  }}
-                >
-                  Erforderliche Maßnahmen
-                </Button>
-                <Button
-                  onClick={() => {
-                    changeTimeline({
-                      typ: "text",
-                      name: "Ort",
-                      text: "",
-                    });
-                    changeTimeline({
-                      typ: "text",
-                      name: "Sachverhalt",
-                      text: "",
-                    });
-                    changeTimeline({
-                      typ: "text",
-                      name: "Erforderliche Maßnahmen",
-                      text: "",
-                    });
-                  }}
-                >
-                  OSEM
-                </Button>
-                <Button
-                  onClick={() => {
-                    changeTimeline({
-                      typ: "text",
-                      name: "Widerrufsvorbehalt",
-                      text: "Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigenb Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert.",
-                    });
-                  }}
-                >
-                  Widerrufsvorbehalt
-                </Button>
-                <Button
-                  onClick={() => {
-                    changeTimeline({
-                      typ: "text",
-                      name: "Mit freundlichen Grüßen",
-                    });
-                  }}
-                >
-                  MfG
-                </Button>
-              </div>
             </div>
 
             <div className="w-96">
-              <Timeline dataIn={currentTimeline} />
+              <div className="flex flex-col w-full items-start gap-2">
+                <span className="font-semibold text-muted-foreground">
+                  Zeitlicher Verlauf
+                </span>
+                <Timeline dataIn={currentTimeline} />
+                <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-0" />
+                <TagList changeTimeline={changeTimeline} />
+                <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-0" />
+              </div>
             </div>
           </div>
         </Dragger>
