@@ -58,7 +58,9 @@ const Heading = () => {
           ) : (
             <>
               <div className="flex items-center gap-2 w-full">
-                <h1 className="my-0 text-4xl">{anordnung.timelineTitle}</h1>
+                <h1 className="my-0 text-4xl font-normal">
+                  {anordnung.timelineTitle}
+                </h1>
                 <span className="text-muted-foreground font-normal text-4xl">
                   #{anordnung.id}
                 </span>
