@@ -75,7 +75,13 @@ const TimelinePage = () => {
             <div className="w-3/4 mx-auto flex items-center gap-2">
               {!editTitle ? (
                 <>
-                  <div className="bg-green-400 py-0.5 px-2 rounded-xl flex items-center justify-center">
+                  <div
+                    className={`${
+                      anordnung.timelineStatus === "Offen"
+                        ? "bg-green-400"
+                        : "bg-red-400"
+                    } py-0.5 px-2 rounded-xl flex items-center justify-center`}
+                  >
                     {anordnung.timelineStatus}
                   </div>
                   <h1 className="mb-0">{anordnung.timelineTitle}</h1>
@@ -89,6 +95,7 @@ const TimelinePage = () => {
                   <Input
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    className="w-1/3"
                   />
                   <Button
                     onClick={() => {

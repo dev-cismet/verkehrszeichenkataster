@@ -1,9 +1,18 @@
 import { Button, Card, Input, Upload } from "antd";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCurrentApplication,
+  updateTimelineStatus,
+} from "../../store/slices/application";
+import { useParams } from "react-router-dom";
 
 const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [text, setText] = useState("");
   const [name, setName] = useState("");
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const anordnung = useSelector(getCurrentApplication);
 
   const tabListNoTitle = [
     {
@@ -60,18 +69,36 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
         </div>
       </Card>
       <div className="w-full flex items-center gap-2 justify-end">
-        <Button>Anordnung Schließen</Button>
         <Button
-          type="primary"
-          onClick={() => {
-            changeTimeline({ typ: "text", name: name, text: text });
-            setText("");
-            setName("");
-          }}
-          disabled={!text || !name}
+          onClick={() =>
+            dispatch(
+              updateTimelineStatus({
+                updatedStatus:
+                  anordnung.timelineStatus === "Offen"
+                    ? "Geschlossen"
+                    : "Offen",
+                applicationId: id,
+              })
+            )
+          }
         >
-          Hinzufügen
+          {anordnung.timelineStatus === "Offen"
+            ? "Anordnung Schließen"
+            : "Anordnung öffnen"}
         </Button>
+        {anordnung.timelineStatus === "Offen" && (
+          <Button
+            type="primary"
+            onClick={() => {
+              changeTimeline({ typ: "text", name: name, text: text });
+              setText("");
+              setName("");
+            }}
+            disabled={!text || !name}
+          >
+            Hinzufügen
+          </Button>
+        )}
       </div>
     </div>
   );
