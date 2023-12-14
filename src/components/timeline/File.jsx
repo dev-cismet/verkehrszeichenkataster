@@ -1,11 +1,70 @@
-import AttachmentWrapper, { AttachmentRow } from "./AttachmentWrapper";
+import { Card, Dropdown, Input } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import {
+  deleteTimelineObject,
+  updateName,
+} from "../../store/slices/application";
+import { useParams } from "react-router-dom";
 
 const File = ({ attachment, i }) => {
+  const { id: applicationId } = useParams();
   const url = attachment?.file;
+  const dispatch = useDispatch();
+
+  const items = [
+    {
+      label: (
+        <div
+          onClick={() => {
+            dispatch(
+              deleteTimelineObject({
+                timelineIndex: i,
+                applicationId: applicationId,
+              })
+            );
+          }}
+        >
+          Löschen
+        </div>
+      ),
+      key: "0",
+    },
+  ];
 
   return (
-    <AttachmentWrapper index={i}>
-      <AttachmentRow attachment={attachment} index={i} alignTop>
+    <div className="w-full relative h-full py-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-1">
+      <Card
+        size="small"
+        type="inner"
+        title={
+          <div className="w-full flex">
+            <Input
+              onChange={(e) => {
+                dispatch(
+                  updateName({
+                    timelineIndex: i,
+                    updatedName: e.target.value,
+                    applicationId: applicationId,
+                  })
+                );
+              }}
+              value={attachment.name}
+              className="w-full font-medium text-lg pl-0"
+              bordered={false}
+            />
+            <Dropdown
+              trigger={["click"]}
+              menu={{ items }}
+              placement="bottomRight"
+            >
+              <div className="p-1 flex items-center justify-center hover:bg-zinc-100 rounded-lg cursor-pointer">
+                <EllipsisOutlined className="text-2xl" />
+              </div>
+            </Dropdown>
+          </div>
+        }
+      >
         {url?.includes("image") ? (
           <div className="w-full rounded-lg">
             <img
@@ -20,8 +79,8 @@ const File = ({ attachment, i }) => {
             Vorschau für den Dateitypen konnte nicht erstellt werden
           </div>
         )}
-      </AttachmentRow>
-    </AttachmentWrapper>
+      </Card>
+    </div>
   );
 };
 
