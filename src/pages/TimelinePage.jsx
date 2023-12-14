@@ -65,7 +65,7 @@ const TimelinePage = () => {
         bodyStyle={{
           overflowY: "auto",
           overflowX: "clip",
-          maxHeight: "94%",
+          maxHeight: "91%",
           height: "100%",
         }}
         className="h-full w-full"
