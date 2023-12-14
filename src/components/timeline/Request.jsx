@@ -24,7 +24,7 @@ const Request = ({ attachment, i, isInternalRequest }) => {
   };
 
   return (
-    <>
+    <div className="w-full relative h-full pb-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-1">
       {isInternalRequest ? (
         <>
           <Card
@@ -150,7 +150,7 @@ const Request = ({ attachment, i, isInternalRequest }) => {
           </Card>
         </>
       )}
-    </>
+    </div>
   );
 };
 

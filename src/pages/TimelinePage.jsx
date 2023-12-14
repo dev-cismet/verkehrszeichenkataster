@@ -16,14 +16,13 @@ import SubmitCard from "../components/timeline/SubmitCard";
 
 const { Dragger } = Upload;
 
-const getBase64 = (file) => {
+const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
   });
-};
 
 const TimelinePage = () => {
   const { id } = useParams();
@@ -83,7 +82,7 @@ const TimelinePage = () => {
         fileList={[]}
       >
         <div className="h-full w-3/4 mx-auto flex justify-between">
-          <div className="flex flex-col w-full gap-4">
+          <div className="flex flex-col w-full">
             {currentTimeline?.map((attachment, i) => {
               switch (attachment.typ) {
                 case "request":
@@ -103,7 +102,7 @@ const TimelinePage = () => {
                   return <File key={i} attachment={attachment} i={i} />;
               }
             })}
-            <hr className="w-full bg-black" />
+            <hr className="w-full border-t-4 border-solid border-zinc-200 my-0" />
             <SubmitCard
               changeTimeline={changeTimeline}
               handleDrop={handleDrop}
