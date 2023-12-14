@@ -9,10 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getCurrentApplication,
   storeTimeline,
+  updateTimelineTitle,
 } from "../store/slices/application";
 import File from "../components/timeline/File";
 import { useParams } from "react-router-dom";
 import SubmitCard from "../components/timeline/SubmitCard";
+import { useState } from "react";
+import { EditOutlined } from "@ant-design/icons";
 
 const { Dragger } = Upload;
 
@@ -26,9 +29,12 @@ const getBase64 = (file) =>
 
 const TimelinePage = () => {
   const { id } = useParams();
-  const currentTimeline = useSelector(getCurrentApplication).timeline;
+  const anordnung = useSelector(getCurrentApplication);
+  const currentTimeline = anordnung.timeline;
   const isInternalRequest =
     useSelector(getCurrentApplication).typ === "internal";
+  const [title, setTitle] = useState(anordnung.timelineTitle);
+  const [editTitle, setEditTitle] = useState(!anordnung.timelineTitle);
 
   const dispatch = useDispatch();
 
@@ -55,144 +61,175 @@ const TimelinePage = () => {
   };
 
   return (
-    <Card
-      bodyStyle={{
-        overflowY: "auto",
-        overflowX: "clip",
-        maxHeight: "94%",
-        height: "100%",
-      }}
-      className="h-full w-full"
-      title={
-        <div className="w-3/4 mx-auto flex items-center gap-2">
-          <div className="bg-green-400 py-0.5 px-2 rounded-xl flex items-center justify-center">
-            Offen
-          </div>
-          <h1 className="mb-0">Verlauf</h1>
-          <span className="text-zinc-400 text-2xl">#1234</span>
-        </div>
-      }
-    >
-      <Dragger
-        openFileDialogOnClick={false}
-        className="h-full w-full"
-        beforeUpload={(file) => {
-          handleDrop(file);
+    <>
+      <Card
+        bodyStyle={{
+          overflowY: "auto",
+          overflowX: "clip",
+          maxHeight: "94%",
+          height: "100%",
         }}
-        fileList={[]}
+        className="h-full w-full"
+        title={
+          <>
+            <div className="w-3/4 mx-auto flex items-center gap-2">
+              {!editTitle ? (
+                <>
+                  <div className="bg-green-400 py-0.5 px-2 rounded-xl flex items-center justify-center">
+                    {anordnung.timelineStatus}
+                  </div>
+                  <h1 className="mb-0">{anordnung.timelineTitle}</h1>
+                  <span className="text-zinc-400 text-2xl">
+                    #{anordnung.id}
+                  </span>
+                  <EditOutlined onClick={() => setEditTitle(true)} />
+                </>
+              ) : (
+                <>
+                  <Input
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                  <Button
+                    onClick={() => {
+                      dispatch(
+                        updateTimelineTitle({
+                          updatedTitle: title,
+                          applicationId: id,
+                        })
+                      );
+                      setEditTitle(false);
+                    }}
+                  >
+                    Speichern
+                  </Button>
+                </>
+              )}
+            </div>
+          </>
+        }
       >
-        <div className="h-full w-3/4 mx-auto flex justify-between">
-          <div className="flex flex-col w-full">
-            {currentTimeline?.map((attachment, i) => {
-              switch (attachment.typ) {
-                case "request":
-                  return (
-                    <Request
-                      attachment={attachment}
-                      key={i}
-                      i={i}
-                      isInternalRequest={isInternalRequest}
-                    />
-                  );
-                case "text":
-                  return <Text attachment={attachment} id={i} key={i} />;
-                case "decision":
-                  return <Decision key={i} id={i} attachment={attachment} />;
-                case "file":
-                  return <File key={i} attachment={attachment} i={i} />;
-              }
-            })}
-            <hr className="w-full border-t-4 border-solid border-zinc-200 my-0" />
-            <SubmitCard
-              changeTimeline={changeTimeline}
-              handleDrop={handleDrop}
-            />
-            <div className="w-2/3 flex justify-center items-center gap-2 pt-2">
-              <div className="w-[20%]" />
-              <Button
-                onClick={() => {
-                  changeTimeline({
-                    typ: "text",
-                    name: "Ort",
-                    text: "",
-                  });
-                }}
-              >
-                Ort
-              </Button>
-              <Button
-                onClick={() => {
-                  changeTimeline({
-                    typ: "text",
-                    name: "Sachverhalt",
-                    text: "",
-                  });
-                }}
-              >
-                Sachverhalt
-              </Button>
-              <Button
-                onClick={() => {
-                  changeTimeline({
-                    typ: "text",
-                    name: "Erforderliche Maßnahmen",
-                    text: "",
-                  });
-                }}
-              >
-                Erforderliche Maßnahmen
-              </Button>
-              <Button
-                onClick={() => {
-                  changeTimeline({
-                    typ: "text",
-                    name: "Ort",
-                    text: "",
-                  });
-                  changeTimeline({
-                    typ: "text",
-                    name: "Sachverhalt",
-                    text: "",
-                  });
-                  changeTimeline({
-                    typ: "text",
-                    name: "Erforderliche Maßnahmen",
-                    text: "",
-                  });
-                }}
-              >
-                OSEM
-              </Button>
-              <Button
-                onClick={() => {
-                  changeTimeline({
-                    typ: "text",
-                    name: "Widerrufsvorbehalt",
-                    text: "Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigenb Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert.",
-                  });
-                }}
-              >
-                Widerrufsvorbehalt
-              </Button>
-              <Button
-                onClick={() => {
-                  changeTimeline({
-                    typ: "text",
-                    name: "Mit freundlichen Grüßen",
-                  });
-                }}
-              >
-                MfG
-              </Button>
+        <Dragger
+          openFileDialogOnClick={false}
+          className="h-full w-full"
+          beforeUpload={(file) => {
+            handleDrop(file);
+          }}
+          fileList={[]}
+        >
+          <div className="h-full w-3/4 mx-auto flex justify-between">
+            <div className="flex flex-col w-full">
+              {currentTimeline?.map((attachment, i) => {
+                switch (attachment.typ) {
+                  case "request":
+                    return (
+                      <Request
+                        attachment={attachment}
+                        key={i}
+                        i={i}
+                        isInternalRequest={isInternalRequest}
+                      />
+                    );
+                  case "text":
+                    return <Text attachment={attachment} id={i} key={i} />;
+                  case "decision":
+                    return <Decision key={i} id={i} attachment={attachment} />;
+                  case "file":
+                    return <File key={i} attachment={attachment} i={i} />;
+                }
+              })}
+              <hr className="w-full border-t-4 border-solid border-zinc-200 my-0" />
+              <SubmitCard
+                changeTimeline={changeTimeline}
+                handleDrop={handleDrop}
+              />
+              <div className="w-2/3 flex justify-center items-center gap-2 pt-2">
+                <div className="w-[20%]" />
+                <Button
+                  onClick={() => {
+                    changeTimeline({
+                      typ: "text",
+                      name: "Ort",
+                      text: "",
+                    });
+                  }}
+                >
+                  Ort
+                </Button>
+                <Button
+                  onClick={() => {
+                    changeTimeline({
+                      typ: "text",
+                      name: "Sachverhalt",
+                      text: "",
+                    });
+                  }}
+                >
+                  Sachverhalt
+                </Button>
+                <Button
+                  onClick={() => {
+                    changeTimeline({
+                      typ: "text",
+                      name: "Erforderliche Maßnahmen",
+                      text: "",
+                    });
+                  }}
+                >
+                  Erforderliche Maßnahmen
+                </Button>
+                <Button
+                  onClick={() => {
+                    changeTimeline({
+                      typ: "text",
+                      name: "Ort",
+                      text: "",
+                    });
+                    changeTimeline({
+                      typ: "text",
+                      name: "Sachverhalt",
+                      text: "",
+                    });
+                    changeTimeline({
+                      typ: "text",
+                      name: "Erforderliche Maßnahmen",
+                      text: "",
+                    });
+                  }}
+                >
+                  OSEM
+                </Button>
+                <Button
+                  onClick={() => {
+                    changeTimeline({
+                      typ: "text",
+                      name: "Widerrufsvorbehalt",
+                      text: "Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigenb Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert.",
+                    });
+                  }}
+                >
+                  Widerrufsvorbehalt
+                </Button>
+                <Button
+                  onClick={() => {
+                    changeTimeline({
+                      typ: "text",
+                      name: "Mit freundlichen Grüßen",
+                    });
+                  }}
+                >
+                  MfG
+                </Button>
+              </div>
+            </div>
+
+            <div className="w-96">
+              <Timeline dataIn={currentTimeline} />
             </div>
           </div>
-
-          <div className="w-96">
-            <Timeline dataIn={currentTimeline} />
-          </div>
-        </div>
-      </Dragger>
-    </Card>
+        </Dragger>
+      </Card>
+    </>
   );
 };
 
