@@ -107,7 +107,7 @@ const TimelinePage = () => {
               />
             </div>
 
-            <div className="w-96">
+            <div className="w-[370px]">
               <div className="flex flex-col w-full items-start gap-2">
                 <span className="font-semibold text-muted-foreground">
                   Zeitlicher Verlauf
