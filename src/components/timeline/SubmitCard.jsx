@@ -17,7 +17,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
   ];
 
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex flex-col gap-2 w-full py-4">
       <span className="text-start text-lg font-medium">
         Kommentar Hinzufügen
       </span>
