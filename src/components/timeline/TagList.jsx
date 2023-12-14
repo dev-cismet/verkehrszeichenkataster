@@ -1,9 +1,15 @@
 import { Tag } from "antd";
-import { useSelector } from "react-redux";
-import { getCurrentApplication } from "../../store/slices/application";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteTimelineObject,
+  getCurrentApplication,
+} from "../../store/slices/application";
+import { useParams } from "react-router-dom";
 
 const TagList = ({ changeTimeline }) => {
+  const { id } = useParams();
   const timeline = useSelector(getCurrentApplication).timeline;
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -18,6 +24,16 @@ const TagList = ({ changeTimeline }) => {
                 name: "Ort",
                 text: "",
               });
+            } else {
+              const index = timeline.findIndex((obj) => obj.name === "Ort");
+              if (index >= 0) {
+                dispatch(
+                  deleteTimelineObject({
+                    timelineIndex: index,
+                    applicationId: id,
+                  })
+                );
+              }
             }
           }}
         >
@@ -32,6 +48,18 @@ const TagList = ({ changeTimeline }) => {
                 name: "Sachverhalt",
                 text: "",
               });
+            } else {
+              const index = timeline.findIndex(
+                (obj) => obj.name === "Sachverhalt"
+              );
+              if (index >= 0) {
+                dispatch(
+                  deleteTimelineObject({
+                    timelineIndex: index,
+                    applicationId: id,
+                  })
+                );
+              }
             }
           }}
         >
@@ -48,6 +76,18 @@ const TagList = ({ changeTimeline }) => {
                 name: "Erforderliche Maßnahmen",
                 text: "",
               });
+            } else {
+              const index = timeline.findIndex(
+                (obj) => obj.name === "Erforderliche Maßnahmen"
+              );
+              if (index >= 0) {
+                dispatch(
+                  deleteTimelineObject({
+                    timelineIndex: index,
+                    applicationId: id,
+                  })
+                );
+              }
             }
           }}
         >
@@ -62,6 +102,18 @@ const TagList = ({ changeTimeline }) => {
                 name: "Widerrufsvorbehalt",
                 text: "Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigen Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert.",
               });
+            } else {
+              const index = timeline.findIndex(
+                (obj) => obj.name === "Widerrufsvorbehalt"
+              );
+              if (index >= 0) {
+                dispatch(
+                  deleteTimelineObject({
+                    timelineIndex: index,
+                    applicationId: id,
+                  })
+                );
+              }
             }
           }}
         >
@@ -78,6 +130,18 @@ const TagList = ({ changeTimeline }) => {
                 name: "Mit freundlichen Grüßen",
                 text: "",
               });
+            } else {
+              const index = timeline.findIndex(
+                (obj) => obj.name === "Mit freundlichen Grüßen"
+              );
+              if (index >= 0) {
+                dispatch(
+                  deleteTimelineObject({
+                    timelineIndex: index,
+                    applicationId: id,
+                  })
+                );
+              }
             }
           }}
         >
