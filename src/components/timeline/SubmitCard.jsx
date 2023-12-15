@@ -6,7 +6,13 @@ import {
   updateTimelineStatus,
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
-import { FileAddOutlined, HighlightOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  FileAddOutlined,
+  HighlightOutlined,
+  HistoryOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 
 const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [text, setText] = useState("");
@@ -72,6 +78,13 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
               })
             )
           }
+          icon={
+            anordnung.timelineStatus === "Offen" ? (
+              <CloseOutlined />
+            ) : (
+              <HistoryOutlined />
+            )
+          }
         >
           {anordnung.timelineStatus === "Offen"
             ? "Anordnung Schließen"
@@ -86,6 +99,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
               setName("");
             }}
             disabled={!text || !name}
+            icon={<PlusOutlined />}
           >
             Hinzufügen
           </Button>
