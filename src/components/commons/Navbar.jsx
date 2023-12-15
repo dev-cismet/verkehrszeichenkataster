@@ -316,9 +316,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                   name: id,
                   id: id,
                   typ: "internal",
-                  anzahl: 2,
-                  date: "1.2.3",
-                  street: "street",
+                  timelineStatus: "Offen",
                   timeline: [
                     {
                       id: 1,
@@ -336,9 +334,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                   name: id,
                   id: id,
                   typ: "internal",
-                  anzahl: 2,
-                  date: "1.2.3",
-                  street: "street",
+                  timelineStatus: "Offen",
                   timeline: [
                     {
                       id: 1,
@@ -367,9 +363,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                   name: id,
                   id: id,
                   typ: "external",
-                  anzahl: 2,
-                  date: "1.2.3",
-                  street: "street",
+                  timelineStatus: "Offen",
                   timeline: [
                     {
                       id: 1,
@@ -387,9 +381,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                   name: id,
                   id: id,
                   typ: "external",
-                  anzahl: 2,
-                  date: "1.2.3",
-                  street: "street",
+                  timelineStatus: "Offen",
                   timeline: [
                     {
                       id: 1,
