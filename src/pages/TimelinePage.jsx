@@ -67,6 +67,7 @@ const TimelinePage = () => {
           overflowX: "clip",
           maxHeight: "91%",
           height: "100%",
+          marginTop: "2px",
         }}
         className="h-full w-full"
         title={<Heading />}
