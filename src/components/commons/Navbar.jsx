@@ -259,6 +259,9 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
             </Button>
           </Link>
         ))}
+        {selectedApplications.length > 0 && (
+          <div className="border-l border-r-0 h-10 border-solid border-muted-foreground" />
+        )}
         <div
           className="flex items-center overflow-clip w-full gap-2"
           ref={selectedApplicationsOuterRef}
