@@ -305,7 +305,6 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
       <div className="flex items-center gap-3">
         <Button
           size="small"
-          className="font-semibold"
           onClick={() => {
             const id = allApplications.length + 1;
             dispatch(
@@ -346,13 +345,12 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
             );
             navigate({ pathname: getApplicationPath(id) });
           }}
+          icon={<PlusOutlined />}
         >
-          <PlusOutlined />
           Intern
         </Button>
         <Button
           size="small"
-          className="font-semibold"
           onClick={() => {
             const id = allApplications.length + 1;
             dispatch(
@@ -393,8 +391,8 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
             );
             navigate({ pathname: getApplicationPath(id) });
           }}
+          icon={<PlusOutlined />}
         >
-          <PlusOutlined />
           Extern
         </Button>
         {/* <Dropdown trigger={["click"]} menu={{ items: createNewListItems }}>
