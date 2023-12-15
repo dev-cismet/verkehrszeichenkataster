@@ -1,91 +1,27 @@
 import { Button, Card, Table } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { dates, maßnahmen, sachverhalte, streets } from "../assets/_data";
 import {
   getAllApplications,
   storeAllApplications,
   storeSelectedApplications,
 } from "../store/slices/application";
+import { anordnungen } from "../constants/mockData";
 
 const columns = [
   {
-    title: "No.",
+    title: "Name",
     dataIndex: "name",
   },
   {
-    title: "Anzahl",
-    dataIndex: "anzahl",
-  },
-  {
-    title: "Datum",
-    dataIndex: "date",
-  },
-  {
-    title: "Straße",
-    dataIndex: "street",
+    title: "Nr",
+    dataIndex: "id",
   },
 ];
 
 const TablePage = () => {
   const dispatch = useDispatch();
   const allApplications = useSelector(getAllApplications);
-
-  const generateObjectsArray = (number) => {
-    let objectsArray = [];
-    for (let i = 1; i <= number; i++) {
-      let randomAnzahl = Math.floor(Math.random() * 100);
-      let obj = {
-        key: i,
-        name: i,
-        anzahl: randomAnzahl,
-        date: dates[Math.floor(Math.random() * dates.length)],
-        street: streets[Math.floor(Math.random() * streets.length)],
-        id: i,
-        timeline: [
-          {
-            id: 1,
-            typ: "request",
-            timestamp: "",
-            sign_location: "",
-            requester_postalcode: "",
-            requester_city: "",
-            requester_street: "",
-            requester_street_number: "",
-            billing_street: "",
-            billing_city: "",
-            billing_street_number: "",
-            billing_postal_code: "",
-            firstname: "",
-            lastname: "",
-            description: "",
-            phone: "",
-            time: "",
-            email: "",
-          },
-          {
-            id: 2,
-            typ: "text",
-            name: "Bemerkung",
-            text: "",
-          },
-          {
-            id: 3,
-            typ: "decision",
-            decision: "",
-            name: "Entscheidung",
-          },
-        ],
-        sachverhalt:
-          sachverhalte[Math.floor(Math.random() * sachverhalte.length)],
-        maßnahmen: maßnahmen[Math.floor(Math.random() * maßnahmen.length)],
-      };
-      objectsArray.push(obj);
-    }
-    return objectsArray;
-  };
-
-  const data = generateObjectsArray(10);
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -102,11 +38,7 @@ const TablePage = () => {
         className="h-full w-full overflow-clip"
         title="Anträge"
         extra={
-          <Button
-            onClick={() =>
-              dispatch(storeAllApplications(generateObjectsArray(10)))
-            }
-          >
+          <Button onClick={() => dispatch(storeAllApplications(anordnungen))}>
             Anträge laden
           </Button>
         }

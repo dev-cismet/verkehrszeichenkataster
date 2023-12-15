@@ -267,16 +267,18 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
             ?.slice(0, getNumberOfItemsThatFit(selectedApplicationsWidth, 112))
             .map((application, i) => (
               <Link
-                to={getApplicationPath(application?.key)}
+                to={getApplicationPath(application?.id)}
                 key={`applicationLink_${i}`}
               >
                 <Button
                   type="text"
                   className={`${
-                    location.pathname.includes("anordnung/" + application?.key)
+                    location.pathname.includes(
+                      "anordnung/" + application?.id + "/"
+                    )
                       ? "text-primary"
                       : ""
-                  } font-semibold no-underline w-32`}
+                  } font-semibold no-underline w-fit`}
                 >
                   <div className="hidden md:block truncate text-sm">
                     {application.timelineTitle
