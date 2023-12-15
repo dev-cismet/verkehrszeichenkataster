@@ -282,8 +282,8 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                 >
                   <div className="hidden md:block truncate text-sm">
                     {application.timelineTitle
-                      ? application.timelineTitle
-                      : "Anordnung " + application?.name}
+                      ? application.timelineTitle + " #" + application.id
+                      : application?.name}
                   </div>
                 </Button>
               </Link>
