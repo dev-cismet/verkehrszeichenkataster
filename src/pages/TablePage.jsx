@@ -17,6 +17,14 @@ const columns = [
     title: "Nr",
     dataIndex: "id",
   },
+  {
+    title: "Typ",
+    dataIndex: "typ",
+  },
+  {
+    title: "Status",
+    dataIndex: "timelineStatus",
+  },
 ];
 
 const TablePage = () => {
