@@ -300,7 +300,6 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
       <div className="flex items-center gap-3">
         <Button
           size="small"
-          type="text"
           className="font-semibold"
           onClick={() => {
             const id = allApplications.length + 1;
@@ -352,7 +351,6 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
         </Button>
         <Button
           size="small"
-          type="text"
           className="font-semibold"
           onClick={() => {
             const id = allApplications.length + 1;
@@ -402,14 +400,14 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
           <PlusOutlined />
           Extern
         </Button>
-        <Dropdown trigger={["click"]} menu={{ items: createNewListItems }}>
+        {/* <Dropdown trigger={["click"]} menu={{ items: createNewListItems }}>
           <Button className="px-4">
             <div className="flex items-center gap-2">
               <PlusOutlined />
               <CaretDownOutlined />
             </div>
           </Button>
-        </Dropdown>
+        </Dropdown> */}
         <LogoutOutlined
           className="text-2xl cursor-pointer"
           onClick={() => logout()}
