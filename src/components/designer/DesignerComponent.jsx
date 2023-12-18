@@ -1,8 +1,4 @@
-import {
-  Excalidraw,
-  MainMenu,
-  viewportCoordsToSceneCoords,
-} from "@excalidraw/excalidraw";
+import { Excalidraw, MainMenu } from "@excalidraw/excalidraw";
 import { useEffect, useState, useRef } from "react";
 import "./designer-style.css";
 import { Input, Collapse, Divider } from "antd";
@@ -10,7 +6,6 @@ import { SearchOutlined, DeleteOutlined } from "@ant-design/icons";
 import signLocal from "./signLocal.json";
 import {
   CloseOutlined,
-  PushpinOutlined,
   UnorderedListOutlined,
   AppstoreOutlined,
   BookOutlined,
@@ -371,7 +366,7 @@ const DesignerComponent = ({
           >
             <div style={iconWrapperSizeWithDescription}>
               <img
-                src={`/${icon.fileName}`}
+                src={icon.fileName}
                 style={singleIconStyInternalStyleWithDescription}
                 onClick={handleUpdateCanvas}
               />
