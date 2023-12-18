@@ -68,8 +68,8 @@ const Text = ({ attachment, id }) => {
         }
       >
         <TextArea
-          rows={3}
           value={attachment.text}
+          autoSize
           id={id}
           onChange={(e) => {
             dispatch(
