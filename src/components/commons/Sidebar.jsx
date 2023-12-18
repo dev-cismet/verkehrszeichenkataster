@@ -123,11 +123,11 @@ const Sidebar = () => {
       </div>
 
       <h2
-        className={`font-semibold text-lg truncate ${
+        className={`font-semibold text-lg truncate w-5/6 ${
           isCollapsed && "invisible"
         }`}
       >
-        {"Anordnung " + selectedApplication?.name}
+        {selectedApplication?.name}
       </h2>
       <SidebarItem
         link="verlauf"
