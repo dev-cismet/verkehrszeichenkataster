@@ -94,7 +94,7 @@ const labelView = (group, groupItems = null) => (
     </span>
   </div>
 );
-const DesignerComponent = ({
+const DesignerWrapper = ({
   dataIn = signLocal,
   extractor = libraryExtractor,
   activeMode = false,
@@ -652,4 +652,4 @@ const DesignerComponent = ({
   );
 };
 
-export default DesignerComponent;
+export default DesignerWrapper;
