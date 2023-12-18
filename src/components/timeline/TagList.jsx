@@ -102,7 +102,7 @@ const TagList = ({ changeTimeline }) => {
               changeTimeline({
                 typ: "text",
                 name: "Widerrufsvorbehalt",
-                text: "Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigen Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert.",
+                text: `Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigen Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert.`,
               });
             } else {
               const index = timeline.findIndex(
