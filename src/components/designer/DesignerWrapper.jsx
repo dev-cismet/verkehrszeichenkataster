@@ -92,6 +92,8 @@ const DesignerWrapper = ({
   dataIn = signLocal,
   extractor = libraryExtractor,
   activeMode = false,
+  getElements = (elements) => {},
+  initialElements,
 }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const [data, setData] = useState([]);
@@ -385,6 +387,8 @@ const DesignerWrapper = ({
           <Excalidraw
             excalidrawAPI={(api) => setExcalidrawAPI(api)}
             UIOptions={UIOptions}
+            onChange={(elements) => getElements(elements)}
+            initialData={{ elements: initialElements }}
             langCode="de-DE"
             renderTopRightUI={() => {
               return (

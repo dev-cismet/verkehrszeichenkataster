@@ -19,6 +19,7 @@ import DesignerWrapper from "../designer/DesignerWrapper";
 const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [text, setText] = useState("");
   const [name, setName] = useState("");
+  const [drawElements, setDrawElements] = useState([]);
   const [useDrawing, setUseDrawing] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -46,7 +47,9 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
             value={name}
           />
           {useDrawing ? (
-            <DesignerWrapper />
+            <DesignerWrapper
+              getElements={(elements) => setDrawElements(elements)}
+            />
           ) : (
             <Input.TextArea
               placeholder="Kommentar"
@@ -105,11 +108,20 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
           <Button
             type="primary"
             onClick={() => {
-              changeTimeline({ typ: "text", name: name, text: text });
+              if (useDrawing) {
+                changeTimeline({
+                  typ: "drawing",
+                  name: name,
+                  elements: drawElements,
+                });
+              } else {
+                changeTimeline({ typ: "text", name: name, text: text });
+              }
               setText("");
               setName("");
+              setDrawElements([]);
             }}
-            disabled={!text || !name}
+            disabled={!text || !(drawElements.length >= 0) || !name}
             icon={<PlusOutlined />}
           >
             Hinzufügen
