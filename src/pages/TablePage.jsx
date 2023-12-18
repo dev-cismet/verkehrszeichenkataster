@@ -11,7 +11,7 @@ import { anordnungen } from "../constants/mockData";
 const columns = [
   {
     title: "Name",
-    dataIndex: "name",
+    dataIndex: "timelineTitle",
   },
   {
     title: "Nr",
