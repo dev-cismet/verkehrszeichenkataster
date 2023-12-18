@@ -170,8 +170,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                 }}
               />
             ))}
-          {selectedApplications.length >
-            getNumberOfItemsThatFit(selectedApplicationsWidth, 112) && (
+          {items.length > 0 && (
             <Dropdown trigger={["click"]} menu={{ items }}>
               <Button type="text">
                 <EllipsisOutlined />
