@@ -9,14 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getCurrentApplication,
   storeTimeline,
-  updateTimelineTitle,
 } from "../store/slices/application";
 import File from "../components/timeline/File";
 import { useParams } from "react-router-dom";
 import SubmitCard from "../components/timeline/SubmitCard";
-import { useState } from "react";
 import Heading from "../components/timeline/Heading";
 import TagList from "../components/timeline/TagList";
+import DrawingCard from "../components/timeline/DrawingCard";
 
 const { Dragger } = Upload;
 
@@ -99,6 +98,10 @@ const TimelinePage = () => {
                     return <Decision key={i} id={i} attachment={attachment} />;
                   case "file":
                     return <File key={i} attachment={attachment} i={i} />;
+                  case "drawing":
+                    return (
+                      <DrawingCard key={i} attachment={attachment} id={i} />
+                    );
                 }
               })}
               <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-0" />
