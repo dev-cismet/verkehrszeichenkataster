@@ -10,4 +10,7 @@ export default defineConfig({
       transformMixedEsModules: true,
     },
   },
+  define: {
+    "process.env.IS_PREACT": JSON.stringify("true"),
+  },
 });

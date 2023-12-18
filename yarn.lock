@@ -1518,6 +1518,11 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.54.0.tgz#4fab9a2ff7860082c304f750e94acd644cf984cf"
   integrity sha512-ut5V+D+fOoWPgGGNj83GGjnntO39xDy6DWxO0wb7Jp3DcMX0TfIqdzHF85VTQkerdyGmuuMD9AKAo5KiNlf/AQ==
 
+"@excalidraw/excalidraw@0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@excalidraw/excalidraw/-/excalidraw-0.17.0.tgz#3c64aa8e36406ac171b008cfecbdce5bb0755725"
+  integrity sha512-NzP22v5xMqxYW27ZtTHhiGFe7kE8NeBk45aoeM/mDSkXiOXPDH+PcvwzHRN/Ei+Vj/0sTPHxejn8bZyRWKGjXg==
+
 "@fal-works/esbuild-plugin-global-externals@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@fal-works/esbuild-plugin-global-externals/-/esbuild-plugin-global-externals-2.1.2.tgz#c05ed35ad82df8e6ac616c68b92c2282bd083ba4"
