@@ -17,9 +17,7 @@ const colorPrimary = "#6965db";
 const colorInactiv = "#a5a5a5";
 const colorTextBlack = "#1b1b1f";
 const iconWrapperSize = {
-  // flex: "0 0 28px",
   width: "28px",
-  _height: "28px",
   aspectRatio: "1/1",
   padding: "8px",
   boxSizing: "content-box",
@@ -28,10 +26,7 @@ const iconWrapperSize = {
 };
 
 const singleIconStyInternalStyle = {
-  // flex: "0 0",
   maxWidth: "38px",
-  // margin: "auto",
-  // aspectRatio: "1/1",
   position: "absolute",
   maxHeight: "38px",
   top: "50%",
@@ -42,7 +37,6 @@ const iconWrapperSizeWithDescription = {
   flex: "0 0 28",
   minWidth: "28px",
   height: "28px",
-  // aspectRatio: "1/1",
   boxSizing: "content-box",
   padding: "8px",
   border: "1px solid #ECECF4",
@@ -154,8 +148,6 @@ const DesignerWrapper = ({
     const newFileId = nanoid();
 
     const excalidrawState = excalidrawAPI.getAppState();
-    // const canvasWidth = 1297;
-    // const canvasHeight = 768;
 
     const centerX = canvasWrapperRef.current.clientWidth / 2;
     const centerY = canvasWrapperRef.current.clientHeight / 2;
@@ -419,13 +411,9 @@ const DesignerWrapper = ({
             }}
           >
             <MainMenu style={{ width: "500px" }}>
-              {/* <MainMenu.DefaultItems.Socials /> */}
               <MainMenu.DefaultItems.Export />
               <MainMenu.DefaultItems.Help />
-              {/* <MainMenu.DefaultItems.SaveToActiveFile /> */}
-              {/* <MainMenu.DefaultItems.ToggleTheme /> */}
               <MainMenu.DefaultItems.LoadScene />
-              {/* <MainMenu.DefaultItems.ClearCanvas /> */}
               <MainMenu.Item
                 onSelect={resetScene}
                 icon={
@@ -456,7 +444,7 @@ const DesignerWrapper = ({
                 boxShadow: "rgba(15, 14, 15, 0.07) 4px 1px 9px 1px",
                 borderRadius: "12px",
                 overflow: "auto",
-                height: "646px",
+                height: "650px",
                 color: "#1b1b1f",
                 boxSizing: "content-box",
               }}
@@ -505,22 +493,6 @@ const DesignerWrapper = ({
                     />
                   </div>
                 </div>
-                {/* <div style={{ margin: "12px 0px 0px 0px" }}>
-                  <div style={{ display: "flex", gap: "12px" }}>
-                    <AppstoreOutlined
-                      style={{ color: !onlyIconMode && colorInactiv }}
-                      onClick={() => {
-                        setOnlyIconMode(true);
-                      }}
-                    />
-                    <UnorderedListOutlined
-                      onClick={() => {
-                        setOnlyIconMode(false);
-                      }}
-                      style={{ color: onlyIconMode && colorInactiv }}
-                    />
-                  </div>
-                </div> */}
                 <Divider style={{ margin: "22px 0px" }} />
                 <div style={{ margin: "15px 0px" }}>
                   {/* <span style={libraryTitle}>Suche</span> */}
@@ -611,40 +583,7 @@ const DesignerWrapper = ({
               </div>
             </div>
           ) : (
-            <div style={{ margin: "16px 0 0px 0px" }}>
-              {/* <Button
-                icon={<BookOutlined />}
-                size="large"
-                style={{
-                  background: "#ECECF4",
-                  color: "5B5B60",
-                  fontSize: "12px",
-                  // padding: "8px 0",
-                }}
-                onClick={() => setShowLibrary(!showLibrary)}
-              >
-                Bibliothek
-              </Button> */}
-              {/* <div
-                style={{
-                  background: "#ECECF4",
-                  displlay: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: "10.5px",
-                  borderRadius: "9px",
-                  width: "80px",
-                  color: "#5B5B60",
-                  fontSize: "12px",
-                  cursor: "pointer",
-                  fontFamily: "Assistant",
-                }}
-                onClick={() => setShowLibrary(!showLibrary)}
-              >
-                <BookOutlined />
-                <span style={{ marginLeft: "10px" }}>Bibliothek</span>
-              </div> */}
-            </div>
+            <div></div>
           )}
         </div>
       </div>
