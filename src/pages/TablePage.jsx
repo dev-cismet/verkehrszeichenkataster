@@ -11,11 +11,19 @@ import { anordnungen } from "../constants/mockData";
 const columns = [
   {
     title: "Name",
-    dataIndex: "name",
+    dataIndex: "timelineTitle",
   },
   {
     title: "Nr",
     dataIndex: "id",
+  },
+  {
+    title: "Typ",
+    dataIndex: "typ",
+  },
+  {
+    title: "Status",
+    dataIndex: "timelineStatus",
   },
 ];
 

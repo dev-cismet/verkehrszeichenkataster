@@ -6,6 +6,13 @@ import {
   updateTimelineStatus,
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
+import {
+  CloseOutlined,
+  FileAddOutlined,
+  HighlightOutlined,
+  HistoryOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 
 const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [text, setText] = useState("");
@@ -48,9 +55,13 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
               }}
               fileList={[]}
             >
-              <Button className="w-fit">Datei</Button>
+              <Button className="w-fit" icon={<FileAddOutlined />}>
+                Datei
+              </Button>
             </Upload>
-            <Button>Zeichnung</Button>
+            <Button className="w-fit" icon={<HighlightOutlined />}>
+              Zeichnung
+            </Button>
           </div>
         </div>
       </Card>
@@ -67,6 +78,13 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
               })
             )
           }
+          icon={
+            anordnung.timelineStatus === "Offen" ? (
+              <CloseOutlined />
+            ) : (
+              <HistoryOutlined />
+            )
+          }
         >
           {anordnung.timelineStatus === "Offen"
             ? "Anordnung Schließen"
@@ -81,6 +99,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
               setName("");
             }}
             disabled={!text || !name}
+            icon={<PlusOutlined />}
           >
             Hinzufügen
           </Button>

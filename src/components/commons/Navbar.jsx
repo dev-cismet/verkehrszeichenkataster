@@ -1,4 +1,4 @@
-import { Button, Dropdown } from "antd";
+import { Button, Dropdown, Select } from "antd";
 
 import {
   CaretDownOutlined,
@@ -24,6 +24,7 @@ import {
   storeSelectedApplications,
 } from "../../store/slices/application";
 import Logo from "/cismet.svg";
+import NavItem from "./NavItem";
 
 const navLinks = () => {
   return [
@@ -45,17 +46,18 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
   const selectedApplications = useSelector(getSelectedApplications);
   const selectedApplicationsOuterRef = useRef(null);
   const [selectedApplicationsWidth, setSelectedApplicationsWidth] = useState(0);
-  const items = selectedApplications
-    ?.slice(
-      getNumberOfItemsThatFit(selectedApplicationsWidth, 112),
-      selectedApplications?.length
-    )
-    .map((item, i) => {
-      return {
-        label: item?.name,
-        key: i,
-      };
-    });
+  const [items, setItems] = useState([]);
+  // const items = selectedApplications
+  //   ?.slice(
+  //     getNumberOfItemsThatFit(selectedApplicationsWidth, 112),
+  //     selectedApplications?.length
+  //   )
+  //   .map((item, i) => {
+  //     return {
+  //       label: item?.name,
+  //       key: i,
+  //     };
+  //   });
 
   let storyStyle = {};
   if (inStory) {
@@ -65,125 +67,6 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
       padding: "10px",
     };
   }
-
-  const createNewListItems = [
-    {
-      label: (
-        <div
-          role="button"
-          onClick={() => {
-            const id = allApplications.length + 1;
-            dispatch(
-              storeAllApplications([
-                ...allApplications,
-                {
-                  key: id,
-                  name: id,
-                  id: id,
-                  typ: "internal",
-                  anzahl: 2,
-                  date: "1.2.3",
-                  street: "street",
-                  timelineTitle: "",
-                  timelineStatus: "Offen",
-                  timeline: [
-                    {
-                      id: 1,
-                      typ: "request",
-                    },
-                  ],
-                },
-              ])
-            );
-            dispatch(
-              storeSelectedApplications([
-                ...selectedApplications,
-                {
-                  key: id,
-                  name: id,
-                  id: id,
-                  typ: "internal",
-                  anzahl: 2,
-                  date: "1.2.3",
-                  street: "street",
-                  timelineTitle: "",
-                  timelineStatus: "Offen",
-                  timeline: [
-                    {
-                      id: 1,
-                      typ: "request",
-                    },
-                  ],
-                },
-              ])
-            );
-            navigate({ pathname: getApplicationPath(id) });
-          }}
-        >
-          Interne Anordnung
-        </div>
-      ),
-      key: "0",
-    },
-    {
-      label: (
-        <div
-          role="button"
-          onClick={() => {
-            const id = allApplications.length + 1;
-            dispatch(
-              storeAllApplications([
-                ...allApplications,
-                {
-                  key: id,
-                  name: id,
-                  id: id,
-                  typ: "external",
-                  anzahl: 2,
-                  date: "1.2.3",
-                  street: "street",
-                  timelineTitle: "",
-                  timelineStatus: "Offen",
-                  timeline: [
-                    {
-                      id: 1,
-                      typ: "request",
-                    },
-                  ],
-                },
-              ])
-            );
-            dispatch(
-              storeSelectedApplications([
-                ...selectedApplications,
-                {
-                  key: id,
-                  name: id,
-                  id: id,
-                  typ: "external",
-                  anzahl: 2,
-                  date: "1.2.3",
-                  street: "street",
-                  timelineTitle: "",
-                  timelineStatus: "Offen",
-                  timeline: [
-                    {
-                      id: 1,
-                      typ: "request",
-                    },
-                  ],
-                },
-              ])
-            );
-            navigate({ pathname: getApplicationPath(id) });
-          }}
-        >
-          Externe Anordnung
-        </div>
-      ),
-      key: "1",
-    },
-  ];
 
   const logout = () => {
     dispatch(storeJWT(undefined));
@@ -259,6 +142,9 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
             </Button>
           </Link>
         ))}
+        {selectedApplications.length > 0 && (
+          <div className="border-l border-r-0 h-10 border-solid border-muted-foreground" />
+        )}
         <div
           className="flex items-center overflow-clip w-full gap-2"
           ref={selectedApplicationsOuterRef}
@@ -266,27 +152,23 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
           {selectedApplications
             ?.slice(0, getNumberOfItemsThatFit(selectedApplicationsWidth, 112))
             .map((application, i) => (
-              <Link
-                to={getApplicationPath(application?.id)}
+              <NavItem
                 key={`applicationLink_${i}`}
-              >
-                <Button
-                  type="text"
-                  className={`${
-                    location.pathname.includes(
-                      "anordnung/" + application?.id + "/"
-                    )
-                      ? "text-primary"
-                      : ""
-                  } font-semibold no-underline w-fit`}
-                >
-                  <div className="hidden md:block truncate text-sm">
-                    {application.timelineTitle
-                      ? application.timelineTitle
-                      : "Anordnung " + application?.name}
-                  </div>
-                </Button>
-              </Link>
+                application={application}
+                setItems={(item) => {
+                  if (
+                    !items.some((value) => value.label === item.timelineTitle)
+                  ) {
+                    setItems((prevItems) => [
+                      ...prevItems,
+                      {
+                        label: item.timelineTitle,
+                        key: item.id,
+                      },
+                    ]);
+                  }
+                }}
+              />
             ))}
           {selectedApplications.length >
             getNumberOfItemsThatFit(selectedApplicationsWidth, 112) && (
@@ -302,7 +184,6 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
       <div className="flex items-center gap-3">
         <Button
           size="small"
-          className="font-semibold"
           onClick={() => {
             const id = allApplications.length + 1;
             dispatch(
@@ -313,9 +194,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                   name: id,
                   id: id,
                   typ: "internal",
-                  anzahl: 2,
-                  date: "1.2.3",
-                  street: "street",
+                  timelineStatus: "Offen",
                   timeline: [
                     {
                       id: 1,
@@ -333,9 +212,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                   name: id,
                   id: id,
                   typ: "internal",
-                  anzahl: 2,
-                  date: "1.2.3",
-                  street: "street",
+                  timelineStatus: "Offen",
                   timeline: [
                     {
                       id: 1,
@@ -347,13 +224,12 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
             );
             navigate({ pathname: getApplicationPath(id) });
           }}
+          icon={<PlusOutlined />}
         >
-          <PlusOutlined />
           Intern
         </Button>
         <Button
           size="small"
-          className="font-semibold"
           onClick={() => {
             const id = allApplications.length + 1;
             dispatch(
@@ -364,9 +240,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                   name: id,
                   id: id,
                   typ: "external",
-                  anzahl: 2,
-                  date: "1.2.3",
-                  street: "street",
+                  timelineStatus: "Offen",
                   timeline: [
                     {
                       id: 1,
@@ -384,9 +258,7 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
                   name: id,
                   id: id,
                   typ: "external",
-                  anzahl: 2,
-                  date: "1.2.3",
-                  street: "street",
+                  timelineStatus: "Offen",
                   timeline: [
                     {
                       id: 1,
@@ -398,8 +270,8 @@ const NavBar = ({ width = "100%", height = 73, style, inStory }) => {
             );
             navigate({ pathname: getApplicationPath(id) });
           }}
+          icon={<PlusOutlined />}
         >
-          <PlusOutlined />
           Extern
         </Button>
         {/* <Dropdown trigger={["click"]} menu={{ items: createNewListItems }}>

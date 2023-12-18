@@ -6,7 +6,11 @@ import {
   updateTimelineTitle,
 } from "../../store/slices/application";
 import { Button, Input } from "antd";
-import { CheckCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import {
+  CheckCircleOutlined,
+  EditOutlined,
+  InfoCircleOutlined,
+} from "@ant-design/icons";
 
 const Heading = () => {
   const { id } = useParams();
@@ -65,7 +69,12 @@ const Heading = () => {
                   #{anordnung.id}
                 </span>
               </div>
-              <Button onClick={() => setEditTitle(true)}>Bearbeiten</Button>
+              <Button
+                onClick={() => setEditTitle(true)}
+                icon={<EditOutlined />}
+              >
+                Bearbeiten
+              </Button>
             </>
           )}
         </div>
