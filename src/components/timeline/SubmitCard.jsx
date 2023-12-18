@@ -9,14 +9,17 @@ import { useParams } from "react-router-dom";
 import {
   CloseOutlined,
   FileAddOutlined,
+  FileTextOutlined,
   HighlightOutlined,
   HistoryOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
+import DesignerWrapper from "../designer/DesignerWrapper";
 
 const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [text, setText] = useState("");
   const [name, setName] = useState("");
+  const [useDrawing, setUseDrawing] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
   const anordnung = useSelector(getCurrentApplication);
@@ -42,12 +45,16 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
             onChange={(e) => setName(e.target.value)}
             value={name}
           />
-          <Input.TextArea
-            placeholder="Kommentar"
-            rows={5}
-            onChange={(e) => setText(e.target.value)}
-            value={text}
-          />
+          {useDrawing ? (
+            <DesignerWrapper />
+          ) : (
+            <Input.TextArea
+              placeholder="Kommentar"
+              rows={5}
+              onChange={(e) => setText(e.target.value)}
+              value={text}
+            />
+          )}
           <div className="flex items-center gap-4">
             <Upload
               beforeUpload={(file) => {
@@ -59,8 +66,12 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                 Datei
               </Button>
             </Upload>
-            <Button className="w-fit" icon={<HighlightOutlined />}>
-              Zeichnung
+            <Button
+              className="w-fit"
+              icon={useDrawing ? <FileTextOutlined /> : <HighlightOutlined />}
+              onClick={() => setUseDrawing(!useDrawing)}
+            >
+              {useDrawing ? "Text" : "Zeichnung"}
             </Button>
           </div>
         </div>
