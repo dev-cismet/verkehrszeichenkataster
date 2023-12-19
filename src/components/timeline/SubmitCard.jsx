@@ -81,30 +81,6 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
         </div>
       </Card>
       <div className="w-full flex items-center gap-2 justify-end">
-        <Button
-          onClick={() =>
-            dispatch(
-              updateTimelineStatus({
-                updatedStatus:
-                  anordnung.timelineStatus === "Offen"
-                    ? "Geschlossen"
-                    : "Offen",
-                applicationId: id,
-              })
-            )
-          }
-          icon={
-            anordnung.timelineStatus === "Offen" ? (
-              <CloseOutlined />
-            ) : (
-              <HistoryOutlined />
-            )
-          }
-        >
-          {anordnung.timelineStatus === "Offen"
-            ? "Anordnung Schließen"
-            : "Anordnung öffnen"}
-        </Button>
         {anordnung.timelineStatus === "Offen" && (
           <Button
             type="primary"
