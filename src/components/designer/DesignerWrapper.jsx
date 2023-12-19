@@ -91,13 +91,14 @@ const labelView = (group, groupItems = null) => (
 const DesignerWrapper = ({
   dataIn = signLocal,
   extractor = libraryExtractor,
-  activeMode = false,
+  viewOnlyMode = false,
   getElements = (elements) => {},
   initialElements,
 }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const [data, setData] = useState([]);
   const canvasWrapperRef = useRef(null);
+  const [viewMode, setViewMode] = useState(viewOnlyMode);
 
   useEffect(() => {
     if (excalidrawAPI) {
@@ -128,19 +129,18 @@ const DesignerWrapper = ({
       saveAsImage: false,
     },
   };
-  const [showLibrary, setShowLibrary] = useState(true);
+  const [showLibrary, setShowLibrary] = useState(!viewOnlyMode);
   const [onlyIconMode, setOnlyIconMode] = useState(true);
   const [itemsOnlyIcon, setItemsOnlyIcon] = useState();
   const [itemsWithTextDescription, setItemsWithTextDescription] = useState();
-  const [ifPinnedLibrary, setIfPinnedLibrary] = useState(true);
+  const [isPinnedLibrary, setIsPinnedLibrary] = useState(true);
 
   const [searchText, setSearchText] = useState("");
 
-  const [filtredData, setFiltredData] = useState([]);
-  const [filtredDataOnlyIcon, setFiltredDataOnlyIcon] = useState({});
-  const [filtredDataIconDescription, setFiltredDataIconDescription] = useState(
-    {}
-  );
+  const [filteredData, setFilteredData] = useState([]);
+  const [filteredDataOnlyIcon, setFilteredDataOnlyIcon] = useState({});
+  const [filteredDataIconDescription, setFilteredDataIconDescription] =
+    useState({});
 
   const handleUpdateCanvas = async (event) => {
     const naturalWidth = event.target.naturalWidth;
@@ -310,9 +310,9 @@ const DesignerWrapper = ({
         (sectionName) => compsOnlyIcons[sectionName].length > 0
       );
 
-      setFiltredData(dataFiltered);
-      setFiltredDataOnlyIcon(compsOnlyIcons);
-      setFiltredDataIconDescription(compsWithTextDescription);
+      setFilteredData(dataFiltered);
+      setFilteredDataOnlyIcon(compsOnlyIcons);
+      setFilteredDataIconDescription(compsWithTextDescription);
     }
   }, [searchText]);
 
@@ -390,6 +390,8 @@ const DesignerWrapper = ({
             onChange={(elements) => getElements(elements)}
             initialData={{ elements: initialElements }}
             langCode="de-DE"
+            viewModeEnabled={viewMode}
+            zenModeEnabled={viewMode}
             renderTopRightUI={() => {
               return (
                 <div
@@ -416,26 +418,31 @@ const DesignerWrapper = ({
           >
             <MainMenu style={{ width: "500px" }}>
               <MainMenu.DefaultItems.Export />
-              <MainMenu.DefaultItems.Help />
-              <MainMenu.DefaultItems.LoadScene />
-              <MainMenu.Item
-                onSelect={resetScene}
-                icon={
-                  <DeleteOutlined
-                    style={{ fontSize: "8px", color: "#5B5B60" }}
-                  />
-                }
-              >
-                <span>Zeichenfläche löschen</span>
-              </MainMenu.Item>
-              <Divider />
+
+              {!viewMode && (
+                <>
+                  <MainMenu.DefaultItems.Help />
+                  <MainMenu.DefaultItems.LoadScene />
+                  <MainMenu.Item
+                    onSelect={resetScene}
+                    icon={
+                      <DeleteOutlined
+                        style={{ fontSize: "8px", color: "#5B5B60" }}
+                      />
+                    }
+                  >
+                    <span>Zeichenfläche löschen</span>
+                  </MainMenu.Item>
+                  <Divider />
+                </>
+              )}
               <MainMenu.DefaultItems.ChangeCanvasBackground />
             </MainMenu>
           </Excalidraw>
         </div>
         <div
           style={{
-            display: ifPinnedLibrary ? "block" : "none",
+            display: isPinnedLibrary ? "block" : "none",
           }}
         >
           {showLibrary ? (
@@ -464,7 +471,7 @@ const DesignerWrapper = ({
                         fontWeight: "bold",
                         marginRight: "12px",
                       }}
-                      onClick={() => setIfPinnedLibrary(false)}
+                      onClick={() => setIsPinnedLibrary(false)}
                     /> */}
                     <AppstoreOutlined
                       style={{
@@ -551,7 +558,7 @@ const DesignerWrapper = ({
                           </div>
                         );
                       })
-                    : filtredData.map((sectionTitle) => {
+                    : filteredData.map((sectionTitle) => {
                         return (
                           <div
                             style={{ margin: "12px 0px 0px 0px" }}
@@ -571,8 +578,8 @@ const DesignerWrapper = ({
                             <Collapse
                               items={
                                 onlyIconMode
-                                  ? filtredDataOnlyIcon[sectionTitle] || []
-                                  : filtredDataIconDescription[
+                                  ? filteredDataOnlyIcon[sectionTitle] || []
+                                  : filteredDataIconDescription[
                                       sectionTitle || []
                                     ]
                               }
