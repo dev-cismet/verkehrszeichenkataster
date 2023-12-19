@@ -20,7 +20,7 @@ const Timeline = ({ dataIn, extractor = mockExtractor }) => {
               };
             case "text":
               return {
-                children: "Bemerkung hinzugefügt",
+                children: `${item.name} hinzugefügt`,
               };
             case "decision":
               return {
@@ -28,7 +28,7 @@ const Timeline = ({ dataIn, extractor = mockExtractor }) => {
               };
             case "file":
               return {
-                children: "Datei hochgeladen",
+                children: `${item.name} hochgeladen`,
               };
           }
         })}
