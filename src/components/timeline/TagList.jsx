@@ -12,6 +12,10 @@ const TagList = ({ changeTimeline }) => {
   const timeline = useSelector(getCurrentApplication).timeline;
   const dispatch = useDispatch();
 
+  const checkIfTimelineContainsText = (text) => {
+    return timeline.some((obj) => obj.name === text);
+  };
+
   return (
     <>
       <span className="font-semibold text-muted-foreground pb-2">
@@ -19,7 +23,12 @@ const TagList = ({ changeTimeline }) => {
       </span>
       <div className="flex w-full flex-wrap gap-1">
         <Tag.CheckableTag
-          checked={timeline.some((obj) => obj.name === "Ort")}
+          checked={checkIfTimelineContainsText("Ort")}
+          className={`${
+            checkIfTimelineContainsText("Ort")
+              ? "bg-green-600 hover:bg-green-500"
+              : "bg-transparent"
+          }`}
           onChange={(checked) => {
             if (checked) {
               changeTimeline({
@@ -43,7 +52,12 @@ const TagList = ({ changeTimeline }) => {
           Ort
         </Tag.CheckableTag>
         <Tag.CheckableTag
-          checked={timeline.some((obj) => obj.name === "Sachverhalt")}
+          checked={checkIfTimelineContainsText("Sachverhalt")}
+          className={`${
+            checkIfTimelineContainsText("Sachverhalt")
+              ? "bg-teal-600 hover:bg-teal-500"
+              : "bg-transparent"
+          }`}
           onChange={(checked) => {
             if (checked) {
               changeTimeline({
@@ -69,9 +83,12 @@ const TagList = ({ changeTimeline }) => {
           Sachverhalt
         </Tag.CheckableTag>
         <Tag.CheckableTag
-          checked={timeline.some(
-            (obj) => obj.name === "Erforderliche Maßnahmen"
-          )}
+          checked={checkIfTimelineContainsText("Erforderliche Maßnahmen")}
+          className={`${
+            checkIfTimelineContainsText("Erforderliche Maßnahmen")
+              ? "bg-sky-600 hover:bg-sky-500"
+              : "bg-transparent"
+          }`}
           onChange={(checked) => {
             if (checked) {
               changeTimeline({
@@ -97,7 +114,12 @@ const TagList = ({ changeTimeline }) => {
           Erforderliche Maßnahmen
         </Tag.CheckableTag>
         <Tag.CheckableTag
-          checked={timeline.some((obj) => obj.name === "Widerrufsvorbehalt")}
+          checked={checkIfTimelineContainsText("Widerrufsvorbehalt")}
+          className={`${
+            checkIfTimelineContainsText("Widerrufsvorbehalt")
+              ? "bg-indigo-600 hover:bg-indigo-500"
+              : "bg-transparent"
+          }`}
           onChange={(checked) => {
             if (checked) {
               changeTimeline({
@@ -123,7 +145,12 @@ const TagList = ({ changeTimeline }) => {
           Widerrufsvorbehalt
         </Tag.CheckableTag>
         <Tag.CheckableTag
-          checked={timeline.some((obj) => obj.name === "Mit freundlichem Gruß")}
+          checked={checkIfTimelineContainsText("Mit freundlichem Gruß")}
+          className={`${
+            checkIfTimelineContainsText("Mit freundlichem Gruß")
+              ? "bg-purple-600 hover:bg-purple-500"
+              : "bg-transparent"
+          }`}
           onChange={(checked) => {
             if (checked) {
               changeTimeline({
