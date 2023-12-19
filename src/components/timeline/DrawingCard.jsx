@@ -1,7 +1,10 @@
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Card, Dropdown, Input } from "antd";
 import { useDispatch } from "react-redux";
-import { updateName } from "../../store/slices/application";
+import {
+  deleteTimelineObject,
+  updateName,
+} from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import DesignerWrapper from "../designer/DesignerWrapper";
 
