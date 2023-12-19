@@ -34,11 +34,29 @@ const Text = ({ attachment, id }) => {
     },
   ];
 
+  const getColor = (name) => {
+    switch (name) {
+      case "Ort":
+        return "#f0fdf4";
+      case "Sachverhalt":
+        return "#f0fdfa";
+      case "Erforderliche Maßnahmen":
+        return "#f0f9ff";
+      case "Widerrufsvorbehalt":
+        return "#eef2ff";
+      case "Mit freundlichem Gruß":
+        return "#faf5ff";
+    }
+  };
+
   return (
     <div className="w-full relative py-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]">
       <Card
         size="small"
         type="inner"
+        headStyle={{
+          background: getColor(attachment.name),
+        }}
         title={
           <div className="w-full flex">
             <Input
