@@ -82,9 +82,9 @@ const Heading = () => {
           <div
             className={`${
               anordnung.timelineStatus === "Offen"
-                ? "bg-green-600"
-                : "bg-purple-600"
-            } py-1 px-3 w-fit rounded-2xl text-lg font-medium text-white flex gap-2 items-center justify-center`}
+                ? "bg-green-700"
+                : "bg-purple-700"
+            } py-1 px-3 w-fit rounded-3xl text-lg font-medium text-white flex gap-2 items-center justify-center`}
           >
             {anordnung.timelineStatus === "Offen" ? (
               <InfoCircleOutlined />
@@ -94,7 +94,7 @@ const Heading = () => {
             <span>{anordnung.timelineStatus}</span>
           </div>
           <span className="text-muted-foreground font-normal">
-            Person hat letzte Woche diese Anordnung erstellt ·{" "}
+            Vooes hat letzte Woche diese Anordnung erstellt ·{" "}
             {anordnung?.timeline?.length} Baustein
             {(anordnung?.timeline?.length === 0 ||
               anordnung?.timeline?.length > 1) &&
