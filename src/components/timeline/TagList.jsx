@@ -5,6 +5,7 @@ import {
   getCurrentApplication,
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
+import "./tags.css";
 
 const TagList = ({ changeTimeline }) => {
   const { id } = useParams();
@@ -16,7 +17,7 @@ const TagList = ({ changeTimeline }) => {
       <span className="font-semibold text-muted-foreground pb-2">
         Textbausteine
       </span>
-      <div className="flex w-full flex-wrap gap-2">
+      <div className="flex w-full flex-wrap gap-1">
         <Tag.CheckableTag
           checked={timeline.some((obj) => obj.name === "Ort")}
           onChange={(checked) => {
