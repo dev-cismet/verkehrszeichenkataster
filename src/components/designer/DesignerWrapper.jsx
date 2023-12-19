@@ -206,7 +206,6 @@ const DesignerWrapper = ({
     });
     setCanvasUrl(exportCanvas.toDataURL());
     getPreviewSrcLink(exportCanvas.toDataURL());
-    console.log("xxx generatePreviewHandler", exportCanvas);
   };
   useEffect(() => {
     const compsWithTextDescription = {};
@@ -407,9 +406,6 @@ const DesignerWrapper = ({
         }}
       >
         <div style={{ width: "100%" }} ref={canvasWrapperRef}>
-          {/* <div>
-            <img src={canvasUrl} alt="" />
-          </div> */}
           <Excalidraw
             excalidrawAPI={(api) => setExcalidrawAPI(api)}
             UIOptions={UIOptions}
