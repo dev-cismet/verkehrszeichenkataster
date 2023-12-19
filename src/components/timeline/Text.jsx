@@ -37,15 +37,15 @@ const Text = ({ attachment, id }) => {
   const getColor = (name) => {
     switch (name) {
       case "Ort":
-        return "#f0fdf4";
+        return "#bbf7d0";
       case "Sachverhalt":
-        return "#f0fdfa";
+        return "#99f6e4";
       case "Erforderliche Maßnahmen":
-        return "#f0f9ff";
+        return "#bae6fd";
       case "Widerrufsvorbehalt":
-        return "#eef2ff";
+        return "#c7d2fe";
       case "Mit freundlichem Gruß":
-        return "#faf5ff";
+        return "#e9d5ff";
     }
   };
 
