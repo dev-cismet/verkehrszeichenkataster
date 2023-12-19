@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getCurrentApplication,
   storeTimeline,
+  updateTimelineStatus,
 } from "../store/slices/application";
 import File from "../components/timeline/File";
 import { useParams } from "react-router-dom";
@@ -16,6 +17,7 @@ import SubmitCard from "../components/timeline/SubmitCard";
 import Heading from "../components/timeline/Heading";
 import TagList from "../components/timeline/TagList";
 import DrawingCard from "../components/timeline/DrawingCard";
+import { CloseOutlined, HistoryOutlined } from "@ant-design/icons";
 
 const { Dragger } = Upload;
 
@@ -120,6 +122,35 @@ const TimelinePage = () => {
                 <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
                 <TagList changeTimeline={changeTimeline} />
                 <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
+                <span className="font-semibold text-muted-foreground pb-2">
+                  Aktionen
+                </span>
+                <div
+                  role="button"
+                  className="hover:text-primary flex gap-1 cursor-pointer font-medium"
+                  onClick={() =>
+                    dispatch(
+                      updateTimelineStatus({
+                        updatedStatus:
+                          anordnung.timelineStatus === "Offen"
+                            ? "Geschlossen"
+                            : "Offen",
+                        applicationId: id,
+                      })
+                    )
+                  }
+                >
+                  {anordnung.timelineStatus === "Offen" ? (
+                    <CloseOutlined />
+                  ) : (
+                    <HistoryOutlined />
+                  )}
+                  <span>
+                    {anordnung.timelineStatus === "Offen"
+                      ? "Anordnung Schließen"
+                      : "Anordnung öffnen"}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
