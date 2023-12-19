@@ -122,19 +122,17 @@ const TagList = ({ changeTimeline }) => {
           Widerrufsvorbehalt
         </Tag.CheckableTag>
         <Tag.CheckableTag
-          checked={timeline.some(
-            (obj) => obj.name === "Mit freundlichen Grüßen"
-          )}
+          checked={timeline.some((obj) => obj.name === "Mit freundlichem Gruß")}
           onChange={(checked) => {
             if (checked) {
               changeTimeline({
                 typ: "text",
-                name: "Mit freundlichen Grüßen",
+                name: "Mit freundlichem Gruß",
                 text: "",
               });
             } else {
               const index = timeline.findIndex(
-                (obj) => obj.name === "Mit freundlichen Grüßen"
+                (obj) => obj.name === "Mit freundlichem Gruß"
               );
               if (index >= 0) {
                 dispatch(
