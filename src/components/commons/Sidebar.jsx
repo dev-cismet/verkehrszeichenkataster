@@ -84,26 +84,29 @@ const SidebarItem = ({
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
-  const currentTimeline = useSelector(getTimeline);
 
   const selectedApplication = useSelector(getCurrentApplication);
+  const currentTimeline = selectedApplication.timeline;
 
-  const getIcon = (type) => {
+  const getIcon = (type, name) => {
+    if (name === "Ort") {
+      return <HomeOutlined className="text-lg" />;
+    }
     switch (type) {
-      case "antrag":
+      case "request":
         return <FormOutlined className="text-lg" />;
       case "text":
         return <EditOutlined className="text-lg" />;
       case "file":
         return <FileOutlined className="text-lg" />;
-      case "entscheidung":
+      case "drawing":
         return <PullRequestOutlined className="text-lg" />;
     }
   };
 
   return (
     <aside
-      className={`relative flex h-full ${isCollapsed ? "w-16" : "w-56"} ${
+      className={`relative flex h-full ${isCollapsed ? "w-16" : "w-72"} ${
         isResetting && "transition-all duration-300 ease-in-out"
       } flex-col gap-4 overflow-y-auto bg-white p-2 text-lg`}
     >
@@ -129,23 +132,16 @@ const Sidebar = () => {
       >
         {selectedApplication?.name}
       </h2>
-      <SidebarItem
-        link="verlauf"
-        icon={<StockOutlined className="text-lg" />}
-        isSidebarCollapsed={isCollapsed}
-        text="Verlauf"
-        collapsable={true}
-      >
-        {currentTimeline.map((item, i) => (
-          <SidebarItem
-            // link={"verlauf"}
-            icon={getIcon(item.type)}
-            isSidebarCollapsed={isCollapsed}
-            text={item.values?.name}
-            key={`sidebar_timeline_${i}`}
-          />
-        ))}
-      </SidebarItem>
+
+      {currentTimeline.map((item, i) => (
+        <SidebarItem
+          // link={"verlauf"}
+          icon={getIcon(item.typ, item.name)}
+          isSidebarCollapsed={isCollapsed}
+          text={item.typ === "request" ? "Antrag" : item.name}
+          key={`sidebar_timeline_${i}`}
+        />
+      ))}
 
       <SidebarItem
         link="kataster/1"
