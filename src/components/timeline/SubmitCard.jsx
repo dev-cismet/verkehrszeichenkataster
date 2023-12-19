@@ -49,6 +49,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
           {useDrawing ? (
             <DesignerWrapper
               getElements={(elements) => setDrawElements(elements)}
+              initialElements={drawElements}
             />
           ) : (
             <Input.TextArea
@@ -120,8 +121,9 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
               setText("");
               setName("");
               setDrawElements([]);
+              setUseDrawing(false);
             }}
-            disabled={!text || !(drawElements.length >= 0) || !name}
+            disabled={(!text && !(drawElements.length >= 0)) || !name}
             icon={<PlusOutlined />}
           >
             Hinzufügen
