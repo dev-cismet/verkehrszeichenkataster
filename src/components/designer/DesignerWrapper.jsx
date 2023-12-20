@@ -92,6 +92,7 @@ const labelView = (group, groupItems = null) => (
     </span>
   </div>
 );
+
 const DesignerWrapper = ({
   dataIn = signLocal,
   extractor = libraryExtractor,
@@ -99,13 +100,13 @@ const DesignerWrapper = ({
   getElements = (elements) => {},
   initialElements,
   getPreviewSrcLink = () => {},
+  resetDrawing,
 }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const [data, setData] = useState([]);
   const canvasWrapperRef = useRef(null);
   const [viewMode, setViewMode] = useState(viewOnlyMode);
   const [canvasUrl, setCanvasUrl] = useState(null);
-
   useEffect(() => {
     if (excalidrawAPI) {
       setData(extractor(dataIn));
@@ -337,6 +338,12 @@ const DesignerWrapper = ({
       setFilteredDataIconDescription(compsWithTextDescription);
     }
   }, [searchText]);
+
+  useEffect(() => {
+    if (resetDrawing) {
+      resetScene();
+    }
+  }, [resetDrawing]);
 
   const resetScene = () => {
     excalidrawAPI.resetScene();
