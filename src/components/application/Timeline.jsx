@@ -30,6 +30,10 @@ const Timeline = ({ dataIn, extractor = mockExtractor }) => {
               return {
                 children: `${item.name} hochgeladen`,
               };
+            case "drawing":
+              return {
+                children: `${item.name} gezeichnet`,
+              };
           }
         })}
       />
