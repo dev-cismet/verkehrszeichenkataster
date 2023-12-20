@@ -21,7 +21,8 @@ import {
   getTimeline,
 } from "../../store/slices/application";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignsPost } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faSignsPost } from "@fortawesome/free-solid-svg-icons";
+import { faFileLines } from "@fortawesome/free-regular-svg-icons";
 
 const SidebarItem = ({
   link,
@@ -109,11 +110,11 @@ const Sidebar = () => {
       case "request":
         return <FormOutlined className="text-lg" />;
       case "text":
-        return <EditOutlined className="text-lg" />;
+        return <FontAwesomeIcon icon={faFileLines} />;
       case "file":
         return <FileOutlined className="text-lg" />;
       case "drawing":
-        return <PullRequestOutlined className="text-lg" />;
+        return <FontAwesomeIcon icon={faPencil} />;
     }
   };
 
