@@ -130,7 +130,7 @@ const Sidebar = () => {
           isCollapsed && "invisible"
         }`}
       >
-        {selectedApplication?.name}
+        {selectedApplication?.timelineTitle}
       </h2>
 
       {currentTimeline.map((item, i) => (
