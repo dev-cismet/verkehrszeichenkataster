@@ -396,7 +396,9 @@ const DesignerWrapper = ({
   return (
     <>
       <div
-        className="excalidraw-custom-wrapper"
+        className={`excalidraw-custom-wrapper ${
+          viewMode ? "only-view-mode" : ""
+        }`}
         style={{
           height: "700px",
           display: "flex",
@@ -435,9 +437,9 @@ const DesignerWrapper = ({
               );
             }}
           >
-            <MainMenu style={{ display: "none", width: "500px" }}>
-              {/* <MainMenu.DefaultItems.Export /> */}
-              {/* <MainMenu.Item
+            <MainMenu style={{ width: "500px" }}>
+              <MainMenu.DefaultItems.Export />
+              <MainMenu.Item
                 onSelect={generatePreviewHandler}
                 icon={
                   <CameraOutlined
@@ -466,7 +468,7 @@ const DesignerWrapper = ({
                   <Divider />
                 </>
               )}
-              <MainMenu.DefaultItems.ChangeCanvasBackground /> */}
+              <MainMenu.DefaultItems.ChangeCanvasBackground />
             </MainMenu>
           </Excalidraw>
         </div>
