@@ -31,7 +31,7 @@ const Request = ({ attachment, i, isInternalRequest }) => {
             size="small"
             type="inner"
             title={
-              <div className="font-medium text-lg text-start">Adressen</div>
+              <div className="font-medium text-lg text-start">Anfrage</div>
             }
           >
             <div className="w-full flex flex-col gap-2">
@@ -51,7 +51,7 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                 </div>
               )}
               {receiver ? (
-                <span className="w-full text-xl font-medium">
+                <span className="w-full text-xl text-end font-medium">
                   Von: {receiver}{" "}
                   <EditOutlined
                     className="cursor-pointer"
@@ -59,7 +59,7 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                   />
                 </span>
               ) : (
-                <div className="flex justify-center items-center gap-2 w-full">
+                <div className="flex justify-end items-center gap-2 w-full">
                   <Button onClick={() => setReceiver("104.11")}>104.11</Button>
                   <Button onClick={() => setReceiver("104.23")}>104.23</Button>
                   <Button onClick={() => setReceiver("GMW")}>GMW</Button>
