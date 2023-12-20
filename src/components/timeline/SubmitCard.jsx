@@ -20,6 +20,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [text, setText] = useState("");
   const [name, setName] = useState("");
   const [drawElements, setDrawElements] = useState([]);
+  const [drawFiles, setDrawFiles] = useState([]);
   const [useDrawing, setUseDrawing] = useState(false);
   const submitRef = useRef(null);
   const { id } = useParams();
@@ -50,6 +51,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
           {useDrawing ? (
             <Designer
               getElements={(elements) => setDrawElements(elements)}
+              getFiles={(files) => setDrawFiles(files)}
               initialElements={drawElements}
             />
           ) : (
@@ -109,7 +111,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                 changeTimeline({
                   typ: "drawing",
                   name: name,
-                  elements: drawElements,
+                  elements: { elements: drawElements, files: drawFiles },
                 });
               } else {
                 changeTimeline({ typ: "text", name: name, text: text });

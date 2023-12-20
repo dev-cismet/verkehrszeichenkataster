@@ -98,6 +98,7 @@ const DesignerWrapper = ({
   extractor = libraryExtractor,
   viewOnlyMode = false,
   getElements = (elements) => {},
+  getFiles = () => {},
   initialElements,
   getPreviewSrcLink = () => {},
   resetDrawing,
@@ -408,8 +409,11 @@ const DesignerWrapper = ({
           <Excalidraw
             excalidrawAPI={(api) => setExcalidrawAPI(api)}
             UIOptions={UIOptions}
-            onChange={(elements) => getElements(elements)}
-            initialData={{ elements: initialElements }}
+            onChange={(elements, appstate, files) => {
+              getElements(elements);
+              getFiles(files);
+            }}
+            initialData={initialElements}
             langCode="de-DE"
             viewModeEnabled={viewMode}
             zenModeEnabled={viewMode}
