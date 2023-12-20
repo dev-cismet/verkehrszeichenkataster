@@ -39,97 +39,111 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
   ];
 
   return (
-    <div className="flex flex-col gap-2 w-full py-4">
-      <span className="text-start text-lg font-medium">Anhang Hinzufügen</span>
-      <Card tabList={tabListNoTitle} size="small" type="inner">
-        <div className="flex flex-col gap-2">
-          <Input
-            placeholder="Name"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
-          {useDrawing ? (
-            <Designer
-              getElements={(elements) => setDrawElements(elements)}
-              getFiles={(files) => setDrawFiles(files)}
-              initialElements={drawElements}
-            />
-          ) : (
-            <Input.TextArea
-              placeholder="Kommentar"
-              rows={5}
-              onChange={(e) => setText(e.target.value)}
-              value={text}
-            />
-          )}
-          <div className="flex items-center gap-4">
-            <Upload
-              beforeUpload={(file) => {
-                handleDrop(file);
-              }}
-              fileList={[]}
-            >
-              <Button className="w-fit" icon={<FileAddOutlined />}>
-                Datei
-              </Button>
-            </Upload>
-            {!useDrawing && (
+    <>
+      {anordnung.timelineStatus === "Offen" && (
+        <div className="flex flex-col gap-2 w-full py-4">
+          <span className="text-start text-lg font-medium">
+            Anhang Hinzufügen
+          </span>
+          <Card
+            tabList={!useDrawing && tabListNoTitle}
+            size="small"
+            type="inner"
+          >
+            <div className="flex flex-col gap-2">
+              <Input
+                placeholder="Name"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+              />
+              {useDrawing ? (
+                <Designer
+                  getElements={(elements) => setDrawElements(elements)}
+                  getFiles={(files) => setDrawFiles(files)}
+                  initialElements={drawElements}
+                />
+              ) : (
+                <Input.TextArea
+                  placeholder="Kommentar"
+                  rows={5}
+                  onChange={(e) => setText(e.target.value)}
+                  value={text}
+                />
+              )}
+              <div className="flex items-center gap-4">
+                {!useDrawing && (
+                  <>
+                    <Upload
+                      beforeUpload={(file) => {
+                        handleDrop(file);
+                      }}
+                      fileList={[]}
+                    >
+                      <Button className="w-fit" icon={<FileAddOutlined />}>
+                        Datei
+                      </Button>
+                    </Upload>
+                    <Button
+                      className="w-fit"
+                      icon={<HighlightOutlined />}
+                      onClick={() => {
+                        setUseDrawing(true);
+                        if (submitRef.current) {
+                          setTimeout(() => {
+                            submitRef.current.scrollIntoView({
+                              behavior: "smooth",
+                            });
+                          }, 5);
+                        }
+                      }}
+                    >
+                      Zeichnung
+                    </Button>
+                  </>
+                )}
+              </div>
+            </div>
+          </Card>
+          <div className="w-full flex items-center gap-2 justify-end">
+            {useDrawing && (
               <Button
-                className="w-fit"
-                icon={<HighlightOutlined />}
                 onClick={() => {
-                  setUseDrawing(true);
-                  if (submitRef.current) {
-                    setTimeout(() => {
-                      submitRef.current.scrollIntoView({ behavior: "smooth" });
-                    }, 5);
-                  }
+                  setUseDrawing(false);
                 }}
+                icon={<CloseOutlined />}
               >
-                Zeichnung
+                Abbrechen
+              </Button>
+            )}
+            {anordnung.timelineStatus === "Offen" && (
+              <Button
+                type="primary"
+                onClick={() => {
+                  if (useDrawing) {
+                    changeTimeline({
+                      typ: "drawing",
+                      name: name,
+                      elements: { elements: drawElements, files: drawFiles },
+                    });
+                  } else {
+                    changeTimeline({ typ: "text", name: name, text: text });
+                  }
+                  setText("");
+                  setName("");
+                  setDrawElements([]);
+                  setUseDrawing(false);
+                }}
+                disabled={(!text && !(drawElements.length >= 0)) || !name}
+                icon={<PlusOutlined />}
+                ref={submitRef}
+              >
+                Hinzufügen
               </Button>
             )}
           </div>
         </div>
-      </Card>
-      <div className="w-full flex items-center gap-2 justify-end">
-        {useDrawing && (
-          <Button
-            onClick={() => {
-              setUseDrawing(false);
-            }}
-            icon={<CloseOutlined />}
-          >
-            Abbrechen
-          </Button>
-        )}
-        {anordnung.timelineStatus === "Offen" && (
-          <Button
-            type="primary"
-            onClick={() => {
-              if (useDrawing) {
-                changeTimeline({
-                  typ: "drawing",
-                  name: name,
-                  elements: { elements: drawElements, files: drawFiles },
-                });
-              } else {
-                changeTimeline({ typ: "text", name: name, text: text });
-              }
-              setText("");
-              setName("");
-              setDrawElements([]);
-              setUseDrawing(false);
-            }}
-            disabled={(!text && !(drawElements.length >= 0)) || !name}
-            icon={<PlusOutlined />}
-            ref={submitRef}
-          >
-            Hinzufügen
-          </Button>
-        )}
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
