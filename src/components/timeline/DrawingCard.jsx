@@ -6,7 +6,7 @@ import {
   updateName,
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
-import DesignerWrapper from "../designer/DesignerWrapper";
+import Designer from "../designer/Designer";
 import { useState } from "react";
 
 const DrawingCard = ({ attachment, id }) => {
@@ -79,7 +79,7 @@ const DrawingCard = ({ attachment, id }) => {
           </div>
         }
       >
-        <DesignerWrapper
+        <Designer
           initialElements={attachment.elements}
           viewOnlyMode={viewOnlyMode}
         />

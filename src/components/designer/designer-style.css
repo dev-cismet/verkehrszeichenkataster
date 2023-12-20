@@ -27,6 +27,10 @@
   display: none;
 }
 
+.excalidraw-custom-wrapper.only-view-mode .excalidraw .main-menu-trigger {
+  display: none !important;
+}
+
 .ant-collapse-header {
   padding-right: 0px !important;
   padding-left: 0px !important;

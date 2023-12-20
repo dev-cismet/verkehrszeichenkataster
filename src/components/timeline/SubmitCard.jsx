@@ -14,7 +14,7 @@ import {
   HistoryOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import DesignerWrapper from "../designer/DesignerWrapper";
+import Designer from "../designer/Designer";
 
 const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [text, setText] = useState("");
@@ -48,7 +48,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
             value={name}
           />
           {useDrawing ? (
-            <DesignerWrapper
+            <Designer
               getElements={(elements) => setDrawElements(elements)}
               initialElements={drawElements}
             />
