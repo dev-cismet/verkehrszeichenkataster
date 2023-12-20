@@ -435,9 +435,9 @@ const DesignerWrapper = ({
               );
             }}
           >
-            <MainMenu style={{ width: "500px" }}>
-              <MainMenu.DefaultItems.Export />
-              <MainMenu.Item
+            <MainMenu style={{ display: "none", width: "500px" }}>
+              {/* <MainMenu.DefaultItems.Export /> */}
+              {/* <MainMenu.Item
                 onSelect={generatePreviewHandler}
                 icon={
                   <CameraOutlined
@@ -466,7 +466,7 @@ const DesignerWrapper = ({
                   <Divider />
                 </>
               )}
-              <MainMenu.DefaultItems.ChangeCanvasBackground />
+              <MainMenu.DefaultItems.ChangeCanvasBackground /> */}
             </MainMenu>
           </Excalidraw>
         </div>

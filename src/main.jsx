@@ -40,7 +40,7 @@ import DateiPage from "./pages/Attachments/DateiPage.jsx";
 import AnfragePage from "./pages/Attachments/AnfragePage.jsx";
 import TextPage from "./pages/Attachments/TextPage.jsx";
 import EntscheidungsPage from "./pages/Attachments/EntscheidungsPage.jsx";
-import DesignerWrapper from "./components/designer/DesignerWrapper.jsx";
+import Designer from "./components/designer/Designer.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
@@ -98,7 +98,7 @@ const router = createHashRouter([
       },
       {
         path: "designer",
-        element: <DesignerWrapper />,
+        element: <Designer />,
       },
       {
         path: "/anordnung/:id",

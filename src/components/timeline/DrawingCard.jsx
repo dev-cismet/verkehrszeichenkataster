@@ -6,7 +6,7 @@ import {
   updateName,
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
-import DesignerWrapper from "../designer/DesignerWrapper";
+import Designer from "../designer/Designer";
 
 const DrawingCard = ({ attachment, id }) => {
   const { id: applicationId } = useParams();
@@ -65,7 +65,7 @@ const DrawingCard = ({ attachment, id }) => {
           </div>
         }
       >
-        <DesignerWrapper initialElements={attachment.elements} />
+        <Designer initialElements={attachment.elements} />
       </Card>
     </div>
   );
