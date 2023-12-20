@@ -1,11 +1,13 @@
-import { Button, Dropdown, Select } from "antd";
+import { Button, Dropdown, Input, Select } from "antd";
 
 import {
   CaretDownOutlined,
   DiffOutlined,
   EllipsisOutlined,
+  FolderOpenOutlined,
   LogoutOutlined,
   PlusOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
 
 import {
@@ -26,6 +28,7 @@ import {
 } from "../../store/slices/application";
 import Logo from "/cismet.svg";
 import NavItem from "./NavItem";
+import "./input.css";
 
 const navLinks = () => {
   return [
@@ -125,22 +128,13 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
           {links.map((link, i) => (
             <Link to={link.href + `?${urlParams}`} key={`navLink_${i}`}>
               <Button
-                type="text"
+                icon={<FolderOpenOutlined />}
+                size="small"
                 className={`${
                   location.pathname.includes(link.href) ? "text-primary" : ""
-                } font-semibold no-underline`}
+                } font-semibold no-underline mt-1 bg-[#00000005]`}
               >
-                <div
-                  className={`xl:hidden block ${
-                    (location.pathname.includes(link.href) && i > 0) ||
-                    (link.href === "/" && location.pathname === "/")
-                      ? "text-primary"
-                      : ""
-                  }`}
-                >
-                  {link.icon}
-                </div>
-                <div className="hidden md:block text-sm">{link.title}</div>
+                {link.title}
               </Button>
             </Link>
           ))}
@@ -187,8 +181,15 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
         </div>
 
         <div className="flex items-center gap-3">
+          <Input
+            size="small"
+            placeholder="Suche..."
+            prefix={<SearchOutlined />}
+            className="w-96 bg-[#00000005]"
+          />
           <Button
             size="small"
+            className="bg-[#00000005]"
             onClick={() => {
               const id = allApplications.length + 1;
               dispatch(
@@ -235,6 +236,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
           </Button>
           <Button
             size="small"
+            className="bg-[#00000005]"
             onClick={() => {
               const id = allApplications.length + 1;
               dispatch(
@@ -280,7 +282,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
             Extern
           </Button>
           <LogoutOutlined
-            className="text-2xl cursor-pointer"
+            className="text-2xl cursor-pointer pr-1"
             onClick={() => logout()}
           />
         </div>
@@ -298,7 +300,8 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
                 to={getApplicationPath(application?.id)}
                 className="flex items-center gap-2"
               >
-                <DiffOutlined className="text-lg" />
+                <DiffOutlined className="text-xl" />
+                <span>{application.id}</span>
                 <span>{application.timelineTitle}</span>
               </Link>
             </li>
