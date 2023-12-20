@@ -138,7 +138,13 @@ const Sidebar = () => {
           // link={"verlauf"}
           icon={getIcon(item.typ, item.name)}
           isSidebarCollapsed={isCollapsed}
-          text={item.typ === "request" ? "Antrag" : item.name}
+          text={
+            item.typ === "request"
+              ? "Anfrage"
+              : item.name === "Mit freundlichen Grüßen"
+              ? "MfG"
+              : item.name
+          }
           key={`sidebar_timeline_${i}`}
         />
       ))}
