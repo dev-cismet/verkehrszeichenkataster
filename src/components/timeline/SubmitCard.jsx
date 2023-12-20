@@ -70,17 +70,29 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                 Datei
               </Button>
             </Upload>
-            <Button
-              className="w-fit"
-              icon={useDrawing ? <FileTextOutlined /> : <HighlightOutlined />}
-              onClick={() => setUseDrawing(!useDrawing)}
-            >
-              {useDrawing ? "Text" : "Zeichnung"}
-            </Button>
+            {!useDrawing && (
+              <Button
+                className="w-fit"
+                icon={<HighlightOutlined />}
+                onClick={() => setUseDrawing(true)}
+              >
+                Zeichnung
+              </Button>
+            )}
           </div>
         </div>
       </Card>
       <div className="w-full flex items-center gap-2 justify-end">
+        {useDrawing && (
+          <Button
+            onClick={() => {
+              setUseDrawing(false);
+            }}
+            icon={<CloseOutlined />}
+          >
+            Abbrechen
+          </Button>
+        )}
         {anordnung.timelineStatus === "Offen" && (
           <Button
             type="primary"
