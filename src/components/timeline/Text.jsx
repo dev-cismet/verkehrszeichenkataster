@@ -27,7 +27,7 @@ const Text = ({ attachment, id }) => {
             );
           }}
         >
-          Löschen
+          Entfernen
         </div>
       ),
       key: "0",
@@ -44,7 +44,7 @@ const Text = ({ attachment, id }) => {
         return "#f0f9ff";
       case "Widerrufsvorbehalt":
         return "#eef2ff";
-      case "Mit freundlichem Gruß":
+      case "Mit freundlichen Grüßen":
         return "#faf5ff";
     }
   };
