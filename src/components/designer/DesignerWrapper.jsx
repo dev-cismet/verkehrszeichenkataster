@@ -1,8 +1,12 @@
-import { Excalidraw, MainMenu } from "@excalidraw/excalidraw";
+import { Excalidraw, MainMenu, exportToCanvas } from "@excalidraw/excalidraw";
 import { useEffect, useState, useRef } from "react";
 import "./designer-style.css";
 import { Input, Collapse, Divider } from "antd";
-import { SearchOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  SearchOutlined,
+  DeleteOutlined,
+  CameraOutlined,
+} from "@ant-design/icons";
 import signLocal from "./signLocal.json";
 import {
   CloseOutlined,
@@ -88,18 +92,21 @@ const labelView = (group, groupItems = null) => (
     </span>
   </div>
 );
+
 const DesignerWrapper = ({
   dataIn = signLocal,
   extractor = libraryExtractor,
   viewOnlyMode = false,
   getElements = (elements) => {},
   initialElements,
+  getPreviewSrcLink = () => {},
+  resetDrawing,
 }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const [data, setData] = useState([]);
   const canvasWrapperRef = useRef(null);
   const [viewMode, setViewMode] = useState(viewOnlyMode);
-
+  const [canvasUrl, setCanvasUrl] = useState(null);
   useEffect(() => {
     if (excalidrawAPI) {
       setData(extractor(dataIn));
@@ -184,6 +191,22 @@ const DesignerWrapper = ({
       appState: excalidrawState,
     });
     await fetchIcon(pathName, newFileId);
+  };
+
+  const generatePreviewHandler = async () => {
+    const exportCanvas = await exportToCanvas({
+      elements: excalidrawAPI.getSceneElements(),
+      appState: excalidrawAPI.getAppState(),
+      getDimensions: () => {
+        return {
+          width: canvasWrapperRef.current.clientWidth,
+          height: canvasWrapperRef.current.clientHeight,
+        };
+      },
+      files: excalidrawAPI.getFiles(),
+    });
+    setCanvasUrl(exportCanvas.toDataURL());
+    getPreviewSrcLink(exportCanvas.toDataURL());
   };
   useEffect(() => {
     const compsWithTextDescription = {};
@@ -316,6 +339,12 @@ const DesignerWrapper = ({
     }
   }, [searchText]);
 
+  useEffect(() => {
+    if (resetDrawing) {
+      resetScene();
+    }
+  }, [resetDrawing]);
+
   const resetScene = () => {
     excalidrawAPI.resetScene();
   };
@@ -418,7 +447,16 @@ const DesignerWrapper = ({
           >
             <MainMenu style={{ width: "500px" }}>
               <MainMenu.DefaultItems.Export />
-
+              <MainMenu.Item
+                onSelect={generatePreviewHandler}
+                icon={
+                  <CameraOutlined
+                    style={{ fontSize: "8px", color: "#5B5B60" }}
+                  />
+                }
+              >
+                <span>Vorschau erstellen</span>
+              </MainMenu.Item>
               {!viewMode && (
                 <>
                   <MainMenu.DefaultItems.Help />
