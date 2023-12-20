@@ -119,26 +119,24 @@ const Sidebar = () => {
         }}
       >
         {isCollapsed ? (
-          <RightOutlined className="absolute right-2 top-6 h-6 w-6 p-1 cursor-pointer hover:bg-zinc-100" />
+          <RightOutlined className="absolute right-2 top-8 h-6 w-6 p-1 cursor-pointer hover:bg-zinc-100" />
         ) : (
-          <LeftOutlined className="absolute right-2 top-6 h-6 w-6 p-1 cursor-pointer hover:bg-zinc-100" />
+          <LeftOutlined className="absolute right-2 top-8 h-6 w-6 p-1 cursor-pointer hover:bg-zinc-100" />
         )}
       </div>
-
-      <h2
-        className={`font-semibold text-lg truncate w-5/6 ${
-          isCollapsed && "invisible"
-        }`}
-      >
-        {selectedApplication?.name}
-      </h2>
 
       {currentTimeline.map((item, i) => (
         <SidebarItem
           // link={"verlauf"}
           icon={getIcon(item.typ, item.name)}
           isSidebarCollapsed={isCollapsed}
-          text={item.typ === "request" ? "Antrag" : item.name}
+          text={
+            item.typ === "request"
+              ? "Anfrage"
+              : item.name === "Mit freundlichen Grüßen"
+              ? "MfG"
+              : item.name
+          }
           key={`sidebar_timeline_${i}`}
         />
       ))}

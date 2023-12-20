@@ -7,12 +7,26 @@ import {
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import Designer from "../designer/Designer";
+import { useState } from "react";
 
 const DrawingCard = ({ attachment, id }) => {
   const { id: applicationId } = useParams();
+  const [viewOnlyMode, setViewOnlyMode] = useState(true);
   const dispatch = useDispatch();
 
   const items = [
+    {
+      label: (
+        <div
+          onClick={() => {
+            setViewOnlyMode(false);
+          }}
+        >
+          Bearbeiten
+        </div>
+      ),
+      key: "0",
+    },
     {
       label: (
         <div
@@ -25,10 +39,10 @@ const DrawingCard = ({ attachment, id }) => {
             );
           }}
         >
-          Löschen
+          Entfernen
         </div>
       ),
-      key: "0",
+      key: "1",
     },
   ];
 
@@ -65,7 +79,10 @@ const DrawingCard = ({ attachment, id }) => {
           </div>
         }
       >
-        <Designer initialElements={attachment.elements} />
+        <Designer
+          initialElements={attachment.elements}
+          viewOnlyMode={viewOnlyMode}
+        />
       </Card>
     </div>
   );

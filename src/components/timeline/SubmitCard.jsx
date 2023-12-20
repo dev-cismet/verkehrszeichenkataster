@@ -1,5 +1,5 @@
 import { Button, Card, Input, Upload } from "antd";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCurrentApplication,
@@ -21,6 +21,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [name, setName] = useState("");
   const [drawElements, setDrawElements] = useState([]);
   const [useDrawing, setUseDrawing] = useState(false);
+  const submitRef = useRef(null);
   const { id } = useParams();
   const dispatch = useDispatch();
   const anordnung = useSelector(getCurrentApplication);
@@ -70,17 +71,36 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                 Datei
               </Button>
             </Upload>
-            <Button
-              className="w-fit"
-              icon={useDrawing ? <FileTextOutlined /> : <HighlightOutlined />}
-              onClick={() => setUseDrawing(!useDrawing)}
-            >
-              {useDrawing ? "Text" : "Zeichnung"}
-            </Button>
+            {!useDrawing && (
+              <Button
+                className="w-fit"
+                icon={<HighlightOutlined />}
+                onClick={() => {
+                  setUseDrawing(true);
+                  if (submitRef.current) {
+                    setTimeout(() => {
+                      submitRef.current.scrollIntoView({ behavior: "smooth" });
+                    }, 5);
+                  }
+                }}
+              >
+                Zeichnung
+              </Button>
+            )}
           </div>
         </div>
       </Card>
       <div className="w-full flex items-center gap-2 justify-end">
+        {useDrawing && (
+          <Button
+            onClick={() => {
+              setUseDrawing(false);
+            }}
+            icon={<CloseOutlined />}
+          >
+            Abbrechen
+          </Button>
+        )}
         {anordnung.timelineStatus === "Offen" && (
           <Button
             type="primary"
@@ -101,6 +121,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
             }}
             disabled={(!text && !(drawElements.length >= 0)) || !name}
             icon={<PlusOutlined />}
+            ref={submitRef}
           >
             Hinzufügen
           </Button>

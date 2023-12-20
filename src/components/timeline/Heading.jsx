@@ -9,6 +9,7 @@ import { Button, Input } from "antd";
 import {
   CheckCircleOutlined,
   EditOutlined,
+  FilePdfOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
 
@@ -75,6 +76,7 @@ const Heading = () => {
               >
                 Bearbeiten
               </Button>
+              <Button icon={<FilePdfOutlined />}>PDF Drucken</Button>
             </>
           )}
         </div>
@@ -94,7 +96,7 @@ const Heading = () => {
             <span>{anordnung.timelineStatus}</span>
           </div>
           <span className="text-muted-foreground font-normal">
-            Vooes hat letzte Woche diese Anordnung erstellt ·{" "}
+            Max Mustermann hat letzte Woche diese Anordnung erstellt ·{" "}
             {anordnung?.timeline?.length} Baustein
             {(anordnung?.timeline?.length === 0 ||
               anordnung?.timeline?.length > 1) &&
