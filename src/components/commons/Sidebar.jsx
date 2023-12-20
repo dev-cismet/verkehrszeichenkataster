@@ -1,12 +1,16 @@
 import {
+  AuditOutlined,
+  CommentOutlined,
   DownOutlined,
   EditOutlined,
   FileOutlined,
   FormOutlined,
   HomeOutlined,
   LeftOutlined,
+  PicLeftOutlined,
   PullRequestOutlined,
   RightOutlined,
+  SlidersOutlined,
   StockOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
@@ -89,8 +93,17 @@ const Sidebar = () => {
   const currentTimeline = selectedApplication.timeline;
 
   const getIcon = (type, name) => {
-    if (name === "Ort") {
-      return <HomeOutlined className="text-lg" />;
+    switch (name) {
+      case "Ort":
+        return <HomeOutlined className="text-lg" />;
+      case "Sachverhalt":
+        return <PicLeftOutlined className="text-lg" />;
+      case "Erforderliche Maßnahmen":
+        return <SlidersOutlined className="text-lg" />;
+      case "Widerrufsvorbehalt":
+        return <AuditOutlined className="text-lg" />;
+      case "Mit freundlichen Grüßen":
+        return <CommentOutlined className="text-lg" />;
     }
     switch (type) {
       case "request":
