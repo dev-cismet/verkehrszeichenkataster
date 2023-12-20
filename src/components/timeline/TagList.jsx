@@ -21,7 +21,7 @@ const TagList = ({ changeTimeline }) => {
       <span className="font-semibold text-muted-foreground pb-2">
         Textbausteine
       </span>
-      <div className="flex w-full flex-wrap gap-1">
+      <div className="flex w-full flex-wrap gap-[5px]">
         <Tag.CheckableTag
           checked={checkIfTimelineContainsText("Ort")}
           className={`${
@@ -145,9 +145,9 @@ const TagList = ({ changeTimeline }) => {
           Widerrufsvorbehalt
         </Tag.CheckableTag>
         <Tag.CheckableTag
-          checked={checkIfTimelineContainsText("Mit freundlichem Gruß")}
+          checked={checkIfTimelineContainsText("Mit freundlichen Grüßen")}
           className={`${
-            checkIfTimelineContainsText("Mit freundlichem Gruß")
+            checkIfTimelineContainsText("Mit freundlichen Grüßen")
               ? "bg-purple-600 hover:bg-purple-500"
               : "bg-transparent"
           }`}
@@ -155,12 +155,12 @@ const TagList = ({ changeTimeline }) => {
             if (checked) {
               changeTimeline({
                 typ: "text",
-                name: "Mit freundlichem Gruß",
+                name: "Mit freundlichen Grüßen",
                 text: "",
               });
             } else {
               const index = timeline.findIndex(
-                (obj) => obj.name === "Mit freundlichem Gruß"
+                (obj) => obj.name === "Mit freundlichen Grüßen"
               );
               if (index >= 0) {
                 dispatch(
@@ -173,7 +173,7 @@ const TagList = ({ changeTimeline }) => {
             }
           }}
         >
-          MFG
+          MfG
         </Tag.CheckableTag>
       </div>
     </>
