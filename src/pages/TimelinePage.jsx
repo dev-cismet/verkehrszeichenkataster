@@ -17,7 +17,12 @@ import SubmitCard from "../components/timeline/SubmitCard";
 import Heading from "../components/timeline/Heading";
 import TagList from "../components/timeline/TagList";
 import DrawingCard from "../components/timeline/DrawingCard";
-import { CloseOutlined, HistoryOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  HistoryOutlined,
+  LockOutlined,
+  UnlockOutlined,
+} from "@ant-design/icons";
 
 const { Dragger } = Upload;
 
@@ -123,7 +128,7 @@ const TimelinePage = () => {
                 <TagList changeTimeline={changeTimeline} />
                 <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
                 <span className="font-semibold text-muted-foreground pb-2">
-                  Aktionen
+                  Bearbeitung
                 </span>
                 <div
                   role="button"
@@ -141,14 +146,14 @@ const TimelinePage = () => {
                   }
                 >
                   {anordnung.timelineStatus === "Offen" ? (
-                    <CloseOutlined />
+                    <LockOutlined />
                   ) : (
-                    <HistoryOutlined />
+                    <UnlockOutlined />
                   )}
                   <span>
                     {anordnung.timelineStatus === "Offen"
-                      ? "Anordnung Schließen"
-                      : "Anordnung öffnen"}
+                      ? "Abschließen"
+                      : "Wieder eröffnen"}
                   </span>
                 </div>
               </div>
