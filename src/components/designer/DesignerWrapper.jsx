@@ -94,7 +94,7 @@ const labelView = (group, groupItems = null) => (
 );
 
 const DesignerWrapper = ({
-  dataIn = signLocal,
+  dataIn: signLibrary = signLocal, // rename to signLibrary
   extractor = libraryExtractor,
   viewOnlyMode = false,
   getElements = (elements) => {},
@@ -109,9 +109,9 @@ const DesignerWrapper = ({
   const [canvasUrl, setCanvasUrl] = useState(null);
   useEffect(() => {
     if (excalidrawAPI) {
-      setData(extractor(dataIn));
+      setData(extractor(signLibrary));
     }
-  }, [dataIn, excalidrawAPI]);
+  }, [signLibrary, excalidrawAPI]);
 
   const fetchIcon = async (pathName, fileId) => {
     const res = await fetch(pathName);
@@ -339,16 +339,6 @@ const DesignerWrapper = ({
     }
   }, [searchText]);
 
-  useEffect(() => {
-    if (resetDrawing) {
-      resetScene();
-    }
-  }, [resetDrawing]);
-
-  const resetScene = () => {
-    excalidrawAPI.resetScene();
-  };
-
   const onlyIconView = (iconsData) => {
     return (
       <div
@@ -462,7 +452,9 @@ const DesignerWrapper = ({
                   <MainMenu.DefaultItems.Help />
                   <MainMenu.DefaultItems.LoadScene />
                   <MainMenu.Item
-                    onSelect={resetScene}
+                    onSelect={() => {
+                      excalidrawAPI.resetScene();
+                    }}
                     icon={
                       <DeleteOutlined
                         style={{ fontSize: "8px", color: "#5B5B60" }}
