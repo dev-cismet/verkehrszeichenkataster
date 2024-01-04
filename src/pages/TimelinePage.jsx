@@ -66,102 +66,95 @@ const TimelinePage = () => {
   };
 
   return (
-    <>
-      <Card
-        bodyStyle={{
-          overflowY: "auto",
-          overflowX: "clip",
-          maxHeight: "91%",
-          height: "100%",
-          marginTop: "2px",
-        }}
-        className="h-full w-full"
-        title={<Heading />}
-      >
-        <Dragger
+    <Card
+      bodyStyle={{
+        overflowY: "auto",
+        overflowX: "clip",
+        maxHeight: "91%",
+        height: "100%",
+        marginTop: "2px",
+      }}
+      className="h-full w-full"
+      title={<Heading />}
+    >
+      {/* <Dragger
           openFileDialogOnClick={false}
           className="h-full w-full"
           beforeUpload={(file) => {
             handleDrop(file);
           }}
           fileList={[]}
-        >
-          <div className="h-full w-3/4 mx-auto flex gap-4 justify-between">
-            <div className="flex flex-col w-full">
-              {currentTimeline?.map((attachment, i) => {
-                switch (attachment.typ) {
-                  case "request":
-                    return (
-                      <Request
-                        attachment={attachment}
-                        key={i}
-                        i={i}
-                        isInternalRequest={isInternalRequest}
-                      />
-                    );
-                  case "text":
-                    return <Text attachment={attachment} id={i} key={i} />;
-                  case "decision":
-                    return <Decision key={i} id={i} attachment={attachment} />;
-                  case "file":
-                    return <File key={i} attachment={attachment} i={i} />;
-                  case "drawing":
-                    return (
-                      <DrawingCard key={i} attachment={attachment} id={i} />
-                    );
-                }
-              })}
-              <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-0" />
-              <SubmitCard
-                changeTimeline={changeTimeline}
-                handleDrop={handleDrop}
-              />
-            </div>
+        > */}
+      <div className="h-full w-3/4 mx-auto flex gap-4 justify-between">
+        <div className="flex flex-col w-full">
+          {currentTimeline?.map((attachment, i) => {
+            switch (attachment.typ) {
+              case "request":
+                return (
+                  <Request
+                    attachment={attachment}
+                    key={i}
+                    i={i}
+                    isInternalRequest={isInternalRequest}
+                  />
+                );
+              case "text":
+                return <Text attachment={attachment} id={i} key={i} />;
+              case "decision":
+                return <Decision key={i} id={i} attachment={attachment} />;
+              case "file":
+                return <File key={i} attachment={attachment} i={i} />;
+              case "drawing":
+                return <DrawingCard key={i} attachment={attachment} id={i} />;
+            }
+          })}
+          <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-0" />
+          <SubmitCard changeTimeline={changeTimeline} handleDrop={handleDrop} />
+        </div>
 
-            <div className="w-[370px]">
-              <div className="flex flex-col w-full items-start">
-                <span className="font-semibold text-muted-foreground pb-2">
-                  Zeitlicher Verlauf
-                </span>
-                <Timeline dataIn={currentTimeline} />
-                <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
-                <TagList changeTimeline={changeTimeline} />
-                <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
-                <span className="font-semibold text-muted-foreground pb-2">
-                  Bearbeitung
-                </span>
-                <div
-                  role="button"
-                  className="hover:text-primary flex gap-1 cursor-pointer font-medium"
-                  onClick={() =>
-                    dispatch(
-                      updateTimelineStatus({
-                        updatedStatus:
-                          anordnung.timelineStatus === "Offen"
-                            ? "Geschlossen"
-                            : "Offen",
-                        applicationId: id,
-                      })
-                    )
-                  }
-                >
-                  {anordnung.timelineStatus === "Offen" ? (
-                    <LockOutlined />
-                  ) : (
-                    <UnlockOutlined />
-                  )}
-                  <span>
-                    {anordnung.timelineStatus === "Offen"
-                      ? "Abschließen"
-                      : "Wieder eröffnen"}
-                  </span>
-                </div>
-              </div>
+        <div className="w-[370px]">
+          <div className="flex flex-col w-full items-start">
+            <span className="font-semibold text-muted-foreground pb-2">
+              Zeitlicher Verlauf
+            </span>
+            <Timeline dataIn={currentTimeline} />
+            <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
+            <TagList changeTimeline={changeTimeline} />
+            <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
+            <span className="font-semibold text-muted-foreground pb-2">
+              Bearbeitung
+            </span>
+            <div
+              role="button"
+              className="hover:text-primary flex gap-1 cursor-pointer font-medium"
+              onClick={() =>
+                dispatch(
+                  updateTimelineStatus({
+                    updatedStatus:
+                      anordnung.timelineStatus === "Offen"
+                        ? "Geschlossen"
+                        : "Offen",
+                    applicationId: id,
+                  })
+                )
+              }
+            >
+              {anordnung.timelineStatus === "Offen" ? (
+                <LockOutlined />
+              ) : (
+                <UnlockOutlined />
+              )}
+              <span>
+                {anordnung.timelineStatus === "Offen"
+                  ? "Abschließen"
+                  : "Wieder eröffnen"}
+              </span>
             </div>
           </div>
-        </Dragger>
-      </Card>
-    </>
+        </div>
+      </div>
+      {/* </Dragger> */}
+    </Card>
   );
 };
 
