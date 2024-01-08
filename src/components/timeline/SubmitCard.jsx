@@ -133,7 +133,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                   setDrawElements([]);
                   setUseDrawing(false);
                 }}
-                disabled={(!text && !(drawElements.length >= 0)) || !name}
+                disabled={!text || !(drawElements.length >= 0)}
                 icon={<PlusOutlined />}
                 ref={submitRef}
               >
