@@ -405,7 +405,7 @@ const DesignerWrapper = ({
           display: "flex",
         }}
       >
-        <div style={{ width: "100%" }} ref={canvasWrapperRef}>
+        <div className="w-full" ref={canvasWrapperRef}>
           <Excalidraw
             excalidrawAPI={(api) => setExcalidrawAPI(api)}
             UIOptions={UIOptions}
