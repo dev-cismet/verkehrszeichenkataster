@@ -8,6 +8,12 @@ export const APP_KEY = "verkehrszeichen-kataster";
 export const STORAGE_PREFIX = "1";
 export const STORAGE_POSTFIX = "1";
 
+export const OFFLINE_ACTIONS_SYNC_URL =
+  "https://offline-actions-wunda-cloud.cismet.de/v1/graphql";
+export const OFFLINE_ACTIONS_ENDPOINT_URL =
+  "wss://offline-actions-wunda-cloud.cismet.de/v1/graphql";
+export const DB_VERSION = "vzk-online-cloud-db-1.0";
+
 export const jwtTestQuery = gql`
   ${queries.jwtTestQuery}
 `;
