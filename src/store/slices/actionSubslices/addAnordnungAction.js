@@ -1,4 +1,4 @@
-import { uuidv4 } from "uuidv4";
+import { v4 as uuidv4 } from "uuid";
 
 import { getJWT, getLoginFromJWT } from "../auth";
 import { getDB } from "../offlineActionDb";
