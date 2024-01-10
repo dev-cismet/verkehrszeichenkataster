@@ -6,6 +6,7 @@ import localForage from "localforage";
 import authSlice from "./slices/auth";
 import mappingSlice from "./slices/mapping";
 import applicationSlice from "./slices/application";
+import offlineActionDbSlice from "./slices/offlineActionDb";
 import { APP_KEY, STORAGE_PREFIX } from "../constants/vkz";
 
 console.log("store initializing ....");
@@ -83,6 +84,7 @@ export default configureStore({
     auth: persistReducer(authConfig, authSlice.reducer),
     mapping: mappingSlice.reducer,
     application: persistReducer(applicationConfig, applicationSlice.reducer),
+    offlineActionDb: offlineActionDbSlice.reducer,
   },
   devTools: devToolsEnabled === true && inProduction === false,
   middleware,
