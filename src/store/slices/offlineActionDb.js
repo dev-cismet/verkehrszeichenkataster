@@ -74,7 +74,7 @@ export const initialize = (storedJWT) => {
           };
           const login = getLoginFromJWT(jwt);
           rep.restart(
-            { userId: login + "@belis", idToken: jwt },
+            { userId: login + "@vzkat", idToken: jwt },
             errorCallback,
             changeCallback
           );
@@ -86,7 +86,7 @@ export const initialize = (storedJWT) => {
           const query = d.actions
             .find()
             .where("applicationId")
-            .eq(login + "@belis")
+            .eq(login + "@vzkat")
             .sort({ createdAt: "desc" });
         } else {
           console.error("offline database not available", jwt);
@@ -124,7 +124,7 @@ export const reInitialize = (storedJWT) => {
       console.log("change occured", action);
     };
     rep.restart(
-      { userId: login + "@belis", idToken: jwt },
+      { userId: login + "@vzkat", idToken: jwt },
       errorCallback,
       changeCallback
     );
@@ -133,7 +133,7 @@ export const reInitialize = (storedJWT) => {
     const query = d.actions
       .find()
       .where("applicationId")
-      .eq(login + "@belis")
+      .eq(login + "@vzkat")
       .sort({ createdAt: "desc" });
     query.$.subscribe((results) => {});
   };
@@ -172,7 +172,7 @@ export const resyncDb = (currentJwt) => {
 
       const login = getLoginFromJWT(jwt);
       rep.restart(
-        { userId: login + "@belis", idToken: jwt },
+        { userId: login + "@vzkat", idToken: jwt },
         errorCallback,
         changeCallback
       );
