@@ -30,6 +30,10 @@ img {
   justify-content: space-between;
 }
 
+/* .rc-md-editor .rc-md-navigation .navigation-nav.left {
+  display: none;
+} */
+
 .rc-md-editor .rc-md-divider {
   display: block;
   width: 1px;

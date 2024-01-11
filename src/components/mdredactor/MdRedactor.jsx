@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import MdEditor from "react-markdown-editor-lite";
 import MarkdownIt from "markdown-it";
 import "react-markdown-editor-lite/lib/index.css";
@@ -89,7 +89,7 @@ const pluginsListSplited = [
 
 const MdRedactor = ({
   mdDoc = "",
-  getDocument = () => console.log("getDocFn function"),
+  getDocument = () => console.log("getDoc function"),
   saveTrigger = 1,
   width = "100%",
   height = "700px",
@@ -97,12 +97,9 @@ const MdRedactor = ({
   const [mdText, setMdText] = useState(mdDoc);
 
   const handleEditorChange = ({ html, text }) => {
+    getDocument(text);
     setMdText(text);
   };
-
-  useEffect(() => {
-    getDocument(mdText);
-  }, [saveTrigger]);
 
   return (
     <div>
