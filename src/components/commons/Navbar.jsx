@@ -19,7 +19,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { storeJWT, storeLogin } from "../../store/slices/auth";
 import { useEffect, useRef, useState } from "react";
-import { getNumberOfItemsThatFit } from "../../tools/helper";
 import {
   getAllApplications,
   getSelectedApplications,
@@ -27,8 +26,8 @@ import {
   storeSelectedApplications,
 } from "../../store/slices/application";
 import Logo from "/cismet.svg";
-import NavItem from "./NavItem";
 import "./input.css";
+import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 
 const navLinks = () => {
   return [
@@ -193,6 +192,23 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
             onClick={() => {
               const id = allApplications.length + 1;
               dispatch(
+                addAnordnungAction({
+                  data: {
+                    key: id,
+                    name: id,
+                    id: id,
+                    typ: "internal",
+                    timelineStatus: "Offen",
+                    timeline: [
+                      {
+                        id: 1,
+                        typ: "request",
+                      },
+                    ],
+                  },
+                })
+              );
+              dispatch(
                 storeAllApplications([
                   ...allApplications,
                   {
@@ -239,6 +255,23 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
             className="bg-[#00000005]"
             onClick={() => {
               const id = allApplications.length + 1;
+              dispatch(
+                addAnordnungAction({
+                  data: {
+                    key: id,
+                    name: id,
+                    id: id,
+                    typ: "external",
+                    timelineStatus: "Offen",
+                    timeline: [
+                      {
+                        id: 1,
+                        typ: "request",
+                      },
+                    ],
+                  },
+                })
+              );
               dispatch(
                 storeAllApplications([
                   ...allApplications,
