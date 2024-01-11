@@ -118,14 +118,15 @@ const pluginsListSplited = [
   "list-ordered",
   "block-quote",
   "link",
-  "divider",
-  "savedoc",
+  // "divider",
+  // "savedoc",
   //   "image",
 ];
 
 const MdRedactor = ({
   mdDoc = "",
   getDocFn = () => console.log("getDocFn function"),
+  saveTrigger = 1,
   width = "100%",
   height = "700px",
 }) => {
@@ -136,10 +137,13 @@ const MdRedactor = ({
   };
 
   const handleEditorChange = ({ html, text }) => {
+    console.log("xxx mdParser", text);
     setMdText(text);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getDocFn(mdText);
+  }, [saveTrigger]);
 
   return (
     <div>
