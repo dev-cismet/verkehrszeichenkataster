@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import MdEditor from "react-markdown-editor-lite";
 import MarkdownIt from "markdown-it";
 import "react-markdown-editor-lite/lib/index.css";
@@ -45,6 +45,17 @@ const ViewMode = (props) => {
     setIsPreviewActive(false);
   };
 
+  useEffect(() => {
+    const toolbarLeft = props.config.menuRef.current.querySelector(
+      ".navigation-nav.left"
+    );
+    if (isPreviewActive) {
+      toolbarLeft.classList.add("hide-tools");
+    } else {
+      toolbarLeft.classList.remove("hide-tools");
+    }
+  }, [isPreviewActive]);
+
   return (
     <>
       <div
@@ -81,6 +92,7 @@ const pluginsListSplited = [
   "header",
   "font-bold",
   "font-italic",
+  "font-strikethrough",
   "list-unordered",
   "list-ordered",
   "block-quote",
@@ -94,6 +106,10 @@ const MdRedactor = ({
   height = "700px",
 }) => {
   const [mdText, setMdText] = useState(mdDoc);
+  const menuRef = useRef(null);
+  ViewMode.defaultConfig = {
+    menuRef,
+  };
 
   const handleEditorChange = ({ html, text }) => {
     getDocument(text);
@@ -101,7 +117,7 @@ const MdRedactor = ({
   };
 
   return (
-    <div>
+    <div ref={menuRef}>
       <MdEditor
         style={{ width, height }}
         plugins={pluginsListSplited}
