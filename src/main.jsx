@@ -41,7 +41,7 @@ import AnfragePage from "./pages/Attachments/AnfragePage.jsx";
 import TextPage from "./pages/Attachments/TextPage.jsx";
 import EntscheidungsPage from "./pages/Attachments/EntscheidungsPage.jsx";
 import Designer from "./components/designer/Designer.jsx";
-import MdRedactor from "./components/redactor/MdRedactor.jsx";
+import MdRedactor from "./components/mdredactor/MdRedactor.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
