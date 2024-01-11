@@ -27,6 +27,7 @@
     "graphql-request": "^6.1.0",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
+    "markdown-it": "^14.0.0",
     "react": "^18.2.0",
     "react-cismap": "^1.16.11",
     "react-dom": "^18.2.0",
