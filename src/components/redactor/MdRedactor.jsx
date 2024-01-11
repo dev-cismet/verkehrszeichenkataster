@@ -16,6 +16,8 @@ MdEditor.addLocale("de-DE", {
   btnClear: "Löschen",
   btnBold: "Fett",
   btnItalic: "Kursiv",
+  btnUndo: "Rückgängig machen",
+  btnRedo: "Wiederholen",
   btnUnderline: "Unterstrichen",
   btnStrikethrough: "Durchgestrichen",
   btnUnordered: "Aufzählungsliste",
@@ -52,9 +54,9 @@ const ViewMode = (props) => {
       <div
         className={isWriteActive ? "mode-btn-toogle-active" : "mode-btn-toogle"}
         onClick={handleClickWrite}
-        // title="Schreibmodus"
+        // title="Bearbeitenmodus"
       >
-        Write
+        Bearbeiten
       </div>
       <div
         className={
@@ -63,7 +65,7 @@ const ViewMode = (props) => {
         onClick={handleClickPreview}
         // title="Vorschaumodus"
       >
-        Preview
+        Vorschau
       </div>
     </div>
   );

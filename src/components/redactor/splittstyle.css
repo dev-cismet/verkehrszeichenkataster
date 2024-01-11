@@ -39,7 +39,7 @@ img {
 
 .mode-btn-toogle {
   position: relative;
-  min-width: 70px;
+  min-width: 90px;
   height: 40px;
   margin-left: 0px;
   margin-right: 3px;
@@ -57,7 +57,7 @@ img {
 
 .mode-btn-toogle-active {
   position: relative;
-  min-width: 70px;
+  min-width: 90px;
   height: 40px;
   margin-left: 0px;
   margin-right: 3px;
