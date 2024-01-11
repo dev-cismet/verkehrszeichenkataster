@@ -41,6 +41,7 @@ import AnfragePage from "./pages/Attachments/AnfragePage.jsx";
 import TextPage from "./pages/Attachments/TextPage.jsx";
 import EntscheidungsPage from "./pages/Attachments/EntscheidungsPage.jsx";
 import Designer from "./components/designer/Designer.jsx";
+import Viewer from "./components/pdf/Viewer.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
@@ -113,8 +114,8 @@ const router = createHashRouter([
             element: <TimelinePage />,
           },
           {
-            path: "zeichnen",
-            element: <></>,
+            path: "pdf",
+            element: <Viewer />,
           },
           {
             path: "verlauf/antrag",
