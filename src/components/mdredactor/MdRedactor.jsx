@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MdEditor from "react-markdown-editor-lite";
 import MarkdownIt from "markdown-it";
 import "react-markdown-editor-lite/lib/index.css";
@@ -46,7 +46,7 @@ const ViewMode = (props) => {
   };
 
   return (
-    <div>
+    <>
       <div
         className={
           !isPreviewActive ? "mode-btn-toggle-active" : "mode-btn-toggle"
@@ -63,7 +63,7 @@ const ViewMode = (props) => {
       >
         Vorschau
       </div>
-    </div>
+    </>
   );
 };
 
@@ -90,7 +90,6 @@ const pluginsListSplited = [
 const MdRedactor = ({
   mdDoc = "",
   getDocument = () => console.log("getDoc function"),
-  saveTrigger = 1,
   width = "100%",
   height = "700px",
 }) => {
