@@ -37,7 +37,7 @@ img {
   margin: 0 5px;
 }
 
-.mode-btn-toogle {
+.mode-btn-toggle {
   position: relative;
   min-width: 90px;
   height: 40px;
@@ -51,11 +51,11 @@ img {
   border: none;
   background-color: transparent;
 }
-.mode-btn-toogle:hover {
+.mode-btn-toggle:hover {
   color: #111111;
 }
 
-.mode-btn-toogle-active {
+.mode-btn-toggle-active {
   position: relative;
   min-width: 90px;
   height: 40px;
@@ -70,7 +70,7 @@ img {
   border: none;
   border-radius: 6px 6px 0 0;
 }
-.mode-btn-toogle-active:hover {
+.mode-btn-toggle-active:hover {
   color: #111111;
 }
 
