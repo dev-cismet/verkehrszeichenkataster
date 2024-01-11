@@ -30,9 +30,12 @@ img {
   justify-content: space-between;
 }
 
-/* .rc-md-editor .rc-md-navigation .navigation-nav.left {
+.rc-md-editor .rc-md-navigation .navigation-nav.left.hide-tools {
   display: none;
-} */
+}
+.rc-md-editor .rc-md-navigation .navigation-nav.right {
+  margin-right: auto;
+}
 
 .rc-md-editor .rc-md-divider {
   display: block;
