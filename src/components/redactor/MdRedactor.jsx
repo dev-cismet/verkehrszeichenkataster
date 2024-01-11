@@ -16,10 +16,10 @@ MdEditor.addLocale("de-DE", {
   btnClear: "Löschen",
   btnBold: "Fett",
   btnItalic: "Kursiv",
-  btnUnderline: "Unterstreichen",
+  btnUnderline: "Unterstrichen",
   btnStrikethrough: "Durchgestrichen",
-  btnUnordered: "Ungeordnete Liste",
-  btnOrdered: "Ordered List",
+  btnUnordered: "Aufzählungsliste",
+  btnOrdered: "Nummerierte Liste",
   btnQuote: "Zitat",
   btnLink: "Link",
 });
@@ -52,7 +52,7 @@ const ViewMode = (props) => {
       <div
         className={isWriteActive ? "mode-btn-toogle-active" : "mode-btn-toogle"}
         onClick={handleClickWrite}
-        title="Schreibmodus"
+        // title="Schreibmodus"
       >
         Write
       </div>
@@ -61,7 +61,7 @@ const ViewMode = (props) => {
           isPreviewActive ? "mode-btn-toogle-active" : "mode-btn-toogle"
         }
         onClick={handleClickPreview}
-        title="Vorschaumodus"
+        // title="Vorschaumodus"
       >
         Preview
       </div>
@@ -112,8 +112,8 @@ const pluginsListSplited = [
   "header",
   "font-bold",
   "font-italic",
-  "font-underline",
-  "font-strikethrough",
+  // "font-underline",
+  // "font-strikethrough",
   "list-unordered",
   "list-ordered",
   "block-quote",
