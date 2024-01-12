@@ -7,15 +7,6 @@ import {
   Image,
 } from "@react-pdf/renderer";
 
-// Create styles
-const styles = StyleSheet.create({
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-});
-
 const Document = () => {
   return (
     <DocumentRenderer>
