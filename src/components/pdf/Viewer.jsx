@@ -7,6 +7,7 @@ import {
   Text,
 } from "@react-pdf/renderer";
 import Document from "./Document";
+import ExternalTemplate from "./ExternalTemplate";
 
 const MyDoc = (
   <DocumentRenderer>
@@ -50,7 +51,7 @@ const Viewer = () => {
   return (
     <div className="flex h-full w-full flex-col gap-2">
       <PDFViewer className="h-full w-full">
-        <Document />
+        <ExternalTemplate />
       </PDFViewer>
       <a href={instance.url} download="test.pdf">
         Download
