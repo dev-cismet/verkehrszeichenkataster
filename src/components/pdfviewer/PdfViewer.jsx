@@ -6,12 +6,13 @@ const PdfViewer = ({
   width = "100%",
   height = "700px",
 }) => {
-  const [createdLinks, setCreatedLinks] = useState([]);
+  const [createdLinks, setCreatedLinks] = useState("");
 
   useEffect(() => {
     const convertBase64ToUrlLink = (pdfdecoded) => {
       if (filePdf) {
-        const byteCharacters = atob(pdfdecoded);
+        const removeBase64DataType = pdfdecoded.split(",")[1];
+        const byteCharacters = atob(removeBase64DataType);
         const byteNumbers = new Array(byteCharacters.length);
         for (let i = 0; i < byteCharacters.length; i++) {
           byteNumbers[i] = byteCharacters.charCodeAt(i);
@@ -19,7 +20,7 @@ const PdfViewer = ({
         const byteArray = new Uint8Array(byteNumbers);
         const file = new Blob([byteArray], { type: "application/pdf" });
         const fileURL = URL.createObjectURL(file);
-        setCreatedLinks((prev) => [...prev, fileURL]);
+        setCreatedLinks(fileURL);
         return fileURL;
       } else {
         return "";
@@ -28,17 +29,13 @@ const PdfViewer = ({
 
     convertBase64ToUrlLink(filePdf);
 
-    return () => {
-      createdLinks.forEach((link) => URL.revokeObjectURL(link));
-    };
+    if (createdLinks !== "") {
+      URL.revokeObjectURL(createdLinks);
+    }
   }, [filePdf]);
 
   return (
-    <iframe
-      title="PDF Viewer"
-      src={createdLinks[createdLinks.length - 1]}
-      style={{ width, height }}
-    />
+    <iframe title="PDF Viewer" src={createdLinks} style={{ width, height }} />
   );
 };
 
