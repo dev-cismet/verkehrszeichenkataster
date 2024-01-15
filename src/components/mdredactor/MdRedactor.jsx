@@ -104,7 +104,7 @@ const MdRedactor = ({
   getDocument = () => console.log("getDoc function"),
   placeholder = "",
   width = "100%",
-  height = "700px",
+  height = "200px",
 }) => {
   const [mdText, setMdText] = useState(mdDoc);
   const menuRef = useRef(null);
