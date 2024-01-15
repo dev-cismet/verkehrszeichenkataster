@@ -1,14 +1,8 @@
-import {
-  Page,
-  Text,
-  View,
-  Document,
-  Image,
-} from "@react-pdf/renderer";
+import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
 import ExternalSidebar from "./components/ExternalSidebar";
 import Contact from "./components/Contact";
 import { mdParser } from "../mdredactor/MdRedactor";
-
+import { Html } from "react-pdf-html";
 
 const TextWithTitle = ({ title, text }) => {
   return (
@@ -22,7 +16,9 @@ const TextWithTitle = ({ title, text }) => {
       <Text style={{ textDecoration: "underline", paddingTop: 10 }}>
         {title}
       </Text>
-      <Text style={{ maxWidth: "70%" }}>{text}</Text>
+      <View style={{ maxWidth: "70%" }}>
+        <Html style={{ fontSize: 12 }}>{mdParser.render(text)}</Html>
+      </View>
     </View>
   );
 };
