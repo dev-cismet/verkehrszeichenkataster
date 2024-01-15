@@ -42,6 +42,7 @@ import TextPage from "./pages/Attachments/TextPage.jsx";
 import EntscheidungsPage from "./pages/Attachments/EntscheidungsPage.jsx";
 import Designer from "./components/designer/Designer.jsx";
 import MdRedactor from "./components/mdredactor/MdRedactor.jsx";
+import PdfViewer from "./components/pdfviewer/PdfViewer.jsx";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
@@ -104,6 +105,10 @@ const router = createHashRouter([
       {
         path: "mdredactor",
         element: <MdRedactor />,
+      },
+      {
+        path: "pdfviewer",
+        element: <PdfViewer />,
       },
       {
         path: "/anordnung/:id",
