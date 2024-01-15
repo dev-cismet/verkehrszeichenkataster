@@ -7,14 +7,29 @@ import {
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import { EllipsisOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import MdRedactor, { mdParser } from "../mdredactor/MdRedactor";
 
 const { TextArea } = Input;
 
 const Text = ({ attachment, id }) => {
   const { id: applicationId } = useParams();
+  const [isEdit, setIsEdit] = useState(false);
   const dispatch = useDispatch();
 
   const items = [
+    {
+      label: (
+        <div
+          onClick={() => {
+            setIsEdit(true);
+          }}
+        >
+          Bearbeiten
+        </div>
+      ),
+      key: "0",
+    },
     {
       label: (
         <div
@@ -30,7 +45,7 @@ const Text = ({ attachment, id }) => {
           Entfernen
         </div>
       ),
-      key: "0",
+      key: "1",
     },
   ];
 
@@ -85,7 +100,16 @@ const Text = ({ attachment, id }) => {
           </div>
         }
       >
-        <TextArea
+        {isEdit ? (
+          <MdRedactor mdDoc={attachment.text} />
+        ) : (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: mdParser.render(attachment.text),
+            }}
+          />
+        )}
+        {/* <TextArea
           value={attachment.text}
           autoSize
           id={id}
@@ -99,7 +123,7 @@ const Text = ({ attachment, id }) => {
               })
             );
           }}
-        />
+        /> */}
       </Card>
     </div>
   );

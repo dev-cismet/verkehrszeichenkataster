@@ -4,7 +4,7 @@ import MarkdownIt from "markdown-it";
 import "react-markdown-editor-lite/lib/index.css";
 import "./splittstyle.css";
 
-const mdParser = new MarkdownIt({
+export const mdParser = new MarkdownIt({
   html: true,
   linkify: true,
   typographer: true,
