@@ -15,6 +15,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import Designer from "../designer/Designer";
+import MdRedactor from "../mdredactor/MdRedactor";
 
 const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [text, setText] = useState("");
@@ -63,12 +64,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                   initialElements={drawElements}
                 />
               ) : (
-                <Input.TextArea
-                  placeholder="Kommentar"
-                  rows={5}
-                  onChange={(e) => setText(e.target.value)}
-                  value={text}
-                />
+                <MdRedactor getDocument={(text) => setText(text)} />
               )}
               <div className="flex items-center gap-4">
                 {!useDrawing && (
