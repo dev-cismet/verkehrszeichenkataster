@@ -102,6 +102,7 @@ const pluginsListSplited = [
 const MdRedactor = ({
   mdDoc = "",
   getDocument = () => console.log("getDoc function"),
+  placeholder = "",
   width = "100%",
   height = "700px",
 }) => {
@@ -126,6 +127,7 @@ const MdRedactor = ({
         onChange={handleEditorChange}
         // onImageUpload={onImageUpload}
         shortcuts={true}
+        placeholder={placeholder}
         view={{ menu: true, md: true, html: false }}
       />
     </div>
