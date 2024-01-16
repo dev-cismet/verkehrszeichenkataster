@@ -23,21 +23,12 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [drawElements, setDrawElements] = useState([]);
   const [drawFiles, setDrawFiles] = useState([]);
   const [useDrawing, setUseDrawing] = useState(false);
+  const [triggerDrawingGeneration, setTriggerDrawingGeneration] = useState(0);
+  const [drawing, setDrawing] = useState("");
   const submitRef = useRef(null);
   const { id } = useParams();
   const dispatch = useDispatch();
   const anordnung = useSelector(getCurrentApplication);
-
-  const tabListNoTitle = [
-    {
-      key: "write",
-      label: "Schreiben",
-    },
-    {
-      key: "preview",
-      label: "Vorschau",
-    },
-  ];
 
   return (
     <>
@@ -46,11 +37,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
           <span className="text-start text-lg font-medium">
             Anhang Hinzufügen
           </span>
-          <Card
-            tabList={!useDrawing && tabListNoTitle}
-            size="small"
-            type="inner"
-          >
+          <Card size="small" type="inner">
             <div className="flex flex-col gap-2">
               <Input
                 placeholder="Name"
@@ -62,6 +49,8 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                   getElements={(elements) => setDrawElements(elements)}
                   getFiles={(files) => setDrawFiles(files)}
                   initialElements={drawElements}
+                  resetDrawing={triggerDrawingGeneration}
+                  getPreviewSrcLink={(preview) => setDrawing(preview)}
                 />
               ) : (
                 <MdRedactor getDocument={(text) => setText(text)} />
@@ -115,11 +104,18 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
               <Button
                 type="primary"
                 onClick={() => {
+                  setTriggerDrawingGeneration((prevValue) => {
+                    return prevValue + 1;
+                  });
+
                   if (useDrawing) {
                     changeTimeline({
                       typ: "drawing",
                       name: name,
-                      elements: { elements: drawElements, files: drawFiles },
+                      elements: {
+                        elements: drawElements,
+                        files: drawFiles,
+                      },
                     });
                   } else {
                     changeTimeline({ typ: "text", name: name, text: text });
@@ -129,7 +125,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                   setDrawElements([]);
                   setUseDrawing(false);
                 }}
-                disabled={!text || !(drawElements.length >= 0)}
+                disabled={!text && !(drawElements.length >= 0)}
                 icon={<PlusOutlined />}
                 ref={submitRef}
               >

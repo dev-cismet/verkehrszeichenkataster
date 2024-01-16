@@ -209,6 +209,11 @@ const DesignerWrapper = ({
     setCanvasUrl(exportCanvas.toDataURL());
     getPreviewSrcLink(exportCanvas.toDataURL());
   };
+
+  useEffect(() => {
+    generatePreviewHandler();
+  }, [resetDrawing]);
+
   useEffect(() => {
     const compsWithTextDescription = {};
     const compsOnlyIcons = {};
