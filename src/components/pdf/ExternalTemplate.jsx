@@ -46,13 +46,19 @@ const ExternalTemplate = ({ timeline, title }) => {
           </View>
           <Text style={{ textDecoration: "underline" }}>{title}</Text>
           <Text style={{ fontSize: 10 }}>(Anordnung Nr. 001/2024)</Text>
-          {timeline?.map((attachment) => {
+          {timeline?.map((attachment, i) => {
             if (attachment.typ === "text") {
               return (
-                <TextWithTitle title={attachment.name} text={attachment.text} />
+                <TextWithTitle
+                  key={`pdf_` + i}
+                  title={attachment.name}
+                  text={attachment.text}
+                />
               );
             } else if (attachment.typ === "file") {
-              return <Image src={attachment.file} />;
+              return <Image key={`pdf_` + i} src={attachment.file} />;
+            } else if (attachment.typ === "drawing") {
+              return <Image key={`pdf_` + i} src={attachment.preview} />;
             }
           })}
         </View>
