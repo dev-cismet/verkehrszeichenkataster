@@ -12,7 +12,7 @@ const addAnordnungAction = (params) => {
 
     const offlineAction = {
       id: uuidv4(),
-      action: "saveObject",
+      action: "SaveObject",
       jwt: jwt,
       parameter: JSON.stringify(params),
       isCompleted: false,

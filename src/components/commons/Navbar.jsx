@@ -47,20 +47,6 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
   const { pathname } = useLocation();
   const allApplications = useSelector(getAllApplications);
   const selectedApplications = useSelector(getSelectedApplications);
-  const selectedApplicationsOuterRef = useRef(null);
-  const [selectedApplicationsWidth, setSelectedApplicationsWidth] = useState(0);
-  const [items, setItems] = useState([]);
-  // const items = selectedApplications
-  //   ?.slice(
-  //     getNumberOfItemsThatFit(selectedApplicationsWidth, 112),
-  //     selectedApplications?.length
-  //   )
-  //   .map((item, i) => {
-  //     return {
-  //       label: item?.name,
-  //       key: i,
-  //     };
-  //   });
 
   let storyStyle = {};
   if (inStory) {
@@ -86,22 +72,6 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
     }
     return newPath;
   };
-
-  useEffect(() => {
-    setSelectedApplicationsWidth(
-      selectedApplicationsOuterRef.current.offsetWidth
-    );
-
-    const getWidth = () => {
-      setSelectedApplicationsWidth(
-        selectedApplicationsOuterRef.current.offsetWidth
-      );
-    };
-
-    window.addEventListener("resize", getWidth);
-
-    return () => window.removeEventListener("resize", getWidth);
-  }, []);
 
   return (
     <header
@@ -137,46 +107,6 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
               </Button>
             </Link>
           ))}
-          {/* {selectedApplications.length > 0 && (
-            <div className="border-l border-r-0 h-10 border-solid border-muted-foreground" />
-          )} */}
-          <div
-            className="flex items-center overflow-clip w-full gap-2"
-            ref={selectedApplicationsOuterRef}
-          >
-            {/* {selectedApplications
-              ?.slice(
-                0,
-                getNumberOfItemsThatFit(selectedApplicationsWidth, 112)
-              )
-              .map((application, i) => (
-                <NavItem
-                  key={`applicationLink_${i}`}
-                  application={application}
-                  setItems={(item) => {
-                    if (
-                      !items.some((value) => value.label === item.timelineTitle)
-                    ) {
-                      setItems((prevItems) => [
-                        ...prevItems,
-                        {
-                          label: item.timelineTitle,
-                          key: item.id,
-                        },
-                      ]);
-                    }
-                  }}
-                />
-              ))}
-            {selectedApplications.length >
-              getNumberOfItemsThatFit(selectedApplicationsWidth, 112) && (
-              <Dropdown trigger={["click"]} menu={{ items }}>
-                <Button type="text">
-                  <EllipsisOutlined />
-                </Button>
-              </Dropdown>
-            )} */}
-          </div>
         </div>
 
         <div className="flex items-center gap-3">
@@ -193,18 +123,17 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
               const id = allApplications.length + 1;
               dispatch(
                 addAnordnungAction({
+                  className: "vzk_anordnung",
                   data: {
-                    key: id,
-                    name: id,
-                    id: id,
-                    typ: "internal",
-                    timelineStatus: "Offen",
-                    timeline: [
-                      {
-                        id: 1,
-                        typ: "request",
-                      },
-                    ],
+                    title: "",
+                    vzk_type: {
+                      id: 1,
+                      name: "internal",
+                    },
+                    vzk_status: {
+                      name: "offen",
+                      id: 1,
+                    },
                   },
                 })
               );
@@ -262,7 +191,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
                     name: id,
                     id: id,
                     typ: "external",
-                    timelineStatus: "Offen",
+                    status: "Offen",
                     timeline: [
                       {
                         id: 1,
