@@ -145,6 +145,68 @@ const TagList = ({ changeTimeline }) => {
           Widerrufsvorbehalt
         </Tag.CheckableTag>
         <Tag.CheckableTag
+          checked={checkIfTimelineContainsText("Fachfirmavorbehalt")}
+          className={`${
+            checkIfTimelineContainsText("Fachfirmavorbehalt")
+              ? "bg-yellow-600 hover:bg-yellow-500"
+              : "bg-transparent"
+          }`}
+          onChange={(checked) => {
+            if (checked) {
+              changeTimeline({
+                typ: "text",
+                name: "Fachfirmavorbehalt",
+                text: "Für die Aufbringung der Markierung wenden Sie sich bitte an eine der nachstehen genannten Vertragsfirmen der Stadt Wuppertal.",
+              });
+            } else {
+              const index = timeline.findIndex(
+                (obj) => obj.name === "Fachfirmavorbehalt"
+              );
+              if (index >= 0) {
+                dispatch(
+                  deleteTimelineObject({
+                    timelineIndex: index,
+                    applicationId: id,
+                  })
+                );
+              }
+            }
+          }}
+        >
+          Fachfirmavorbehalt
+        </Tag.CheckableTag>
+        <Tag.CheckableTag
+          checked={checkIfTimelineContainsText("Kostennotiz")}
+          className={`${
+            checkIfTimelineContainsText("Kostennotiz")
+              ? "bg-pink-600 hover:bg-pink-500"
+              : "bg-transparent"
+          }`}
+          onChange={(checked) => {
+            if (checked) {
+              changeTimeline({
+                typ: "text",
+                name: "Kostennotiz",
+                text: "Gem. § 16 Straßen- und Wegegesetz NW sind die Kosten der Aufbringung, Unterhaltung und Entfernung der Markierung von Ihnen als Antragsteller zu tragen.",
+              });
+            } else {
+              const index = timeline.findIndex(
+                (obj) => obj.name === "Kostennotiz"
+              );
+              if (index >= 0) {
+                dispatch(
+                  deleteTimelineObject({
+                    timelineIndex: index,
+                    applicationId: id,
+                  })
+                );
+              }
+            }
+          }}
+        >
+          Kostennotiz
+        </Tag.CheckableTag>
+        <Tag.CheckableTag
           checked={checkIfTimelineContainsText("Mit freundlichen Grüßen")}
           className={`${
             checkIfTimelineContainsText("Mit freundlichen Grüßen")

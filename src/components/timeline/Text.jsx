@@ -1,4 +1,4 @@
-import { Card, Dropdown, Input } from "antd";
+import { Card, Dropdown, Input, Button } from "antd";
 import { useDispatch } from "react-redux";
 import {
   deleteTimelineObject,
@@ -6,15 +6,35 @@ import {
   updateTimelineValues,
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
-import { EllipsisOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  EllipsisOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
+import { useState } from "react";
+import MdRedactor, { mdParser } from "../mdredactor/MdRedactor";
 
 const { TextArea } = Input;
 
 const Text = ({ attachment, id }) => {
   const { id: applicationId } = useParams();
+  const [isEdit, setIsEdit] = useState(false);
+  const [text, setText] = useState(attachment.text);
   const dispatch = useDispatch();
 
   const items = [
+    {
+      label: (
+        <div
+          onClick={() => {
+            setIsEdit(true);
+          }}
+        >
+          Bearbeiten
+        </div>
+      ),
+      key: "0",
+    },
     {
       label: (
         <div
@@ -30,7 +50,7 @@ const Text = ({ attachment, id }) => {
           Entfernen
         </div>
       ),
-      key: "0",
+      key: "1",
     },
   ];
 
@@ -44,6 +64,10 @@ const Text = ({ attachment, id }) => {
         return "#f0f9ff";
       case "Widerrufsvorbehalt":
         return "#eef2ff";
+      case "Fachfirmavorbehalt":
+        return "#fefce8";
+      case "Kostennotiz":
+        return "#fdf2f8";
       case "Mit freundlichen Grüßen":
         return "#faf5ff";
     }
@@ -85,21 +109,42 @@ const Text = ({ attachment, id }) => {
           </div>
         }
       >
-        <TextArea
-          value={attachment.text}
-          autoSize
-          id={id}
-          onChange={(e) => {
-            dispatch(
-              updateTimelineValues({
-                timelineIndex: id,
-                itemValue: e.target.value,
-                property: "text",
-                applicationId: applicationId,
-              })
-            );
-          }}
-        />
+        {isEdit ? (
+          <div className="flex flex-col gap-2">
+            <MdRedactor
+              mdDoc={attachment.text}
+              getDocument={(text) => setText(text)}
+            />
+            <div className="w-full flex items-center gap-2 justify-end">
+              <Button icon={<CloseOutlined />} onClick={() => setIsEdit(false)}>
+                Abbrechen
+              </Button>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  dispatch(
+                    updateTimelineValues({
+                      timelineIndex: id,
+                      itemValue: text,
+                      property: "text",
+                      applicationId: applicationId,
+                    })
+                  );
+                  setIsEdit(false);
+                }}
+              >
+                Text bearbeiten
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: mdParser.render(attachment.text),
+            }}
+          />
+        )}
       </Card>
     </div>
   );

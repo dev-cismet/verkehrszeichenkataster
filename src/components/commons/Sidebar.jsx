@@ -49,7 +49,7 @@ const SidebarItem = ({
         >
           {icon}
           {!isSidebarCollapsed && (
-            <h4 className="mb-0 w-full truncate">{text}</h4>
+            <h4 className="mb-0 w-full truncate">{text ? text : "Text"}</h4>
           )}
           {collapsable && (
             <div className="flex w-fit items-center gap-1 justify-end">

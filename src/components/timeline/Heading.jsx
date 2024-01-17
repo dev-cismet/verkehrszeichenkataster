@@ -12,6 +12,9 @@ import {
   FilePdfOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
+import { Document, usePDF } from "@react-pdf/renderer";
+import ExternalTemplate from "../pdf/ExternalTemplate";
+import InternalTemplate from "../pdf/InternalTemplate";
 
 const Heading = () => {
   const { id } = useParams();
@@ -19,10 +22,37 @@ const Heading = () => {
   const anordnung = useSelector(getCurrentApplication);
   const [title, setTitle] = useState(anordnung.timelineTitle);
   const [editTitle, setEditTitle] = useState(!!!anordnung.timelineTitle);
+  const [instance, updateInstance] = usePDF({
+    document:
+      anordnung.typ === "internal" ? (
+        <InternalTemplate
+          timeline={anordnung?.timeline}
+          title={anordnung.timelineTitle}
+        />
+      ) : (
+        <ExternalTemplate
+          timeline={anordnung?.timeline}
+          title={anordnung.timelineTitle}
+        />
+      ),
+  });
 
   useEffect(() => {
     setTitle(anordnung.timelineTitle);
     setEditTitle(!!!anordnung.timelineTitle);
+    updateInstance(
+      anordnung.typ === "internal" ? (
+        <InternalTemplate
+          timeline={anordnung?.timeline}
+          title={anordnung.timelineTitle}
+        />
+      ) : (
+        <ExternalTemplate
+          timeline={anordnung?.timeline}
+          title={anordnung.timelineTitle}
+        />
+      )
+    );
   }, [anordnung]);
 
   return (
@@ -76,7 +106,13 @@ const Heading = () => {
               >
                 Bearbeiten
               </Button>
-              <Button icon={<FilePdfOutlined />}>PDF Drucken</Button>
+              <Button
+                href={instance.url}
+                download="Anordnung.pdf"
+                icon={<FilePdfOutlined />}
+              >
+                PDF Drucken
+              </Button>
             </>
           )}
         </div>
