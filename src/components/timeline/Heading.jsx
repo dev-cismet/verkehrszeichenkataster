@@ -40,6 +40,19 @@ const Heading = () => {
   useEffect(() => {
     setTitle(anordnung.timelineTitle);
     setEditTitle(!!!anordnung.timelineTitle);
+    updateInstance(
+      anordnung.typ === "internal" ? (
+        <InternalTemplate
+          timeline={anordnung?.timeline}
+          title={anordnung.timelineTitle}
+        />
+      ) : (
+        <ExternalTemplate
+          timeline={anordnung?.timeline}
+          title={anordnung.timelineTitle}
+        />
+      )
+    );
   }, [anordnung]);
 
   return (
