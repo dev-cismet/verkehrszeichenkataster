@@ -64,6 +64,10 @@ const Text = ({ attachment, id }) => {
         return "#f0f9ff";
       case "Widerrufsvorbehalt":
         return "#eef2ff";
+      case "Fachfirmavorbehalt":
+        return "#fefce8";
+      case "Kostennotiz":
+        return "#fdf2f8";
       case "Mit freundlichen Grüßen":
         return "#faf5ff";
     }
