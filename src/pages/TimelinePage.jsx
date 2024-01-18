@@ -7,6 +7,7 @@ import Decision from "../components/timeline/Decision";
 import "./dragger.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getApplicationById,
   getCurrentApplication,
   storeTimeline,
   updateTimelineStatus,
@@ -64,6 +65,10 @@ const TimelinePage = () => {
       description: "",
     });
   };
+
+  if (id) {
+    dispatch(getApplicationById(id));
+  }
 
   return (
     <Card

@@ -18,6 +18,10 @@ export const jwtTestQuery = gql`
   ${queries.jwtTestQuery}
 `;
 
+export const getAnordnungByIdQuery = gql`
+  ${queries.anordnungById}
+`;
+
 export const landParcelQuery = gql`
   ${queries.landParcel}
 `;

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ENDPOINT, getAnordnungByIdQuery } from "../../constants/vkz";
 
 const initialState = {
   allApplications: [],
@@ -297,4 +298,34 @@ export const getCurrentApplication = (state) => {
 
 export const getTimeline = (state) => {
   return state.application.timeline;
+};
+
+export const getApplicationById = (id) => {
+  return async (dispatch, getState) => {
+    const jwt = getState().auth.jwt;
+
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify({
+        query: getAnordnungByIdQuery,
+        variables: { id },
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.error(
+          "There was a problem with the fetch operation:",
+          error.message
+        );
+      });
+  };
 };
