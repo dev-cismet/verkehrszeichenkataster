@@ -43,3 +43,27 @@ query MyQuery($id: Int) {
     }
   }
 }`;
+
+queries.allAnordnungen = `
+query MyQuery {
+  vzk_anordnung {
+    id
+    department_name
+    department_number
+    department
+    number
+    title
+    vzk_status {
+      name
+    }
+    vzk_type {
+      name
+    }
+    vzk_anordnung_timelineArrayRelationShip {
+      id
+      vzk_attachment_typ {
+        name
+      }
+    }
+  }
+}`;

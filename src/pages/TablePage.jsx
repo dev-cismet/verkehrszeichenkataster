@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllApplications,
+  getAllApplicationsDb,
   storeAllApplications,
   storeSelectedApplications,
 } from "../store/slices/application";
@@ -39,6 +40,8 @@ const TablePage = () => {
       name: record.name,
     }),
   };
+
+  dispatch(getAllApplicationsDb());
 
   return (
     <div className="h-full max-h-[calc(100vh-73px)] w-full bg-zinc-200 p-2 flex flex-col items-center gap-2">

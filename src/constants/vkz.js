@@ -22,6 +22,10 @@ export const getAnordnungByIdQuery = gql`
   ${queries.anordnungById}
 `;
 
+export const getAllAnordnungenQuery = gql`
+  ${queries.allAnordnungen}
+`;
+
 export const landParcelQuery = gql`
   ${queries.landParcel}
 `;
