@@ -44,6 +44,7 @@ import Designer from "./components/designer/Designer.jsx";
 import Viewer from "./components/pdf/Viewer.jsx";
 import MdRedactor from "./components/mdredactor/MdRedactor.jsx";
 import PdfViewer from "./components/pdfviewer/PdfViewer.jsx";
+import { initialize } from "./store/slices/offlineActionDb.js";
 
 const baseLayerConf = extendBaseLayerConf({ ...defaultLayerConf });
 
@@ -60,6 +61,8 @@ const AuthWrapper = () => {
 
   if (!jwt) {
     return <Navigate to="/login" state={{ from: location }} replace />;
+  } else {
+    dispatch(initialize());
   }
 
   return (
