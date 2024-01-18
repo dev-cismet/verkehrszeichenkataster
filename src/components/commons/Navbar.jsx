@@ -129,32 +129,19 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
                       "Errichtung von Verkehrszeichen und einrichtungen gemäß §45 Abs. 3 StVO",
                     vzk_type: {
                       id: 1,
-                      name: "internal",
                     },
                     vzk_status: {
-                      name: "offen",
                       id: 1,
                     },
-                  },
-                })
-              );
-              dispatch(
-                storeAllApplications([
-                  ...allApplications,
-                  {
-                    key: id,
-                    name: id,
-                    id: id,
-                    typ: "internal",
-                    timelineStatus: "Offen",
-                    timeline: [
+                    vzk_anordnung_timelineArrayRelationShip: [
                       {
-                        id: 1,
-                        typ: "request",
+                        vzk_attachment_typ: {
+                          id: 1,
+                        },
                       },
                     ],
                   },
-                ])
+                })
               );
               dispatch(
                 storeSelectedApplications([
@@ -196,26 +183,15 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
                     vzk_status: {
                       id: 1,
                     },
-                  },
-                })
-              );
-              dispatch(
-                storeAllApplications([
-                  ...allApplications,
-                  {
-                    key: id,
-                    name: id,
-                    id: id,
-                    typ: "external",
-                    timelineStatus: "Offen",
-                    timeline: [
+                    vzk_anordnung_timelineArrayRelationShip: [
                       {
-                        id: 1,
-                        typ: "request",
+                        vzk_attachment_typ: {
+                          id: 1,
+                        },
                       },
                     ],
                   },
-                ])
+                })
               );
               dispatch(
                 storeSelectedApplications([
