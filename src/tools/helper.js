@@ -26,5 +26,9 @@ export const getDataTypeFromBase64 = (base64String) => {
 };
 
 export const titleCase = (string) => {
-  return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  if (string) {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  } else {
+    return "";
+  }
 };

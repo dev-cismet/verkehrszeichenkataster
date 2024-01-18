@@ -11,7 +11,7 @@ const TagList = ({ changeTimeline }) => {
   const { id } = useParams();
   const timeline = useSelector(
     getCurrentApplication
-  ).vzk_anordnung_timelineArrayRelationShip;
+  )?.vzk_anordnung_timelineArrayRelationShip;
   const dispatch = useDispatch();
 
   const checkIfTimelineContainsText = (text) => {

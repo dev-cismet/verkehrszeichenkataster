@@ -92,7 +92,7 @@ const Sidebar = () => {
 
   const selectedApplication = useSelector(getCurrentApplication);
   const currentTimeline =
-    selectedApplication.vzk_anordnung_timelineArrayRelationShip;
+    selectedApplication?.vzk_anordnung_timelineArrayRelationShip;
 
   const getIcon = (type, name) => {
     switch (name) {

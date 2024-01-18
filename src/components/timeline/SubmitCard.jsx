@@ -30,7 +30,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const { id } = useParams();
   const anordnung = useSelector(getCurrentApplication);
 
-  const status = titleCase(anordnung.vzk_status.name);
+  const status = titleCase(anordnung?.vzk_status?.name);
 
   return (
     <>

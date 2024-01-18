@@ -25,6 +25,7 @@ import {
   UnlockOutlined,
 } from "@ant-design/icons";
 import { useEffect } from "react";
+import { titleCase } from "../tools/helper";
 
 const { Dragger } = Upload;
 
@@ -40,8 +41,9 @@ const TimelinePage = () => {
   const { id } = useParams();
   const anordnung = useSelector(getCurrentApplication);
 
-  const currentTimeline = anordnung.vzk_anordnung_timelineArrayRelationShip;
-  const isInternalRequest = anordnung.vzk_type.name === "internal";
+  const currentTimeline = anordnung?.vzk_anordnung_timelineArrayRelationShip;
+  const isInternalRequest = anordnung?.vzk_type?.name === "internal";
+  const status = titleCase(anordnung?.vzk_status?.name);
 
   const dispatch = useDispatch();
 
@@ -138,24 +140,15 @@ const TimelinePage = () => {
               onClick={() =>
                 dispatch(
                   updateTimelineStatus({
-                    updatedStatus:
-                      anordnung.timelineStatus === "Offen"
-                        ? "Geschlossen"
-                        : "Offen",
+                    updatedStatus: status === "Offen" ? "Geschlossen" : "Offen",
                     applicationId: id,
                   })
                 )
               }
             >
-              {anordnung.timelineStatus === "Offen" ? (
-                <LockOutlined />
-              ) : (
-                <UnlockOutlined />
-              )}
+              {status === "Offen" ? <LockOutlined /> : <UnlockOutlined />}
               <span>
-                {anordnung.timelineStatus === "Offen"
-                  ? "Abschließen"
-                  : "Wieder eröffnen"}
+                {status === "Offen" ? "Abschließen" : "Wieder eröffnen"}
               </span>
             </div>
           </div>
