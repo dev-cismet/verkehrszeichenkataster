@@ -1,18 +1,16 @@
-import { Button, Card, Table } from "antd";
-import React from "react";
+import { Card, Table } from "antd";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllApplications,
   getAllApplicationsDb,
-  storeAllApplications,
   storeSelectedApplications,
 } from "../store/slices/application";
-import { anordnungen } from "../constants/mockData";
 
 const columns = [
   {
     title: "Name",
-    dataIndex: "timelineTitle",
+    dataIndex: "title",
   },
   {
     title: "Nr",
@@ -20,11 +18,11 @@ const columns = [
   },
   {
     title: "Typ",
-    dataIndex: "typ",
+    dataIndex: ["vzk_type", "name"],
   },
   {
     title: "Status",
-    dataIndex: "timelineStatus",
+    dataIndex: ["vzk_status", "name"],
   },
 ];
 
@@ -36,28 +34,20 @@ const TablePage = () => {
     onChange: (selectedRowKeys, selectedRows) => {
       dispatch(storeSelectedApplications(selectedRows));
     },
-    getCheckboxProps: (record) => ({
-      name: record.name,
-    }),
   };
 
-  dispatch(getAllApplicationsDb());
+  useEffect(() => {
+    dispatch(getAllApplicationsDb());
+  }, []);
 
   return (
     <div className="h-full max-h-[calc(100vh-73px)] w-full bg-zinc-200 p-2 flex flex-col items-center gap-2">
-      <Card
-        className="h-full w-full overflow-clip"
-        title="Anträge"
-        extra={
-          <Button onClick={() => dispatch(storeAllApplications(anordnungen))}>
-            Anträge laden
-          </Button>
-        }
-      >
+      <Card className="h-full w-full overflow-clip" title="Anträge">
         <Table
           columns={columns}
           dataSource={allApplications}
           rowSelection={rowSelection}
+          rowKey={(record) => record.id}
           pagination={false}
           className="w-full"
         />

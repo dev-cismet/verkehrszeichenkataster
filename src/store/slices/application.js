@@ -353,7 +353,7 @@ export const getAllApplicationsDb = () => {
         return response.json();
       })
       .then((result) => {
-        console.log(result);
+        dispatch(storeAllApplications(result.data.vzk_anordnung));
       })
       .catch((error) => {
         console.error(
