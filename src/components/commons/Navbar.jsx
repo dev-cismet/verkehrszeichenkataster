@@ -125,7 +125,8 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
                 addAnordnungAction({
                   className: "vzk_anordnung",
                   data: {
-                    title: "",
+                    title:
+                      "Errichtung von Verkehrszeichen und einrichtungen gemäß §45 Abs. 3 StVO",
                     vzk_type: {
                       id: 1,
                       name: "internal",
@@ -186,18 +187,15 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
               const id = allApplications.length + 1;
               dispatch(
                 addAnordnungAction({
+                  className: "vzk_anordnung",
                   data: {
-                    key: id,
-                    name: id,
-                    id: id,
-                    typ: "external",
-                    status: "Offen",
-                    timeline: [
-                      {
-                        id: 1,
-                        typ: "request",
-                      },
-                    ],
+                    title: "",
+                    vzk_type: {
+                      id: 2,
+                    },
+                    vzk_status: {
+                      id: 1,
+                    },
                   },
                 })
               );
