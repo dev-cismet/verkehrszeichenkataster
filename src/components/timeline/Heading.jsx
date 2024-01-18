@@ -16,43 +16,45 @@ import { Document, usePDF } from "@react-pdf/renderer";
 import ExternalTemplate from "../pdf/ExternalTemplate";
 import InternalTemplate from "../pdf/InternalTemplate";
 import { titleCase } from "../../tools/helper";
+import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 
 const Heading = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const anordnung = useSelector(getCurrentApplication);
-  const [title, setTitle] = useState(anordnung.title);
-  const [editTitle, setEditTitle] = useState(!!!anordnung.title);
+
+  const [title, setTitle] = useState(anordnung?.title);
+  const [editTitle, setEditTitle] = useState(!!!anordnung?.title);
   const [instance, updateInstance] = usePDF({
     document:
-      anordnung.vzk_type.name === "internal" ? (
+      anordnung?.vzk_type?.name === "internal" ? (
         <InternalTemplate
           timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
-          title={anordnung.title}
+          title={anordnung?.title}
         />
       ) : (
         <ExternalTemplate
           timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
-          title={anordnung.title}
+          title={anordnung?.title}
         />
       ),
   });
 
-  const status = titleCase(anordnung.vzk_status.name);
+  const status = titleCase(anordnung?.vzk_status?.name);
 
   useEffect(() => {
-    setTitle(anordnung.title);
-    setEditTitle(!!!anordnung.title);
+    setTitle(anordnung?.title);
+    setEditTitle(!!!anordnung?.title);
     updateInstance(
-      anordnung.vzk_type.name === "internal" ? (
+      anordnung?.vzk_type?.name === "internal" ? (
         <InternalTemplate
           timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
-          title={anordnung.title}
+          title={anordnung?.title}
         />
       ) : (
         <ExternalTemplate
           timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
-          title={anordnung.title}
+          title={anordnung?.title}
         />
       )
     );
@@ -74,9 +76,18 @@ const Heading = () => {
               <Button
                 onClick={() => {
                   dispatch(
+                    addAnordnungAction({
+                      className: "vzk_anordnung",
+                      data: {
+                        title: title,
+                        id: anordnung?.id,
+                      },
+                    })
+                  );
+                  dispatch(
                     updateTimelineTitle({
                       updatedTitle: title,
-                      applicationId: id,
+                      applicationId: anordnung?.id,
                     })
                   );
                   setEditTitle(false);
@@ -96,9 +107,11 @@ const Heading = () => {
           ) : (
             <>
               <div className="flex items-center gap-2 w-full">
-                <h1 className="my-0 text-4xl font-normal">{anordnung.title}</h1>
+                <h1 className="my-0 text-4xl font-normal">
+                  {anordnung?.title}
+                </h1>
                 <span className="text-muted-foreground font-normal text-4xl">
-                  #{anordnung.id}
+                  #{anordnung?.id}
                 </span>
               </div>
               <Button
