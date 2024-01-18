@@ -15,41 +15,44 @@ import {
 import { Document, usePDF } from "@react-pdf/renderer";
 import ExternalTemplate from "../pdf/ExternalTemplate";
 import InternalTemplate from "../pdf/InternalTemplate";
+import { titleCase } from "../../tools/helper";
 
 const Heading = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const anordnung = useSelector(getCurrentApplication);
-  const [title, setTitle] = useState(anordnung.timelineTitle);
-  const [editTitle, setEditTitle] = useState(!!!anordnung.timelineTitle);
+  const [title, setTitle] = useState(anordnung.title);
+  const [editTitle, setEditTitle] = useState(!!!anordnung.title);
   const [instance, updateInstance] = usePDF({
     document:
-      anordnung.typ === "internal" ? (
+      anordnung.vzk_type.name === "internal" ? (
         <InternalTemplate
-          timeline={anordnung?.timeline}
-          title={anordnung.timelineTitle}
+          timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
+          title={anordnung.title}
         />
       ) : (
         <ExternalTemplate
-          timeline={anordnung?.timeline}
-          title={anordnung.timelineTitle}
+          timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
+          title={anordnung.title}
         />
       ),
   });
 
+  const status = titleCase(anordnung.vzk_status.name);
+
   useEffect(() => {
-    setTitle(anordnung.timelineTitle);
-    setEditTitle(!!!anordnung.timelineTitle);
+    setTitle(anordnung.title);
+    setEditTitle(!!!anordnung.title);
     updateInstance(
-      anordnung.typ === "internal" ? (
+      anordnung.vzk_type.name === "internal" ? (
         <InternalTemplate
-          timeline={anordnung?.timeline}
-          title={anordnung.timelineTitle}
+          timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
+          title={anordnung.title}
         />
       ) : (
         <ExternalTemplate
-          timeline={anordnung?.timeline}
-          title={anordnung.timelineTitle}
+          timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
+          title={anordnung.title}
         />
       )
     );
@@ -93,9 +96,7 @@ const Heading = () => {
           ) : (
             <>
               <div className="flex items-center gap-2 w-full">
-                <h1 className="my-0 text-4xl font-normal">
-                  {anordnung.timelineTitle}
-                </h1>
+                <h1 className="my-0 text-4xl font-normal">{anordnung.title}</h1>
                 <span className="text-muted-foreground font-normal text-4xl">
                   #{anordnung.id}
                 </span>
@@ -119,23 +120,23 @@ const Heading = () => {
         <div className="flex items-center gap-2">
           <div
             className={`${
-              anordnung.timelineStatus === "Offen"
-                ? "bg-green-700"
-                : "bg-purple-700"
+              status === "Offen" ? "bg-green-700" : "bg-purple-700"
             } py-1 px-3 w-fit rounded-3xl text-lg font-medium text-white flex gap-2 items-center justify-center`}
           >
-            {anordnung.timelineStatus === "Offen" ? (
+            {status === "Offen" ? (
               <InfoCircleOutlined />
             ) : (
               <CheckCircleOutlined />
             )}
-            <span>{anordnung.timelineStatus}</span>
+            <span>{status}</span>
           </div>
           <span className="text-muted-foreground font-normal">
             Max Mustermann hat letzte Woche diese Anordnung erstellt ·{" "}
-            {anordnung?.timeline?.length} Baustein
-            {(anordnung?.timeline?.length === 0 ||
-              anordnung?.timeline?.length > 1) &&
+            {anordnung?.vzk_anordnung_timelineArrayRelationShip?.length}{" "}
+            Baustein
+            {(anordnung?.vzk_anordnung_timelineArrayRelationShip?.length ===
+              0 ||
+              anordnung?.vzk_anordnung_timelineArrayRelationShip?.length > 1) &&
               "e"}
           </span>
         </div>

@@ -9,11 +9,13 @@ import "./tags.css";
 
 const TagList = ({ changeTimeline }) => {
   const { id } = useParams();
-  const timeline = useSelector(getCurrentApplication).timeline;
+  const timeline = useSelector(
+    getCurrentApplication
+  ).vzk_anordnung_timelineArrayRelationShip;
   const dispatch = useDispatch();
 
   const checkIfTimelineContainsText = (text) => {
-    return timeline.some((obj) => obj.name === text);
+    return timeline?.some((obj) => obj.name === text);
   };
 
   return (

@@ -16,6 +16,7 @@ import {
 } from "@ant-design/icons";
 import Designer from "../designer/Designer";
 import MdRedactor from "../mdredactor/MdRedactor";
+import { titleCase } from "../../tools/helper";
 
 const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [text, setText] = useState("");
@@ -27,12 +28,13 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [drawing, setDrawing] = useState("");
   const submitRef = useRef(null);
   const { id } = useParams();
-  const dispatch = useDispatch();
   const anordnung = useSelector(getCurrentApplication);
+
+  const status = titleCase(anordnung.vzk_status.name);
 
   return (
     <>
-      {anordnung.timelineStatus === "Offen" && (
+      {status === "Offen" && (
         <div className="flex flex-col gap-2 w-full py-4">
           <span className="text-start text-lg font-medium">
             Anhang Hinzufügen
@@ -100,7 +102,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                 Abbrechen
               </Button>
             )}
-            {anordnung.timelineStatus === "Offen" && (
+            {status === "Offen" && (
               <Button
                 type="primary"
                 onClick={() => {
