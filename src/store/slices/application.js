@@ -323,7 +323,9 @@ export const getApplicationById = (id) => {
         return response.json();
       })
       .then((result) => {
-        console.log(result);
+        if (result.data.vzk_anordnung.length > 0) {
+          dispatch(storeCurrentApplication(result.data.vzk_anordnung[0]));
+        }
       })
       .catch((error) => {
         console.error(

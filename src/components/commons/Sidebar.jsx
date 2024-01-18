@@ -91,7 +91,8 @@ const Sidebar = () => {
   const [isResetting, setIsResetting] = useState(false);
 
   const selectedApplication = useSelector(getCurrentApplication);
-  const currentTimeline = selectedApplication.timeline;
+  const currentTimeline =
+    selectedApplication.vzk_anordnung_timelineArrayRelationShip;
 
   const getIcon = (type, name) => {
     switch (name) {
@@ -139,7 +140,7 @@ const Sidebar = () => {
         )}
       </div>
 
-      {currentTimeline.map((item, i) => (
+      {currentTimeline?.map((item, i) => (
         <SidebarItem
           // link={"verlauf"}
           icon={getIcon(item.typ, item.name)}

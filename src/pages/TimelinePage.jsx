@@ -24,6 +24,7 @@ import {
   LockOutlined,
   UnlockOutlined,
 } from "@ant-design/icons";
+import { useEffect } from "react";
 
 const { Dragger } = Upload;
 
@@ -38,9 +39,9 @@ const getBase64 = (file) =>
 const TimelinePage = () => {
   const { id } = useParams();
   const anordnung = useSelector(getCurrentApplication);
-  const currentTimeline = anordnung.timeline;
-  const isInternalRequest =
-    useSelector(getCurrentApplication).typ === "internal";
+
+  const currentTimeline = anordnung.vzk_anordnung_timelineArrayRelationShip;
+  const isInternalRequest = anordnung.vzk_type.name === "internal";
 
   const dispatch = useDispatch();
 
@@ -66,9 +67,11 @@ const TimelinePage = () => {
     });
   };
 
-  if (id) {
-    dispatch(getApplicationById(id));
-  }
+  useEffect(() => {
+    if (id) {
+      dispatch(getApplicationById(id));
+    }
+  }, []);
 
   return (
     <Card
@@ -93,7 +96,7 @@ const TimelinePage = () => {
       <div className="h-full w-3/4 mx-auto flex gap-4 justify-between">
         <div className="flex flex-col w-full">
           {currentTimeline?.map((attachment, i) => {
-            switch (attachment.typ) {
+            switch (attachment.vzk_attachment_typ.name.toLowerCase()) {
               case "request":
                 return (
                   <Request
