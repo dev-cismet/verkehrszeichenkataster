@@ -238,7 +238,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
               >
                 <DiffOutlined className="text-xl" />
                 <span>{application.id}</span>
-                <span>{application.timelineTitle}</span>
+                <span>{application.title}</span>
               </Link>
             </li>
           ))}
