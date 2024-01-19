@@ -61,8 +61,6 @@ const AuthWrapper = () => {
 
   if (!jwt) {
     return <Navigate to="/login" state={{ from: location }} replace />;
-  } else {
-    dispatch(initialize());
   }
 
   return (
