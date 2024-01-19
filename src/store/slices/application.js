@@ -172,22 +172,12 @@ const slice = createSlice({
     updateTimelineTitle(state, action) {
       const { updatedTitle, applicationId } = action.payload;
 
-      const updatedApplications = state.allApplications.map((item) => {
-        if (item.id.toString() === applicationId) {
-          return {
-            ...item,
-            timelineTitle: updatedTitle,
-          };
-        }
-        return item;
-      });
-
       const updatedSelectedApplications = state.selectedApplications.map(
         (item) => {
-          if (item.id.toString() === applicationId) {
+          if (item?.uuid === applicationId) {
             return {
               ...item,
-              timelineTitle: updatedTitle,
+              title: updatedTitle,
             };
           }
           return item;
@@ -196,7 +186,6 @@ const slice = createSlice({
 
       return {
         ...state,
-        allApplications: updatedApplications,
         selectedApplications: updatedSelectedApplications,
       };
     },
