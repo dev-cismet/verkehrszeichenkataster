@@ -12,7 +12,7 @@ const DetailsWrapper = () => {
   const dispatch = useDispatch();
 
   const selectedApplication = selectedApplications.find(
-    (element) => element.id.toString() === id
+    (element) => element.uuid?.toString() === id
   );
 
   dispatch(storeCurrentApplication(selectedApplication));

@@ -1,9 +1,7 @@
-import { Button, Dropdown, Input, Select } from "antd";
-
+import { Button, Input } from "antd";
+import { v4 as uuidv4 } from "uuid";
 import {
-  CaretDownOutlined,
   DiffOutlined,
-  EllipsisOutlined,
   FolderOpenOutlined,
   LogoutOutlined,
   PlusOutlined,
@@ -18,16 +16,16 @@ import {
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { storeJWT, storeLogin } from "../../store/slices/auth";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import {
   getAllApplications,
   getSelectedApplications,
-  storeAllApplications,
   storeSelectedApplications,
 } from "../../store/slices/application";
 import Logo from "/cismet.svg";
 import "./input.css";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
+import { getId } from "../../store/slices/offlineActionDb";
 
 const navLinks = () => {
   return [
@@ -47,6 +45,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
   const { pathname } = useLocation();
   const allApplications = useSelector(getAllApplications);
   const selectedApplications = useSelector(getSelectedApplications);
+  const id = useSelector(getId);
 
   let storyStyle = {};
   if (inStory) {
@@ -120,47 +119,37 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
             size="small"
             className="bg-[#00000005]"
             onClick={() => {
-              const id = allApplications.length + 1;
+              const id = uuidv4();
+              const anordnung = {
+                title:
+                  "Errichtung von Verkehrszeichen und einrichtungen gemäß §45 Abs. 3 StVO",
+                uuid: id,
+                vzk_type: {
+                  id: 1,
+                  name: "internal",
+                },
+                vzk_status: {
+                  id: 1,
+                  name: "offen",
+                },
+                vzk_anordnung_timelineArrayRelationShip: [
+                  {
+                    vzk_attachment_typ: {
+                      id: 1,
+                    },
+                  },
+                ],
+              };
               dispatch(
                 addAnordnungAction({
                   className: "vzk_anordnung",
-                  data: {
-                    title:
-                      "Errichtung von Verkehrszeichen und einrichtungen gemäß §45 Abs. 3 StVO",
-                    vzk_type: {
-                      id: 1,
-                    },
-                    vzk_status: {
-                      id: 1,
-                    },
-                    vzk_anordnung_timelineArrayRelationShip: [
-                      {
-                        vzk_attachment_typ: {
-                          id: 1,
-                        },
-                      },
-                    ],
-                  },
+                  data: anordnung,
                 })
               );
               dispatch(
-                storeSelectedApplications([
-                  ...selectedApplications,
-                  {
-                    key: id,
-                    name: id,
-                    id: id,
-                    typ: "internal",
-                    timelineStatus: "Offen",
-                    timeline: [
-                      {
-                        id: 1,
-                        typ: "request",
-                      },
-                    ],
-                  },
-                ])
+                storeSelectedApplications([...selectedApplications, anordnung])
               );
+
               navigate({ pathname: getApplicationPath(id) });
             }}
             icon={<PlusOutlined />}
@@ -171,45 +160,34 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
             size="small"
             className="bg-[#00000005]"
             onClick={() => {
-              const id = allApplications.length + 1;
+              const id = uuidv4();
+              const anordnung = {
+                title: "",
+                uuid: id,
+                vzk_type: {
+                  id: 2,
+                  name: "external",
+                },
+                vzk_status: {
+                  id: 1,
+                  name: "offen",
+                },
+                vzk_anordnung_timelineArrayRelationShip: [
+                  {
+                    vzk_attachment_typ: {
+                      id: 1,
+                    },
+                  },
+                ],
+              };
               dispatch(
                 addAnordnungAction({
                   className: "vzk_anordnung",
-                  data: {
-                    title: "",
-                    vzk_type: {
-                      id: 2,
-                    },
-                    vzk_status: {
-                      id: 1,
-                    },
-                    vzk_anordnung_timelineArrayRelationShip: [
-                      {
-                        vzk_attachment_typ: {
-                          id: 1,
-                        },
-                      },
-                    ],
-                  },
+                  data: anordnung,
                 })
               );
               dispatch(
-                storeSelectedApplications([
-                  ...selectedApplications,
-                  {
-                    key: id,
-                    name: id,
-                    id: id,
-                    typ: "external",
-                    timelineStatus: "Offen",
-                    timeline: [
-                      {
-                        id: 1,
-                        typ: "request",
-                      },
-                    ],
-                  },
-                ])
+                storeSelectedApplications([...selectedApplications, anordnung])
               );
               navigate({ pathname: getApplicationPath(id) });
             }}
@@ -233,7 +211,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
               }`}
             >
               <Link
-                to={getApplicationPath(application?.id)}
+                to={getApplicationPath(application?.uuid)}
                 className="flex items-center gap-2"
               >
                 <DiffOutlined className="text-xl" />

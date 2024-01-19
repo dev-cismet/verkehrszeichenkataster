@@ -5,7 +5,12 @@ import actions from "./actionSubslices";
 import { getJWT, getLoginFromJWT } from "./auth";
 import { DB_VERSION } from "../../constants/vkz";
 
-const initialState = { tasks: [], rawTasks: [], intermediateResults: {} };
+const initialState = {
+  tasks: [],
+  rawTasks: [],
+  intermediateResults: {},
+  id: "",
+};
 
 const slice = createSlice({
   name: "offlineActionDb",
@@ -32,19 +37,26 @@ const slice = createSlice({
       state.rawTasks = action.payload;
       return state;
     },
+    setId(state, action) {
+      state.id = action.payload;
+      return state;
+    },
   },
 });
 
 export default slice;
 
-export const { storeDB, storeIntermediateResults, storeRep } = slice.actions;
+export const { storeDB, storeIntermediateResults, storeRep, setId } =
+  slice.actions;
 
 export const getDB = (state) => {
   return state.offlineActionDb.db;
 };
+
 export const getRep = (state) => {
   return state.offlineActionDb.rep;
 };
+
 export const getIntermediateResults = (state) => {
   return state.offlineActionDb.intermediateResults;
 };
@@ -52,9 +64,15 @@ export const getIntermediateResults = (state) => {
 export const getTasks = (state) => {
   return state.offlineActionDb.tasks;
 };
+
 export const getRawTasks = (state) => {
   return state.offlineActionDb.rawTasks;
 };
+
+export const getId = (state) => {
+  return state.offlineActionDb.id;
+};
+
 export const initialize = (storedJWT) => {
   return async (dispatch, getState) => {
     const state = getState();
@@ -70,7 +88,9 @@ export const initialize = (storedJWT) => {
             console.log("error occured", error);
           };
           const changeCallback = (action) => {
-            // console.log("change occured", action);
+            const id = JSON.parse(`${action.result}`).id;
+            // dispatch(setId(id));
+            console.log("change occured", JSON.parse(`${action.result}`));
           };
           const login = getLoginFromJWT(jwt);
           rep.restart(

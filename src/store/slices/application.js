@@ -38,22 +38,13 @@ const slice = createSlice({
     },
     storeTimeline(state, action) {
       const { id, timeline } = action.payload;
-      const updatedApplications = state.allApplications.map((item) => {
-        if (item.id.toString() === id) {
-          return {
-            ...item,
-            timeline: timeline,
-          };
-        }
-        return item;
-      });
 
       const updatedSelectedApplications = state.selectedApplications.map(
         (item) => {
-          if (item.id.toString() === id) {
+          if (item.uuid === id) {
             return {
               ...item,
-              timeline: timeline,
+              vzk_anordnung_timelineArrayRelationShip: timeline,
             };
           }
           return item;
@@ -62,7 +53,6 @@ const slice = createSlice({
 
       return {
         ...state,
-        allApplications: updatedApplications,
         selectedApplications: updatedSelectedApplications,
       };
     },
@@ -172,22 +162,12 @@ const slice = createSlice({
     updateTimelineTitle(state, action) {
       const { updatedTitle, applicationId } = action.payload;
 
-      const updatedApplications = state.allApplications.map((item) => {
-        if (item.id.toString() === applicationId) {
-          return {
-            ...item,
-            timelineTitle: updatedTitle,
-          };
-        }
-        return item;
-      });
-
       const updatedSelectedApplications = state.selectedApplications.map(
         (item) => {
-          if (item.id.toString() === applicationId) {
+          if (item?.uuid === applicationId) {
             return {
               ...item,
-              timelineTitle: updatedTitle,
+              title: updatedTitle,
             };
           }
           return item;
@@ -196,7 +176,6 @@ const slice = createSlice({
 
       return {
         ...state,
-        allApplications: updatedApplications,
         selectedApplications: updatedSelectedApplications,
       };
     },
@@ -307,6 +286,7 @@ export const getTimeline = (state) => {
 export const getApplicationById = (id) => {
   return async (dispatch, getState) => {
     const jwt = getState().auth.jwt;
+    const selectedApplications = getState().application.selectedApplications;
 
     fetch(ENDPOINT, {
       method: "POST",
@@ -325,6 +305,12 @@ export const getApplicationById = (id) => {
       .then((result) => {
         if (result.data.vzk_anordnung.length > 0) {
           dispatch(storeCurrentApplication(result.data.vzk_anordnung[0]));
+          dispatch(
+            storeSelectedApplications([
+              ...selectedApplications,
+              result.data.vzk_anordnung[0],
+            ])
+          );
         }
       })
       .catch((error) => {

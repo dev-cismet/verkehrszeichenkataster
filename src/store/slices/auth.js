@@ -5,6 +5,7 @@ import {
   REST_SERVICE,
   jwtTestQuery,
 } from "../../constants/vkz";
+import { initialize } from "./offlineActionDb";
 
 const initialState = {
   jwt: undefined,
@@ -127,6 +128,8 @@ export const checkJWTValidation = () => {
         if (result.status === 401) {
           dispatch(storeJWT(undefined));
           dispatch(storeLogin(undefined));
+        } else {
+          dispatch(initialize());
         }
       })
       .catch((error) => {

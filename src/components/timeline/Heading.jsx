@@ -80,14 +80,14 @@ const Heading = () => {
                       className: "vzk_anordnung",
                       data: {
                         title: title,
-                        id: anordnung?.id,
+                        uuid: anordnung?.uuid,
                       },
                     })
                   );
                   dispatch(
                     updateTimelineTitle({
                       updatedTitle: title,
-                      applicationId: anordnung?.id,
+                      applicationId: anordnung?.uuid,
                     })
                   );
                   setEditTitle(false);
