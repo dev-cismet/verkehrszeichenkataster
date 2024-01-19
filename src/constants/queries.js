@@ -54,6 +54,7 @@ query MyQuery {
     department
     number
     title
+    uuid
     vzk_status {
       name
     }

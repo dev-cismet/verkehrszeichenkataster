@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import {
   getAllApplications,
   getSelectedApplications,
+  storeSelectedApplications,
 } from "../../store/slices/application";
 import Logo from "/cismet.svg";
 import "./input.css";
@@ -119,29 +120,36 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
             className="bg-[#00000005]"
             onClick={() => {
               const id = uuidv4();
+              const anordnung = {
+                title:
+                  "Errichtung von Verkehrszeichen und einrichtungen gemäß §45 Abs. 3 StVO",
+                uuid: id,
+                vzk_type: {
+                  id: 1,
+                  name: "internal",
+                },
+                vzk_status: {
+                  id: 1,
+                  name: "offen",
+                },
+                vzk_anordnung_timelineArrayRelationShip: [
+                  {
+                    vzk_attachment_typ: {
+                      id: 1,
+                    },
+                  },
+                ],
+              };
               dispatch(
                 addAnordnungAction({
                   className: "vzk_anordnung",
-                  data: {
-                    title:
-                      "Errichtung von Verkehrszeichen und einrichtungen gemäß §45 Abs. 3 StVO",
-                    uuid: id,
-                    vzk_type: {
-                      id: 1,
-                    },
-                    vzk_status: {
-                      id: 1,
-                    },
-                    vzk_anordnung_timelineArrayRelationShip: [
-                      {
-                        vzk_attachment_typ: {
-                          id: 1,
-                        },
-                      },
-                    ],
-                  },
+                  data: anordnung,
                 })
               );
+              dispatch(
+                storeSelectedApplications([...selectedApplications, anordnung])
+              );
+
               navigate({ pathname: getApplicationPath(id) });
             }}
             icon={<PlusOutlined />}
@@ -153,27 +161,33 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
             className="bg-[#00000005]"
             onClick={() => {
               const id = uuidv4();
+              const anordnung = {
+                title: "",
+                uuid: id,
+                vzk_type: {
+                  id: 2,
+                  name: "external",
+                },
+                vzk_status: {
+                  id: 1,
+                  name: "offen",
+                },
+                vzk_anordnung_timelineArrayRelationShip: [
+                  {
+                    vzk_attachment_typ: {
+                      id: 1,
+                    },
+                  },
+                ],
+              };
               dispatch(
                 addAnordnungAction({
                   className: "vzk_anordnung",
-                  data: {
-                    title: "",
-                    uuid: id,
-                    vzk_type: {
-                      id: 2,
-                    },
-                    vzk_status: {
-                      id: 1,
-                    },
-                    vzk_anordnung_timelineArrayRelationShip: [
-                      {
-                        vzk_attachment_typ: {
-                          id: 1,
-                        },
-                      },
-                    ],
-                  },
+                  data: anordnung,
                 })
+              );
+              dispatch(
+                storeSelectedApplications([...selectedApplications, anordnung])
               );
               navigate({ pathname: getApplicationPath(id) });
             }}
@@ -197,7 +211,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
               }`}
             >
               <Link
-                to={getApplicationPath(application?.id)}
+                to={getApplicationPath(application?.uuid)}
                 className="flex items-center gap-2"
               >
                 <DiffOutlined className="text-xl" />
