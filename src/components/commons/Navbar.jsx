@@ -1,9 +1,7 @@
-import { Button, Dropdown, Input, Select } from "antd";
-
+import { Button, Input } from "antd";
+import { v4 as uuidv4 } from "uuid";
 import {
-  CaretDownOutlined,
   DiffOutlined,
-  EllipsisOutlined,
   FolderOpenOutlined,
   LogoutOutlined,
   PlusOutlined,
@@ -18,12 +16,10 @@ import {
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { storeJWT, storeLogin } from "../../store/slices/auth";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import {
   getAllApplications,
   getSelectedApplications,
-  storeAllApplications,
-  storeSelectedApplications,
 } from "../../store/slices/application";
 import Logo from "/cismet.svg";
 import "./input.css";
@@ -75,12 +71,6 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
     return newPath;
   };
 
-  useEffect(() => {
-    if (id) {
-      navigate({ pathname: getApplicationPath(id) });
-    }
-  }, [id]);
-
   return (
     <header
       className="flex flex-col gap-3 border-solid border-b-2 border-0 border-zinc-200 bg-[#00000005]"
@@ -128,13 +118,14 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
             size="small"
             className="bg-[#00000005]"
             onClick={() => {
-              const id = allApplications.length + 1;
+              const id = uuidv4();
               dispatch(
                 addAnordnungAction({
                   className: "vzk_anordnung",
                   data: {
                     title:
                       "Errichtung von Verkehrszeichen und einrichtungen gemäß §45 Abs. 3 StVO",
+                    uuid: id,
                     vzk_type: {
                       id: 1,
                     },
@@ -151,6 +142,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
                   },
                 })
               );
+              navigate({ pathname: getApplicationPath(id) });
             }}
             icon={<PlusOutlined />}
           >
@@ -160,12 +152,13 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
             size="small"
             className="bg-[#00000005]"
             onClick={() => {
-              const id = allApplications.length + 1;
+              const id = uuidv4();
               dispatch(
                 addAnordnungAction({
                   className: "vzk_anordnung",
                   data: {
                     title: "",
+                    uuid: id,
                     vzk_type: {
                       id: 2,
                     },
@@ -182,6 +175,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
                   },
                 })
               );
+              navigate({ pathname: getApplicationPath(id) });
             }}
             icon={<PlusOutlined />}
           >

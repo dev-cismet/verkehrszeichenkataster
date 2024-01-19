@@ -89,7 +89,7 @@ export const initialize = (storedJWT) => {
           };
           const changeCallback = (action) => {
             const id = JSON.parse(`${action.result}`).id;
-            dispatch(setId(id));
+            // dispatch(setId(id));
             console.log("change occured", JSON.parse(`${action.result}`));
           };
           const login = getLoginFromJWT(jwt);

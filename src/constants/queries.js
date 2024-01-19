@@ -21,14 +21,15 @@ query MyQuery($bbPoly: geometry) {
 }`;
 
 queries.anordnungById = `
-query MyQuery($id: Int) {
-  vzk_anordnung(where: {id: {_eq: $id}}) {
+query MyQuery($id: String) {
+  vzk_anordnung(where: {uuid: {_eq: $id}}) {
     id
     department_name
     department_number
     department
     number
     title
+    uuid
     vzk_status {
       name
     }
