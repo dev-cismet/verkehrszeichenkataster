@@ -6,6 +6,7 @@ import {
   getAllApplicationsDb,
   storeSelectedApplications,
 } from "../store/slices/application";
+import { compare } from "../tools/helper";
 
 const columns = [
   {
@@ -19,10 +20,33 @@ const columns = [
   {
     title: "Typ",
     dataIndex: ["vzk_type", "name"],
+    filters: [
+      {
+        text: "internal",
+        value: "internal",
+      },
+      {
+        text: "external",
+        value: "external",
+      },
+    ],
+    onFilter: (value, record) => record.vzk_type.name === value,
+    sorter: (a, b) => compare(a.vzk_type.name, b.vzk_type.name),
   },
   {
     title: "Status",
     dataIndex: ["vzk_status", "name"],
+    filters: [
+      {
+        text: "offen",
+        value: "offen",
+      },
+      {
+        text: "geschlossen",
+        value: "geschlossen",
+      },
+    ],
+    onFilter: (value, record) => record.vzk_status.name === value,
   },
 ];
 
