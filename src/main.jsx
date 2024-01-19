@@ -94,10 +94,6 @@ const router = createHashRouter([
     children: [
       {
         path: "/",
-        element: <App />,
-      },
-      {
-        path: "/tabelle",
         element: <TablePage />,
       },
       {

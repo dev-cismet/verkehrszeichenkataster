@@ -28,12 +28,7 @@ import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungA
 import { getId } from "../../store/slices/offlineActionDb";
 
 const navLinks = () => {
-  return [
-    {
-      title: "Anordnungen",
-      href: "/tabelle",
-    },
-  ];
+  return [];
 };
 
 const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
