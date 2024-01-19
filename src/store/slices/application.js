@@ -307,6 +307,7 @@ export const getTimeline = (state) => {
 export const getApplicationById = (id) => {
   return async (dispatch, getState) => {
     const jwt = getState().auth.jwt;
+    const selectedApplications = getState().application.selectedApplications;
 
     fetch(ENDPOINT, {
       method: "POST",
@@ -325,6 +326,12 @@ export const getApplicationById = (id) => {
       .then((result) => {
         if (result.data.vzk_anordnung.length > 0) {
           dispatch(storeCurrentApplication(result.data.vzk_anordnung[0]));
+          dispatch(
+            storeSelectedApplications([
+              ...selectedApplications,
+              result.data.vzk_anordnung[0],
+            ])
+          );
         }
       })
       .catch((error) => {

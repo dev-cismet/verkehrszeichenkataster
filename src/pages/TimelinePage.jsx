@@ -24,7 +24,7 @@ import {
   LockOutlined,
   UnlockOutlined,
 } from "@ant-design/icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { titleCase } from "../tools/helper";
 
 const { Dragger } = Upload;
@@ -44,6 +44,7 @@ const TimelinePage = () => {
   const currentTimeline = anordnung?.vzk_anordnung_timelineArrayRelationShip;
   const isInternalRequest = anordnung?.vzk_type?.name === "internal";
   const status = titleCase(anordnung?.vzk_status?.name);
+  const [currentId, setCurrentId] = useState("");
 
   const dispatch = useDispatch();
 
@@ -70,10 +71,11 @@ const TimelinePage = () => {
   };
 
   useEffect(() => {
-    if (id) {
+    if (id !== currentId) {
+      setCurrentId(id);
       dispatch(getApplicationById(id));
     }
-  }, []);
+  }, [id]);
 
   return (
     <Card

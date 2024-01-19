@@ -28,6 +28,7 @@ import {
 import Logo from "/cismet.svg";
 import "./input.css";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
+import { getId } from "../../store/slices/offlineActionDb";
 
 const navLinks = () => {
   return [
@@ -47,6 +48,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
   const { pathname } = useLocation();
   const allApplications = useSelector(getAllApplications);
   const selectedApplications = useSelector(getSelectedApplications);
+  const id = useSelector(getId);
 
   let storyStyle = {};
   if (inStory) {
@@ -72,6 +74,12 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
     }
     return newPath;
   };
+
+  useEffect(() => {
+    if (id) {
+      navigate({ pathname: getApplicationPath(id) });
+    }
+  }, [id]);
 
   return (
     <header
@@ -143,25 +151,6 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
                   },
                 })
               );
-              dispatch(
-                storeSelectedApplications([
-                  ...selectedApplications,
-                  {
-                    key: id,
-                    name: id,
-                    id: id,
-                    typ: "internal",
-                    timelineStatus: "Offen",
-                    timeline: [
-                      {
-                        id: 1,
-                        typ: "request",
-                      },
-                    ],
-                  },
-                ])
-              );
-              navigate({ pathname: getApplicationPath(id) });
             }}
             icon={<PlusOutlined />}
           >
@@ -193,25 +182,6 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
                   },
                 })
               );
-              dispatch(
-                storeSelectedApplications([
-                  ...selectedApplications,
-                  {
-                    key: id,
-                    name: id,
-                    id: id,
-                    typ: "external",
-                    timelineStatus: "Offen",
-                    timeline: [
-                      {
-                        id: 1,
-                        typ: "request",
-                      },
-                    ],
-                  },
-                ])
-              );
-              navigate({ pathname: getApplicationPath(id) });
             }}
             icon={<PlusOutlined />}
           >
