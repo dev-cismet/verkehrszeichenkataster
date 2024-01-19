@@ -1,6 +1,7 @@
 import { Button, Card, Input, Upload } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import {
   getCurrentApplication,
   updateTimelineStatus,
@@ -17,6 +18,7 @@ import {
 import Designer from "../designer/Designer";
 import MdRedactor from "../mdredactor/MdRedactor";
 import { titleCase } from "../../tools/helper";
+import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 
 const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [text, setText] = useState("");
@@ -28,6 +30,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
   const [drawing, setDrawing] = useState("");
   const submitRef = useRef(null);
   const { id } = useParams();
+  const dispatch = useDispatch();
   const anordnung = useSelector(getCurrentApplication);
 
   const status = titleCase(anordnung?.vzk_status?.name);
@@ -109,6 +112,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                   setTriggerDrawingGeneration((prevValue) => {
                     return prevValue + 1;
                   });
+                  const uuid = uuidv4();
 
                   if (useDrawing) {
                     changeTimeline({
@@ -120,6 +124,30 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                       },
                     });
                   } else {
+                    dispatch(
+                      addAnordnungAction({
+                        className: "vzk_attachment_text",
+                        data: {
+                          text: text,
+                          uuid: uuid,
+                        },
+                      })
+                    );
+                    dispatch(
+                      addAnordnungAction({
+                        className: "vzk_anordnung",
+                        data: {
+                          uuid: id,
+                          vzk_anordnung_timelineArrayRelationShip: [
+                            ...anordnung.vzk_anordnung_timelineArrayRelationShip,
+                            {
+                              name: name,
+                              fk_uuid: uuid,
+                            },
+                          ],
+                        },
+                      })
+                    );
                     changeTimeline({ typ: "text", name: name, text: text });
                   }
                   setText("");

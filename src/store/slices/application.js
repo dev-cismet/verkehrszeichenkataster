@@ -38,22 +38,13 @@ const slice = createSlice({
     },
     storeTimeline(state, action) {
       const { id, timeline } = action.payload;
-      const updatedApplications = state.allApplications.map((item) => {
-        if (item.id.toString() === id) {
-          return {
-            ...item,
-            timeline: timeline,
-          };
-        }
-        return item;
-      });
 
       const updatedSelectedApplications = state.selectedApplications.map(
         (item) => {
-          if (item.id.toString() === id) {
+          if (item.uuid === id) {
             return {
               ...item,
-              timeline: timeline,
+              vzk_anordnung_timelineArrayRelationShip: timeline,
             };
           }
           return item;
@@ -62,7 +53,6 @@ const slice = createSlice({
 
       return {
         ...state,
-        allApplications: updatedApplications,
         selectedApplications: updatedSelectedApplications,
       };
     },
