@@ -71,7 +71,7 @@ const TimelinePage = () => {
   };
 
   useEffect(() => {
-    if (id !== currentId) {
+    if (id !== currentId && anordnung?.uuid !== id) {
       setCurrentId(id);
       dispatch(getApplicationById(id));
     }
@@ -100,7 +100,7 @@ const TimelinePage = () => {
       <div className="h-full w-3/4 mx-auto flex gap-4 justify-between">
         <div className="flex flex-col w-full">
           {currentTimeline?.map((attachment, i) => {
-            switch (attachment.vzk_attachment_typ.name.toLowerCase()) {
+            switch (attachment.vzk_attachment_typ.name?.toLowerCase()) {
               case "request":
                 return (
                   <Request
