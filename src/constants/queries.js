@@ -36,10 +36,11 @@ query MyQuery($id: String) {
     vzk_type {
       name
     }
-    vzk_anordnung_timelineArrayRelationShip {
+    vzk_anordnung_timelineArrayRelationShip(order_by: {id: asc}) {
       fk_uuid
       uuid
       name
+      id
       vzk_attachment_typ {
         id
         name
@@ -118,7 +119,7 @@ query MyQuery {
       id
       name
     }
-    vzk_anordnung_timelineArrayRelationShip {
+    vzk_anordnung_timelineArrayRelationShip(order_by: {id: asc}) {
       fk_uuid
       uuid
       name
