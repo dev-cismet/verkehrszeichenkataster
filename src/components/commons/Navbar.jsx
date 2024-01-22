@@ -19,6 +19,7 @@ import { storeJWT, storeLogin } from "../../store/slices/auth";
 import { useEffect } from "react";
 import {
   getAllApplications,
+  getCurrentApplication,
   getSelectedApplications,
   storeSelectedApplications,
 } from "../../store/slices/application";
@@ -38,8 +39,8 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
   const location = useLocation();
   const [urlParams, setUrlParams] = useSearchParams();
   const { pathname } = useLocation();
-  const allApplications = useSelector(getAllApplications);
   const selectedApplications = useSelector(getSelectedApplications);
+  const currentApplication = useSelector(getCurrentApplication);
   const id = useSelector(getId);
 
   let storyStyle = {};
@@ -65,6 +66,56 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
       newPath = "/anordnung/" + id + "/verlauf";
     }
     return newPath;
+  };
+
+  const createApplication = (type) => {
+    const id = uuidv4();
+    const requestId = uuidv4();
+    const attachmentId = uuidv4();
+    const anordnung = {
+      title:
+        type === "internal"
+          ? "Errichtung von Verkehrszeichen und einrichtungen gemäß §45 Abs. 3 StVO"
+          : "",
+      uuid: id,
+      vzk_type: {
+        id: 1,
+        name: type,
+      },
+      vzk_status: {
+        id: 1,
+        name: "offen",
+      },
+      vzk_anordnung_timelineArrayRelationShip: [
+        {
+          uuid: attachmentId,
+          fk_uuid: requestId,
+          vzk_attachment_typ: {
+            id: 1,
+            name: "Request",
+          },
+        },
+      ],
+    };
+
+    dispatch(
+      addAnordnungAction({
+        className: "vzk_attachment_request",
+        data: {
+          uuid: requestId,
+        },
+      })
+    );
+
+    dispatch(
+      addAnordnungAction({
+        className: "vzk_anordnung",
+        data: anordnung,
+      })
+    );
+    dispatch(storeSelectedApplications([...selectedApplications, anordnung]));
+
+    navigate({ pathname: getApplicationPath(id) });
   };
 
   return (
@@ -114,38 +165,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
             size="small"
             className="bg-[#00000005]"
             onClick={() => {
-              const id = uuidv4();
-              const anordnung = {
-                title:
-                  "Errichtung von Verkehrszeichen und einrichtungen gemäß §45 Abs. 3 StVO",
-                uuid: id,
-                vzk_type: {
-                  id: 1,
-                  name: "internal",
-                },
-                vzk_status: {
-                  id: 1,
-                  name: "offen",
-                },
-                vzk_anordnung_timelineArrayRelationShip: [
-                  {
-                    vzk_attachment_typ: {
-                      id: 1,
-                    },
-                  },
-                ],
-              };
-              dispatch(
-                addAnordnungAction({
-                  className: "vzk_anordnung",
-                  data: anordnung,
-                })
-              );
-              dispatch(
-                storeSelectedApplications([...selectedApplications, anordnung])
-              );
-
-              navigate({ pathname: getApplicationPath(id) });
+              createApplication("internal");
             }}
             icon={<PlusOutlined />}
           >
@@ -155,36 +175,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
             size="small"
             className="bg-[#00000005]"
             onClick={() => {
-              const id = uuidv4();
-              const anordnung = {
-                title: "",
-                uuid: id,
-                vzk_type: {
-                  id: 2,
-                  name: "external",
-                },
-                vzk_status: {
-                  id: 1,
-                  name: "offen",
-                },
-                vzk_anordnung_timelineArrayRelationShip: [
-                  {
-                    vzk_attachment_typ: {
-                      id: 1,
-                    },
-                  },
-                ],
-              };
-              dispatch(
-                addAnordnungAction({
-                  className: "vzk_anordnung",
-                  data: anordnung,
-                })
-              );
-              dispatch(
-                storeSelectedApplications([...selectedApplications, anordnung])
-              );
-              navigate({ pathname: getApplicationPath(id) });
+              createApplication("external");
             }}
             icon={<PlusOutlined />}
           >
