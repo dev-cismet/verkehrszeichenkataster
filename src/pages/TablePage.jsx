@@ -58,7 +58,6 @@ const TablePage = () => {
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(selectedRowKeys);
       dispatch(storeSelectedApplications(selectedRows));
     },
     selectedRowKeys: selectedApplications.map((application) => {
