@@ -91,6 +91,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
         {
           uuid: attachmentId,
           fk_uuid: requestId,
+          name: "Anfrage",
           vzk_attachment_typ: {
             id: 1,
             name: "Request",
@@ -119,6 +120,8 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
 
     navigate({ pathname: getApplicationPath(id) });
   };
+
+  console.log(selectedApplications);
 
   return (
     <header
@@ -198,7 +201,9 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
           }}
           items={selectedApplications.map((application) => {
             return {
-              label: application?.title || "Anordnung",
+              label: application?.title
+                ? application.title + "#" + application.id
+                : "Anordnung #" + application.id,
               key: application?.uuid,
             };
           })}
