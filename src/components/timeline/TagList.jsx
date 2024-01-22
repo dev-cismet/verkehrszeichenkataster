@@ -32,13 +32,18 @@ const TagList = ({ changeTimeline }) => {
         },
       })
     );
+    const timelineForDb = timeline.map((object) => {
+      const bigTimeline = { ...object };
+      delete bigTimeline.data;
+      return bigTimeline;
+    });
     dispatch(
       addAnordnungAction({
         className: "vzk_anordnung",
         data: {
           uuid: id,
           vzk_anordnung_timelineArrayRelationShip: [
-            ...timeline,
+            ...timelineForDb,
             {
               name: name,
               fk_uuid: uuid,
@@ -57,7 +62,9 @@ const TagList = ({ changeTimeline }) => {
       name: name,
       fk_uuid: uuid,
       uuid: timelineObjectId,
-      text: text,
+      data: {
+        text: text,
+      },
       vzk_attachment_typ: {
         id: 2,
         name: "Text",

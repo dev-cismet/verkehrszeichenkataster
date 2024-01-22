@@ -393,7 +393,7 @@ export const getAttachments = (timeline, uuid) => {
             }
           };
           const attachmentData = getAttachmentData();
-          updatedTimeline.push({ ...attachmentData, ...attachment });
+          updatedTimeline.push({ ...attachment, data: attachmentData });
           if (updatedTimeline.length === timeline.length) {
             dispatch(storeTimeline({ id: uuid, timeline: updatedTimeline }));
           }
