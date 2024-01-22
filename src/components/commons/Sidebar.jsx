@@ -143,7 +143,7 @@ const Sidebar = () => {
       {currentTimeline?.map((item, i) => (
         <SidebarItem
           // link={"verlauf"}
-          icon={getIcon(item.typ, item.name)}
+          icon={getIcon(item.vzk_attachment_typ.name.toLowerCase(), item.name)}
           isSidebarCollapsed={isCollapsed}
           text={
             item.typ === "request"
