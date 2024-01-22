@@ -7,7 +7,6 @@ import Decision from "../components/timeline/Decision";
 import "./dragger.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getApplicationById,
   getCurrentApplication,
   storeTimeline,
   updateTimelineStatus,
@@ -26,6 +25,8 @@ import {
 } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { titleCase } from "../tools/helper";
+import addAnordnungAction from "../store/slices/actionSubslices/addAnordnungAction";
+import { v4 as uuidv4 } from "uuid";
 
 const { Dragger } = Upload;
 
@@ -61,11 +62,50 @@ const TimelinePage = () => {
       file.preview = await getBase64(file);
     }
 
+    const uuid = uuidv4();
+    const timelineObjectId = uuidv4();
+
+    dispatch(
+      addAnordnungAction({
+        className: "vzk_attachment_file",
+        data: {
+          file: file.url || file.preview,
+          uuid: uuid,
+        },
+      })
+    );
+    dispatch(
+      addAnordnungAction({
+        className: "vzk_anordnung",
+        data: {
+          uuid: id,
+          vzk_anordnung_timelineArrayRelationShip: [
+            ...anordnung.vzk_anordnung_timelineArrayRelationShip,
+            {
+              name: file.name.replace(/\.[^/.]+$/, ""),
+              fk_uuid: uuid,
+              uuid: timelineObjectId,
+              vzk_attachment_typ: {
+                id: 4,
+                name: "File",
+              },
+            },
+          ],
+        },
+      })
+    );
+
     changeTimeline({
-      typ: "file",
+      vzk_attachment_typ: {
+        id: 4,
+        name: "File",
+      },
+      fk_uuid: uuid,
+      uuid: timelineObjectId,
       name: file.name.replace(/\.[^/.]+$/, ""),
-      file: file.url || file.preview,
-      description: "",
+      data: {
+        file: file.url || file.preview,
+      },
     });
   };
 
