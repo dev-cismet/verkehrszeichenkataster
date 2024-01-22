@@ -11,7 +11,8 @@ import PdfViewer from "../pdfviewer/PdfViewer";
 
 const File = ({ attachment, i }) => {
   const { id: applicationId } = useParams();
-  const url = attachment?.file;
+  const url = attachment?.data?.file;
+
   const dispatch = useDispatch();
 
   const items = [
@@ -67,25 +68,27 @@ const File = ({ attachment, i }) => {
           </div>
         }
       >
-        {getDataTypeFromBase64(url) === "image" && (
-          <div className="w-full rounded-lg">
-            <img
-              key={i}
-              alt={attachment?.name}
-              className="w-full rounded-lg"
-              src={url}
-            />
-          </div>
-        )}
-        {getDataTypeFromBase64(url) === "pdf" && (
-          <div className="w-full rounded-lg">
-            <PdfViewer filePdf={url} />
-          </div>
-        )}
-        {getDataTypeFromBase64(url) === "other" && (
-          <div className="w-full rounded-lg h-64 flex items-center justify-center border-solid border-zinc-200">
-            Vorschau für den Dateitypen konnte nicht erstellt werden
-          </div>
+        {url && (
+          <>
+            {getDataTypeFromBase64(url) === "image" && (
+              <img
+                key={i}
+                alt={attachment?.name}
+                className="w-full rounded-lg"
+                src={url}
+              />
+            )}
+            {getDataTypeFromBase64(url) === "pdf" && (
+              <div className="w-full rounded-lg">
+                <PdfViewer filePdf={url} />
+              </div>
+            )}
+            {getDataTypeFromBase64(url) === "other" && (
+              <div className="w-full rounded-lg h-64 flex items-center justify-center border-solid border-zinc-200">
+                Vorschau für den Dateitypen konnte nicht erstellt werden
+              </div>
+            )}
+          </>
         )}
       </Card>
     </div>
