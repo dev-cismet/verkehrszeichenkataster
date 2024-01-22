@@ -6,6 +6,8 @@ import {
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import "./tags.css";
+import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
+import { v4 as uuidv4 } from "uuid";
 
 const TagList = ({ changeTimeline }) => {
   const { id } = useParams();
@@ -16,6 +18,51 @@ const TagList = ({ changeTimeline }) => {
 
   const checkIfTimelineContainsText = (text) => {
     return timeline?.some((obj) => obj.name === text);
+  };
+
+  const onSelect = (name, text) => {
+    const uuid = uuidv4();
+    const timelineObjectId = uuidv4();
+    dispatch(
+      addAnordnungAction({
+        className: "vzk_attachment_text",
+        data: {
+          text: text,
+          uuid: uuid,
+        },
+      })
+    );
+    dispatch(
+      addAnordnungAction({
+        className: "vzk_anordnung",
+        data: {
+          uuid: id,
+          vzk_anordnung_timelineArrayRelationShip: [
+            ...timeline,
+            {
+              name: name,
+              fk_uuid: uuid,
+              uuid: timelineObjectId,
+              vzk_attachment_typ: {
+                id: 2,
+                name: "Text",
+              },
+            },
+          ],
+        },
+      })
+    );
+
+    changeTimeline({
+      name: name,
+      fk_uuid: uuid,
+      uuid: timelineObjectId,
+      text: text,
+      vzk_attachment_typ: {
+        id: 2,
+        name: "Text",
+      },
+    });
   };
 
   return (
@@ -33,11 +80,7 @@ const TagList = ({ changeTimeline }) => {
           }`}
           onChange={(checked) => {
             if (checked) {
-              changeTimeline({
-                typ: "text",
-                name: "Ort",
-                text: "",
-              });
+              onSelect("Ort", "");
             } else {
               const index = timeline.findIndex((obj) => obj.name === "Ort");
               if (index >= 0) {
@@ -62,11 +105,7 @@ const TagList = ({ changeTimeline }) => {
           }`}
           onChange={(checked) => {
             if (checked) {
-              changeTimeline({
-                typ: "text",
-                name: "Sachverhalt",
-                text: "",
-              });
+              onSelect("Sachverhalt", "");
             } else {
               const index = timeline.findIndex(
                 (obj) => obj.name === "Sachverhalt"
@@ -93,11 +132,7 @@ const TagList = ({ changeTimeline }) => {
           }`}
           onChange={(checked) => {
             if (checked) {
-              changeTimeline({
-                typ: "text",
-                name: "Erforderliche Maßnahmen",
-                text: "",
-              });
+              onSelect("Erforderliche Maßnahmen", "");
             } else {
               const index = timeline.findIndex(
                 (obj) => obj.name === "Erforderliche Maßnahmen"
@@ -124,11 +159,10 @@ const TagList = ({ changeTimeline }) => {
           }`}
           onChange={(checked) => {
             if (checked) {
-              changeTimeline({
-                typ: "text",
-                name: "Widerrufsvorbehalt",
-                text: `Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigen Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert.`,
-              });
+              onSelect(
+                "Widerrufsvorbehalt",
+                "Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigen Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert."
+              );
             } else {
               const index = timeline.findIndex(
                 (obj) => obj.name === "Widerrufsvorbehalt"
@@ -155,11 +189,10 @@ const TagList = ({ changeTimeline }) => {
           }`}
           onChange={(checked) => {
             if (checked) {
-              changeTimeline({
-                typ: "text",
-                name: "Fachfirmavorbehalt",
-                text: "Für die Aufbringung der Markierung wenden Sie sich bitte an eine der nachstehen genannten Vertragsfirmen der Stadt Wuppertal.",
-              });
+              onSelect(
+                "Fachfirmavorbehalt",
+                "Für die Aufbringung der Markierung wenden Sie sich bitte an eine der nachstehen genannten Vertragsfirmen der Stadt Wuppertal."
+              );
             } else {
               const index = timeline.findIndex(
                 (obj) => obj.name === "Fachfirmavorbehalt"
@@ -186,11 +219,10 @@ const TagList = ({ changeTimeline }) => {
           }`}
           onChange={(checked) => {
             if (checked) {
-              changeTimeline({
-                typ: "text",
-                name: "Kostennotiz",
-                text: "Gem. § 16 Straßen- und Wegegesetz NW sind die Kosten der Aufbringung, Unterhaltung und Entfernung der Markierung von Ihnen als Antragsteller zu tragen.",
-              });
+              onSelect(
+                "Kostennotiz",
+                "Gem. § 16 Straßen- und Wegegesetz NW sind die Kosten der Aufbringung, Unterhaltung und Entfernung der Markierung von Ihnen als Antragsteller zu tragen."
+              );
             } else {
               const index = timeline.findIndex(
                 (obj) => obj.name === "Kostennotiz"
@@ -217,11 +249,7 @@ const TagList = ({ changeTimeline }) => {
           }`}
           onChange={(checked) => {
             if (checked) {
-              changeTimeline({
-                typ: "text",
-                name: "Mit freundlichen Grüßen",
-                text: "",
-              });
+              onSelect("Mit freundlichen Grüßen", "");
             } else {
               const index = timeline.findIndex(
                 (obj) => obj.name === "Mit freundlichen Grüßen"

@@ -19,7 +19,7 @@ const { TextArea } = Input;
 const Text = ({ attachment, id }) => {
   const { id: applicationId } = useParams();
   const [isEdit, setIsEdit] = useState(false);
-  const [text, setText] = useState(attachment.text);
+  const [text, setText] = useState(attachment.text || "");
   const dispatch = useDispatch();
 
   const items = [
@@ -141,7 +141,7 @@ const Text = ({ attachment, id }) => {
         ) : (
           <div
             dangerouslySetInnerHTML={{
-              __html: mdParser.render(attachment.text),
+              __html: mdParser.render(attachment.text || ""),
             }}
           />
         )}
