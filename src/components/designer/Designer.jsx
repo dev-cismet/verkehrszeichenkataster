@@ -211,7 +211,7 @@ const DesignerWrapper = ({
   };
 
   useEffect(() => {
-    generatePreviewHandler();
+    // generatePreviewHandler();
   }, [resetDrawing]);
 
   useEffect(() => {
