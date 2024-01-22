@@ -1,4 +1,4 @@
-import { Button, Input } from "antd";
+import { Button, Input, Tabs } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import {
   DiffOutlined,
@@ -188,25 +188,19 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
         </div>
       </div>
       <div className="w-full px-2">
-        <ul className="flex items-center gap-2 list-none px-0">
-          {selectedApplications?.map((application, i) => (
-            <li
-              className={`p-2 text-sm hover:bg-gray-100 rounded-lg cursor-pointer relative ${
-                pathname.includes("anordnung/" + application?.id + "/") &&
-                "after:bg-primary after:rounded-md after:absolute after:-bottom-3 after:left-0 after:w-full after:h-0.5 after:content-[''] font-semibold"
-              }`}
-            >
-              <Link
-                to={getApplicationPath(application?.uuid)}
-                className="flex items-center gap-2"
-              >
-                <DiffOutlined className="text-xl" />
-                <span>{application.id}</span>
-                <span>{application.title}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <Tabs
+          tabPosition="top"
+          activeKey={currentApplication?.uuid}
+          onTabClick={(key) => {
+            navigate({ pathname: getApplicationPath(key) });
+          }}
+          items={selectedApplications.map((application) => {
+            return {
+              label: application?.title,
+              key: application?.uuid,
+            };
+          })}
+        />
       </div>
     </header>
   );
