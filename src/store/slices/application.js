@@ -3,6 +3,10 @@ import {
   ENDPOINT,
   getAllAnordnungenQuery,
   getAnordnungByIdQuery,
+  getDrawingByIdQuery,
+  getFileByIdQuery,
+  getRequestByIdQuery,
+  getTextByIdQuery,
 } from "../../constants/vkz";
 
 const initialState = {
@@ -51,9 +55,15 @@ const slice = createSlice({
         }
       );
 
+      const updatedCurrentApplication = {
+        ...state.currentApplication,
+        vzk_anordnung_timelineArrayRelationShip: timeline,
+      };
+
       return {
         ...state,
         selectedApplications: updatedSelectedApplications,
+        currentApplication: updatedCurrentApplication,
       };
     },
     updateTimelineValues(state, action) {
@@ -309,6 +319,13 @@ export const getApplicationById = (id) => {
               (element) => element.uuid?.toString() === id
             );
           dispatch(storeCurrentApplication(result.data.vzk_anordnung[0]));
+          dispatch(
+            getAttachments(
+              result.data.vzk_anordnung[0]
+                .vzk_anordnung_timelineArrayRelationShip,
+              id
+            )
+          );
           if (!selectedApplication) {
             dispatch(
               storeSelectedApplications([
@@ -325,6 +342,69 @@ export const getApplicationById = (id) => {
           error.message
         );
       });
+  };
+};
+
+export const getAttachments = (timeline, uuid) => {
+  const getQuery = (type) => {
+    switch (type) {
+      case "text":
+        return getTextByIdQuery;
+      case "request":
+        return getRequestByIdQuery;
+      case "file":
+        return getFileByIdQuery;
+      case "drawing":
+        return getDrawingByIdQuery;
+    }
+  };
+
+  return async (dispatch, getState) => {
+    const jwt = getState().auth.jwt;
+    let updatedTimeline = [];
+
+    timeline.forEach((attachment) => {
+      const type = attachment.vzk_attachment_typ.name.toLowerCase();
+      fetch(ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify({
+          query: getQuery(type),
+          variables: { id: attachment.fk_uuid },
+        }),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((result) => {
+          const getAttachmentData = () => {
+            switch (type) {
+              case "text":
+                return result.data.vzk_attachment_text[0];
+              case "request":
+                return result.data.vzk_attachment_request[0];
+              case "file":
+                return result.data.vzk_attachment_file[0];
+              case "drawing":
+                return result.data.vzk_attachment_drawing[0];
+            }
+          };
+          const attachmentData = getAttachmentData();
+          updatedTimeline.push({ ...attachmentData, ...attachment });
+          if (updatedTimeline.length === timeline.length) {
+            dispatch(storeTimeline({ id: uuid, timeline: updatedTimeline }));
+          }
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with the fetch operation:",
+            error.message
+          );
+        });
+    });
   };
 };
 

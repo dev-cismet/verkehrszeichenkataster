@@ -31,15 +31,15 @@ export const getTextByIdQuery = gql`
 `;
 
 export const getDrawingByIdQuery = gql`
-  ${queries.textById}
+  ${queries.drawingById}
 `;
 
 export const getFileByIdQuery = gql`
-  ${queries.textById}
+  ${queries.fileById}
 `;
 
 export const getRequestByIdQuery = gql`
-  ${queries.textById}
+  ${queries.requestById}
 `;
 
 export const landParcelQuery = gql`
