@@ -13,8 +13,8 @@ const Timeline = ({ dataIn, extractor = mockExtractor }) => {
       <AntTimeline
         mode="alternate"
         items={data?.map((item) => {
-          switch (item.typ) {
-            case "request":
+          switch (item.vzk_attachment_typ.name) {
+            case "Request":
               return {
                 children: "Antrag erstellt",
               };
