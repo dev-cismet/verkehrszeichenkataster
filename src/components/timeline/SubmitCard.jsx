@@ -113,6 +113,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                     return prevValue + 1;
                   });
                   const uuid = uuidv4();
+                  const timelineObjectId = uuidv4();
 
                   if (useDrawing) {
                     changeTimeline({
@@ -143,6 +144,11 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                             {
                               name: name,
                               fk_uuid: uuid,
+                              uuid: timelineObjectId,
+                              vzk_attachment_typ: {
+                                id: 2,
+                                name: "Text",
+                              },
                             },
                           ],
                         },
