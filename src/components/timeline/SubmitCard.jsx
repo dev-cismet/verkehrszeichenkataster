@@ -116,12 +116,53 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                   const timelineObjectId = uuidv4();
 
                   if (useDrawing) {
+                    dispatch(
+                      addAnordnungAction({
+                        className: "vzk_attachment_drawing",
+                        data: {
+                          drawing: JSON.stringify({
+                            elements: drawElements,
+                            files: drawFiles,
+                          }),
+                          uuid: uuid,
+                        },
+                      })
+                    );
+                    dispatch(
+                      addAnordnungAction({
+                        className: "vzk_anordnung",
+                        data: {
+                          uuid: id,
+                          vzk_anordnung_timelineArrayRelationShip: [
+                            ...anordnung.vzk_anordnung_timelineArrayRelationShip,
+                            {
+                              name: name,
+                              fk_uuid: uuid,
+                              uuid: timelineObjectId,
+                              vzk_attachment_typ: {
+                                id: 5,
+                                name: "Drawing",
+                              },
+                            },
+                          ],
+                        },
+                      })
+                    );
+
                     changeTimeline({
                       typ: "drawing",
                       name: name,
-                      elements: {
-                        elements: drawElements,
-                        files: drawFiles,
+                      fk_uuid: uuid,
+                      uuid: timelineObjectId,
+                      vzk_attachment_typ: {
+                        id: 5,
+                        name: "Drawing",
+                      },
+                      data: {
+                        drawing: JSON.stringify({
+                          elements: drawElements,
+                          files: drawFiles,
+                        }),
                       },
                     });
                   } else {
@@ -154,7 +195,14 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                         },
                       })
                     );
-                    changeTimeline({ typ: "text", name: name, text: text });
+                    changeTimeline({
+                      vzk_attachment_typ: {
+                        id: 2,
+                        name: "Text",
+                      },
+                      name: name,
+                      data: { text: text },
+                    });
                   }
                   setText("");
                   setName("");
