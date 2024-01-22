@@ -70,7 +70,7 @@ const TablePage = () => {
   }, []);
 
   return (
-    <div className="h-full max-h-[calc(100vh-73px)] w-full bg-zinc-200 p-2 flex flex-col items-center gap-2">
+    <div className="h-full max-h-[calc(100vh-104px)] w-full bg-zinc-200 p-2 flex flex-col items-center gap-2">
       <Card className="h-full w-full overflow-clip" title="Anträge">
         <Table
           columns={columns}
