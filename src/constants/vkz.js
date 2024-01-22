@@ -26,6 +26,22 @@ export const getAllAnordnungenQuery = gql`
   ${queries.allAnordnungen}
 `;
 
+export const getTextByIdQuery = gql`
+  ${queries.textById}
+`;
+
+export const getDrawingByIdQuery = gql`
+  ${queries.textById}
+`;
+
+export const getFileByIdQuery = gql`
+  ${queries.textById}
+`;
+
+export const getRequestByIdQuery = gql`
+  ${queries.textById}
+`;
+
 export const landParcelQuery = gql`
   ${queries.landParcel}
 `;
