@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllApplications,
   getAllApplicationsDb,
+  getSelectedApplications,
   storeSelectedApplications,
 } from "../store/slices/application";
 import { compare } from "../tools/helper";
@@ -53,11 +54,16 @@ const columns = [
 const TablePage = () => {
   const dispatch = useDispatch();
   const allApplications = useSelector(getAllApplications);
+  const selectedApplications = useSelector(getSelectedApplications);
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
+      console.log(selectedRowKeys);
       dispatch(storeSelectedApplications(selectedRows));
     },
+    selectedRowKeys: selectedApplications.map((application) => {
+      return application.id;
+    }),
   };
 
   useEffect(() => {
