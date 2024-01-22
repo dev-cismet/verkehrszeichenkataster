@@ -13,6 +13,7 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import MdRedactor, { mdParser } from "../mdredactor/MdRedactor";
+import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 
 const { TextArea } = Input;
 
@@ -123,6 +124,15 @@ const Text = ({ attachment, id }) => {
                 type="primary"
                 icon={<PlusOutlined />}
                 onClick={() => {
+                  dispatch(
+                    addAnordnungAction({
+                      className: "vzk_attachment_text",
+                      data: {
+                        text: text,
+                        uuid: attachment.fk_uuid,
+                      },
+                    })
+                  );
                   dispatch(
                     updateTimelineValues({
                       timelineIndex: id,
