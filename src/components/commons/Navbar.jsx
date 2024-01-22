@@ -21,6 +21,7 @@ import {
   getAllApplications,
   getCurrentApplication,
   getSelectedApplications,
+  storeCurrentApplication,
   storeSelectedApplications,
 } from "../../store/slices/application";
 import Logo from "/cismet.svg";
@@ -114,6 +115,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
       })
     );
     dispatch(storeSelectedApplications([...selectedApplications, anordnung]));
+    dispatch(storeCurrentApplication(application));
 
     navigate({ pathname: getApplicationPath(id) });
   };

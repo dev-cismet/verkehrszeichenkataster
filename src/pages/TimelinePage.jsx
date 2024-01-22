@@ -44,7 +44,6 @@ const TimelinePage = () => {
   const currentTimeline = anordnung?.vzk_anordnung_timelineArrayRelationShip;
   const isInternalRequest = anordnung?.vzk_type?.name === "internal";
   const status = titleCase(anordnung?.vzk_status?.name);
-  const [currentId, setCurrentId] = useState("");
 
   const dispatch = useDispatch();
 
@@ -69,13 +68,6 @@ const TimelinePage = () => {
       description: "",
     });
   };
-
-  useEffect(() => {
-    if (id !== currentId && anordnung?.uuid !== id) {
-      setCurrentId(id);
-      dispatch(getApplicationById(id));
-    }
-  }, [id]);
 
   return (
     <Card

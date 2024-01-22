@@ -2,20 +2,21 @@ import { Outlet, useParams } from "react-router-dom";
 import Sidebar from "../components/commons/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getSelectedApplications,
-  storeCurrentApplication,
+  getApplicationById,
+  getCurrentApplication,
 } from "../store/slices/application";
+import { useEffect } from "react";
 
 const DetailsWrapper = () => {
   const { id } = useParams();
-  const selectedApplications = useSelector(getSelectedApplications);
+  const currentApplication = useSelector(getCurrentApplication);
   const dispatch = useDispatch();
 
-  const selectedApplication = selectedApplications.find(
-    (element) => element.uuid?.toString() === id
-  );
-
-  dispatch(storeCurrentApplication(selectedApplication));
+  useEffect(() => {
+    if (currentApplication.uuid !== id) {
+      dispatch(getApplicationById(id));
+    }
+  }, [id]);
 
   return (
     <div className="h-full max-h-[calc(100vh-104px)] flex w-full bg-zinc-200 overflow-clip">
