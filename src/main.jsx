@@ -163,7 +163,7 @@ const router = createHashRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <>
     <PersistGate loading={null} persistor={persistor}>
       <ConfigProvider
         locale={locale}
@@ -189,5 +189,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </Provider>
       </ConfigProvider>
     </PersistGate>
-  </React.StrictMode>
+  </>
 );
