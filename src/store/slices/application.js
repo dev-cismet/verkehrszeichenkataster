@@ -304,13 +304,19 @@ export const getApplicationById = (id) => {
       })
       .then((result) => {
         if (result.data.vzk_anordnung.length > 0) {
+          const selectedApplication =
+            getState().application.selectedApplications.find(
+              (element) => element.uuid?.toString() === id
+            );
           dispatch(storeCurrentApplication(result.data.vzk_anordnung[0]));
-          dispatch(
-            storeSelectedApplications([
-              ...selectedApplications,
-              result.data.vzk_anordnung[0],
-            ])
-          );
+          if (!selectedApplication) {
+            dispatch(
+              storeSelectedApplications([
+                ...selectedApplications,
+                result.data.vzk_anordnung[0],
+              ])
+            );
+          }
         }
       })
       .catch((error) => {
