@@ -115,7 +115,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
       })
     );
     dispatch(storeSelectedApplications([...selectedApplications, anordnung]));
-    dispatch(storeCurrentApplication(application));
+    dispatch(storeCurrentApplication(anordnung));
 
     navigate({ pathname: getApplicationPath(id) });
   };
@@ -198,7 +198,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
           }}
           items={selectedApplications.map((application) => {
             return {
-              label: application?.title,
+              label: application?.title || "Anordnung",
               key: application?.uuid,
             };
           })}
