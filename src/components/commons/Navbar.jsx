@@ -125,7 +125,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
 
   return (
     <header
-      className="flex flex-col gap-3 border-solid border-b-2 border-0 border-zinc-200 bg-[#00000005]"
+      className="flex flex-col gap-2 border-solid border-b-2 border-0 border-zinc-200 bg-[#00000005]"
       style={{ ...style, ...storyStyle, width, height }}
     >
       <div className="flex items-center justify-between p-2 gap-3 max-w-full">
