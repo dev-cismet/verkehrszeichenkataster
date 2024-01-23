@@ -25,14 +25,15 @@ const columns = [
     dataIndex: ["vzk_type", "name"],
     filters: [
       {
-        text: "internal",
+        text: "Intern",
         value: "internal",
       },
       {
-        text: "external",
+        text: "Extern",
         value: "external",
       },
     ],
+    render: (text) => <span>{text === "internal" ? "Intern" : "Extern"}</span>,
     onFilter: (value, record) => record?.vzk_type?.name === value,
     sorter: (a, b) => compare(a?.vzk_type?.name, b?.vzk_type?.name),
   },
@@ -50,6 +51,7 @@ const columns = [
       },
     ],
     onFilter: (value, record) => record?.vzk_status?.name === value,
+    sorter: (a, b) => compare(a?.vzk_status?.name, b?.vzk_status?.name),
   },
 ];
 
