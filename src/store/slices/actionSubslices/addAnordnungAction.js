@@ -22,12 +22,6 @@ const addAnordnungAction = (params) => {
     };
 
     offlineActionDb.actions.insert(offlineAction);
-
-    console.log(
-      "added object to offline db to addIncident",
-      params,
-      offlineAction
-    );
   };
 };
 
