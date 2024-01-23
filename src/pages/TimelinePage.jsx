@@ -171,14 +171,40 @@ const TimelinePage = () => {
             <div
               role="button"
               className="hover:text-primary flex gap-1 cursor-pointer font-medium"
-              onClick={() =>
+              onClick={() => {
+                dispatch(
+                  addAnordnungAction({
+                    className: "vzk_anordnung",
+                    data: {
+                      vzk_status:
+                        status === "Offen"
+                          ? {
+                              id: 2,
+                              name: "geschlossen",
+                            }
+                          : {
+                              id: 1,
+                              name: "offen",
+                            },
+                      uuid: anordnung.uuid,
+                    },
+                  })
+                );
                 dispatch(
                   updateTimelineStatus({
-                    updatedStatus: status === "Offen" ? "Geschlossen" : "Offen",
-                    applicationId: id,
+                    updatedStatus:
+                      status === "Offen"
+                        ? {
+                            id: 2,
+                            name: "geschlossen",
+                          }
+                        : {
+                            id: 1,
+                            name: "offen",
+                          },
                   })
-                )
-              }
+                );
+              }}
             >
               {status === "Offen" ? <LockOutlined /> : <UnlockOutlined />}
               <span>

@@ -140,34 +140,18 @@ const slice = createSlice({
       };
     },
     updateTimelineStatus(state, action) {
-      const { updatedStatus, applicationId } = action.payload;
+      const { updatedStatus } = action.payload;
 
-      const updatedApplications = state.allApplications.map((item) => {
-        if (item.id.toString() === applicationId) {
-          return {
-            ...item,
-            timelineStatus: updatedStatus,
-          };
-        }
-        return item;
-      });
-
-      const updatedSelectedApplications = state.selectedApplications.map(
-        (item) => {
-          if (item.id.toString() === applicationId) {
-            return {
-              ...item,
-              timelineStatus: updatedStatus,
-            };
-          }
-          return item;
-        }
-      );
+      const updatedCurrentApplication = {
+        ...state.currentApplication,
+        vzk_status: {
+          ...updatedStatus,
+        },
+      };
 
       return {
         ...state,
-        allApplications: updatedApplications,
-        selectedApplications: updatedSelectedApplications,
+        currentApplication: updatedCurrentApplication,
       };
     },
     deleteTimelineObject(state, action) {
