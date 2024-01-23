@@ -70,52 +70,28 @@ const slice = createSlice({
       const { timelineIndex, itemValue, property, applicationId } =
         action.payload;
 
-      const updatedApplications = state.allApplications.map((item) => {
-        if (item.id.toString() === applicationId) {
-          const updatedTimeline = item.timeline.map((value, index) => {
+      const updatedCurrentApplicationTimeline =
+        state.currentApplication.vzk_anordnung_timelineArrayRelationShip.map(
+          (value, index) => {
             if (index === timelineIndex) {
               return {
                 ...value,
-                [property]: itemValue,
+                data: {
+                  [property]: itemValue,
+                },
               };
             }
             return value;
-          });
-
-          return {
-            ...item,
-            timeline: updatedTimeline,
-          };
-        }
-        return item;
-      });
-
-      const updatedSelectedApplications = state.selectedApplications.map(
-        (item) => {
-          if (item.id.toString() === applicationId) {
-            const updatedTimeline = item.timeline.map((value, index) => {
-              if (index === timelineIndex) {
-                return {
-                  ...value,
-                  [property]: itemValue,
-                };
-              }
-              return value;
-            });
-
-            return {
-              ...item,
-              timeline: updatedTimeline,
-            };
           }
-          return item;
-        }
-      );
+        );
 
       return {
         ...state,
-        allApplications: updatedApplications,
-        selectedApplications: updatedSelectedApplications,
+        currentApplication: {
+          ...state.currentApplication,
+          vzk_anordnung_timelineArrayRelationShip:
+            updatedCurrentApplicationTimeline,
+        },
       };
     },
     updateName(state, action) {
@@ -393,8 +369,10 @@ export const getAttachments = (timeline, uuid) => {
             }
           };
           const attachmentData = getAttachmentData();
+          console.log(attachmentData);
           updatedTimeline.push({ ...attachment, data: attachmentData });
           if (updatedTimeline.length === timeline.length) {
+            console.log(updatedTimeline);
             dispatch(storeTimeline({ id: uuid, timeline: updatedTimeline }));
           }
         })
