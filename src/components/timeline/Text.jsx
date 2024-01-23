@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 import MdRedactor, { mdParser } from "../mdredactor/MdRedactor";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
+import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectAction";
 
 const { TextArea } = Input;
 
@@ -41,11 +42,19 @@ const Text = ({ attachment, id }) => {
         <div
           onClick={() => {
             dispatch(
-              deleteTimelineObject({
-                timelineIndex: id,
-                applicationId: applicationId,
+              deleteObjectAction({
+                className: "vzk_attachment_text",
+                data: {
+                  uuid: attachment?.uuid,
+                },
               })
             );
+            // dispatch(
+            //   deleteTimelineObject({
+            //     timelineIndex: id,
+            //     applicationId: applicationId,
+            //   })
+            // );
           }}
         >
           Entfernen
@@ -95,6 +104,7 @@ const Text = ({ attachment, id }) => {
                 );
               }}
               value={attachment.name}
+              placeholder="Text"
               className="w-full font-medium text-lg pl-0"
               bordered={false}
             />
