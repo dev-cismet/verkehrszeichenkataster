@@ -103,7 +103,7 @@ query MyQuery($id: String) {
 
 queries.allAnordnungen = `
 query MyQuery {
-  vzk_anordnung {
+  vzk_anordnung(order_by: {id: asc}) {
     id
     department_name
     department_number
