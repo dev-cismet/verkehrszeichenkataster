@@ -58,7 +58,7 @@ const Request = ({ attachment, i, isInternalRequest }) => {
             }
           >
             <div className="w-full flex flex-col gap-2">
-              {requester ? (
+              {currentApplication.department ? (
                 <span className="w-full text-start text-xl font-medium">
                   Absender: {requester}{" "}
                   <EditOutlined
@@ -74,7 +74,7 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                   <Button onClick={() => setRequester("GMW")}>GMW</Button>
                 </div>
               )}
-              {receiver ? (
+              {currentApplication.department_name ? (
                 <span className="w-full text-xl text-end font-medium">
                   Adressat: {receiver}{" "}
                   <EditOutlined
