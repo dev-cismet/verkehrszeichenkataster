@@ -1,16 +1,25 @@
 import { Button, Card, Input } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { updateTimelineValues } from "../../store/slices/application";
+import {
+  getCurrentApplication,
+  updateTimelineValues,
+} from "../../store/slices/application";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
+import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 const { TextArea } = Input;
 
 const Request = ({ attachment, i, isInternalRequest }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [requester, setRequester] = useState("");
-  const [receiver, setReceiver] = useState("");
+  const currentApplication = useSelector(getCurrentApplication);
+  const [requester, setRequester] = useState(
+    currentApplication.department || "104.11"
+  );
+  const [receiver, setReceiver] = useState(
+    currentApplication.department_name || ""
+  );
 
   const updateValue = (value, property) => {
     dispatch(
@@ -21,6 +30,20 @@ const Request = ({ attachment, i, isInternalRequest }) => {
         applicationId: id,
       })
     );
+  };
+
+  const setDepartments = (name) => {
+    dispatch(
+      addAnordnungAction({
+        className: "vzk_anordnung",
+        data: {
+          uuid: currentApplication.uuid,
+          department_name: name,
+          department: "104.11",
+        },
+      })
+    );
+    setReceiver(name);
   };
 
   return (
@@ -37,7 +60,7 @@ const Request = ({ attachment, i, isInternalRequest }) => {
             <div className="w-full flex flex-col gap-2">
               {requester ? (
                 <span className="w-full text-start text-xl font-medium">
-                  An: {requester}{" "}
+                  Absender: {requester}{" "}
                   <EditOutlined
                     className="cursor-pointer"
                     onClick={() => setRequester("")}
@@ -45,6 +68,7 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                 </span>
               ) : (
                 <div className="flex justify-start items-center gap-2 w-full">
+                  <span className="text-xl font-medium">Absender:</span>
                   <Button onClick={() => setRequester("104.11")}>104.11</Button>
                   <Button onClick={() => setRequester("104.23")}>104.23</Button>
                   <Button onClick={() => setRequester("GMW")}>GMW</Button>
@@ -52,7 +76,7 @@ const Request = ({ attachment, i, isInternalRequest }) => {
               )}
               {receiver ? (
                 <span className="w-full text-xl text-end font-medium">
-                  Von: {receiver}{" "}
+                  Adressat: {receiver}{" "}
                   <EditOutlined
                     className="cursor-pointer"
                     onClick={() => setReceiver("")}
@@ -60,9 +84,14 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                 </span>
               ) : (
                 <div className="flex justify-end items-center gap-2 w-full">
-                  <Button onClick={() => setReceiver("104.11")}>104.11</Button>
-                  <Button onClick={() => setReceiver("104.23")}>104.23</Button>
-                  <Button onClick={() => setReceiver("GMW")}>GMW</Button>
+                  <span className="text-xl font-medium">Adressat:</span>
+                  <Button onClick={() => setDepartments("104.11")}>
+                    104.11
+                  </Button>
+                  <Button onClick={() => setDepartments("104.23")}>
+                    104.23
+                  </Button>
+                  <Button onClick={() => setDepartments("GMW")}>GMW</Button>
                 </div>
               )}
             </div>
