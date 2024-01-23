@@ -201,6 +201,8 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
         <Tabs
           tabPosition="top"
           activeKey={currentApplication?.uuid || ""}
+          type="editable-card"
+          hideAdd
           onTabClick={(key) => {
             navigate({ pathname: getApplicationPath(key) });
           }}
