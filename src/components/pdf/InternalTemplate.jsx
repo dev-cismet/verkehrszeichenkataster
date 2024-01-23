@@ -6,7 +6,7 @@ const BorderedText = ({ title, text }) => {
       style={{
         border: 1,
         textAlign: "left",
-        fontSize: 16,
+        fontSize: 14,
         padding: 6,
         gap: 6,
       }}
@@ -17,12 +17,12 @@ const BorderedText = ({ title, text }) => {
   );
 };
 
-const InternalTemplate = ({ timeline, title, requester, receiver }) => {
+const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
   return (
     <Document>
       <Page
         size="A4"
-        style={{ flexDirection: "column", padding: 20, gap: 6, fontSize: 14 }}
+        style={{ flexDirection: "column", padding: 20, gap: 6, fontSize: 12 }}
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View
@@ -31,8 +31,8 @@ const InternalTemplate = ({ timeline, title, requester, receiver }) => {
               gap: 24,
             }}
           >
-            <Text>{requester}</Text>
-            <Text style={{ fontSize: 24 }}>{receiver}</Text>
+            <Text style={{ fontSize: 14 }}>{requester}</Text>
+            <Text style={{ fontSize: 20 }}>{receiver}</Text>
           </View>
           <View
             style={{
@@ -46,7 +46,7 @@ const InternalTemplate = ({ timeline, title, requester, receiver }) => {
           </View>
         </View>
         <Text style={{ textAlign: "center", fontWeight: "bold" }}>
-          Nr.: 3/2023 Prio:
+          Nr.: {id}/2023 Prio:
         </Text>
         <Text style={{ fontWeight: "bold", fontSize: 14 }}>{title}</Text>
         {timeline.map((attachment) => {
@@ -59,15 +59,17 @@ const InternalTemplate = ({ timeline, title, requester, receiver }) => {
             );
           }
         })}
-        <Text>
+        <Text style={{ paddingBottom: 6 }}>
           Mit der Bitte, die vorstehende aufgeführte/n Maßnahme/n nach § 45 Abs.
           5 StVO zu veranlassen und den Tag der Durchführung auf der
           Durchschrift mit zu teilen.
         </Text>
-        <Text>2 - Polizeipräsident / Direktion Verkehr - z.K.</Text>
-        <Text>3 - z.V.</Text>
-        <Text>i.A.</Text>
-        <Text>Max Mustermann</Text>
+        <Text style={{ paddingBottom: 6 }}>
+          2 - Polizeipräsident / Direktion Verkehr - z.K.
+        </Text>
+        <Text style={{ paddingBottom: 6 }}>3 - z.V.</Text>
+        <Text style={{ paddingBottom: 6 }}>i.A.</Text>
+        <Text style={{ paddingBottom: 6 }}>Max Mustermann</Text>
         <Text>An 104. 11</Text>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text>Die angeordnete/n Maßnahme/n wurden/n am</Text>
