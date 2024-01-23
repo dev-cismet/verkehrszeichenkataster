@@ -81,6 +81,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
           ? "Errichtung von Verkehrszeichen und einrichtungen gemäß §45 Abs. 3 StVO"
           : "",
       uuid: id,
+      department: "104.11",
       vzk_type: {
         id: type === "internal" ? 1 : 2,
         name: type,
