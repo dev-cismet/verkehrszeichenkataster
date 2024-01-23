@@ -197,42 +197,19 @@ const slice = createSlice({
       };
     },
     deleteTimelineObject(state, action) {
-      const { timelineIndex, applicationId } = action.payload;
+      const { timelineIndex } = action.payload;
 
-      const updatedApplications = state.allApplications.map((item) => {
-        if (item.id.toString() === applicationId) {
-          const updatedTimeline = item.timeline.filter(
-            (value, index) => index !== timelineIndex
-          );
-
-          return {
-            ...item,
-            timeline: updatedTimeline,
-          };
-        }
-        return item;
-      });
-
-      const updatedSelectedApplications = state.selectedApplications.map(
-        (item) => {
-          if (item.id.toString() === applicationId) {
-            const updatedTimeline = item.timeline.filter(
-              (value, index) => index !== timelineIndex
-            );
-
-            return {
-              ...item,
-              timeline: updatedTimeline,
-            };
-          }
-          return item;
-        }
-      );
-
+      const updatedCurrentApplicationTimeline =
+        state.currentApplication.vzk_anordnung_timelineArrayRelationShip.filter(
+          (value, index) => index !== timelineIndex
+        );
       return {
         ...state,
-        allApplications: updatedApplications,
-        selectedApplications: updatedSelectedApplications,
+        currentApplication: {
+          ...state.currentApplication,
+          vzk_anordnung_timelineArrayRelationShip:
+            updatedCurrentApplicationTimeline,
+        },
       };
     },
   },

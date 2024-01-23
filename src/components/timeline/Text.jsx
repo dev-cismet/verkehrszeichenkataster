@@ -45,16 +45,23 @@ const Text = ({ attachment, id }) => {
               deleteObjectAction({
                 className: "vzk_attachment_text",
                 data: {
+                  uuid: attachment?.fk_uuid,
+                },
+              })
+            );
+            dispatch(
+              deleteObjectAction({
+                className: "vzk_anordnung_timeline",
+                data: {
                   uuid: attachment?.uuid,
                 },
               })
             );
-            // dispatch(
-            //   deleteTimelineObject({
-            //     timelineIndex: id,
-            //     applicationId: applicationId,
-            //   })
-            // );
+            dispatch(
+              deleteTimelineObject({
+                timelineIndex: id,
+              })
+            );
           }}
         >
           Entfernen
