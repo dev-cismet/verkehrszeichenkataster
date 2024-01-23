@@ -146,7 +146,7 @@ const Sidebar = () => {
           icon={getIcon(item.vzk_attachment_typ.name.toLowerCase(), item.name)}
           isSidebarCollapsed={isCollapsed}
           text={
-            item.typ === "request"
+            item.vzk_attachment_typ.name.toLowerCase() === "request"
               ? "Anfrage"
               : item.name === "Mit freundlichen Grüßen"
               ? "MfG"
