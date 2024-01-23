@@ -32,8 +32,8 @@ const columns = [
         value: "external",
       },
     ],
-    onFilter: (value, record) => record.vzk_type.name === value,
-    sorter: (a, b) => compare(a.vzk_type.name, b.vzk_type.name),
+    onFilter: (value, record) => record?.vzk_type?.name === value,
+    sorter: (a, b) => compare(a?.vzk_type?.name, b?.vzk_type?.name),
   },
   {
     title: "Status",
@@ -48,7 +48,7 @@ const columns = [
         value: "geschlossen",
       },
     ],
-    onFilter: (value, record) => record.vzk_status.name === value,
+    onFilter: (value, record) => record?.vzk_status?.name === value,
   },
 ];
 
