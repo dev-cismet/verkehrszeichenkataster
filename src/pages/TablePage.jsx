@@ -18,6 +18,7 @@ const columns = [
   {
     title: "Nr",
     dataIndex: "id",
+    sorter: (a, b) => compare(a?.id, b?.id),
   },
   {
     title: "Typ",
