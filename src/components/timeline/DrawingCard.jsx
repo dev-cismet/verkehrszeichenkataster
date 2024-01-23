@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import Designer from "../designer/Designer";
 import { useState } from "react";
 import Title from "./Title";
+import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectAction";
 
 const DrawingCard = ({ attachment, id }) => {
   const { id: applicationId } = useParams();
@@ -30,9 +31,24 @@ const DrawingCard = ({ attachment, id }) => {
         <div
           onClick={() => {
             dispatch(
+              deleteObjectAction({
+                className: "vzk_attachment_drawing",
+                data: {
+                  uuid: attachment?.fk_uuid,
+                },
+              })
+            );
+            dispatch(
+              deleteObjectAction({
+                className: "vzk_anordnung_timeline",
+                data: {
+                  uuid: attachment?.uuid,
+                },
+              })
+            );
+            dispatch(
               deleteTimelineObject({
                 timelineIndex: id,
-                applicationId: applicationId,
               })
             );
           }}

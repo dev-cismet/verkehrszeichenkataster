@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { getDataTypeFromBase64 } from "../../tools/helper";
 import PdfViewer from "../pdfviewer/PdfViewer";
 import Title from "./Title";
+import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectAction";
 
 const File = ({ attachment, i }) => {
   const { id: applicationId } = useParams();
@@ -19,14 +20,29 @@ const File = ({ attachment, i }) => {
         <div
           onClick={() => {
             dispatch(
+              deleteObjectAction({
+                className: "vzk_attachment_file",
+                data: {
+                  uuid: attachment?.fk_uuid,
+                },
+              })
+            );
+            dispatch(
+              deleteObjectAction({
+                className: "vzk_anordnung_timeline",
+                data: {
+                  uuid: attachment?.uuid,
+                },
+              })
+            );
+            dispatch(
               deleteTimelineObject({
                 timelineIndex: i,
-                applicationId: applicationId,
               })
             );
           }}
         >
-          Löschen
+          Entfernen
         </div>
       ),
       key: "0",
