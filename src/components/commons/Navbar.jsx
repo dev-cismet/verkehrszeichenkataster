@@ -41,6 +41,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
   const [urlParams, setUrlParams] = useSearchParams();
   const { pathname } = useLocation();
   const selectedApplications = useSelector(getSelectedApplications);
+  const allApplications = useSelector(getAllApplications);
   const currentApplication = useSelector(getCurrentApplication);
   const id = useSelector(getId);
 
@@ -73,6 +74,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
     const id = uuidv4();
     const requestId = uuidv4();
     const attachmentId = uuidv4();
+    const expectedId = allApplications[allApplications.length - 1].id + 1;
     const anordnung = {
       title:
         type === "internal"
@@ -115,8 +117,13 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
         data: anordnung,
       })
     );
-    dispatch(storeSelectedApplications([...selectedApplications, anordnung]));
-    dispatch(storeCurrentApplication(anordnung));
+    dispatch(
+      storeSelectedApplications([
+        ...selectedApplications,
+        { ...anordnung, id: expectedId },
+      ])
+    );
+    dispatch(storeCurrentApplication({ ...anordnung, id: expectedId }));
 
     navigate({ pathname: getApplicationPath(id) });
   };
