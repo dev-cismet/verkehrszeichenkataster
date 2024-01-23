@@ -80,12 +80,12 @@ const DrawingCard = ({ attachment, id }) => {
           </div>
         }
       >
-        <Designer
-          initialElements={
-            attachment?.data?.drawing && JSON.parse(attachment.data.drawing)
-          }
-          viewOnlyMode={viewOnlyMode}
-        />
+        {attachment?.data?.drawing && (
+          <Designer
+            initialElements={JSON.parse(attachment.data.drawing)}
+            viewOnlyMode={viewOnlyMode}
+          />
+        )}
       </Card>
     </div>
   );
