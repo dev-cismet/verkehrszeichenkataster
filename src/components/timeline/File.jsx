@@ -1,13 +1,11 @@
-import { Card, Dropdown, Input } from "antd";
+import { Card, Dropdown } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import {
-  deleteTimelineObject,
-  updateName,
-} from "../../store/slices/application";
+import { deleteTimelineObject } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import { getDataTypeFromBase64 } from "../../tools/helper";
 import PdfViewer from "../pdfviewer/PdfViewer";
+import Title from "./Title";
 
 const File = ({ attachment, i }) => {
   const { id: applicationId } = useParams();
@@ -42,20 +40,7 @@ const File = ({ attachment, i }) => {
         type="inner"
         title={
           <div className="w-full flex">
-            <Input
-              onChange={(e) => {
-                dispatch(
-                  updateName({
-                    timelineIndex: i,
-                    updatedName: e.target.value,
-                    applicationId: applicationId,
-                  })
-                );
-              }}
-              value={attachment.name}
-              className="w-full font-medium text-lg pl-0"
-              bordered={false}
-            />
+            <Title attachment={attachment} index={i} />
             <Dropdown
               trigger={["click"]}
               menu={{ items }}
@@ -71,12 +56,14 @@ const File = ({ attachment, i }) => {
         {url && (
           <>
             {getDataTypeFromBase64(url) === "image" && (
-              <img
-                key={i}
-                alt={attachment?.name}
-                className="w-full rounded-lg"
-                src={url}
-              />
+              <div className="w-full rounded-lg">
+                <img
+                  key={i}
+                  alt={attachment?.name}
+                  className="w-full rounded-lg"
+                  src={url}
+                />
+              </div>
             )}
             {getDataTypeFromBase64(url) === "pdf" && (
               <div className="w-full rounded-lg">

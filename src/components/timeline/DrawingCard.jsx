@@ -1,13 +1,11 @@
 import { EllipsisOutlined } from "@ant-design/icons";
-import { Card, Dropdown, Input } from "antd";
+import { Card, Dropdown } from "antd";
 import { useDispatch } from "react-redux";
-import {
-  deleteTimelineObject,
-  updateName,
-} from "../../store/slices/application";
+import { deleteTimelineObject } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import Designer from "../designer/Designer";
 import { useState } from "react";
+import Title from "./Title";
 
 const DrawingCard = ({ attachment, id }) => {
   const { id: applicationId } = useParams();
@@ -53,20 +51,7 @@ const DrawingCard = ({ attachment, id }) => {
         type="inner"
         title={
           <div className="w-full flex">
-            <Input
-              onChange={(e) => {
-                dispatch(
-                  updateName({
-                    timelineIndex: id,
-                    updatedName: e.target.value,
-                    applicationId: applicationId,
-                  })
-                );
-              }}
-              value={attachment.name}
-              className="w-full font-medium text-lg pl-0"
-              bordered={false}
-            />
+            <Title attachment={attachment} index={id} />
             <Dropdown
               trigger={["click"]}
               menu={{ items }}

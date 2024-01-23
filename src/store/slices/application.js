@@ -95,11 +95,11 @@ const slice = createSlice({
       };
     },
     updateName(state, action) {
-      const { timelineIndex, updatedName, applicationId } = action.payload;
+      const { timelineIndex, updatedName } = action.payload;
 
-      const updatedApplications = state.allApplications.map((item) => {
-        if (item.id.toString() === applicationId) {
-          const updatedTimeline = item.timeline.map((value, index) => {
+      const updatedCurrentApplicationTimeline =
+        state.currentApplication.vzk_anordnung_timelineArrayRelationShip.map(
+          (value, index) => {
             if (index === timelineIndex) {
               return {
                 ...value,
@@ -107,42 +107,16 @@ const slice = createSlice({
               };
             }
             return value;
-          });
-
-          return {
-            ...item,
-            timeline: updatedTimeline,
-          };
-        }
-        return item;
-      });
-
-      const updatedSelectedApplications = state.selectedApplications.map(
-        (item) => {
-          if (item.id.toString() === applicationId) {
-            const updatedTimeline = item.timeline.map((value, index) => {
-              if (index === timelineIndex) {
-                return {
-                  ...value,
-                  name: updatedName,
-                };
-              }
-              return value;
-            });
-
-            return {
-              ...item,
-              timeline: updatedTimeline,
-            };
           }
-          return item;
-        }
-      );
+        );
 
       return {
         ...state,
-        allApplications: updatedApplications,
-        selectedApplications: updatedSelectedApplications,
+        currentApplication: {
+          ...state.currentApplication,
+          vzk_anordnung_timelineArrayRelationShip:
+            updatedCurrentApplicationTimeline,
+        },
       };
     },
     updateTimelineTitle(state, action) {

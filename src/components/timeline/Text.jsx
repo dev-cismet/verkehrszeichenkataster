@@ -1,8 +1,7 @@
-import { Card, Dropdown, Input, Button } from "antd";
+import { Card, Dropdown, Button } from "antd";
 import { useDispatch } from "react-redux";
 import {
   deleteTimelineObject,
-  updateName,
   updateTimelineValues,
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
@@ -15,8 +14,7 @@ import { useState } from "react";
 import MdRedactor, { mdParser } from "../mdredactor/MdRedactor";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectAction";
-
-const { TextArea } = Input;
+import Title from "./Title";
 
 const Text = ({ attachment, id }) => {
   const { id: applicationId } = useParams();
@@ -100,21 +98,7 @@ const Text = ({ attachment, id }) => {
         }}
         title={
           <div className="w-full flex">
-            <Input
-              onChange={(e) => {
-                dispatch(
-                  updateName({
-                    timelineIndex: id,
-                    updatedName: e.target.value,
-                    applicationId: applicationId,
-                  })
-                );
-              }}
-              value={attachment.name}
-              placeholder="Text"
-              className="w-full font-medium text-lg pl-0"
-              bordered={false}
-            />
+            <Title attachment={attachment} index={id} />
             <Dropdown
               trigger={["click"]}
               menu={{ items }}
