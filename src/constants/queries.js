@@ -82,22 +82,17 @@ queries.requestById = `
 query MyQuery($id: String) {
   vzk_attachment_request(where: {uuid: {_eq: $id}}) {
     billing_city
-    uuid
     billing_postal_code
     billing_street
     billing_street_number
-    description
     email
     firstname
-    id
     lastname
     phone
     requester_city
     requester_postalcode
     requester_street
     requester_street_number
-    sign_location
-    time
   }
 }`;
 

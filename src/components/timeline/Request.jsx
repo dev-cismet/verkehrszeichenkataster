@@ -8,7 +8,7 @@ import {
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
-const { TextArea } = Input;
+import { useDebounce } from "@uidotdev/usehooks";
 
 const Request = ({ attachment, i, isInternalRequest }) => {
   const { id } = useParams();
@@ -20,6 +20,9 @@ const Request = ({ attachment, i, isInternalRequest }) => {
   const [receiver, setReceiver] = useState(
     currentApplication.department_name || ""
   );
+  const [externalRequest, setExternalRequest] = useState(attachment.data);
+
+  const debouncedRequest = useDebounce(externalRequest, 700);
 
   const updateValue = (value, property) => {
     dispatch(
@@ -45,6 +48,23 @@ const Request = ({ attachment, i, isInternalRequest }) => {
     );
     setReceiver(name);
   };
+
+  console.log(attachment);
+
+  if (
+    debouncedRequest !== attachment.data &&
+    debouncedRequest === externalRequest
+  ) {
+    dispatch(
+      addAnordnungAction({
+        className: "vzk_attachment_request",
+        data: {
+          ...debouncedRequest,
+          uuid: attachment.fk_uuid,
+        },
+      })
+    );
+  }
 
   return (
     <div className="w-full relative pb-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]">
@@ -115,7 +135,12 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                     <Input
                       id="requester_first_name"
                       value={attachment.firstname}
-                      onChange={(e) => updateValue(e.target.value, "firstname")}
+                      onChange={(e) =>
+                        setExternalRequest({
+                          ...externalRequest,
+                          firstname: e.target.value,
+                        })
+                      }
                     />
                   </div>
                   <div className="flex flex-col w-full gap-2">
@@ -123,7 +148,12 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                     <Input
                       id="requester_last_name"
                       value={attachment.lastname}
-                      onChange={(e) => updateValue(e.target.value, "lastname")}
+                      onChange={(e) =>
+                        setExternalRequest({
+                          ...externalRequest,
+                          lastname: e.target.value,
+                        })
+                      }
                     />
                   </div>
                 </div>
@@ -135,7 +165,12 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                     <Input
                       id="requester_phone_number"
                       value={attachment.phone}
-                      onChange={(e) => updateValue(e.target.value, "phone")}
+                      onChange={(e) =>
+                        setExternalRequest({
+                          ...externalRequest,
+                          phone: e.target.value,
+                        })
+                      }
                     />
                   </div>
                   <div className="flex flex-col w-full gap-2">
@@ -143,7 +178,12 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                     <Input
                       id="reqeuster_mail"
                       value={attachment.email}
-                      onChange={(e) => updateValue(e.target.value, "email")}
+                      onChange={(e) =>
+                        setExternalRequest({
+                          ...externalRequest,
+                          email: e.target.value,
+                        })
+                      }
                     />
                   </div>
                 </div>
@@ -154,7 +194,10 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                       id="requester_street"
                       value={attachment.requester_street}
                       onChange={(e) =>
-                        updateValue(e.target.value, "requester_street")
+                        setExternalRequest({
+                          ...externalRequest,
+                          requester_street: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -164,7 +207,10 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                       id="requester_street_number"
                       value={attachment.requester_street_number}
                       onChange={(e) =>
-                        updateValue(e.target.value, "requester_street_number")
+                        setExternalRequest({
+                          ...externalRequest,
+                          requester_street_number: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -176,7 +222,10 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                       id="requester_zip_code"
                       value={attachment.requester_postalcode}
                       onChange={(e) =>
-                        updateValue(e.target.value, "requester_postalcode")
+                        setExternalRequest({
+                          ...externalRequest,
+                          requester_postalcode: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -186,7 +235,10 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                       id="requester_city"
                       value={attachment.requester_city}
                       onChange={(e) =>
-                        updateValue(e.target.value, "requester_city")
+                        setExternalRequest({
+                          ...externalRequest,
+                          requester_city: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -201,7 +253,10 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                       id="billing_street"
                       value={attachment.billing_street}
                       onChange={(e) =>
-                        updateValue(e.target.value, "billing_street")
+                        setExternalRequest({
+                          ...externalRequest,
+                          billing_street: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -211,7 +266,10 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                       id="billing_street_number"
                       value={attachment.billing_street_number}
                       onChange={(e) =>
-                        updateValue(e.target.value, "billing_street_number")
+                        setExternalRequest({
+                          ...externalRequest,
+                          billing_street_number: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -223,7 +281,10 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                       id="billing_zip_code"
                       value={attachment.billing_postal_code}
                       onChange={(e) =>
-                        updateValue(e.target.value, "billing_postal_code")
+                        setExternalRequest({
+                          ...externalRequest,
+                          billing_postal_code: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -233,7 +294,10 @@ const Request = ({ attachment, i, isInternalRequest }) => {
                       id="billing_city"
                       value={attachment.billing_city}
                       onChange={(e) =>
-                        updateValue(e.target.value, "billing_city")
+                        setExternalRequest({
+                          ...externalRequest,
+                          billing_city: e.target.value,
+                        })
                       }
                     />
                   </div>
