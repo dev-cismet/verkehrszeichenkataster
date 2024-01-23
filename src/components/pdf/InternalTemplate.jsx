@@ -17,7 +17,7 @@ const BorderedText = ({ title, text }) => {
   );
 };
 
-const InternalTemplate = ({ timeline, title }) => {
+const InternalTemplate = ({ timeline, title, requester, receiver }) => {
   return (
     <Document>
       <Page
@@ -31,8 +31,8 @@ const InternalTemplate = ({ timeline, title }) => {
               gap: 24,
             }}
           >
-            <Text>104.11</Text>
-            <Text style={{ fontSize: 24 }}>104.23</Text>
+            <Text>{requester}</Text>
+            <Text style={{ fontSize: 24 }}>{receiver}</Text>
           </View>
           <View
             style={{
@@ -50,11 +50,16 @@ const InternalTemplate = ({ timeline, title }) => {
         </Text>
         <Text style={{ fontWeight: "bold", fontSize: 14 }}>{title}</Text>
         {timeline.map((attachment) => {
-          if (attachment.typ === "text") {
+          if (attachment.vzk_attachment_typ.name.toLowerCase() === "text") {
             return (
-              <BorderedText title={attachment.name} text={attachment.text} />
+              <BorderedText
+                title={attachment.name}
+                text={attachment?.data?.text}
+              />
             );
-          } else if (attachment.typ === "file") {
+          } else if (
+            attachment.vzk_attachment_typ.name.toLowerCase() === "file"
+          ) {
             return <Image src={attachment.file} />;
           }
         })}

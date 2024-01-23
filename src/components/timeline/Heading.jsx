@@ -31,6 +31,8 @@ const Heading = () => {
         <InternalTemplate
           timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
           title={anordnung?.title}
+          requester={anordnung?.department}
+          receiver={anordnung?.department_name}
         />
       ) : (
         <ExternalTemplate
@@ -50,6 +52,8 @@ const Heading = () => {
         <InternalTemplate
           timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
           title={anordnung?.title}
+          requester={anordnung?.department}
+          receiver={anordnung?.department_name}
         />
       ) : (
         <ExternalTemplate
