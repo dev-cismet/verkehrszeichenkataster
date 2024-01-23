@@ -13,11 +13,13 @@ const TextWithTitle = ({ title, text }) => {
         gap: 6,
       }}
     >
-      <Text style={{ textDecoration: "underline", paddingTop: 10 }}>
-        {title}
-      </Text>
+      {title !== "Fachfirmavorbehalt" && title !== "Kostennotiz" && (
+        <Text style={{ textDecoration: "underline", paddingTop: 10 }}>
+          {title}
+        </Text>
+      )}
       <View style={{ maxWidth: "70%" }}>
-        <Html style={{ fontSize: 12 }}>{mdParser.render(text)}</Html>
+        <Html style={{ fontSize: 12 }}>{text && mdParser.render(text)}</Html>
       </View>
     </View>
   );
@@ -47,17 +49,21 @@ const ExternalTemplate = ({ timeline, title }) => {
           <Text style={{ textDecoration: "underline" }}>{title}</Text>
           <Text style={{ fontSize: 10 }}>(Anordnung Nr. 001/2024)</Text>
           {timeline?.map((attachment, i) => {
-            if (attachment.typ === "text") {
+            if (attachment.vzk_attachment_typ.name.toLowerCase() === "text") {
               return (
                 <TextWithTitle
                   key={`pdf_` + i}
                   title={attachment.name}
-                  text={attachment.text}
+                  text={attachment?.data?.text}
                 />
               );
-            } else if (attachment.typ === "file") {
-              return <Image key={`pdf_` + i} src={attachment.file} />;
-            } else if (attachment.typ === "drawing") {
+            } else if (
+              attachment.vzk_attachment_typ.name.toLowerCase() === "file"
+            ) {
+              return <Image key={`pdf_` + i} src={attachment?.data?.file} />;
+            } else if (
+              attachment.vzk_attachment_typ.name.toLowerCase() === "drawing"
+            ) {
               return <Image key={`pdf_` + i} src={attachment.preview} />;
             }
           })}
