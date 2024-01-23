@@ -126,7 +126,7 @@ const Heading = () => {
               </Button>
               <Button
                 href={instance.url}
-                download="Anordnung.pdf"
+                download={`${anordnung?.id}_Anordnung.pdf`}
                 icon={<FilePdfOutlined />}
               >
                 PDF Drucken
