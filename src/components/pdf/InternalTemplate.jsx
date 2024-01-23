@@ -57,10 +57,6 @@ const InternalTemplate = ({ timeline, title, requester, receiver }) => {
                 text={attachment?.data?.text}
               />
             );
-          } else if (
-            attachment.vzk_attachment_typ.name.toLowerCase() === "file"
-          ) {
-            return <Image src={attachment.file} />;
           }
         })}
         <Text>
@@ -77,6 +73,11 @@ const InternalTemplate = ({ timeline, title, requester, receiver }) => {
           <Text>Die angeordnete/n Maßnahme/n wurden/n am</Text>
           <Text>durchgeführt.</Text>
         </View>
+        {timeline.map((attachment) => {
+          if (attachment.vzk_attachment_typ.name.toLowerCase() === "file") {
+            return <Image src={attachment?.data?.file} />;
+          }
+        })}
       </Page>
     </Document>
   );
