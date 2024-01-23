@@ -12,8 +12,6 @@ const DrawingCard = ({ attachment, id }) => {
   const [viewOnlyMode, setViewOnlyMode] = useState(true);
   const dispatch = useDispatch();
 
-  console.log(attachment?.data?.drawing && JSON.parse(attachment.data.drawing));
-
   const items = [
     {
       label: (
