@@ -33,6 +33,7 @@ const Heading = () => {
           title={anordnung?.title}
           requester={anordnung?.department}
           receiver={anordnung?.department_name}
+          id={anordnung?.id}
         />
       ) : (
         <ExternalTemplate
@@ -54,6 +55,7 @@ const Heading = () => {
           title={anordnung?.title}
           requester={anordnung?.department}
           receiver={anordnung?.department_name}
+          id={anordnung?.id}
         />
       ) : (
         <ExternalTemplate
