@@ -200,7 +200,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
       <div className="w-full px-2">
         <Tabs
           tabPosition="top"
-          activeKey={currentApplication?.uuid}
+          activeKey={currentApplication?.uuid || ""}
           onTabClick={(key) => {
             navigate({ pathname: getApplicationPath(key) });
           }}

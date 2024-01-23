@@ -5,6 +5,7 @@ import {
   getAllApplications,
   getAllApplicationsDb,
   getSelectedApplications,
+  storeCurrentApplication,
   storeSelectedApplications,
 } from "../store/slices/application";
 import { compare } from "../tools/helper";
@@ -67,6 +68,7 @@ const TablePage = () => {
 
   useEffect(() => {
     dispatch(getAllApplicationsDb());
+    dispatch(storeCurrentApplication({}));
   }, []);
 
   return (
