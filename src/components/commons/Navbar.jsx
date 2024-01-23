@@ -82,7 +82,7 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
           : "",
       uuid: id,
       vzk_type: {
-        id: 1,
+        id: type === "internal" ? 1 : 2,
         name: type,
       },
       vzk_status: {
