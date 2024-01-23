@@ -37,7 +37,7 @@ const Title = ({ attachment, index }) => {
       }}
       defaultValue={title}
       // value={attachment.name}
-      placeholder="Text"
+      placeholder="Titel hinzufügen"
       className="w-full font-medium text-lg pl-0"
       bordered={false}
     />
