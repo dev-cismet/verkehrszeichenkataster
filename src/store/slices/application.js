@@ -369,10 +369,9 @@ export const getAttachments = (timeline, uuid) => {
             }
           };
           const attachmentData = getAttachmentData();
-          console.log(attachmentData);
           updatedTimeline.push({ ...attachment, data: attachmentData });
           if (updatedTimeline.length === timeline.length) {
-            console.log(updatedTimeline);
+            updatedTimeline.sort((a, b) => a.id - b.id);
             dispatch(storeTimeline({ id: uuid, timeline: updatedTimeline }));
           }
         })
