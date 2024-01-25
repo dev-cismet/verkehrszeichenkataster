@@ -76,7 +76,7 @@ const File = ({ attachment, i }) => {
                 <img
                   key={i}
                   alt={attachment?.name}
-                  className="w-full rounded-lg"
+                  className="max-w-full rounded-lg"
                   src={url}
                 />
               </div>
