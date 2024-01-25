@@ -111,6 +111,9 @@ const DesignerWrapper = ({
   useEffect(() => {
     if (excalidrawAPI) {
       setData(extractor(signLibrary));
+      if (viewOnlyMode) {
+        getPreviewSrcLink(generatePreviewHandler());
+      }
     }
   }, [signLibrary, excalidrawAPI]);
 
@@ -210,9 +213,9 @@ const DesignerWrapper = ({
     getPreviewSrcLink(exportCanvas.toDataURL());
   };
 
-  useEffect(() => {
-    // generatePreviewHandler();
-  }, [resetDrawing]);
+  // useEffect(() => {
+  //   generatePreviewHandler();
+  // }, [resetDrawing]);
 
   useEffect(() => {
     const compsWithTextDescription = {};

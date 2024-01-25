@@ -18,6 +18,7 @@ const BorderedText = ({ title, text }) => {
 };
 
 const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
+  console.log("xxx InternalTemplate", timeline);
   return (
     <Document>
       <Page

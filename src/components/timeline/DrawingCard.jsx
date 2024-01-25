@@ -11,7 +11,12 @@ import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectA
 const DrawingCard = ({ attachment, id }) => {
   const { id: applicationId } = useParams();
   const [viewOnlyMode, setViewOnlyMode] = useState(true);
+  const [prevImg, setPrevImg] = useState("");
   const dispatch = useDispatch();
+
+  if (prevImg !== "") {
+    console.log("xxx prevImg", prevImg);
+  }
 
   const items = [
     {
@@ -85,6 +90,7 @@ const DrawingCard = ({ attachment, id }) => {
             key={viewOnlyMode}
             initialElements={JSON.parse(attachment.data.drawing)}
             viewOnlyMode={viewOnlyMode}
+            getPreviewSrcLink={setPrevImg}
           />
         )}
       </Card>
