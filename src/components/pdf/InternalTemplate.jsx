@@ -17,8 +17,14 @@ const BorderedText = ({ title, text }) => {
   );
 };
 
-const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
-  console.log("xxx InternalTemplate", timeline);
+const InternalTemplate = ({
+  timeline,
+  title,
+  requester,
+  receiver,
+  id,
+  tempPrev,
+}) => {
   return (
     <Document>
       <Page
@@ -79,6 +85,20 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
         {timeline.map((attachment) => {
           if (attachment.vzk_attachment_typ.name.toLowerCase() === "file") {
             return <Image src={attachment?.data?.file} />;
+          }
+        })}
+
+        {timeline.map((attachment) => {
+          if (
+            attachment.vzk_attachment_typ.name.toLowerCase() === "drawing" &&
+            tempPrev !== ""
+          ) {
+            return (
+              <Image
+                src={tempPrev}
+                style={{ width: "300px", height: "auto" }}
+              />
+            );
           }
         })}
       </Page>

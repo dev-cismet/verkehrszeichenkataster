@@ -17,12 +17,13 @@ import ExternalTemplate from "../pdf/ExternalTemplate";
 import InternalTemplate from "../pdf/InternalTemplate";
 import { titleCase } from "../../tools/helper";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
+import { getTempCurrentDrawingPreview } from "../../store/slices/application";
 
 const Heading = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const anordnung = useSelector(getCurrentApplication);
-
+  const curentDrawing = useSelector(getTempCurrentDrawingPreview);
   const [title, setTitle] = useState(anordnung?.title);
   const [editTitle, setEditTitle] = useState(!!!anordnung?.title);
   const [instance, updateInstance] = usePDF({
@@ -56,6 +57,7 @@ const Heading = () => {
           requester={anordnung?.department}
           receiver={anordnung?.department_name}
           id={anordnung?.id}
+          tempPrev={curentDrawing}
         />
       ) : (
         <ExternalTemplate
@@ -64,7 +66,7 @@ const Heading = () => {
         />
       )
     );
-  }, [anordnung]);
+  }, [anordnung, curentDrawing]);
 
   return (
     <div className="w-3/4 mx-auto flex items-center gap-2">

@@ -1,7 +1,10 @@
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Card, Dropdown } from "antd";
 import { useDispatch } from "react-redux";
-import { deleteTimelineObject } from "../../store/slices/application";
+import {
+  deleteTimelineObject,
+  storeTempCurrentDrawingPreview,
+} from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import Designer from "../designer/Designer";
 import { useState } from "react";
@@ -15,7 +18,7 @@ const DrawingCard = ({ attachment, id }) => {
   const dispatch = useDispatch();
 
   if (prevImg !== "") {
-    console.log("xxx prevImg", prevImg);
+    dispatch(storeTempCurrentDrawingPreview(prevImg));
   }
 
   const items = [
