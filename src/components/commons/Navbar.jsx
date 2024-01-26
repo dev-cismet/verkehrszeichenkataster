@@ -210,8 +210,8 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
           items={selectedApplications.map((application) => {
             return {
               label: application?.title
-                ? application.title + " #" + application.id
-                : "Anordnung #" + application.id,
+                ? "#" + application.id + " " + application.title
+                : "#" + application.id + " Anordnung",
               key: application?.uuid,
             };
           })}
