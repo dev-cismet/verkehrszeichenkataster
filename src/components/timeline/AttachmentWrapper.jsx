@@ -52,7 +52,6 @@ export const AttachmentRow = ({
 const AttachmentWrapper = ({ children, index }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
-
   return (
     <div className="flex w-full gap-2 items-center pb-6">
       <div className="h-full border-[1px] border-solid border-black" />

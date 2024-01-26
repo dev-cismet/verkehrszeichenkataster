@@ -23,7 +23,7 @@ const InternalTemplate = ({
   requester,
   receiver,
   id,
-  tempPrev,
+  curentDrawing,
 }) => {
   return (
     <Document>
@@ -91,12 +91,16 @@ const InternalTemplate = ({
         {timeline.map((attachment) => {
           if (
             attachment.vzk_attachment_typ.name.toLowerCase() === "drawing" &&
-            tempPrev !== ""
+            curentDrawing !== ""
           ) {
             return (
               <Image
-                src={tempPrev}
-                style={{ width: "300px", height: "auto" }}
+                src={
+                  attachment.vzk_attachment_typ?.prev
+                    ? attachment.vzk_attachment_typ?.prev
+                    : curentDrawing
+                }
+                style={{ width: "100%", height: "auto" }}
               />
             );
           }

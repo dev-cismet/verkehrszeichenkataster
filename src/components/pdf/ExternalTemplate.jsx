@@ -68,6 +68,7 @@ const ExternalTemplate = ({ timeline, title }) => {
             }
           })}
         </View>
+
         <ExternalSidebar />
       </Page>
     </Document>

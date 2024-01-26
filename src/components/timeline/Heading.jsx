@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { json, useParams } from "react-router-dom";
 import {
   getCurrentApplication,
   updateTimelineTitle,
@@ -35,6 +35,7 @@ const Heading = () => {
           requester={anordnung?.department}
           receiver={anordnung?.department_name}
           id={anordnung?.id}
+          curentDrawing={curentDrawing}
         />
       ) : (
         <ExternalTemplate
@@ -57,7 +58,7 @@ const Heading = () => {
           requester={anordnung?.department}
           receiver={anordnung?.department_name}
           id={anordnung?.id}
-          tempPrev={curentDrawing}
+          curentDrawing={curentDrawing}
         />
       ) : (
         <ExternalTemplate

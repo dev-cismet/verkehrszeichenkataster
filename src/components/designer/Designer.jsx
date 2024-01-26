@@ -101,7 +101,7 @@ const DesignerWrapper = ({
   getFiles = () => {},
   initialElements,
   getPreviewSrcLink = () => {},
-  resetDrawing,
+  resetDrawing = 1,
 }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const [data, setData] = useState([]);
@@ -215,6 +215,7 @@ const DesignerWrapper = ({
 
   // useEffect(() => {
   //   generatePreviewHandler();
+  //   console.log("xxx resetDrawing", resetDrawing);
   // }, [resetDrawing]);
 
   useEffect(() => {
@@ -420,6 +421,7 @@ const DesignerWrapper = ({
             onChange={(elements, appstate, files) => {
               getElements(elements);
               getFiles(files);
+              generatePreviewHandler();
             }}
             initialData={initialElements}
             langCode="de-DE"

@@ -156,6 +156,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                   vzk_attachment_typ: {
                     id: 5,
                     name: "Drawing",
+                    prev: drawing,
                   },
                   data: {
                     drawing: JSON.stringify({
