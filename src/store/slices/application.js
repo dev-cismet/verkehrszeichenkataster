@@ -13,7 +13,6 @@ const initialState = {
   allApplications: [],
   selectedApplications: [],
   currentApplication: {},
-  tempCurrentDrawingPreview: "",
   timeline: [
     {
       type: "antrag",
@@ -171,10 +170,6 @@ const slice = createSlice({
         },
       };
     },
-    storeTempCurrentDrawingPreview(state, action) {
-      state.tempCurrentDrawingPreview = action.payload;
-      return state;
-    },
   },
 });
 
@@ -191,12 +186,7 @@ export const {
   updateTimelineTitle,
   updateTimelineStatus,
   deleteTimelineObject,
-  storeTempCurrentDrawingPreview,
 } = slice.actions;
-
-export const getTempCurrentDrawingPreview = (state) => {
-  return state.application.tempCurrentDrawingPreview;
-};
 
 export const getAllApplications = (state) => {
   return state.application.allApplications;

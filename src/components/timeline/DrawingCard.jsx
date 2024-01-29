@@ -1,10 +1,7 @@
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Card, Dropdown } from "antd";
 import { useDispatch } from "react-redux";
-import {
-  deleteTimelineObject,
-  storeTempCurrentDrawingPreview,
-} from "../../store/slices/application";
+import { deleteTimelineObject } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import Designer from "../designer/Designer";
 import { useState } from "react";
@@ -14,12 +11,7 @@ import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectA
 const DrawingCard = ({ attachment, id }) => {
   const { id: applicationId } = useParams();
   const [viewOnlyMode, setViewOnlyMode] = useState(true);
-  const [prevImg, setPrevImg] = useState("");
   const dispatch = useDispatch();
-
-  if (prevImg !== "") {
-    dispatch(storeTempCurrentDrawingPreview(prevImg));
-  }
 
   const items = [
     {
@@ -93,7 +85,7 @@ const DrawingCard = ({ attachment, id }) => {
             key={viewOnlyMode}
             initialElements={JSON.parse(attachment.data.drawing)}
             viewOnlyMode={viewOnlyMode}
-            getPreviewSrcLink={setPrevImg}
+            // getPreviewSrcLink={}
           />
         )}
       </Card>

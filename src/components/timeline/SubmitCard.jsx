@@ -1,5 +1,5 @@
 import { Button, Card, Input, Upload } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -122,6 +122,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                       drawing: JSON.stringify({
                         elements: drawElements,
                         files: drawFiles,
+                        base64Preview: drawing,
                       }),
                       uuid: uuid,
                     },
@@ -156,12 +157,12 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                   vzk_attachment_typ: {
                     id: 5,
                     name: "Drawing",
-                    prev: drawing,
                   },
                   data: {
                     drawing: JSON.stringify({
                       elements: drawElements,
                       files: drawFiles,
+                      base64Preview: drawing,
                     }),
                   },
                 });

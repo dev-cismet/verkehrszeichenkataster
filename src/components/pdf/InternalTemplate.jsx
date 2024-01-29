@@ -17,14 +17,7 @@ const BorderedText = ({ title, text }) => {
   );
 };
 
-const InternalTemplate = ({
-  timeline,
-  title,
-  requester,
-  receiver,
-  id,
-  curentDrawing,
-}) => {
+const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
   return (
     <Document>
       <Page
@@ -91,16 +84,16 @@ const InternalTemplate = ({
         {timeline.map((attachment) => {
           if (
             attachment.vzk_attachment_typ.name.toLowerCase() === "drawing" &&
-            curentDrawing !== ""
+            attachment?.data?.drawing
           ) {
+            console.log("xxx timeline", attachment.uuid);
+            const drawingObject = JSON.parse(attachment.data.drawing);
+
             return (
               <Image
-                src={
-                  attachment.vzk_attachment_typ?.prev
-                    ? attachment.vzk_attachment_typ?.prev
-                    : curentDrawing
-                }
-                style={{ width: "100%", height: "auto" }}
+                src={drawingObject.base64Preview}
+                style={{ width: "100%", height: "auto", padding: 0 }}
+                key={attachment.uuid}
               />
             );
           }
