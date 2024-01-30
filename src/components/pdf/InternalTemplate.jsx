@@ -86,13 +86,11 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
             attachment.vzk_attachment_typ.name.toLowerCase() === "drawing" &&
             attachment?.data?.drawing
           ) {
-            console.log("xxx timeline", attachment.uuid);
             const drawingObject = JSON.parse(attachment.data.drawing);
-
             return (
               <Image
                 src={drawingObject.base64Preview}
-                style={{ width: "100%", height: "auto", padding: 0 }}
+                style={{ maxWidth: "100%", height: "auto" }}
                 key={attachment.uuid}
               />
             );

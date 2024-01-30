@@ -27,6 +27,7 @@ import { useEffect, useState } from "react";
 import { titleCase } from "../tools/helper";
 import addAnordnungAction from "../store/slices/actionSubslices/addAnordnungAction";
 import { v4 as uuidv4 } from "uuid";
+import { nanoid } from "@reduxjs/toolkit";
 
 const { Dragger } = Upload;
 
@@ -149,7 +150,14 @@ const TimelinePage = () => {
               case "file":
                 return <File key={i} attachment={attachment} i={i} />;
               case "drawing":
-                return <DrawingCard key={i} attachment={attachment} id={i} />;
+                return (
+                  <DrawingCard
+                    key={i + nanoid()}
+                    attachment={attachment}
+                    id={i}
+                    changeTimeline={changeTimeline}
+                  />
+                );
             }
           })}
           <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-0" />
