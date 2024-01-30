@@ -87,26 +87,26 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
                 },
               })
             );
-            dispatch(
-              addAnordnungAction({
-                className: "vzk_anordnung",
-                data: {
-                  uuid: attachment?.uuid,
-                  vzk_anordnung_timelineArrayRelationShip: [
-                    ...anordnung.vzk_anordnung_timelineArrayRelationShip,
-                    {
-                      name: "",
-                      fk_uuid: attachment?.fk_uuid,
-                      uuid: attachment?.uuid,
-                      vzk_attachment_typ: {
-                        id: 5,
-                        name: "Drawing",
-                      },
-                    },
-                  ],
-                },
-              })
-            );
+            // dispatch(
+            //   addAnordnungAction({
+            //     className: "vzk_anordnung",
+            //     data: {
+            //       uuid: attachment?.uuid,
+            //       vzk_anordnung_timelineArrayRelationShip: [
+            //         ...anordnung.vzk_anordnung_timelineArrayRelationShip,
+            //         {
+            //           name: "",
+            //           fk_uuid: attachment?.fk_uuid,
+            //           uuid: attachment?.uuid,
+            //           vzk_attachment_typ: {
+            //             id: 5,
+            //             name: "Drawing",
+            //           },
+            //         },
+            //       ],
+            //     },
+            //   })
+            // );
             changeTimeline({
               typ: "drawing",
               name: "",
