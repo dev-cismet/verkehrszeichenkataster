@@ -27,10 +27,10 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
       label: (
         <div
           onClick={() => {
-            setViewOnlyMode(false);
+            setViewOnlyMode(!viewOnlyMode);
           }}
         >
-          Bearbeiten
+          {viewOnlyMode ? "Bearbeiten" : "Abschließen Bearbeiten"}
         </div>
       ),
       key: "0",
