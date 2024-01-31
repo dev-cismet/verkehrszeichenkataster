@@ -74,6 +74,9 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
       label: (
         <div
           onClick={() => {
+            // dispatch(
+            //   deleteTimelineObject({ timelineIndex: index, applicationId: id })
+            // );
             setViewOnlyMode(true);
             dispatch(
               addAnordnungAction({

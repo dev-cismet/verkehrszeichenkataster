@@ -89,11 +89,18 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
           ) {
             const drawingObject = JSON.parse(attachment.data.drawing);
             return (
-              <Image
-                src={drawingObject.base64Preview}
-                style={{ maxWidth: "100%", height: "auto" }}
+              <div
                 key={attachment.uuid}
-              />
+                style={{ width: "100%", border: "1px solid red" }}
+              >
+                <Image
+                  src={drawingObject.base64Preview}
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto",
+                  }}
+                />
+              </div>
             );
           }
         })}

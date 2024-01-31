@@ -106,6 +106,7 @@ const DesignerWrapper = ({
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const [data, setData] = useState([]);
   const canvasWrapperRef = useRef(null);
+  const canvasWidthRef = useRef(null);
   const [viewMode, setViewMode] = useState(viewOnlyMode);
   const [canvasUrl, setCanvasUrl] = useState(null);
   useEffect(() => {
@@ -197,22 +198,29 @@ const DesignerWrapper = ({
     await fetchIcon(pathName, newFileId);
   };
 
-  const generatePreviewHandler = async () => {
+  const generatePreviewHandler = async (elements) => {
+    let highestElement = 0;
+    elements.forEach((el) => {
+      if (el.height > highestElement) {
+        highestElement = el.height;
+      }
+    });
     const exportCanvas = await exportToCanvas({
       elements: excalidrawAPI.getSceneElements(),
       appState: excalidrawAPI.getAppState(),
       getDimensions: () => {
         return {
-          width: canvasWrapperRef.current.clientWidth,
-          height: canvasWrapperRef.current.clientHeight,
+          width: canvasWidthRef.current.clientWidth - 20,
+          _height: canvasWrapperRef.current.clientHeight,
+          height: highestElement,
         };
       },
       files: excalidrawAPI.getFiles(),
+      exportPadding: 0,
     });
     setCanvasUrl(exportCanvas.toDataURL());
     getPreviewSrcLink(exportCanvas.toDataURL());
   };
-
   // useEffect(() => {
   //   generatePreviewHandler();
   //   console.log("xxx resetDrawing", resetDrawing);
@@ -406,6 +414,7 @@ const DesignerWrapper = ({
   return (
     <>
       <div
+        ref={canvasWidthRef}
         className={`excalidraw-custom-wrapper ${
           viewMode ? "only-view-mode" : ""
         }`}
@@ -421,7 +430,7 @@ const DesignerWrapper = ({
             onChange={(elements, appstate, files) => {
               getElements(elements);
               getFiles(files);
-              generatePreviewHandler();
+              generatePreviewHandler(elements);
             }}
             initialData={initialElements}
             langCode="de-DE"
@@ -558,7 +567,6 @@ const DesignerWrapper = ({
                     prefix={<SearchOutlined />}
                     allowClear
                     onPressEnter={(e) => {
-                      console.log("yyy on Press enter");
                       setSearchText(e.target.value);
                     }}
                     placeholder="Hier nach Beschreibung und Nr filtern"
