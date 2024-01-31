@@ -28,7 +28,8 @@ const Heading = () => {
     document:
       anordnung?.vzk_type?.name === "internal" ? (
         <InternalTemplate
-          timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
+          _timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
+          timeline={[]}
           title={anordnung?.title}
           requester={anordnung?.department}
           receiver={anordnung?.department_name}

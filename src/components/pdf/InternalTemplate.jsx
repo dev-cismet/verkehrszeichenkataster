@@ -53,6 +53,7 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
           if (attachment.vzk_attachment_typ.name.toLowerCase() === "text") {
             return (
               <BorderedText
+                key={attachment.uuid}
                 title={attachment.name}
                 text={attachment?.data?.text}
               />
@@ -77,7 +78,7 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
         </View>
         {timeline.map((attachment) => {
           if (attachment.vzk_attachment_typ.name.toLowerCase() === "file") {
-            return <Image src={attachment?.data?.file} />;
+            return <Image key={attachment.uuid} src={attachment?.data?.file} />;
           }
         })}
 

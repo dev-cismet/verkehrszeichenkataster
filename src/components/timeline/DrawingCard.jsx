@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteTimelineObject,
   getCurrentApplication,
+  storeCurrentApplication,
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import Designer from "../designer/Designer";
@@ -87,49 +88,29 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
                 },
               })
             );
-            // dispatch(
-            //   addAnordnungAction({
-            //     className: "vzk_anordnung",
-            //     data: {
-            //       uuid: attachment?.uuid,
-            //       vzk_anordnung_timelineArrayRelationShip: [
-            //         ...anordnung.vzk_anordnung_timelineArrayRelationShip,
-            //         {
-            //           name: "",
-            //           fk_uuid: attachment?.fk_uuid,
-            //           uuid: attachment?.uuid,
-            //           vzk_attachment_typ: {
-            //             id: 5,
-            //             name: "Drawing",
-            //           },
-            //         },
-            //       ],
-            //     },
-            //   })
-            // );
-            changeTimeline({
-              typ: "drawing",
-              name: "",
-              fk_uuid: attachment?.fk_uuid,
-              uuid: attachment?.uuid,
-              vzk_attachment_typ: {
-                id: 5,
-                name: "Drawing",
-              },
-              data: {
-                drawing: JSON.stringify({
-                  elements: drawElements,
-                  files: drawFiles,
-                  base64Preview: drawing,
-                }),
-              },
-            });
-
-            dispatch(
-              deleteTimelineObject({
-                timelineIndex: id,
-              })
-            );
+            const copyanordnung = {
+              ...anordnung,
+              vzk_anordnung_timelineArrayRelationShip:
+                anordnung.vzk_anordnung_timelineArrayRelationShip.map(
+                  (item) => {
+                    if (item.fk_uuid === attachment?.fk_uuid) {
+                      return {
+                        ...item,
+                        data: {
+                          drawing: JSON.stringify({
+                            elements: drawElements,
+                            files: drawFiles,
+                            base64Preview: drawing,
+                          }),
+                        },
+                      };
+                    } else {
+                      return item;
+                    }
+                  }
+                ),
+            };
+            dispatch(storeCurrentApplication(copyanordnung));
           }}
         >
           Speichern

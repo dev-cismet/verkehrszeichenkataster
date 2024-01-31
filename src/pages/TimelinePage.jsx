@@ -152,7 +152,7 @@ const TimelinePage = () => {
               case "drawing":
                 return (
                   <DrawingCard
-                    key={i + nanoid()}
+                    key={i}
                     attachment={attachment}
                     id={i}
                     changeTimeline={changeTimeline}
