@@ -74,10 +74,30 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
       label: (
         <div
           onClick={() => {
-            // dispatch(
-            //   deleteTimelineObject({ timelineIndex: index, applicationId: id })
-            // );
             setViewOnlyMode(true);
+            // changeTimeline({
+            //   typ: "drawing",
+            //   name: "",
+            //   fk_uuid: attachment?.fk_uuid,
+            //   uuid: attachment?.uuid,
+            //   vzk_attachment_typ: {
+            //     id: 5,
+            //     name: "Drawing",
+            //   },
+            //   data: {
+            //     drawing: JSON.stringify({
+            //       elements: drawElements,
+            //       files: drawFiles,
+            //       base64Preview: drawing,
+            //     }),
+            //   },
+            // });
+
+            // dispatch(
+            //   deleteTimelineObject({
+            //     timelineIndex: id,
+            //   })
+            // );
             dispatch(
               addAnordnungAction({
                 className: "vzk_attachment_drawing",
