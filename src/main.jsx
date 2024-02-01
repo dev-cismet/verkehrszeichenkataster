@@ -41,6 +41,7 @@ import AnfragePage from "./pages/Attachments/AnfragePage.jsx";
 import TextPage from "./pages/Attachments/TextPage.jsx";
 import EntscheidungsPage from "./pages/Attachments/EntscheidungsPage.jsx";
 import Designer from "./components/designer/Designer.jsx";
+import SignsLibrary from "./components/designer/SignsLibrary.jsx";
 import Viewer from "./components/pdf/Viewer.jsx";
 import MdRedactor from "./components/mdredactor/MdRedactor.jsx";
 import PdfViewer from "./components/pdfviewer/PdfViewer.jsx";
@@ -61,6 +62,10 @@ const AuthWrapper = () => {
 
   if (!jwt) {
     return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  if (location.pathname === "/verkehrszeichenbibliothek") {
+    return <SignsLibrary />;
   }
 
   return (
@@ -99,6 +104,10 @@ const router = createHashRouter([
       {
         path: "designer",
         element: <Designer />,
+      },
+      {
+        path: "verkehrszeichenbibliothek",
+        element: <SignsLibrary />,
       },
       {
         path: "mdredactor",
