@@ -91,7 +91,7 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
             return (
               <div
                 key={attachment.uuid}
-                style={{ width: "100%", border: "1px solid red" }}
+                // style={{ width: "100%", border: "1px solid red" }}
               >
                 <Image
                   src={drawingObject.base64Preview}

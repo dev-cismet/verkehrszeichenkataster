@@ -30,7 +30,7 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
             setViewOnlyMode(!viewOnlyMode);
           }}
         >
-          {viewOnlyMode ? "Bearbeiten" : "Abschließen Bearbeiten"}
+          {viewOnlyMode ? "Bearbeiten" : "Abbrechen"}
         </div>
       ),
       key: "0",
