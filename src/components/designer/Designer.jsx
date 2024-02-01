@@ -141,7 +141,7 @@ const DesignerWrapper = ({
       saveAsImage: false,
     },
   };
-  const [showLibrary, setShowLibrary] = useState(!viewOnlyMode);
+  const [showLibrary, setShowLibrary] = useState(false);
   const [onlyIconMode, setOnlyIconMode] = useState(true);
   const [itemsOnlyIcon, setItemsOnlyIcon] = useState();
   const [itemsWithTextDescription, setItemsWithTextDescription] = useState();
