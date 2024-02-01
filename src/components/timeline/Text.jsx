@@ -114,7 +114,7 @@ const Text = ({ attachment, id }) => {
         {isEdit ? (
           <div className="flex flex-col gap-2">
             <MdRedactor
-              mdDoc={attachment.text}
+              mdDoc={attachment?.data?.text || ""}
               getDocument={(text) => setText(text)}
             />
             <div className="w-full flex items-center gap-2 justify-end">
