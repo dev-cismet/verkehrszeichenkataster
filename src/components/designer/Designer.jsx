@@ -452,7 +452,13 @@ const DesignerWrapper = ({
                     cursor: "pointer",
                     boxSizing: "content-box",
                   }}
-                  onClick={() => setShowLibrary(!showLibrary)}
+                  onClick={() => {
+                    // setShowLibrary(!showLibrary);
+                    const url =
+                      window.location.origin +
+                      "/verkehrszeichenkataster/#/verkehrszeichenbibliothek";
+                    window.open(url, "_blank");
+                  }}
                 >
                   <BookOutlined />
                   <span style={{ marginLeft: "10px" }}>Bibliothek</span>
