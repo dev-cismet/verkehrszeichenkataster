@@ -1,7 +1,7 @@
 import { Excalidraw, MainMenu, exportToCanvas } from "@excalidraw/excalidraw";
 import { useEffect, useState, useRef } from "react";
 import "./designer-style.css";
-import { Input, Collapse, Divider } from "antd";
+import { Input, Collapse, Divider, Dropdown, Space } from "antd";
 import {
   SearchOutlined,
   DeleteOutlined,
@@ -12,7 +12,6 @@ import {
   CloseOutlined,
   UnorderedListOutlined,
   AppstoreOutlined,
-  BookOutlined,
 } from "@ant-design/icons";
 import { libraryExtractor } from "./libraryExtractor";
 import { nanoid } from "nanoid";
@@ -28,6 +27,7 @@ const iconWrapperSize = {
   border: "1px solid #ECECF4",
   position: "relative",
 };
+import LibraryRoadSignsButton from "./LibraryRoadSignsButton";
 
 const singleIconStyInternalStyle = {
   maxWidth: "38px",
@@ -109,6 +109,7 @@ const DesignerWrapper = ({
   const canvasWidthRef = useRef(null);
   const [viewMode, setViewMode] = useState(viewOnlyMode);
   const [canvasUrl, setCanvasUrl] = useState(null);
+
   useEffect(() => {
     if (excalidrawAPI) {
       setData(extractor(signLibrary));
@@ -436,35 +437,7 @@ const DesignerWrapper = ({
             langCode="de-DE"
             viewModeEnabled={viewMode}
             zenModeEnabled={viewMode}
-            renderTopRightUI={() => {
-              return (
-                <div
-                  style={{
-                    background: "#ECECF4",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "10.5px",
-                    borderRadius: "9px",
-                    width: "80px",
-                    color: "#5B5B60",
-                    fontSize: "12px",
-                    cursor: "pointer",
-                    boxSizing: "content-box",
-                  }}
-                  onClick={() => {
-                    // setShowLibrary(!showLibrary);
-                    const url =
-                      window.location.origin +
-                      "/verkehrszeichenkataster/#/verkehrszeichenbibliothek";
-                    window.open(url, "_blank");
-                  }}
-                >
-                  <BookOutlined />
-                  <span style={{ marginLeft: "10px" }}>Bibliothek</span>
-                </div>
-              );
-            }}
+            renderTopRightUI={() => <LibraryRoadSignsButton />}
           >
             <MainMenu style={{ width: "500px" }}>
               <MainMenu.DefaultItems.Export />
