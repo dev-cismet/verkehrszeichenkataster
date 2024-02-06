@@ -13,6 +13,7 @@ const initialState = {
   allApplications: [],
   selectedApplications: [],
   currentApplication: {},
+  tempSignsLibMode: "detached",
   timeline: [
     {
       type: "antrag",
@@ -37,6 +38,10 @@ const slice = createSlice({
       return state;
     },
     storeCurrentApplication(state, action) {
+      state.currentApplication = action.payload;
+      return state;
+    },
+    storeTempSignsLibMode(state, action) {
       state.currentApplication = action.payload;
       return state;
     },
@@ -186,8 +191,12 @@ export const {
   updateTimelineTitle,
   updateTimelineStatus,
   deleteTimelineObject,
+  storeTempSignsLibMode,
 } = slice.actions;
 
+export const getTempSignsLibMode = (state) => {
+  return state.application.tempSignsLibMode;
+};
 export const getAllApplications = (state) => {
   return state.application.allApplications;
 };
