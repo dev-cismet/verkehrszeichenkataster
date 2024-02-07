@@ -42,7 +42,7 @@ const slice = createSlice({
       return state;
     },
     storeTempSignsLibMode(state, action) {
-      state.currentApplication = action.payload;
+      state.tempSignsLibMode = action.payload;
       return state;
     },
     storeTimeline(state, action) {

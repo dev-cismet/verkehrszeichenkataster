@@ -10,6 +10,7 @@ import {
   getCurrentApplication,
   storeTimeline,
   updateTimelineStatus,
+  getTempSignsLibMode,
 } from "../store/slices/application";
 import File from "../components/timeline/File";
 import { useParams } from "react-router-dom";
@@ -27,7 +28,8 @@ import { useEffect, useState } from "react";
 import { titleCase } from "../tools/helper";
 import addAnordnungAction from "../store/slices/actionSubslices/addAnordnungAction";
 import { v4 as uuidv4 } from "uuid";
-import { nanoid } from "@reduxjs/toolkit";
+import FloatingSignLibButton from "../components/designer/FloatingSignLibButton";
+import LibSignDrawer from "../components/designer/LibSignDrawer";
 
 const { Dragger } = Upload;
 
@@ -42,6 +44,7 @@ const getBase64 = (file) =>
 const TimelinePage = () => {
   const { id } = useParams();
   const anordnung = useSelector(getCurrentApplication);
+  const signLibMode = useSelector(getTempSignsLibMode);
 
   const currentTimeline = anordnung?.vzk_anordnung_timelineArrayRelationShip;
   const isInternalRequest = anordnung?.vzk_type?.name === "internal";
@@ -111,6 +114,7 @@ const TimelinePage = () => {
   };
 
   return (
+    <>
     <Card
       bodyStyle={{
         overflowY: "auto",
@@ -228,12 +232,21 @@ const TimelinePage = () => {
                 </span>
               </div>
             </div>
+            {signLibMode === "timeline" && (
+              <>
+                <TempSignsLibMock />
+              </>
+            )}
+            {signLibMode === "overlay" && (
+              <>
+                <FloatingSignLibButton /> <LibSignDrawer />
+              </>
+            )}
           </div>
-          <TempSignsLibMock />
         </div>
-      </div>
-      {/* </Dragger> */}
-    </Card>
+        {/* </Dragger> */}
+      </Card>
+    </>
   );
 };
 
