@@ -11,6 +11,9 @@ import {
   DeleteOutlined,
   CameraOutlined,
 } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { getTempSignsLibMode } from "../../store/slices/application";
+
 const colorPrimary = "#6965db";
 const colorInactiv = "#a5a5a5";
 const colorTextBlack = "#1b1b1f";
@@ -92,6 +95,7 @@ const SignsLibrary = ({
   extractor = libraryExtractor,
 }) => {
   const [data, setData] = useState([]);
+  const signLibMode = useSelector(getTempSignsLibMode);
 
   useEffect(() => {
     if (signLibrary) {
@@ -296,8 +300,6 @@ const SignsLibrary = ({
     );
   };
 
-  //return <div>Signs Library</div>;
-
   return (
     <div>
       {showLibrary ? (
@@ -310,7 +312,8 @@ const SignsLibrary = ({
             boxShadow: "rgba(15, 14, 15, 0.07) 4px 1px 9px 1px",
             borderRadius: "12px",
             overflow: "auto",
-            height: "650px",
+            _height: "650px",
+            height: signLibMode === "detached" ? "calc(100vh - 52px)" : "650px",
             color: "#1b1b1f",
             boxSizing: "content-box",
           }}

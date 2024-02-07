@@ -87,6 +87,24 @@ const LibraryRoadSignsButton = () => {
       ),
       key: "3",
     },
+    {
+      label: (
+        <>
+          <div
+            onClick={() => {
+              if (signLibMode === "inside") {
+                dispatch(storeTempSignsLibMode("inside-cosed"));
+              } else {
+                dispatch(storeTempSignsLibMode("inside"));
+              }
+            }}
+          >
+            {signLibMode === "inside-cosed" ? "Inside closed" : "Inside"}
+          </div>
+        </>
+      ),
+      key: "4",
+    },
     // {
     //   label: (
     //     <Popover

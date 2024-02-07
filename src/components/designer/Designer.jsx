@@ -15,6 +15,8 @@ import {
 } from "@ant-design/icons";
 import { libraryExtractor } from "./libraryExtractor";
 import { nanoid } from "nanoid";
+import { useSelector } from "react-redux";
+import { getTempSignsLibMode } from "../../store/slices/application";
 
 const colorPrimary = "#6965db";
 const colorInactiv = "#a5a5a5";
@@ -102,6 +104,7 @@ const DesignerWrapper = ({
   initialElements,
   getPreviewSrcLink = () => {},
   resetDrawing = 1,
+  displayLibrary = false,
 }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const [data, setData] = useState([]);
@@ -142,7 +145,7 @@ const DesignerWrapper = ({
       saveAsImage: false,
     },
   };
-  const [showLibrary, setShowLibrary] = useState(false);
+  const [showLibrary, setShowLibrary] = useState(displayLibrary);
   const [onlyIconMode, setOnlyIconMode] = useState(true);
   const [itemsOnlyIcon, setItemsOnlyIcon] = useState();
   const [itemsWithTextDescription, setItemsWithTextDescription] = useState();
@@ -479,7 +482,7 @@ const DesignerWrapper = ({
             display: isPinnedLibrary ? "block" : "none",
           }}
         >
-          {showLibrary ? (
+          {showLibrary && !viewMode ? (
             <div
               style={{
                 margin: "15px 0 12px 4px",
