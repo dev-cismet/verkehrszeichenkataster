@@ -119,13 +119,14 @@ const Sidebar = () => {
   };
 
   return (
-    <aside
-      className={`relative min-w-[100px] sm:min-w-[100px] flex h-full ${
-        isCollapsed ? "w-16" : "w-72"
-      } ${
-        isResetting && "transition-all duration-300 ease-in-out"
-      } flex-col gap-4 overflow-y-auto bg-white p-2 text-lg`}
-    >
+    // <aside
+    //   className={`relative flex min-w-[120px] h-full ${
+    //     isCollapsed ? "w-16" : "w-72"
+    //   } ${
+    //     isResetting && "transition-all duration-300 ease-in-out"
+    //   } flex-col gap-4 overflow-y-auto bg-white p-2 text-lg`}
+    // >
+    <aside className="relative flex min-w-[175px] h-full transition-all duration-300 ease-in-out flex-col gap-4 overflow-y-auto bg-white p-2 text-lg">
       <div
         role="button"
         onClick={() => {

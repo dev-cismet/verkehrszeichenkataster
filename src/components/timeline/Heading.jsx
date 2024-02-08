@@ -67,7 +67,7 @@ const Heading = () => {
   }, [anordnung]);
 
   return (
-    <div className="w-[100%] min-[1550px]:w-[88%] ml-auto flex items-center gap-2">
+    <div className="w-[100%] min-[1260px]:w-[94%] min-[1440px]:w-[88%] ml-auto flex items-center gap-2">
       <div className="flex flex-col w-full py-4 gap-2">
         <div className="flex items-center justify-between gap-4">
           {editTitle ? (
@@ -120,7 +120,7 @@ const Heading = () => {
                   {anordnung?.title}
                 </h1>
               </div>
-              <div className="flex gap-4 w-[28%] xl:w-[35%] justify-end min-[1550px]:mr-[15%]">
+              <div className="flex flex-wrap min-[1122px]:flex-nowrap gap-4 w-[28%] xl:w-[35%] justify-end min-[1260px]:mr-[7%] min-[1440px]:mr-[15%]">
                 <Button
                   className="w-[133px]"
                   onClick={() => setEditTitle(true)}

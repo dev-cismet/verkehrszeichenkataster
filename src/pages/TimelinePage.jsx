@@ -134,7 +134,7 @@ const TimelinePage = () => {
           }}
           fileList={[]}
         > */}
-      <div className="h-full w-[100%] min-[1550px]:w-[76%] mx-auto flex flex-col min-[850px]:flex-row gap-4 justify-between">
+      <div className="h-full w-[100%] min-[1260px]:w-[87%] min-[1440px]:w-[76%] mx-auto flex flex-col min-[965px]:flex-row gap-4 justify-between">
         <div className="flex flex-col w-full">
           {currentTimeline?.map((attachment, i) => {
             switch (attachment.vzk_attachment_typ?.name?.toLowerCase()) {
