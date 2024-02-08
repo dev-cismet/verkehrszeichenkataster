@@ -134,61 +134,81 @@ const TimelinePage = () => {
           }}
           fileList={[]}
         > */}
-      <div className="h-full w-[100%] min-[1260px]:w-[87%] min-[1440px]:w-[76%] mx-auto flex flex-col min-[965px]:flex-row gap-4 justify-between">
-        <div className="flex flex-col w-full">
-          {currentTimeline?.map((attachment, i) => {
-            switch (attachment.vzk_attachment_typ?.name?.toLowerCase()) {
-              case "request":
-                return (
-                  <Request
-                    attachment={attachment}
-                    key={i}
-                    i={i}
-                    isInternalRequest={isInternalRequest}
-                  />
-                );
-              case "text":
-                return <Text attachment={attachment} id={i} key={i} />;
-              case "decision":
-                return <Decision key={i} id={i} attachment={attachment} />;
-              case "file":
-                return <File key={i} attachment={attachment} i={i} />;
-              case "drawing":
-                return (
-                  <DrawingCard
-                    key={i}
-                    attachment={attachment}
-                    id={i}
-                    changeTimeline={changeTimeline}
-                  />
-                );
-            }
-          })}
-          <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-0" />
-          <SubmitCard changeTimeline={changeTimeline} handleDrop={handleDrop} />
-        </div>
+      <div className="flex mx-auto justify-center">
+        <div className="flex flex-col min-[1020px]:flex-row justify-between gap-4">
+          <div className="flex flex-col min-[1455px]:w-[800px]">
+            {currentTimeline?.map((attachment, i) => {
+              switch (attachment.vzk_attachment_typ?.name?.toLowerCase()) {
+                case "request":
+                  return (
+                    <Request
+                      attachment={attachment}
+                      key={i}
+                      i={i}
+                      isInternalRequest={isInternalRequest}
+                    />
+                  );
+                case "text":
+                  return <Text attachment={attachment} id={i} key={i} />;
+                case "decision":
+                  return <Decision key={i} id={i} attachment={attachment} />;
+                case "file":
+                  return <File key={i} attachment={attachment} i={i} />;
+                case "drawing":
+                  return (
+                    <DrawingCard
+                      key={i}
+                      attachment={attachment}
+                      id={i}
+                      changeTimeline={changeTimeline}
+                    />
+                  );
+              }
+            })}
+            <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-0" />
+            <SubmitCard
+              changeTimeline={changeTimeline}
+              handleDrop={handleDrop}
+            />
+          </div>
 
-        <div className="w-[370px]" style={{ minWidth: "370px" }}>
-          <div className="flex flex-col w-full items-start">
-            <span className="font-semibold text-muted-foreground pb-2">
-              Zeitlicher Verlauf
-            </span>
-            <Timeline dataIn={currentTimeline} />
-            <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
-            <TagList changeTimeline={changeTimeline} />
-            <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
-            <span className="font-semibold text-muted-foreground pb-2">
-              Bearbeitung
-            </span>
-            <div
-              role="button"
-              className="hover:text-primary flex gap-1 cursor-pointer font-medium"
-              onClick={() => {
-                dispatch(
-                  addAnordnungAction({
-                    className: "vzk_anordnung",
-                    data: {
-                      vzk_status:
+          <div className="min-[1455px]:w-[370px]">
+            <div className="flex flex-col w-full items-start">
+              <span className="font-semibold text-muted-foreground pb-2">
+                Zeitlicher Verlauf
+              </span>
+              <Timeline dataIn={currentTimeline} />
+              <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
+              <TagList changeTimeline={changeTimeline} />
+              <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
+              <span className="font-semibold text-muted-foreground pb-2">
+                Bearbeitung
+              </span>
+              <div
+                role="button"
+                className="hover:text-primary flex gap-1 cursor-pointer font-medium"
+                onClick={() => {
+                  dispatch(
+                    addAnordnungAction({
+                      className: "vzk_anordnung",
+                      data: {
+                        vzk_status:
+                          status === "Offen"
+                            ? {
+                                id: 2,
+                                name: "geschlossen",
+                              }
+                            : {
+                                id: 1,
+                                name: "offen",
+                              },
+                        uuid: anordnung.uuid,
+                      },
+                    })
+                  );
+                  dispatch(
+                    updateTimelineStatus({
+                      updatedStatus:
                         status === "Offen"
                           ? {
                               id: 2,
@@ -198,30 +218,15 @@ const TimelinePage = () => {
                               id: 1,
                               name: "offen",
                             },
-                      uuid: anordnung.uuid,
-                    },
-                  })
-                );
-                dispatch(
-                  updateTimelineStatus({
-                    updatedStatus:
-                      status === "Offen"
-                        ? {
-                            id: 2,
-                            name: "geschlossen",
-                          }
-                        : {
-                            id: 1,
-                            name: "offen",
-                          },
-                  })
-                );
-              }}
-            >
-              {status === "Offen" ? <LockOutlined /> : <UnlockOutlined />}
-              <span>
-                {status === "Offen" ? "Abschließen" : "Wieder eröffnen"}
-              </span>
+                    })
+                  );
+                }}
+              >
+                {status === "Offen" ? <LockOutlined /> : <UnlockOutlined />}
+                <span>
+                  {status === "Offen" ? "Abschließen" : "Wieder eröffnen"}
+                </span>
+              </div>
             </div>
           </div>
         </div>

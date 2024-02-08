@@ -67,9 +67,12 @@ const Heading = () => {
   }, [anordnung]);
 
   return (
-    <div className="w-[100%] min-[1260px]:w-[94%] min-[1440px]:w-[88%] ml-auto flex items-center gap-2">
-      <div className="flex flex-col w-full py-4 gap-2">
-        <div className="flex items-center justify-between gap-4">
+    <div className="w-full flex justify-center mx-auto">
+      <div
+        className="flex flex-col w-full py-4 gap-4"
+        // style={{ border: "1px solid yellow" }}
+      >
+        <div className="flex items-center justify-center gap-4">
           {editTitle ? (
             <>
               <Input
@@ -112,15 +115,39 @@ const Heading = () => {
             </>
           ) : (
             <>
-              <div className="flex items-center gap-2 w-[74%] xl:w-[64%]">
-                <h1 className="my-0 text-4xl font-normal">
+              <div className="min-[1455px]:w-[800px]">
+                <h1 className="my-0 text-4xl font-normal mb-4">
                   <span className="text-muted-foreground font-normal text-4xl">
                     #{anordnung?.id + " "}
                   </span>
                   {anordnung?.title}
                 </h1>
+                <div className="flex items-center gap-2">
+                  <div
+                    className={`${
+                      status === "Offen" ? "bg-green-700" : "bg-purple-700"
+                    } py-1 px-3 w-fit rounded-3xl text-lg font-medium text-white flex gap-2 items-center justify-center`}
+                  >
+                    {status === "Offen" ? (
+                      <InfoCircleOutlined />
+                    ) : (
+                      <CheckCircleOutlined />
+                    )}
+                    <span>{status}</span>
+                  </div>
+                  <span className="text-muted-foreground font-normal">
+                    Max Mustermann hat letzte Woche diese Anordnung erstellt ·{" "}
+                    {anordnung?.vzk_anordnung_timelineArrayRelationShip?.length}{" "}
+                    Baustein
+                    {(anordnung?.vzk_anordnung_timelineArrayRelationShip
+                      ?.length === 0 ||
+                      anordnung?.vzk_anordnung_timelineArrayRelationShip
+                        ?.length > 1) &&
+                      "e"}
+                  </span>
+                </div>
               </div>
-              <div className="flex flex-wrap min-[1122px]:flex-nowrap gap-4 w-[28%] xl:w-[35%] justify-end min-[1260px]:mr-[7%] min-[1440px]:mr-[15%]">
+              <div className="min-[1455px]:w-[370px] flex flex-wrap min-[1020px]:flex-nowrap gap-2 justify-end">
                 <Button
                   className="w-[133px]"
                   onClick={() => setEditTitle(true)}
@@ -138,29 +165,6 @@ const Heading = () => {
               </div>
             </>
           )}
-        </div>
-        <div className="flex items-center gap-2">
-          <div
-            className={`${
-              status === "Offen" ? "bg-green-700" : "bg-purple-700"
-            } py-1 px-3 w-fit rounded-3xl text-lg font-medium text-white flex gap-2 items-center justify-center`}
-          >
-            {status === "Offen" ? (
-              <InfoCircleOutlined />
-            ) : (
-              <CheckCircleOutlined />
-            )}
-            <span>{status}</span>
-          </div>
-          <span className="text-muted-foreground font-normal">
-            Max Mustermann hat letzte Woche diese Anordnung erstellt ·{" "}
-            {anordnung?.vzk_anordnung_timelineArrayRelationShip?.length}{" "}
-            Baustein
-            {(anordnung?.vzk_anordnung_timelineArrayRelationShip?.length ===
-              0 ||
-              anordnung?.vzk_anordnung_timelineArrayRelationShip?.length > 1) &&
-              "e"}
-          </span>
         </div>
       </div>
     </div>
