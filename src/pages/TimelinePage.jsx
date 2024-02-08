@@ -114,7 +114,6 @@ const TimelinePage = () => {
   };
 
   return (
-    <>
     <Card
       bodyStyle={{
         overflowY: "auto",
@@ -222,31 +221,31 @@ const TimelinePage = () => {
                               id: 1,
                               name: "offen",
                             },
-                    })
-                  );
-                }}
-              >
-                {status === "Offen" ? <LockOutlined /> : <UnlockOutlined />}
-                <span>
-                  {status === "Offen" ? "Abschließen" : "Wieder eröffnen"}
-                </span>
-              </div>
+                    },
+                  })
+                );
+              }}
+            >
+              {status === "Offen" ? <LockOutlined /> : <UnlockOutlined />}
+              <span>
+                {status === "Offen" ? "Abschließen" : "Wieder eröffnen"}
+              </span>
             </div>
-            {signLibMode === "timeline" && (
-              <>
-                <TempSignsLibMock />
-              </>
-            )}
-            {signLibMode === "overlay" && (
-              <>
-                <FloatingSignLibButton /> <LibSignDrawer />
-              </>
-            )}
           </div>
+          {signLibMode === "timeline" && (
+            <>
+              <TempSignsLibMock />
+            </>
+          )}
+          {signLibMode === "overlay" && (
+            <>
+              <FloatingSignLibButton /> <LibSignDrawer />
+            </>
+          )}
         </div>
-        {/* </Dragger> */}
-      </Card>
-    </>
+      </div>
+      {/* </Dragger> */}
+    </Card>
   );
 };
 
