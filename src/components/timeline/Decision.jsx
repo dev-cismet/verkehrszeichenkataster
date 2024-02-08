@@ -4,6 +4,8 @@ import AttachmentWrapper, { AttachmentRow } from "./AttachmentWrapper";
 const Decision = ({ attachment, id }) => {
   const [form] = Form.useForm();
 
+  return "";
+
   return (
     <AttachmentWrapper index={id}>
       <AttachmentRow attachment={attachment} index={id}>

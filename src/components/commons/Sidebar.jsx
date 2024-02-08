@@ -36,7 +36,6 @@ const SidebarItem = ({
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [showCustomAction, setShowCustomAction] = useState(false);
-
   return (
     <>
       <Link relative="path" to={link}>
@@ -121,7 +120,9 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`relative flex h-full ${isCollapsed ? "w-16" : "w-72"} ${
+      className={`relative min-w-[100px] sm:min-w-[100px] flex h-full ${
+        isCollapsed ? "w-16" : "w-72"
+      } ${
         isResetting && "transition-all duration-300 ease-in-out"
       } flex-col gap-4 overflow-y-auto bg-white p-2 text-lg`}
     >

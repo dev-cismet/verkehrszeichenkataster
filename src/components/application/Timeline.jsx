@@ -7,7 +7,7 @@ const mockExtractor = (anordnung) => {
 
 const Timeline = ({ dataIn, extractor = mockExtractor }) => {
   const data = extractor(dataIn);
-
+  return "";
   return (
     <div className="h-full w-full">
       <AntTimeline

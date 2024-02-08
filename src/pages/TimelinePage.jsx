@@ -120,7 +120,11 @@ const TimelinePage = () => {
         marginTop: "2px",
       }}
       className="h-full w-full"
-      title={<Heading />}
+      title={
+        <div style={{ whiteSpace: "wrap" }}>
+          <Heading />
+        </div>
+      }
     >
       {/* <Dragger
           openFileDialogOnClick={false}
@@ -130,7 +134,7 @@ const TimelinePage = () => {
           }}
           fileList={[]}
         > */}
-      <div className="h-full w-3/4 mx-auto flex gap-4 justify-between">
+      <div className="h-full w-[100%] min-[1550px]:w-[76%] mx-auto flex flex-col min-[850px]:flex-row gap-4 justify-between">
         <div className="flex flex-col w-full">
           {currentTimeline?.map((attachment, i) => {
             switch (attachment.vzk_attachment_typ?.name?.toLowerCase()) {
@@ -164,7 +168,7 @@ const TimelinePage = () => {
           <SubmitCard changeTimeline={changeTimeline} handleDrop={handleDrop} />
         </div>
 
-        <div className="w-[370px]">
+        <div className="w-[370px]" style={{ minWidth: "370px" }}>
           <div className="flex flex-col w-full items-start">
             <span className="font-semibold text-muted-foreground pb-2">
               Zeitlicher Verlauf
