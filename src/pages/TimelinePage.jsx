@@ -24,7 +24,7 @@ import {
   LockOutlined,
   UnlockOutlined,
 } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { titleCase } from "../tools/helper";
 import addAnordnungAction from "../store/slices/actionSubslices/addAnordnungAction";
 import { v4 as uuidv4 } from "uuid";
@@ -46,13 +46,15 @@ const TimelinePage = () => {
   const { id } = useParams();
   const anordnung = useSelector(getCurrentApplication);
   const signLibMode = useSelector(getTempSignsLibMode);
+  const containerRef = useRef(null);
+
+  const [containerHeight, setContainerHeight] = useState(800);
 
   const currentTimeline = anordnung?.vzk_anordnung_timelineArrayRelationShip;
   const isInternalRequest = anordnung?.vzk_type?.name === "internal";
   const status = titleCase(anordnung?.vzk_status?.name);
 
   const dispatch = useDispatch();
-
   const changeTimeline = (item) => {
     dispatch(storeTimeline({ id: id, timeline: [...currentTimeline, item] }));
     setTimeout(() => {
@@ -114,8 +116,21 @@ const TimelinePage = () => {
     });
   };
 
+  useEffect(() => {
+    const getContainerScrollHeight = () => {
+      const visibleHeight = window.innerHeight;
+      if (containerRef.current) {
+        const scrollHeight = containerRef.current.scrollHeight;
+        setContainerHeight(scrollHeight + visibleHeight);
+      }
+    };
+
+    getContainerScrollHeight();
+  }, [containerRef.current]);
+
   return (
     <Card
+      ref={containerRef}
       bodyStyle={{
         overflowY: "auto",
         overflowX: "clip",
@@ -131,14 +146,17 @@ const TimelinePage = () => {
       }
     >
       {/* <Dragger
-          openFileDialogOnClick={false}
-          className="h-full w-full"
-          beforeUpload={(file) => {
-            handleDrop(file);
-          }}
-          fileList={[]}
-        > */}
-      <div className="flex mx-auto justify-center">
+      openFileDialogOnClick={false}
+      className="h-full w-full"
+      beforeUpload={(file) => {
+        handleDrop(file);
+      }}
+      fileList={[]}
+    > */}
+      <div
+        className="flex mx-auto justify-center"
+        // style={{ height: `${containerHeight}px`, border: "1px solid red" }}
+      >
         <div className="flex flex-col min-[1020px]:flex-row justify-between gap-4">
           <div className="flex flex-col min-[1455px]:w-[800px]">
             {currentTimeline?.map((attachment, i) => {
@@ -222,37 +240,35 @@ const TimelinePage = () => {
                               id: 1,
                               name: "offen",
                             },
-                    },
-                  })
-                );
-              }}
-            >
-              {status === "Offen" ? <LockOutlined /> : <UnlockOutlined />}
-              <span>
-                {status === "Offen" ? "Abschließen" : "Wieder eröffnen"}
-              </span>
-            </div>
-          </div>
-          {signLibMode === "timeline" && (
-            <>
-              <div
-                style={{
-                  position: "relative",
-                  width: "100%",
-                  height: "2000px",
+                    })
+                  );
                 }}
               >
-                <div style={{ position: "sticky", top: 0 }}>
-                  <SignsLibrary />
-                </div>
+                {status === "Offen" ? <LockOutlined /> : <UnlockOutlined />}
+                <span>
+                  {status === "Offen" ? "Abschließen" : "Wieder eröffnen"}
+                </span>
               </div>
-            </>
-          )}
-          {signLibMode === "overlay" && (
-            <>
-              <FloatingSignLibButton /> <LibSignDrawer />
-            </>
-          )}
+              {signLibMode === "timeline" && (
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: containerHeight,
+                  }}
+                >
+                  <div style={{ position: "sticky", top: 0 }}>
+                    <SignsLibrary />
+                  </div>
+                </div>
+              )}
+              {signLibMode === "overlay" && (
+                <>
+                  <FloatingSignLibButton /> <LibSignDrawer />
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </div>
       {/* </Dragger> */}
