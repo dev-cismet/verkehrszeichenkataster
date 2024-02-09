@@ -94,6 +94,8 @@ const SignsLibrary = ({
   dataIn: signLibrary = signLocal,
   extractor = libraryExtractor,
   height = "650px",
+  margins = "15px 0 12px 4px",
+  closeCallBack,
 }) => {
   const [data, setData] = useState([]);
   const signLibMode = useSelector(getTempSignsLibMode);
@@ -306,7 +308,7 @@ const SignsLibrary = ({
       {showLibrary ? (
         <div
           style={{
-            margin: "15px 0 12px 4px",
+            margin: margins,
             width: "338px",
             border: "1px solid #F0F0F0",
             padding: "10px 20px",
@@ -314,6 +316,7 @@ const SignsLibrary = ({
             borderRadius: "12px",
             overflow: "auto",
             height: height,
+            background: "#ffff",
             // height: signLibMode === "detached" ? "calc(100vh - 52px)" : "650px",
             color: "#1b1b1f",
             boxSizing: "content-box",
@@ -353,7 +356,11 @@ const SignsLibrary = ({
                 />
 
                 <CloseOutlined
-                  onClick={() => setShowLibrary(!showLibrary)}
+                  onClick={() => {
+                    closeCallBack
+                      ? closeCallBack()
+                      : setShowLibrary(!showLibrary);
+                  }}
                   style={{
                     // color: colorPrimary,
                     fontSize: "16px",

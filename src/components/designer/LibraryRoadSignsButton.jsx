@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./designer-style.css";
-import { Popover, Dropdown, Space, Drawer, notification } from "antd";
+import { Dropdown, Space } from "antd";
 import { BookOutlined, MoreOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,15 +12,6 @@ const LibraryRoadSignsButton = () => {
   const signLibMode = useSelector(getTempSignsLibMode);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  // const [openDrawer, setOpenDrawer] = useState(false);
-  // const [api, contextHolder] = notification.useNotification();
-  // const openNotification = () => {
-  //   api.open({
-  //     message: "",
-  //     description: <TempSignsLibMock />,
-  //     duration: 0,
-  //   });
-  // };
   const handleMenuClick = (e) => {
     if (e.key === "3") {
       setOpen(false);
@@ -31,13 +22,6 @@ const LibraryRoadSignsButton = () => {
       setOpen(nextOpen);
     }
   };
-
-  // const showDrawer = () => {
-  //   setOpenDrawer(true);
-  // };
-  // const onClose = () => {
-  //   setOpenDrawer(false);
-  // };
 
   const items = [
     {
@@ -105,44 +89,6 @@ const LibraryRoadSignsButton = () => {
       ),
       key: "4",
     },
-    // {
-    //   label: (
-    //     <Popover
-    //       content={() => <TempSignsLibMock />}
-    //       title="Title"
-    //       trigger="click"
-    //       placement="right"
-    //       overlayStyle={{ marginLeft: "200px" }}
-    //     >
-    //       Open right
-    //     </Popover>
-    //   ),
-    //   key: "3",
-    // },
-    // {
-    //   label: (
-    //     <>
-    //       {contextHolder}
-    //       <div onClick={() => openNotification("top")}>Open right</div>
-    //     </>
-    //   ),
-    //   key: "4",
-    // },
-    // {
-    //   label: (
-    //     <>
-    //       <div onClick={showDrawer}>Drawer</div>
-    //       <Drawer title="Basic Drawer" onClose={onClose} open={openDrawer}>
-    //         <TempSignsLibMock />
-    //       </Drawer>
-    //     </>
-    //   ),
-    //   key: "2",
-    // },
-    // {
-    //   label: "Clicking me will close the menu.",
-    //   key: "3",
-    // },
   ];
   return (
     <Dropdown

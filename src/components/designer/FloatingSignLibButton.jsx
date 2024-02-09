@@ -1,5 +1,6 @@
 import { useState } from "react";
 import LibSignDrawer from "./LibSignDrawer";
+import { BookOutlined } from "@ant-design/icons";
 
 const floatingBtnStyle = {
   position: "fixed",
@@ -19,12 +20,15 @@ const floatingBtnStyle = {
 
 const FloatingSignLibButton = () => {
   const [open, setOpen] = useState(false);
+  const closeDrawerHandler = () => setOpen(false);
   return (
     <>
       <button onClick={() => setOpen(!open)} style={floatingBtnStyle}>
-        +
+        <BookOutlined
+          style={{ fontSize: "14px", marginBottom: "15px", color: "#5B5B60" }}
+        />
       </button>
-      <LibSignDrawer showDrawer={open} />
+      <LibSignDrawer showDrawer={open} setShowDrawer={closeDrawerHandler} />
     </>
   );
 };
