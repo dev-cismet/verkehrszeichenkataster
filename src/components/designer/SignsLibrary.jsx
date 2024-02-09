@@ -93,6 +93,7 @@ const labelView = (group, groupItems = null) => (
 const SignsLibrary = ({
   dataIn: signLibrary = signLocal,
   extractor = libraryExtractor,
+  height = "650px",
 }) => {
   const [data, setData] = useState([]);
   const signLibMode = useSelector(getTempSignsLibMode);
@@ -312,8 +313,8 @@ const SignsLibrary = ({
             boxShadow: "rgba(15, 14, 15, 0.07) 4px 1px 9px 1px",
             borderRadius: "12px",
             overflow: "auto",
-            _height: "650px",
-            height: signLibMode === "detached" ? "calc(100vh - 52px)" : "650px",
+            height: height,
+            // height: signLibMode === "detached" ? "calc(100vh - 52px)" : "650px",
             color: "#1b1b1f",
             boxSizing: "content-box",
           }}

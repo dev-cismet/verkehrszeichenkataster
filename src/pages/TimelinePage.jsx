@@ -30,6 +30,7 @@ import addAnordnungAction from "../store/slices/actionSubslices/addAnordnungActi
 import { v4 as uuidv4 } from "uuid";
 import FloatingSignLibButton from "../components/designer/FloatingSignLibButton";
 import LibSignDrawer from "../components/designer/LibSignDrawer";
+import SignsLibrary from "../components/designer/SignsLibrary";
 
 const { Dragger } = Upload;
 
@@ -234,7 +235,17 @@ const TimelinePage = () => {
           </div>
           {signLibMode === "timeline" && (
             <>
-              <TempSignsLibMock />
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  height: "2000px",
+                }}
+              >
+                <div style={{ position: "sticky", top: 0 }}>
+                  <SignsLibrary />
+                </div>
+              </div>
             </>
           )}
           {signLibMode === "overlay" && (
