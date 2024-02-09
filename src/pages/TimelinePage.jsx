@@ -3,7 +3,6 @@ import Timeline from "../components/application/Timeline";
 import Request from "../components/timeline/Request";
 import Text from "../components/timeline/Text";
 import Decision from "../components/timeline/Decision";
-import TempSignsLibMock from "../components/designer/TempSignsLibMock";
 import "./dragger.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -258,7 +257,11 @@ const TimelinePage = () => {
                   }}
                 >
                   <div style={{ position: "sticky", top: 0 }}>
-                    <SignsLibrary />
+                    <SignsLibrary
+                      iconsGap="8px"
+                      margins="20px 0 0 0"
+                      height="650px"
+                    />
                   </div>
                 </div>
               )}

@@ -11,8 +11,6 @@ import {
   DeleteOutlined,
   CameraOutlined,
 } from "@ant-design/icons";
-import { useSelector } from "react-redux";
-import { getTempSignsLibMode } from "../../store/slices/application";
 
 const colorPrimary = "#6965db";
 const colorInactiv = "#a5a5a5";
@@ -70,10 +68,6 @@ const titleGroupStyle = {
   lineHeight: "1.4em",
 };
 
-const onChangeCollapseHandle = (key) => {
-  console.log(key);
-};
-
 const labelView = (group, groupItems = null) => (
   <div
     style={{
@@ -93,12 +87,14 @@ const labelView = (group, groupItems = null) => (
 const SignsLibrary = ({
   dataIn: signLibrary = signLocal,
   extractor = libraryExtractor,
-  height = "650px",
-  margins = "15px 0 12px 4px",
+  height = "100%",
+  // margins = "15px 0 12px 4px",
+  margins = "0",
   closeCallBack,
+  width = "100%",
+  iconsGap = "16px",
 }) => {
   const [data, setData] = useState([]);
-  const signLibMode = useSelector(getTempSignsLibMode);
 
   useEffect(() => {
     if (signLibrary) {
@@ -253,10 +249,9 @@ const SignsLibrary = ({
     return (
       <div
         style={{
-          display: "flex",
-          gap: "10px",
-          flexWrap: "wrap",
-          marginRight: "-18px",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(45px, 0.75fr))",
+          gap: iconsGap,
         }}
       >
         {iconsData.map((icon) => (
@@ -309,17 +304,16 @@ const SignsLibrary = ({
         <div
           style={{
             margin: margins,
-            width: "338px",
+            width,
             border: "1px solid #F0F0F0",
             padding: "10px 20px",
             boxShadow: "rgba(15, 14, 15, 0.07) 4px 1px 9px 1px",
             borderRadius: "12px",
             overflow: "auto",
-            height: height,
+            height,
             background: "#ffff",
-            // height: signLibMode === "detached" ? "calc(100vh - 52px)" : "650px",
             color: "#1b1b1f",
-            boxSizing: "content-box",
+            // boxSizing: "content-box",
           }}
         >
           <div style={{ margin: "16px 0" }}>
@@ -327,14 +321,14 @@ const SignsLibrary = ({
               <span style={libraryTitle}>Bibliothek</span>
               <div style={{ marginLeft: "auto" }}>
                 {/* <PushpinOutlined
-                      style={{
-                        color: "#a5a5a5",
-                        fontSize: "16px",
-                        fontWeight: "bold",
-                        marginRight: "12px",
-                      }}
-                      onClick={() => setIsPinnedLibrary(false)}
-                    /> */}
+                  style={{
+                    color: "#a5a5a5",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    marginRight: "12px",
+                  }}
+                  onClick={() => setIsPinnedLibrary(false)}
+                /> */}
                 <AppstoreOutlined
                   style={{
                     color: !onlyIconMode && colorInactiv,
@@ -416,7 +410,6 @@ const SignsLibrary = ({
                           }
                           ghost
                           defaultActiveKey={["1"]}
-                          _onChange={onChangeCollapseHandle}
                         />
                       </div>
                     );
@@ -444,7 +437,6 @@ const SignsLibrary = ({
                           }
                           ghost
                           defaultActiveKey={["1"]}
-                          _onChange={onChangeCollapseHandle}
                         />
                       </div>
                     );
