@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./designer-style.css";
 import { Dropdown, Space } from "antd";
-import { BookOutlined, MoreOutlined } from "@ant-design/icons";
+import { SettingOutlined, MoreOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getTempSignsLibMode,
@@ -98,6 +98,7 @@ const LibraryRoadSignsButton = () => {
       }}
       onOpenChange={handleOpenChange}
       open={open}
+      style={{ flexShrink: 0, marginLeft: "auto" }}
     >
       <a onClick={(e) => e.preventDefault()}>
         <Space>
@@ -107,24 +108,26 @@ const LibraryRoadSignsButton = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              padding: "10.5px",
-              borderRadius: "9px",
-              width: "100px",
+              padding: "1px",
+              borderRadius: "7px",
+              width: "33px",
+              height: "33px",
+              border: "1px solid white",
               color: "#5B5B60",
               fontSize: "12px",
               cursor: "pointer",
-              boxSizing: "content-box",
             }}
           >
-            <BookOutlined />
-            <span style={{ marginLeft: "8px" }}>Bibliothek</span>
+            {/* <BookOutlined /> */}
+            <SettingOutlined />
+            {/* <span style={{ marginLeft: "8px" }}>Bibliothek</span>
             <MoreOutlined
               style={{
                 marginLeft: "16px",
                 fontSize: "16px",
                 marginRight: "-8px",
               }}
-            />
+            /> */}
           </div>
         </Space>
       </a>
