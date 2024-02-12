@@ -16,7 +16,7 @@ const colorPrimary = "#6965db";
 const colorInactiv = "#a5a5a5";
 const colorTextBlack = "#1b1b1f";
 const iconWrapperSize = {
-  width: "28px",
+  // width: "28px",
   aspectRatio: "1/1",
   padding: "8px",
   boxSizing: "content-box",
@@ -24,14 +24,6 @@ const iconWrapperSize = {
   position: "relative",
 };
 
-const singleIconStyInternalStyle = {
-  maxWidth: "38px",
-  position: "absolute",
-  maxHeight: "38px",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
 const iconWrapperSizeWithDescription = {
   flex: "0 0 28",
   minWidth: "28px",
@@ -92,10 +84,18 @@ const SignsLibrary = ({
   margins = "0",
   closeCallBack,
   width = "100%",
-  iconsGap = "16px",
+  iconsGap = "14px",
+  iconSize = "70px",
 }) => {
   const [data, setData] = useState([]);
-
+  const singleIconStyInternalStyle = {
+    maxWidth: iconSize,
+    position: "absolute",
+    maxHeight: iconSize,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  };
   useEffect(() => {
     if (signLibrary) {
       setData(extractor(signLibrary));
@@ -250,8 +250,8 @@ const SignsLibrary = ({
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(45px, 0.75fr))",
-          gap: iconsGap,
+          gridTemplateColumns: `repeat(auto-fill, minmax(calc(${iconSize} + 8px), 0.75fr))`,
+          gridGap: iconsGap,
         }}
       >
         {iconsData.map((icon) => (

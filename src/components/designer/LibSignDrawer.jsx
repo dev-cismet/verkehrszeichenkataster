@@ -16,8 +16,9 @@ const LibSignDrawer = ({ showDrawer, setShowDrawer }) => {
       {showDrawer && (
         <div style={libDrawerStyle}>
           <SignsLibrary
-            height="calc(100vh - 25px)"
+            height="calc(100vh)"
             margins="1px"
+            iconsGap="12px"
             closeCallBack={setShowDrawer}
           />
         </div>

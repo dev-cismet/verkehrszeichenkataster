@@ -42,6 +42,9 @@ export const libraryExtractor = (data) => {
       });
     });
 
-    return sections;
+    let firstTwoSections = sections.splice(0, 1);
+    sections.concat(firstTwoSections);
+
+    return sections.concat(firstTwoSections);
   }
 };

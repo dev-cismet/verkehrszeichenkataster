@@ -258,7 +258,9 @@ const TimelinePage = () => {
                 >
                   <div style={{ position: "sticky", top: 0 }}>
                     <SignsLibrary
+                      // iconsGap="8px"
                       iconsGap="8px"
+                      iconSize="40px"
                       margins="20px 0 0 0"
                       height="650px"
                     />
