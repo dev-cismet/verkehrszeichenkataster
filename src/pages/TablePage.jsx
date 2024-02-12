@@ -76,7 +76,16 @@ const TablePage = () => {
 
   return (
     <div className="h-full max-h-[calc(100vh-104px)] w-full bg-zinc-200 p-2 flex flex-col items-center gap-2">
-      <Card className="h-full w-full overflow-clip" title="Anträge">
+      <Card
+        className="h-full w-full"
+        title="Anträge"
+        bodyStyle={{
+          overflowY: "auto",
+          maxHeight: "calc(100% - 60px)",
+          overflowX: "clip",
+          height: "100%",
+        }}
+      >
         <Table
           columns={columns}
           dataSource={allApplications}
