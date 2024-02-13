@@ -11,6 +11,8 @@ import {
   DeleteOutlined,
   CameraOutlined,
 } from "@ant-design/icons";
+import { BroadcastChannel } from "broadcast-channel";
+import { useSearchParams } from "react-router-dom";
 
 const colorPrimary = "#6965db";
 const colorInactiv = "#a5a5a5";
@@ -88,6 +90,32 @@ const SignsLibrary = ({
   iconSize = "70px",
 }) => {
   const [data, setData] = useState([]);
+  const [message, setMessage] = useState("");
+  const [channel, setChannel] = useState(null);
+
+  const [urlParams, setUrlParams] = useSearchParams();
+  useEffect(() => {
+    console.log("xxx library search param", urlParams.get("channel"));
+    const newChannel = new BroadcastChannel(urlParams.get("channel"));
+
+    const handleMessage = (newMessage) => {
+      console.log("Received message in TempTabsConnection", newMessage);
+      setMessage(newMessage);
+
+      if (newMessage === "close") {
+        window.close();
+      }
+    };
+
+    newChannel.addEventListener("message", handleMessage);
+    setChannel(newChannel);
+
+    return () => {
+      newChannel.removeEventListener("message", handleMessage);
+      newChannel.close();
+    };
+  }, []);
+
   const singleIconStyInternalStyle = {
     maxWidth: iconSize,
     position: "absolute",
@@ -113,6 +141,12 @@ const SignsLibrary = ({
   const [filteredDataOnlyIcon, setFilteredDataOnlyIcon] = useState({});
   const [filteredDataIconDescription, setFilteredDataIconDescription] =
     useState({});
+
+  const sendMessage = (path) => {
+    if (channel) {
+      channel.postMessage(path);
+    }
+  };
 
   useEffect(() => {
     const compsWithTextDescription = {};
@@ -259,7 +293,7 @@ const SignsLibrary = ({
             <img
               src={icon.fileName}
               style={singleIconStyInternalStyle}
-              //   onClick={handleUpdateCanvas}
+              onClick={() => sendMessage(icon.fileName)}
             />
           </div>
         ))}
@@ -318,7 +352,7 @@ const SignsLibrary = ({
         >
           <div style={{ margin: "16px 0" }}>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <span style={libraryTitle}>Bibliothek</span>
+              <span style={libraryTitle}>Bibliothek {message}</span>
               <div style={{ marginLeft: "auto" }}>
                 {/* <PushpinOutlined
                   style={{

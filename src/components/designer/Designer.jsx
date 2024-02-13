@@ -15,8 +15,7 @@ import {
 } from "@ant-design/icons";
 import { libraryExtractor } from "./libraryExtractor";
 import { nanoid } from "nanoid";
-import { useSelector } from "react-redux";
-import { getTempSignsLibMode } from "../../store/slices/application";
+import TempTabsConnection from "./TempTabsConnection";
 
 const colorPrimary = "#6965db";
 const colorInactiv = "#a5a5a5";
@@ -112,6 +111,7 @@ const DesignerWrapper = ({
   const canvasWidthRef = useRef(null);
   const [viewMode, setViewMode] = useState(viewOnlyMode);
   const [canvasUrl, setCanvasUrl] = useState(null);
+  const connectionId = nanoid();
 
   useEffect(() => {
     if (excalidrawAPI) {
@@ -158,11 +158,11 @@ const DesignerWrapper = ({
   const [filteredDataIconDescription, setFilteredDataIconDescription] =
     useState({});
 
-  const handleUpdateCanvas = async (event) => {
-    const naturalWidth = event.target.naturalWidth;
-    const naturalHeight = event.target.naturalHeight;
-    const iconPath = event.target.getAttribute("src");
-    const pathName = iconPath;
+  const handleUpdateCanvas = async (pathName) => {
+    // const naturalWidth = event.target.naturalWidth;
+    // const naturalHeight = event.target.naturalHeight;
+    // const iconPath = event.target.getAttribute("src");
+    // const pathName = iconPath;
     const newFileId = nanoid();
 
     const excalidrawState = excalidrawAPI.getAppState();
@@ -184,8 +184,8 @@ const DesignerWrapper = ({
       y: centerY,
       strokeColor: "#c92a2a",
       backgroundColor: "transparent",
-      width: naturalWidth / 6,
-      height: naturalHeight / 6,
+      width: 150,
+      height: 150,
       groupIds: [],
       boundElements: null,
       locked: false,
@@ -427,6 +427,11 @@ const DesignerWrapper = ({
           display: "flex",
         }}
       >
+        {/* <TempTabsConnection channelId={"dc70akp2DIXHpi3ziP3NL"} /> */}
+        <TempTabsConnection
+          channelId={connectionId}
+          // addImage={handleUpdateCanvas}
+        />
         <div className="w-full" ref={canvasWrapperRef}>
           <Excalidraw
             excalidrawAPI={(api) => setExcalidrawAPI(api)}
@@ -440,7 +445,9 @@ const DesignerWrapper = ({
             langCode="de-DE"
             viewModeEnabled={viewMode}
             zenModeEnabled={viewMode}
-            renderTopRightUI={() => <LibraryRoadSignsButton />}
+            renderTopRightUI={() => (
+              <LibraryRoadSignsButton connectionId={connectionId} />
+            )}
           >
             <MainMenu style={{ width: "500px" }}>
               <MainMenu.DefaultItems.Export />

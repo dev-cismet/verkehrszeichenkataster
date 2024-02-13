@@ -8,7 +8,7 @@ import {
   storeTempSignsLibMode,
 } from "../../store/slices/application";
 
-const LibraryRoadSignsButton = () => {
+const LibraryRoadSignsButton = ({ connectionId }) => {
   const signLibMode = useSelector(getTempSignsLibMode);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -33,8 +33,9 @@ const LibraryRoadSignsButton = () => {
 
               const url =
                 window.location.origin +
-                "/verkehrszeichenkataster/#/verkehrszeichenbibliothek";
-              window.open(url, "_blank");
+                "/verkehrszeichenkataster/#/verkehrszeichenbibliothek" +
+                `?channel=${connectionId}`;
+              window.open(url, "_blank", "popup=yes");
             }}
           >
             Detached
