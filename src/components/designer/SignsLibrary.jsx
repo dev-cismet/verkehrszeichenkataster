@@ -95,25 +95,27 @@ const SignsLibrary = ({
 
   const [urlParams, setUrlParams] = useSearchParams();
   useEffect(() => {
-    console.log("xxx library search param", urlParams.get("channel"));
-    const newChannel = new BroadcastChannel(urlParams.get("channel"));
+    const channelParam = urlParams.get("channel");
+    if (channelParam) {
+      const newChannel = new BroadcastChannel(urlParams.get("channel"));
 
-    const handleMessage = (newMessage) => {
-      console.log("Received message in TempTabsConnection", newMessage);
-      setMessage(newMessage);
+      const handleMessage = (newMessage) => {
+        console.log("Received message in TempTabsConnection", newMessage);
+        setMessage(newMessage);
 
-      if (newMessage === "close") {
-        window.close();
-      }
-    };
+        if (newMessage === "close") {
+          window.close();
+        }
+      };
 
-    newChannel.addEventListener("message", handleMessage);
-    setChannel(newChannel);
+      newChannel.addEventListener("message", handleMessage);
+      setChannel(newChannel);
 
-    return () => {
-      newChannel.removeEventListener("message", handleMessage);
-      newChannel.close();
-    };
+      return () => {
+        newChannel.removeEventListener("message", handleMessage);
+        newChannel.close();
+      };
+    }
   }, []);
 
   const singleIconStyInternalStyle = {

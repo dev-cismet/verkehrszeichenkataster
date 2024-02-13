@@ -154,7 +154,7 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
               `DesignerDrawKey.` +
               JSON.stringify({
                 viewOnlyMode,
-                signLibMode,
+                // signLibMode,
               })
             }
             getElements={(elements) => setDrawElements(elements)}
@@ -162,11 +162,11 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
             initialElements={JSON.parse(attachment.data.drawing)}
             viewOnlyMode={viewOnlyMode}
             getPreviewSrcLink={(preview) => setDrawing(preview)}
-            displayLibrary={
-              signLibMode === "inside" || signLibMode === "inside-cosed"
-                ? true
-                : false
-            }
+            // displayLibrary={
+            //   signLibMode === "inside" || signLibMode === "inside-cosed"
+            //     ? true
+            //     : false
+            // }
           />
         )}
       </Card>

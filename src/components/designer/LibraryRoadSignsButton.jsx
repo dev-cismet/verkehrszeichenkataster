@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./designer-style.css";
 import { Dropdown, Space } from "antd";
-import { SettingOutlined, MoreOutlined } from "@ant-design/icons";
+import { SettingOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getTempSignsLibMode,
   storeTempSignsLibMode,
 } from "../../store/slices/application";
+import { useSearchParams } from "react-router-dom";
 
-const LibraryRoadSignsButton = ({ connectionId }) => {
+const LibraryRoadSignsButton = ({ connectionId, setCurrentMode }) => {
   const signLibMode = useSelector(getTempSignsLibMode);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [urlParams, setUrlParams] = useSearchParams();
+  console.log("xxx LibraryRoadSignsButton", connectionId);
   const handleMenuClick = (e) => {
     if (e.key === "3") {
       setOpen(false);
@@ -23,6 +26,8 @@ const LibraryRoadSignsButton = ({ connectionId }) => {
     }
   };
 
+  // useEffect(() => {}, [data])
+
   const items = [
     {
       label: (
@@ -30,7 +35,8 @@ const LibraryRoadSignsButton = ({ connectionId }) => {
           <div
             onClick={() => {
               dispatch(storeTempSignsLibMode("detached"));
-
+              setCurrentMode("detached");
+              console.log("xxx LibraryRoadSignsButton", connectionId);
               const url =
                 window.location.origin +
                 "/verkehrszeichenkataster/#/verkehrszeichenbibliothek" +
@@ -50,6 +56,8 @@ const LibraryRoadSignsButton = ({ connectionId }) => {
           <div
             onClick={() => {
               dispatch(storeTempSignsLibMode("timeline"));
+              setCurrentMode("timeline");
+              // setUrlParams({ channel: connectionId });
             }}
           >
             Timeline
@@ -64,6 +72,7 @@ const LibraryRoadSignsButton = ({ connectionId }) => {
           <div
             onClick={() => {
               dispatch(storeTempSignsLibMode("overlay"));
+              setCurrentMode("overlay");
             }}
           >
             Overlay
@@ -79,6 +88,7 @@ const LibraryRoadSignsButton = ({ connectionId }) => {
             onClick={() => {
               if (signLibMode === "inside") {
                 dispatch(storeTempSignsLibMode("inside-cosed"));
+                setCurrentMode("inside");
               } else {
                 dispatch(storeTempSignsLibMode("inside"));
               }
@@ -119,16 +129,7 @@ const LibraryRoadSignsButton = ({ connectionId }) => {
               cursor: "pointer",
             }}
           >
-            {/* <BookOutlined /> */}
             <SettingOutlined />
-            {/* <span style={{ marginLeft: "8px" }}>Bibliothek</span>
-            <MoreOutlined
-              style={{
-                marginLeft: "16px",
-                fontSize: "16px",
-                marginRight: "-8px",
-              }}
-            /> */}
           </div>
         </Space>
       </a>

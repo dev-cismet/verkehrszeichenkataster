@@ -1,7 +1,7 @@
 import { Excalidraw, MainMenu, exportToCanvas } from "@excalidraw/excalidraw";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import "./designer-style.css";
-import { Input, Collapse, Divider, Dropdown, Space } from "antd";
+import { Input, Collapse, Divider } from "antd";
 import {
   SearchOutlined,
   DeleteOutlined,
@@ -111,10 +111,9 @@ const DesignerWrapper = ({
   const canvasWidthRef = useRef(null);
   const [viewMode, setViewMode] = useState(viewOnlyMode);
   const [canvasUrl, setCanvasUrl] = useState(null);
-  const connectionId = nanoid();
-  const testHandler = () => {
-    return "ffffffffffff";
-  };
+  const [currentId, setCurrentId] = useState(nanoid());
+  const [currentMode, setCurrentMode] = useState(nanoid());
+  const [signPath, setSignPath] = useState(null);
 
   useEffect(() => {
     if (excalidrawAPI) {
@@ -125,29 +124,6 @@ const DesignerWrapper = ({
     }
   }, [signLibrary, excalidrawAPI]);
 
-  const fetchIcon = async (pathName, fileId) => {
-    const res = await fetch(pathName);
-
-    const imageData = await res.blob();
-    const reader = new FileReader();
-    reader.readAsDataURL(imageData);
-
-    reader.onload = function () {
-      const imagesArray = [
-        {
-          id: fileId,
-          dataURL: reader.result,
-          mimeType: "image/svg+xml",
-        },
-      ];
-      excalidrawAPI.addFiles(imagesArray);
-    };
-  };
-  const UIOptions = {
-    canvasActions: {
-      saveAsImage: false,
-    },
-  };
   const [showLibrary, setShowLibrary] = useState(displayLibrary);
   const [onlyIconMode, setOnlyIconMode] = useState(true);
   const [itemsOnlyIcon, setItemsOnlyIcon] = useState();
@@ -161,73 +137,6 @@ const DesignerWrapper = ({
   const [filteredDataIconDescription, setFilteredDataIconDescription] =
     useState({});
 
-  const handleUpdateCanvas = async (pathName) => {
-    // const naturalWidth = event.target.naturalWidth;
-    // const naturalHeight = event.target.naturalHeight;
-    // const iconPath = event.target.getAttribute("src");
-    // const pathName = iconPath;
-    const newFileId = nanoid();
-
-    const excalidrawState = excalidrawAPI.getAppState();
-
-    const centerX = canvasWrapperRef.current.clientWidth / 2;
-    const centerY = canvasWrapperRef.current.clientHeight / 2;
-
-    const newElement = {
-      type: "image",
-      isDeleted: false,
-      id: nanoid(),
-      fillStyle: "hachure",
-      strokeWidth: 1,
-      strokeStyle: "solid",
-      roughness: 1,
-      opacity: 100,
-      angle: 0,
-      x: centerX,
-      y: centerY,
-      strokeColor: "#c92a2a",
-      backgroundColor: "transparent",
-      width: 150,
-      height: 150,
-      groupIds: [],
-      boundElements: null,
-      locked: false,
-      link: null,
-      fileId: newFileId,
-    };
-
-    const getSceneElements = excalidrawAPI.getSceneElements();
-
-    excalidrawAPI.updateScene({
-      elements: [...getSceneElements, newElement],
-      appState: excalidrawState,
-    });
-    await fetchIcon(pathName, newFileId);
-  };
-
-  const generatePreviewHandler = async (elements) => {
-    let highestElement = 0;
-    elements.forEach((el) => {
-      if (el.height > highestElement) {
-        highestElement = el.height;
-      }
-    });
-    const exportCanvas = await exportToCanvas({
-      elements: excalidrawAPI.getSceneElements(),
-      appState: excalidrawAPI.getAppState(),
-      getDimensions: () => {
-        return {
-          width: canvasWidthRef.current.clientWidth - 20,
-          _height: canvasWrapperRef.current.clientHeight,
-          height: highestElement,
-        };
-      },
-      files: excalidrawAPI.getFiles(),
-      exportPadding: 0,
-    });
-    setCanvasUrl(exportCanvas.toDataURL());
-    getPreviewSrcLink(exportCanvas.toDataURL());
-  };
   // useEffect(() => {
   //   generatePreviewHandler();
   //   console.log("xxx resetDrawing", resetDrawing);
@@ -364,6 +273,98 @@ const DesignerWrapper = ({
     }
   }, [searchText]);
 
+  const fetchIcon = async (pathName, fileId) => {
+    const res = await fetch(pathName);
+
+    const imageData = await res.blob();
+    const reader = new FileReader();
+    reader.readAsDataURL(imageData);
+
+    reader.onload = function () {
+      const imagesArray = [
+        {
+          id: fileId,
+          dataURL: reader.result,
+          mimeType: "image/svg+xml",
+        },
+      ];
+      excalidrawAPI.addFiles(imagesArray);
+    };
+  };
+  const UIOptions = {
+    canvasActions: {
+      saveAsImage: false,
+    },
+  };
+
+  const handleUpdateCanvas = async (pathName) => {
+    // const naturalWidth = event.target.naturalWidth;
+    // const naturalHeight = event.target.naturalHeight;
+    // const iconPath = event.target.getAttribute("src");
+    // const pathName = iconPath;
+    const newFileId = nanoid();
+
+    const excalidrawState = excalidrawAPI.getAppState();
+
+    const centerX = canvasWrapperRef.current.clientWidth / 2;
+    const centerY = canvasWrapperRef.current.clientHeight / 2;
+
+    const newElement = {
+      type: "image",
+      isDeleted: false,
+      id: nanoid(),
+      fillStyle: "hachure",
+      strokeWidth: 1,
+      strokeStyle: "solid",
+      roughness: 1,
+      opacity: 100,
+      angle: 0,
+      x: centerX,
+      y: centerY,
+      strokeColor: "#c92a2a",
+      backgroundColor: "transparent",
+      width: 150,
+      height: 150,
+      groupIds: [],
+      boundElements: null,
+      locked: false,
+      link: null,
+      fileId: newFileId,
+    };
+
+    const getSceneElements = excalidrawAPI.getSceneElements();
+
+    excalidrawAPI.updateScene({
+      elements: [...getSceneElements, newElement],
+      appState: excalidrawState,
+    });
+    await fetchIcon(pathName, newFileId);
+  };
+
+  const generatePreviewHandler = async (elements) => {
+    let highestElement = 0;
+    elements.forEach((el) => {
+      if (el.height > highestElement) {
+        highestElement = el.height;
+      }
+    });
+    const exportCanvas = await exportToCanvas({
+      elements: excalidrawAPI.getSceneElements(),
+      appState: excalidrawAPI.getAppState(),
+      getDimensions: () => {
+        return {
+          width: canvasWidthRef.current.clientWidth - 20,
+          _height: canvasWrapperRef.current.clientHeight,
+          height: highestElement,
+        };
+      },
+      files: excalidrawAPI.getFiles(),
+      exportPadding: 0,
+    });
+    setCanvasUrl(exportCanvas.toDataURL());
+    getPreviewSrcLink(exportCanvas.toDataURL());
+  };
+
   const onlyIconView = (iconsData) => {
     return (
       <div
@@ -418,6 +419,10 @@ const DesignerWrapper = ({
     );
   };
 
+  useEffect(() => {
+    handleUpdateCanvas(signPath);
+  }, [signPath]);
+
   return (
     <>
       <div
@@ -430,11 +435,10 @@ const DesignerWrapper = ({
           display: "flex",
         }}
       >
-        {/* <TempTabsConnection channelId={"dc70akp2DIXHpi3ziP3NL"} /> */}
         <TempTabsConnection
-          channelId={excalidrawAPI?.id}
-          // addImage={handleUpdateCanvas}
-          addImage={handleUpdateCanvas}
+          key={currentMode + currentId}
+          channelId={currentId}
+          addImage={setSignPath}
         />
         <div className="w-full" ref={canvasWrapperRef}>
           <Excalidraw
@@ -450,7 +454,11 @@ const DesignerWrapper = ({
             viewModeEnabled={viewMode}
             zenModeEnabled={viewMode}
             renderTopRightUI={() => (
-              <LibraryRoadSignsButton connectionId={excalidrawAPI?.id} />
+              <LibraryRoadSignsButton
+                key={currentMode + currentId}
+                connectionId={currentId}
+                setCurrentMode={setCurrentMode}
+              />
             )}
           >
             <MainMenu style={{ width: "500px" }}>
