@@ -147,6 +147,11 @@ const SignsLibrary = ({
       channel.postMessage(path);
     }
   };
+  const closeMessage = () => {
+    if (channel) {
+      channel.postMessage("close");
+    }
+  };
 
   useEffect(() => {
     const compsWithTextDescription = {};
@@ -385,6 +390,9 @@ const SignsLibrary = ({
 
                 <CloseOutlined
                   onClick={() => {
+                    if (urlParams.get("channel")) {
+                      window.close();
+                    }
                     closeCallBack
                       ? closeCallBack()
                       : setShowLibrary(!showLibrary);

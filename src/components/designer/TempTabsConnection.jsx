@@ -1,16 +1,17 @@
 import { BroadcastChannel } from "broadcast-channel";
 import { useState, useEffect } from "react";
 
-const TempTabsConnection = ({ channelId }) => {
+const TempTabsConnection = ({ channelId, addImage }) => {
   const [message, setMessage] = useState("");
   const [channel, setChannel] = useState(null);
   console.log("xxx TempTabsConnection id", channelId);
+
   useEffect(() => {
     const newChannel = new BroadcastChannel(channelId);
-
     const handleMessage = (newMessage) => {
       console.log("Received message in TempTabsConnection", newMessage);
       setMessage(newMessage);
+      addImage(newMessage);
     };
 
     newChannel.addEventListener("message", handleMessage);
@@ -20,7 +21,7 @@ const TempTabsConnection = ({ channelId }) => {
       newChannel.removeEventListener("message", handleMessage);
       newChannel.close();
     };
-  }, []);
+  }, [channelId]);
 
   const closechannel = () => {
     if (channel) {
@@ -30,7 +31,7 @@ const TempTabsConnection = ({ channelId }) => {
 
   return (
     <div>
-      <h1>Received Message: {message}</h1>
+      {/* <h1>Received Message: {message}</h1> */}
       <button onClick={closechannel}>Close</button>
     </div>
   );

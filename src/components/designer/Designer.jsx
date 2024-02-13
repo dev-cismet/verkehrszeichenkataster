@@ -112,6 +112,9 @@ const DesignerWrapper = ({
   const [viewMode, setViewMode] = useState(viewOnlyMode);
   const [canvasUrl, setCanvasUrl] = useState(null);
   const connectionId = nanoid();
+  const testHandler = () => {
+    return "ffffffffffff";
+  };
 
   useEffect(() => {
     if (excalidrawAPI) {
@@ -429,8 +432,9 @@ const DesignerWrapper = ({
       >
         {/* <TempTabsConnection channelId={"dc70akp2DIXHpi3ziP3NL"} /> */}
         <TempTabsConnection
-          channelId={connectionId}
+          channelId={excalidrawAPI?.id}
           // addImage={handleUpdateCanvas}
+          addImage={handleUpdateCanvas}
         />
         <div className="w-full" ref={canvasWrapperRef}>
           <Excalidraw
@@ -446,7 +450,7 @@ const DesignerWrapper = ({
             viewModeEnabled={viewMode}
             zenModeEnabled={viewMode}
             renderTopRightUI={() => (
-              <LibraryRoadSignsButton connectionId={connectionId} />
+              <LibraryRoadSignsButton connectionId={excalidrawAPI?.id} />
             )}
           >
             <MainMenu style={{ width: "500px" }}>
