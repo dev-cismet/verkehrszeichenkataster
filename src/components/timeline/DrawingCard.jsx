@@ -13,7 +13,7 @@ import Title from "./Title";
 import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectAction";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 
-const DrawingCard = ({ attachment, id, changeTimeline }) => {
+const DrawingCard = ({ attachment, index, changeTimeline }) => {
   const { id: applicationId } = useParams();
   const [viewOnlyMode, setViewOnlyMode] = useState(true);
   const [drawElements, setDrawElements] = useState([]);
@@ -57,7 +57,7 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
             );
             dispatch(
               deleteTimelineObject({
-                timelineIndex: id,
+                timelineIndex: index,
               })
             );
           }}
@@ -124,13 +124,16 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
   }
 
   return (
-    <div className="w-full relative py-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]">
+    <div
+      id={index}
+      className="w-full relative py-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]"
+    >
       <Card
         size="small"
         type="inner"
         title={
           <div className="w-full flex">
-            <Title attachment={attachment} index={id} />
+            <Title attachment={attachment} index={index} />
             <Dropdown
               trigger={["click"]}
               menu={{ items }}

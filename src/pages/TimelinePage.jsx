@@ -144,22 +144,22 @@ const TimelinePage = () => {
                     <Request
                       attachment={attachment}
                       key={i}
-                      i={i}
+                      index={i}
                       isInternalRequest={isInternalRequest}
                     />
                   );
                 case "text":
-                  return <Text attachment={attachment} id={i} key={i} />;
+                  return <Text attachment={attachment} index={i} key={i} />;
                 case "decision":
                   return <Decision key={i} id={i} attachment={attachment} />;
                 case "file":
-                  return <File key={i} attachment={attachment} i={i} />;
+                  return <File key={i} attachment={attachment} index={i} />;
                 case "drawing":
                   return (
                     <DrawingCard
                       key={i}
                       attachment={attachment}
-                      id={i}
+                      index={i}
                       changeTimeline={changeTimeline}
                     />
                   );

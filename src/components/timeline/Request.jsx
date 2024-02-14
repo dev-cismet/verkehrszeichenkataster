@@ -10,7 +10,7 @@ import { EditOutlined } from "@ant-design/icons";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 import { useDebounce } from "@uidotdev/usehooks";
 
-const Request = ({ attachment, i, isInternalRequest }) => {
+const Request = ({ attachment, index, isInternalRequest }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const currentApplication = useSelector(getCurrentApplication);
@@ -27,7 +27,7 @@ const Request = ({ attachment, i, isInternalRequest }) => {
   const updateValue = (value, property) => {
     dispatch(
       updateTimelineValues({
-        timelineIndex: i,
+        timelineIndex: index,
         itemValue: value,
         property: property,
         applicationId: id,
@@ -49,8 +49,6 @@ const Request = ({ attachment, i, isInternalRequest }) => {
     setReceiver(name);
   };
 
-  console.log(attachment);
-
   if (
     debouncedRequest !== attachment.data &&
     debouncedRequest === externalRequest
@@ -67,7 +65,10 @@ const Request = ({ attachment, i, isInternalRequest }) => {
   }
 
   return (
-    <div className="w-full relative pb-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]">
+    <div
+      id={index}
+      className="w-full relative pb-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]"
+    >
       {isInternalRequest ? (
         <>
           <Card

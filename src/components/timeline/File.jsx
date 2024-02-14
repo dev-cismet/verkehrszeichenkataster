@@ -8,7 +8,7 @@ import PdfViewer from "../pdfviewer/PdfViewer";
 import Title from "./Title";
 import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectAction";
 
-const File = ({ attachment, i }) => {
+const File = ({ attachment, index }) => {
   const { id: applicationId } = useParams();
   const url = attachment?.data?.file;
 
@@ -37,7 +37,7 @@ const File = ({ attachment, i }) => {
             );
             dispatch(
               deleteTimelineObject({
-                timelineIndex: i,
+                timelineIndex: index,
               })
             );
           }}
@@ -50,13 +50,16 @@ const File = ({ attachment, i }) => {
   ];
 
   return (
-    <div className="w-full relative py-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]">
+    <div
+      id={index}
+      className="w-full relative py-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]"
+    >
       <Card
         size="small"
         type="inner"
         title={
           <div className="w-full flex">
-            <Title attachment={attachment} index={i} />
+            <Title attachment={attachment} index={index} />
             <Dropdown
               trigger={["click"]}
               menu={{ items }}
@@ -74,7 +77,7 @@ const File = ({ attachment, i }) => {
             {getDataTypeFromBase64(url) === "image" && (
               <div className="w-full rounded-lg">
                 <img
-                  key={i}
+                  key={index}
                   alt={attachment?.name}
                   className="max-w-full rounded-lg"
                   src={url}
