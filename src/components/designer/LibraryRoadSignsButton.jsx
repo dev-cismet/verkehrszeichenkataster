@@ -9,7 +9,11 @@ import {
 } from "../../store/slices/application";
 import { useSearchParams } from "react-router-dom";
 
-const LibraryRoadSignsButton = ({ connectionId, setCurrentMode }) => {
+const LibraryRoadSignsButton = ({
+  connectionId,
+  setCurrentMode,
+  setIsdragging,
+}) => {
   const signLibMode = useSelector(getTempSignsLibMode);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -33,6 +37,7 @@ const LibraryRoadSignsButton = ({ connectionId, setCurrentMode }) => {
             onClick={() => {
               dispatch(storeTempSignsLibMode("detached"));
               setCurrentMode("detached");
+              setIsdragging(true);
               const url =
                 window.location.origin +
                 "/verkehrszeichenkataster/#/verkehrszeichenbibliothek" +

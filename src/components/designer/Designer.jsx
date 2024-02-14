@@ -25,6 +25,11 @@ const DesignerWrapper = ({
   const [currentMode, setCurrentMode] = useState(nanoid());
   const [signPath, setSignPath] = useState(null);
 
+  const [isDragging, setIsdragging] = useState(true);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [image, setImage] = useState(null);
+  const [currentImageSizes, setCurrentImageSizes] = useState(null);
+
   useEffect(() => {
     if (excalidrawAPI) {
       if (viewOnlyMode) {
@@ -126,11 +131,104 @@ const DesignerWrapper = ({
   };
 
   useEffect(() => {
-    handleUpdateCanvas(signPath);
+    if (!viewOnlyMode && signPath) {
+      handleUpdateCanvas(signPath);
+    }
   }, [signPath]);
 
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const rect = event.currentTarget.getBoundingClientRect();
+    const offsetX = event.clientX - rect.left;
+    const offsetY = event.clientY - rect.top;
+    setPosition({ x: offsetX, y: offsetY });
+
+    console.log("xxx drop");
+
+    const fileId = nanoid();
+    const file = event.dataTransfer.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImage({ id: fileId, mimeType: file.type });
+
+      const img = new Image();
+      img.src = reader.result;
+      img.onload = () => {
+        setCurrentImageSizes({ width: img.width, height: img.height });
+      };
+
+      const imagesArray = [
+        {
+          id: fileId,
+          dataURL: reader.result,
+          mimeType: file.type,
+        },
+      ];
+      excalidrawAPI.addFiles(imagesArray);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSize = (fileId, sizes) => {
+    const excalidrawState = excalidrawAPI.getAppState();
+
+    const centerX = canvasWrapperRef.current.clientWidth / 2;
+    const centerY = canvasWrapperRef.current.clientHeight / 2;
+
+    const newElement = {
+      type: "image",
+      isDeleted: false,
+      id: nanoid(),
+      fillStyle: "hachure",
+      strokeWidth: 1,
+      strokeStyle: "solid",
+      roughness: 1,
+      opacity: 100,
+      angle: 0,
+      x: position.x - 20,
+      y: position.y - 20,
+      // x: centerX,
+      // y: centerY,
+      strokeColor: "#c92a2a",
+      backgroundColor: "transparent",
+      width: sizes.width / 14,
+      height: sizes.height / 14,
+      groupIds: [],
+      boundElements: null,
+      locked: false,
+      link: null,
+      fileId: fileId,
+    };
+
+    const getSceneElements = excalidrawAPI.getSceneElements();
+
+    excalidrawAPI.updateScene({
+      elements: [...getSceneElements, newElement],
+      appState: excalidrawState,
+    });
+
+    setCurrentImageSizes(null);
+
+    setImage(null);
+  };
+
+  useEffect(() => {
+    if (image && currentImageSizes) {
+      handleSize(image.id, currentImageSizes);
+    }
+  }, [image, currentImageSizes]);
+
   return (
-    <>
+    <div>
+      <TempTabsConnection
+        key={currentMode + currentId}
+        channelId={currentId}
+        addImage={setSignPath}
+      />
       <div
         ref={canvasWidthRef}
         className={`excalidraw-custom-wrapper ${
@@ -139,13 +237,27 @@ const DesignerWrapper = ({
         style={{
           height: "700px",
           display: "flex",
+          position: "relative",
         }}
+        onDrop={(event) => handleDrop(event)}
+        onDragOver={handleDragOver}
+        onMouseLeave={() => setIsdragging(true)}
+        onMouseEnter={() => setIsdragging(false)}
       >
-        <TempTabsConnection
-          key={currentMode + currentId}
-          channelId={currentId}
-          addImage={setSignPath}
-        />
+        {isDragging && !viewOnlyMode && (
+          <div
+            style={{
+              top: 0,
+              center: "0",
+              height: "100%",
+              width: "100%",
+              position: "absolute",
+              background: "red",
+              zIndex: 9999,
+              opacity: "0.1",
+            }}
+          ></div>
+        )}
         <div className="w-full" ref={canvasWrapperRef}>
           <Excalidraw
             excalidrawAPI={(api) => setExcalidrawAPI(api)}
@@ -164,6 +276,7 @@ const DesignerWrapper = ({
                 key={currentMode + currentId}
                 connectionId={currentId}
                 setCurrentMode={setCurrentMode}
+                setIsdragging={setIsdragging}
               />
             )}
           >
@@ -212,7 +325,7 @@ const DesignerWrapper = ({
           </div>
         ) : null}
       </div>
-    </>
+    </div>
   );
 };
 
