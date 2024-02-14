@@ -100,7 +100,6 @@ const SignsLibrary = ({
       const newChannel = new BroadcastChannel(urlParams.get("channel"));
 
       const handleMessage = (newMessage) => {
-        console.log("Received message in TempTabsConnection", newMessage);
         setMessage(newMessage);
 
         if (newMessage === "close") {

@@ -1,13 +1,9 @@
 import { BroadcastChannel } from "broadcast-channel";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { getTempSignsLibMode } from "../../store/slices/application";
+
 const TempTabsConnection = ({ channelId, addImage }) => {
   const [message, setMessage] = useState("");
   const [channel, setChannel] = useState(null);
-  const signLibMode = useSelector(getTempSignsLibMode);
-
-  console.log("xxx TempTabsConnection id", channelId);
 
   useEffect(() => {
     const newChannel = new BroadcastChannel(channelId);
@@ -34,12 +30,7 @@ const TempTabsConnection = ({ channelId, addImage }) => {
     }
   };
 
-  return (
-    <div>
-      {/* <h1>Received Message: {message}</h1> */}
-      <button onClick={closechannel}>Close</button>
-    </div>
-  );
+  return <div>{/* <button onClick={closechannel}>Close</button> */}</div>;
 };
 
 export default TempTabsConnection;

@@ -14,7 +14,6 @@ const LibraryRoadSignsButton = ({ connectionId, setCurrentMode }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [urlParams, setUrlParams] = useSearchParams();
-  console.log("xxx LibraryRoadSignsButton", connectionId);
   const handleMenuClick = (e) => {
     if (e.key === "3") {
       setOpen(false);
@@ -26,8 +25,6 @@ const LibraryRoadSignsButton = ({ connectionId, setCurrentMode }) => {
     }
   };
 
-  // useEffect(() => {}, [data])
-
   const items = [
     {
       label: (
@@ -36,7 +33,6 @@ const LibraryRoadSignsButton = ({ connectionId, setCurrentMode }) => {
             onClick={() => {
               dispatch(storeTempSignsLibMode("detached"));
               setCurrentMode("detached");
-              console.log("xxx LibraryRoadSignsButton", connectionId);
               const url =
                 window.location.origin +
                 "/verkehrszeichenkataster/#/verkehrszeichenbibliothek" +
@@ -57,7 +53,7 @@ const LibraryRoadSignsButton = ({ connectionId, setCurrentMode }) => {
             onClick={() => {
               dispatch(storeTempSignsLibMode("timeline"));
               setCurrentMode("timeline");
-              // setUrlParams({ channel: connectionId });
+              setUrlParams({ channel: connectionId, mode: "timeline" });
             }}
           >
             Timeline
@@ -73,6 +69,7 @@ const LibraryRoadSignsButton = ({ connectionId, setCurrentMode }) => {
             onClick={() => {
               dispatch(storeTempSignsLibMode("overlay"));
               setCurrentMode("overlay");
+              setUrlParams({ channel: connectionId, mode: "overlay" });
             }}
           >
             Overlay
