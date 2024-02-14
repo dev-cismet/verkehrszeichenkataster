@@ -5,11 +5,10 @@ import {
   deleteTimelineObject,
   getCurrentApplication,
   storeCurrentApplication,
-  getTempSignsLibMode,
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import Designer from "../designer/Designer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Title from "./Title";
 import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectAction";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
@@ -17,15 +16,12 @@ import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungA
 const DrawingCard = ({ attachment, id, changeTimeline }) => {
   const { id: applicationId } = useParams();
   const [viewOnlyMode, setViewOnlyMode] = useState(true);
-  // const [showLibrary, setShowLibrary] = useState(false);
   const [drawElements, setDrawElements] = useState([]);
   const [drawFiles, setDrawFiles] = useState([]);
   const [drawing, setDrawing] = useState("");
+  const [resetDrawing, setResetDrawing] = useState(false);
   const anordnung = useSelector(getCurrentApplication);
-  const signLibMode = useSelector(getTempSignsLibMode);
   const dispatch = useDispatch();
-
-  // let showLibrary = signLibMode === "inside" ? true : false;
 
   const items = [
     {
@@ -35,7 +31,13 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
             setViewOnlyMode(!viewOnlyMode);
           }}
         >
-          {viewOnlyMode ? "Bearbeiten" : "Abbrechen"}
+          {viewOnlyMode ? (
+            "Bearbeiten"
+          ) : (
+            <span onClick={() => setResetDrawing(!resetDrawing)}>
+              Abbrechen
+            </span>
+          )}
         </div>
       ),
       key: "0",
@@ -79,9 +81,6 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
       label: (
         <div
           onClick={() => {
-            // dispatch(
-            //   deleteTimelineObject({ timelineIndex: index, applicationId: id })
-            // );
             setViewOnlyMode(true);
             dispatch(
               addAnordnungAction({
@@ -150,23 +149,12 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
       >
         {attachment?.data?.drawing && (
           <Designer
-            key={
-              `DesignerDrawKey.` +
-              JSON.stringify({
-                viewOnlyMode,
-                // signLibMode,
-              })
-            }
+            key={resetDrawing}
             getElements={(elements) => setDrawElements(elements)}
             getFiles={(files) => setDrawFiles(files)}
             initialElements={JSON.parse(attachment.data.drawing)}
             viewOnlyMode={viewOnlyMode}
             getPreviewSrcLink={(preview) => setDrawing(preview)}
-            // displayLibrary={
-            //   signLibMode === "inside" || signLibMode === "inside-cosed"
-            //     ? true
-            //     : false
-            // }
           />
         )}
       </Card>

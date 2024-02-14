@@ -358,9 +358,6 @@ const SignsLibrary = ({
                     closeCallBack
                       ? closeCallBack()
                       : dispatch(storeTempSignsLibMode("none"));
-                    // closeCallBack
-                    //   ? closeCallBack()
-                    //   : setShowLibrary(!showLibrary);
                   }}
                   style={{
                     // color: colorPrimary,

@@ -15,13 +15,11 @@ const DesignerWrapper = ({
   initialElements,
   getPreviewSrcLink = () => {},
   resetDrawing = 1,
-  displayLibrary = false,
+  // displayLibrary = false,
 }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
-  const [data, setData] = useState([]);
   const canvasWrapperRef = useRef(null);
   const canvasWidthRef = useRef(null);
-  const [viewMode, setViewMode] = useState(viewOnlyMode);
   const [canvasUrl, setCanvasUrl] = useState(null);
   const [currentId, setCurrentId] = useState(nanoid());
   const [currentMode, setCurrentMode] = useState(nanoid());
@@ -34,9 +32,6 @@ const DesignerWrapper = ({
       }
     }
   }, [excalidrawAPI]);
-
-  const [showLibrary, setShowLibrary] = useState(displayLibrary);
-  const [isPinnedLibrary, setIsPinnedLibrary] = useState(true);
 
   const fetchIcon = async (pathName, fileId) => {
     const res = await fetch(pathName);
@@ -139,7 +134,7 @@ const DesignerWrapper = ({
       <div
         ref={canvasWidthRef}
         className={`excalidraw-custom-wrapper ${
-          viewMode ? "only-view-mode" : ""
+          viewOnlyMode ? "only-view-mode" : ""
         }`}
         style={{
           height: "700px",
@@ -162,8 +157,8 @@ const DesignerWrapper = ({
             }}
             initialData={initialElements}
             langCode="de-DE"
-            viewModeEnabled={viewMode}
-            zenModeEnabled={viewMode}
+            viewModeEnabled={viewOnlyMode}
+            zenModeEnabled={viewOnlyMode}
             renderTopRightUI={() => (
               <LibraryRoadSignsButton
                 key={currentMode + currentId}
@@ -184,7 +179,7 @@ const DesignerWrapper = ({
               >
                 <span>Vorschau erstellen</span>
               </MainMenu.Item>
-              {!viewMode && (
+              {!viewOnlyMode && (
                 <>
                   <MainMenu.DefaultItems.Help />
                   <MainMenu.DefaultItems.LoadScene />
@@ -207,19 +202,15 @@ const DesignerWrapper = ({
             </MainMenu>
           </Excalidraw>
         </div>
-        <div
-          style={{
-            display: isPinnedLibrary ? "block" : "none",
-          }}
-        >
-          {currentMode === "inside" && !viewMode ? (
+        {currentMode === "inside" && !viewOnlyMode ? (
+          <div style={{ width: "320px" }}>
             <SignsLibrary
               height="650px"
               iconSize="40px"
               closeCallBack={() => setCurrentMode("none")}
             />
-          ) : null}
-        </div>
+          </div>
+        ) : null}
       </div>
     </>
   );
