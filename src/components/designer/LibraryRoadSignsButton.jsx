@@ -83,19 +83,32 @@ const LibraryRoadSignsButton = ({ connectionId, setCurrentMode }) => {
         <>
           <div
             onClick={() => {
-              if (signLibMode === "inside") {
-                dispatch(storeTempSignsLibMode("inside-cosed"));
-                setCurrentMode("inside");
-              } else {
-                dispatch(storeTempSignsLibMode("inside"));
-              }
+              dispatch(storeTempSignsLibMode("inside"));
+              setCurrentMode("inside");
+              setUrlParams({ channel: connectionId, mode: "inside" });
             }}
           >
-            {signLibMode === "inside-cosed" ? "Inside closed" : "Inside"}
+            Inside
           </div>
         </>
       ),
       key: "4",
+    },
+    {
+      label: (
+        <>
+          <div
+            onClick={() => {
+              dispatch(storeTempSignsLibMode("none"));
+              setCurrentMode("none");
+              setUrlParams({ channel: connectionId, mode: "none" });
+            }}
+          >
+            Close
+          </div>
+        </>
+      ),
+      key: "5",
     },
   ];
   return (

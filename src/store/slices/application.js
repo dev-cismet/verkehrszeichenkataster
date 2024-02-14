@@ -13,7 +13,7 @@ const initialState = {
   allApplications: [],
   selectedApplications: [],
   currentApplication: {},
-  tempSignsLibMode: "detached",
+  tempSignsLibMode: "none",
   timeline: [
     {
       type: "antrag",

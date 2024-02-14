@@ -2,66 +2,27 @@ import { libraryExtractor } from "./libraryExtractor";
 import signLocal from "./signLocal.json";
 import { useEffect, useState } from "react";
 import { Input, Collapse, Divider } from "antd";
+import { storeTempSignsLibMode } from "../../store/slices/application";
+import { useDispatch } from "react-redux";
 import {
   CloseOutlined,
   UnorderedListOutlined,
   AppstoreOutlined,
-  BookOutlined,
   SearchOutlined,
-  DeleteOutlined,
-  CameraOutlined,
 } from "@ant-design/icons";
 import { BroadcastChannel } from "broadcast-channel";
 import { useSearchParams } from "react-router-dom";
-
-const colorPrimary = "#6965db";
-const colorInactiv = "#a5a5a5";
-const colorTextBlack = "#1b1b1f";
-const iconWrapperSize = {
-  // width: "28px",
-  aspectRatio: "1/1",
-  padding: "8px",
-  boxSizing: "content-box",
-  border: "1px solid #ECECF4",
-  position: "relative",
-};
-
-const iconWrapperSizeWithDescription = {
-  flex: "0 0 28",
-  minWidth: "28px",
-  height: "28px",
-  boxSizing: "content-box",
-  padding: "8px",
-  border: "1px solid #ECECF4",
-  position: "relative",
-};
-const singleIconStyInternalStyleWithDescription = {
-  maxWidth: "38px",
-  position: "absolute",
-  maxHeight: "38px",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
-const libraryTitle = {
-  fontFamily: "Assistant, Helvetica, Roboto, Arial",
-  fontSize: "20px",
-  color: colorPrimary,
-  fontWeight: "bold",
-};
-const sectionTitleStyle = {
-  fontFamily: "Assistant, Helvetica, Roboto, Arial",
-  fontSize: "15px",
-  color: colorPrimary,
-  fontWeight: "bold",
-};
-
-const titleGroupStyle = {
-  fontFamily: "Assistant, Helvetica, Roboto, Arial",
-  color: "#525252",
-  lineHeight: "1.4em",
-};
-
+import {
+  colorPrimary,
+  colorInactiv,
+  colorTextBlack,
+  iconWrapperSize,
+  iconWrapperSizeWithDescription,
+  singleIconStyInternalStyleWithDescription,
+  libraryTitle,
+  sectionTitleStyle,
+  titleGroupStyle,
+} from "./signs-style.js";
 const labelView = (group, groupItems = null) => (
   <div
     style={{
@@ -92,7 +53,7 @@ const SignsLibrary = ({
   const [data, setData] = useState([]);
   const [message, setMessage] = useState("");
   const [channel, setChannel] = useState(null);
-
+  const dispatch = useDispatch();
   const [urlParams, setUrlParams] = useSearchParams();
   useEffect(() => {
     const channelParam = urlParams.get("channel");
@@ -396,7 +357,10 @@ const SignsLibrary = ({
                     }
                     closeCallBack
                       ? closeCallBack()
-                      : setShowLibrary(!showLibrary);
+                      : dispatch(storeTempSignsLibMode("none"));
+                    // closeCallBack
+                    //   ? closeCallBack()
+                    //   : setShowLibrary(!showLibrary);
                   }}
                   style={{
                     // color: colorPrimary,
