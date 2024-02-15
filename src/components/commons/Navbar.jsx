@@ -207,6 +207,17 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
           onTabClick={(key) => {
             navigate({ pathname: getApplicationPath(key) });
           }}
+          onEdit={(targetKey, action) => {
+            if (action === "remove") {
+              dispatch(
+                storeSelectedApplications(
+                  selectedApplications.filter(
+                    (obj) => !obj.uuid?.includes(targetKey)
+                  )
+                )
+              );
+            }
+          }}
           items={selectedApplications.map((application) => {
             return {
               label: application?.title
