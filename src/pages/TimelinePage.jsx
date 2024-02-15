@@ -23,7 +23,7 @@ import {
   LockOutlined,
   UnlockOutlined,
 } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { titleCase } from "../tools/helper";
 import addAnordnungAction from "../store/slices/actionSubslices/addAnordnungAction";
 import { v4 as uuidv4 } from "uuid";
@@ -41,7 +41,9 @@ const getBase64 = (file) =>
 
 const TimelinePage = () => {
   const { id } = useParams();
+  const headingRef = useRef(null);
   const anordnung = useSelector(getCurrentApplication);
+  const [headingHeight, setHeadingHeight] = useState(144);
 
   const currentTimeline = anordnung?.vzk_anordnung_timelineArrayRelationShip;
   const isInternalRequest = anordnung?.vzk_type?.name === "internal";
@@ -110,18 +112,24 @@ const TimelinePage = () => {
     });
   };
 
+  if (headingRef.current) {
+    if (headingHeight !== headingRef.current.offsetHeight) {
+      setHeadingHeight(headingRef.current.offsetHeight);
+    }
+  }
+
   return (
     <Card
       bodyStyle={{
         overflowY: "auto",
         overflowX: "clip",
-        maxHeight: "84%",
+        maxHeight: `calc(100% - ${headingHeight + 6}px)`,
         height: "100%",
         marginTop: "2px",
       }}
       className="h-full w-full"
       title={
-        <div style={{ whiteSpace: "wrap" }}>
+        <div ref={headingRef} style={{ whiteSpace: "wrap" }}>
           <Heading />
         </div>
       }
