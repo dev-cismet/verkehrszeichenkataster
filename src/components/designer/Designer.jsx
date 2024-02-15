@@ -38,39 +38,7 @@ const DesignerWrapper = ({
     }
   }, [excalidrawAPI]);
 
-  const fetchIcon = async (pathName, fileId) => {
-    const res = await fetch(pathName);
-
-    const imageData = await res.blob();
-    const reader = new FileReader();
-    reader.readAsDataURL(imageData);
-
-    reader.onload = function () {
-      const imagesArray = [
-        {
-          id: fileId,
-          dataURL: reader.result,
-          mimeType: "image/svg+xml",
-        },
-      ];
-      excalidrawAPI.addFiles(imagesArray);
-    };
-  };
-  const UIOptions = {
-    canvasActions: {
-      saveAsImage: false,
-    },
-  };
-
-  const handleUpdateCanvas = async (pathName) => {
-    // const naturalWidth = event.target.naturalWidth;
-    // const naturalHeight = event.target.naturalHeight;
-    // const iconPath = event.target.getAttribute("src");
-    // const pathName = iconPath;
-    const newFileId = nanoid();
-
-    const excalidrawState = excalidrawAPI.getAppState();
-
+  function createExcalidrawImageElement(fileId, width, height, finalWidth) {
     const centerX = canvasWrapperRef.current.clientWidth / 2;
     const centerY = canvasWrapperRef.current.clientHeight / 2;
 
@@ -88,21 +56,60 @@ const DesignerWrapper = ({
       y: centerY,
       strokeColor: "#c92a2a",
       backgroundColor: "transparent",
-      width: 150,
-      height: 150,
+      width: finalWidth,
+      height: (finalWidth / width) * height,
       groupIds: [],
       boundElements: null,
       locked: false,
       link: null,
-      fileId: newFileId,
+      fileId,
     };
-
+    const excalidrawState = excalidrawAPI.getAppState();
     const getSceneElements = excalidrawAPI.getSceneElements();
-
     excalidrawAPI.updateScene({
       elements: [...getSceneElements, newElement],
       appState: excalidrawState,
     });
+  }
+
+  const fetchIcon = async (pathName, fileId) => {
+    const res = await fetch(pathName);
+    const img = new Image();
+    img.src = pathName;
+
+    img.onload = function () {
+      createExcalidrawImageElement(
+        fileId,
+        this.naturalWidth,
+        this.naturalHeight,
+        70
+      );
+    };
+
+    const imageData = await res.blob();
+    const reader = new FileReader();
+    reader.readAsDataURL(imageData);
+
+    reader.onload = function () {
+      const imagesArray = [
+        {
+          id: fileId,
+          dataURL: reader.result,
+          mimeType: "image/svg+xml",
+        },
+      ];
+      excalidrawAPI.addFiles(imagesArray);
+    };
+  };
+
+  const UIOptions = {
+    canvasActions: {
+      saveAsImage: false,
+    },
+  };
+
+  const handleUpdateCanvas = async (pathName) => {
+    const newFileId = nanoid();
     await fetchIcon(pathName, newFileId);
   };
 
@@ -150,8 +157,6 @@ const DesignerWrapper = ({
     const offsetY = event.clientY - rect.top;
     setPosition({ x: offsetX, y: offsetY });
 
-    console.log("xxx drop");
-
     const fileId = nanoid();
     const file = event.dataTransfer.files[0];
     const reader = new FileReader();
@@ -176,9 +181,9 @@ const DesignerWrapper = ({
     reader.readAsDataURL(file);
   };
 
-  const handleSize = (fileId, sizes) => {
+  const handleSize = (fileId, sizes, mimeType) => {
     const excalidrawState = excalidrawAPI.getAppState();
-
+    const finalWidth = mimeType === "image/svg+xml" ? 70 : 300;
     const newElement = {
       type: "image",
       isDeleted: false,
@@ -193,8 +198,8 @@ const DesignerWrapper = ({
       y: position.y - 20,
       strokeColor: "#c92a2a",
       backgroundColor: "transparent",
-      width: sizes.width / 14,
-      height: sizes.height / 14,
+      width: finalWidth,
+      height: (finalWidth / sizes.width) * sizes.height,
       groupIds: [],
       boundElements: null,
       locked: false,
@@ -218,7 +223,7 @@ const DesignerWrapper = ({
 
   useEffect(() => {
     if (image && currentImageSizes && position && canvasWrapperRef.current) {
-      handleSize(image.id, currentImageSizes);
+      handleSize(image.id, currentImageSizes, image.mimeType);
     }
   }, [image, currentImageSizes, position, canvasWrapperRef.current]);
 
@@ -239,7 +244,6 @@ const DesignerWrapper = ({
           display: "flex",
           position: "relative",
         }}
-        // onDrop={(event) => handleDrop(event)}
         onDropCapture={(event) => handleDrop(event)}
         onDragOver={handleDragOver}
         onMouseLeave={() => setIsdragging(true)}
