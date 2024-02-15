@@ -72,8 +72,8 @@ const SignsLibrary = ({
       setChannel(newChannel);
 
       return () => {
-        newChannel.removeEventListener("message", handleMessage);
         newChannel.close();
+        newChannel.removeEventListener("message", handleMessage);
       };
     }
   }, []);
@@ -287,7 +287,7 @@ const SignsLibrary = ({
               <img
                 src={icon.fileName}
                 style={singleIconStyInternalStyleWithDescription}
-                // onClick={handleUpdateCanvas}
+                onClick={() => sendMessage(icon.fileName)}
               />
             </div>
             <span style={{ fontSize: "13px", lineHeight: "1.3em" }}>

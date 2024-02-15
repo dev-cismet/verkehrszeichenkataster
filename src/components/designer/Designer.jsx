@@ -26,9 +26,6 @@ const DesignerWrapper = ({
   const [signPath, setSignPath] = useState(null);
 
   const [isDragging, setIsdragging] = useState(true);
-  const [position, setPosition] = useState(null);
-  const [image, setImage] = useState(null);
-  const [currentImageSizes, setCurrentImageSizes] = useState(null);
 
   useEffect(() => {
     if (excalidrawAPI) {
@@ -38,9 +35,23 @@ const DesignerWrapper = ({
     }
   }, [excalidrawAPI]);
 
-  function createExcalidrawImageElement(fileId, width, height, finalWidth) {
-    const centerX = canvasWrapperRef.current.clientWidth / 2;
-    const centerY = canvasWrapperRef.current.clientHeight / 2;
+  function createExcalidrawImageElement(
+    fileId,
+    width,
+    height,
+    finalWidth,
+    mimeType = "image/svg+xml",
+    offsetX,
+    offsetY
+  ) {
+    const currentWidth = mimeType === "image/svg+xml" ? finalWidth : 300;
+
+    const centerX = offsetX
+      ? offsetX
+      : canvasWrapperRef.current.clientWidth / 2;
+    const centerY = offsetY
+      ? offsetY
+      : canvasWrapperRef.current.clientHeight / 2;
 
     const newElement = {
       type: "image",
@@ -56,8 +67,8 @@ const DesignerWrapper = ({
       y: centerY,
       strokeColor: "#c92a2a",
       backgroundColor: "transparent",
-      width: finalWidth,
-      height: (finalWidth / width) * height,
+      width: currentWidth,
+      height: (currentWidth / width) * height,
       groupIds: [],
       boundElements: null,
       locked: false,
@@ -152,80 +163,41 @@ const DesignerWrapper = ({
   const handleDrop = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    const rect = event.currentTarget.getBoundingClientRect();
-    const offsetX = event.clientX - rect.left;
-    const offsetY = event.clientY - rect.top;
-    setPosition({ x: offsetX, y: offsetY });
+    if (!viewOnlyMode) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const offsetX = event.clientX - rect.left;
+      const offsetY = event.clientY - rect.top;
 
-    const fileId = nanoid();
-    const file = event.dataTransfer.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImage({ id: fileId, mimeType: file.type });
+      const fileId = nanoid();
+      const file = event.dataTransfer.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.src = reader.result;
+        img.onload = () => {
+          createExcalidrawImageElement(
+            fileId,
+            img.naturalWidth,
+            img.naturalHeight,
+            70,
+            file.type,
+            offsetX,
+            offsetY
+          );
+        };
 
-      const img = new Image();
-      img.src = reader.result;
-      img.onload = () => {
-        setCurrentImageSizes({ width: img.width, height: img.height });
+        const imagesArray = [
+          {
+            id: fileId,
+            dataURL: reader.result,
+            mimeType: file.type,
+          },
+        ];
+        excalidrawAPI.addFiles(imagesArray);
       };
-
-      const imagesArray = [
-        {
-          id: fileId,
-          dataURL: reader.result,
-          mimeType: file.type,
-        },
-      ];
-      excalidrawAPI.addFiles(imagesArray);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleSize = (fileId, sizes, mimeType) => {
-    const excalidrawState = excalidrawAPI.getAppState();
-    const finalWidth = mimeType === "image/svg+xml" ? 70 : 300;
-    const newElement = {
-      type: "image",
-      isDeleted: false,
-      id: nanoid(),
-      fillStyle: "hachure",
-      strokeWidth: 1,
-      strokeStyle: "solid",
-      roughness: 1,
-      opacity: 100,
-      angle: 0,
-      x: position.x - 20,
-      y: position.y - 20,
-      strokeColor: "#c92a2a",
-      backgroundColor: "transparent",
-      width: finalWidth,
-      height: (finalWidth / sizes.width) * sizes.height,
-      groupIds: [],
-      boundElements: null,
-      locked: false,
-      link: null,
-      fileId: fileId,
-    };
-
-    const getSceneElements = excalidrawAPI.getSceneElements();
-
-    excalidrawAPI.updateScene({
-      elements: [...getSceneElements, newElement],
-      appState: excalidrawState,
-    });
-
-    setCurrentImageSizes(null);
-
-    setImage(null);
-
-    setPosition(null);
-  };
-
-  useEffect(() => {
-    if (image && currentImageSizes && position && canvasWrapperRef.current) {
-      handleSize(image.id, currentImageSizes, image.mimeType);
+      reader.readAsDataURL(file);
     }
-  }, [image, currentImageSizes, position, canvasWrapperRef.current]);
+  };
 
   return (
     <div>
@@ -246,8 +218,6 @@ const DesignerWrapper = ({
         }}
         onDropCapture={(event) => handleDrop(event)}
         onDragOver={handleDragOver}
-        onMouseLeave={() => setIsdragging(true)}
-        onMouseEnter={() => setIsdragging(false)}
       >
         <div className="w-full" ref={canvasWrapperRef}>
           <Excalidraw
@@ -256,9 +226,7 @@ const DesignerWrapper = ({
             onChange={(elements, appstate, files) => {
               getElements(elements);
               getFiles(files);
-              if (!isDragging) {
-                generatePreviewHandler(elements);
-              }
+              generatePreviewHandler(elements);
             }}
             initialData={initialElements}
             langCode="de-DE"
