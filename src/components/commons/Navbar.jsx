@@ -209,6 +209,10 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
           }}
           onEdit={(targetKey, action) => {
             if (action === "remove") {
+              if (currentApplication?.uuid === targetKey) {
+                dispatch(storeCurrentApplication({}));
+                navigate("/");
+              }
               dispatch(
                 storeSelectedApplications(
                   selectedApplications.filter(
