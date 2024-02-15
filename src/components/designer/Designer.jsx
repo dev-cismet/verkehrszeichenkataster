@@ -26,7 +26,7 @@ const DesignerWrapper = ({
   const [signPath, setSignPath] = useState(null);
 
   const [isDragging, setIsdragging] = useState(true);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState(null);
   const [image, setImage] = useState(null);
   const [currentImageSizes, setCurrentImageSizes] = useState(null);
 
@@ -108,26 +108,28 @@ const DesignerWrapper = ({
 
   const generatePreviewHandler = async (elements) => {
     let highestElement = 0;
-    elements.forEach((el) => {
-      if (el.height > highestElement) {
-        highestElement = el.height;
-      }
-    });
-    const exportCanvas = await exportToCanvas({
-      elements: excalidrawAPI.getSceneElements(),
-      appState: excalidrawAPI.getAppState(),
-      getDimensions: () => {
-        return {
-          width: canvasWidthRef.current.clientWidth - 20,
-          _height: canvasWrapperRef.current.clientHeight,
-          height: highestElement,
-        };
-      },
-      files: excalidrawAPI.getFiles(),
-      exportPadding: 0,
-    });
-    setCanvasUrl(exportCanvas.toDataURL());
-    getPreviewSrcLink(exportCanvas.toDataURL());
+    if (elements) {
+      elements.forEach((el) => {
+        if (el.height > highestElement) {
+          highestElement = el.height;
+        }
+      });
+      const exportCanvas = await exportToCanvas({
+        elements: excalidrawAPI.getSceneElements(),
+        appState: excalidrawAPI.getAppState(),
+        getDimensions: () => {
+          return {
+            width: canvasWidthRef.current.clientWidth - 20,
+            _height: canvasWrapperRef.current.clientHeight,
+            height: highestElement,
+          };
+        },
+        files: excalidrawAPI.getFiles(),
+        exportPadding: 0,
+      });
+      setCanvasUrl(exportCanvas.toDataURL());
+      getPreviewSrcLink(exportCanvas.toDataURL());
+    }
   };
 
   useEffect(() => {
@@ -142,6 +144,7 @@ const DesignerWrapper = ({
 
   const handleDrop = (event) => {
     event.preventDefault();
+    event.stopPropagation();
     const rect = event.currentTarget.getBoundingClientRect();
     const offsetX = event.clientX - rect.left;
     const offsetY = event.clientY - rect.top;
@@ -176,9 +179,6 @@ const DesignerWrapper = ({
   const handleSize = (fileId, sizes) => {
     const excalidrawState = excalidrawAPI.getAppState();
 
-    const centerX = canvasWrapperRef.current.clientWidth / 2;
-    const centerY = canvasWrapperRef.current.clientHeight / 2;
-
     const newElement = {
       type: "image",
       isDeleted: false,
@@ -191,8 +191,6 @@ const DesignerWrapper = ({
       angle: 0,
       x: position.x - 20,
       y: position.y - 20,
-      // x: centerX,
-      // y: centerY,
       strokeColor: "#c92a2a",
       backgroundColor: "transparent",
       width: sizes.width / 14,
@@ -214,13 +212,15 @@ const DesignerWrapper = ({
     setCurrentImageSizes(null);
 
     setImage(null);
+
+    setPosition(null);
   };
 
   useEffect(() => {
-    if (image && currentImageSizes) {
+    if (image && currentImageSizes && position && canvasWrapperRef.current) {
       handleSize(image.id, currentImageSizes);
     }
-  }, [image, currentImageSizes]);
+  }, [image, currentImageSizes, position, canvasWrapperRef.current]);
 
   return (
     <div>
@@ -239,25 +239,12 @@ const DesignerWrapper = ({
           display: "flex",
           position: "relative",
         }}
-        onDrop={(event) => handleDrop(event)}
+        // onDrop={(event) => handleDrop(event)}
+        onDropCapture={(event) => handleDrop(event)}
         onDragOver={handleDragOver}
         onMouseLeave={() => setIsdragging(true)}
         onMouseEnter={() => setIsdragging(false)}
       >
-        {isDragging && !viewOnlyMode && (
-          <div
-            style={{
-              top: 0,
-              center: "0",
-              height: "100%",
-              width: "100%",
-              position: "absolute",
-              background: "red",
-              zIndex: 9999,
-              opacity: "0.1",
-            }}
-          ></div>
-        )}
         <div className="w-full" ref={canvasWrapperRef}>
           <Excalidraw
             excalidrawAPI={(api) => setExcalidrawAPI(api)}
@@ -265,7 +252,9 @@ const DesignerWrapper = ({
             onChange={(elements, appstate, files) => {
               getElements(elements);
               getFiles(files);
-              generatePreviewHandler(elements);
+              if (!isDragging) {
+                generatePreviewHandler(elements);
+              }
             }}
             initialData={initialElements}
             langCode="de-DE"
