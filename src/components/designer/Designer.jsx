@@ -4,7 +4,7 @@ import "./designer-style.css";
 import { Divider } from "antd";
 import { DeleteOutlined, CameraOutlined } from "@ant-design/icons";
 import { nanoid } from "nanoid";
-import TempTabsConnection from "./TempTabsConnection";
+import TabsConnection from "./TabsConnection";
 import LibraryRoadSignsButton from "./LibraryRoadSignsButton";
 import SignsLibrary from "./SignsLibrary";
 
@@ -201,7 +201,7 @@ const DesignerWrapper = ({
 
   return (
     <div>
-      <TempTabsConnection
+      <TabsConnection
         key={currentMode + currentId}
         channelId={currentId}
         addImage={setSignPath}

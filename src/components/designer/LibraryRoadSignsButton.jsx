@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./designer-style.css";
 import { Dropdown, Space } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
-  getTempSignsLibMode,
+  // getTempSignsLibMode,
   storeTempSignsLibMode,
 } from "../../store/slices/application";
 import { useSearchParams } from "react-router-dom";
@@ -14,7 +14,7 @@ const LibraryRoadSignsButton = ({
   setCurrentMode,
   setIsdragging,
 }) => {
-  const signLibMode = useSelector(getTempSignsLibMode);
+  // const signLibMode = useSelector(getTempSignsLibMode);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [urlParams, setUrlParams] = useSearchParams();
