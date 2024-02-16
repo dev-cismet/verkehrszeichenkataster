@@ -3,10 +3,7 @@ import "./designer-style.css";
 import { Dropdown, Space } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import {
-  // getTempSignsLibMode,
-  storeTempSignsLibMode,
-} from "../../store/slices/application";
+import { storeTempSignsLibMode } from "../../store/slices/application";
 import { useSearchParams } from "react-router-dom";
 
 const LibraryRoadSignsButton = ({

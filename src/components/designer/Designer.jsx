@@ -7,6 +7,8 @@ import { nanoid } from "nanoid";
 import TabsConnection from "./TabsConnection";
 import LibraryRoadSignsButton from "./LibraryRoadSignsButton";
 import SignsLibrary from "./SignsLibrary";
+import { storeTempSignsLibMode } from "../../store/slices/application";
+import { useDispatch, useSelector } from "react-redux";
 
 const DesignerWrapper = ({
   viewOnlyMode = false,
@@ -24,8 +26,8 @@ const DesignerWrapper = ({
   const [currentId, setCurrentId] = useState(nanoid());
   const [currentMode, setCurrentMode] = useState(nanoid());
   const [signPath, setSignPath] = useState(null);
-
   const [isDragging, setIsdragging] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (excalidrawAPI) {
@@ -44,8 +46,6 @@ const DesignerWrapper = ({
     offsetX,
     offsetY
   ) {
-    const currentWidth = mimeType === "image/svg+xml" ? finalWidth : 300;
-
     const centerX = offsetX
       ? offsetX
       : canvasWrapperRef.current.clientWidth / 2;
@@ -67,8 +67,8 @@ const DesignerWrapper = ({
       y: centerY,
       strokeColor: "#c92a2a",
       backgroundColor: "transparent",
-      width: currentWidth,
-      height: (currentWidth / width) * height,
+      width: finalWidth,
+      height: (finalWidth / width) * height,
       groupIds: [],
       boundElements: null,
       locked: false,
@@ -165,8 +165,6 @@ const DesignerWrapper = ({
     event.stopPropagation();
     if (!viewOnlyMode) {
       const rect = event.currentTarget.getBoundingClientRect();
-      const offsetX = event.clientX - rect.left;
-      const offsetY = event.clientY - rect.top;
 
       const fileId = nanoid();
       const file = event.dataTransfer.files[0];
@@ -175,11 +173,17 @@ const DesignerWrapper = ({
         const img = new Image();
         img.src = reader.result;
         img.onload = () => {
+          const determineWidth = file.type === "image/svg+xml" ? 70 : 300;
+          const calcWidth = determineWidth / 2;
+          const calcHeight =
+            ((determineWidth / img.naturalWidth) * img.naturalHeight) / 2;
+          const offsetX = event.clientX - rect.left - calcWidth;
+          const offsetY = event.clientY - rect.top - calcHeight;
           createExcalidrawImageElement(
             fileId,
             img.naturalWidth,
             img.naturalHeight,
-            70,
+            determineWidth,
             file.type,
             offsetX,
             offsetY
