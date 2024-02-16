@@ -17,7 +17,6 @@ const DesignerWrapper = ({
   initialElements,
   getPreviewSrcLink = () => {},
   resetDrawing = 1,
-  // displayLibrary = false,
 }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const canvasWrapperRef = useRef(null);

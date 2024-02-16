@@ -5,6 +5,7 @@ import {
   deleteTimelineObject,
   getCurrentApplication,
   storeCurrentApplication,
+  storeTempSignsLibMode,
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import Designer from "../designer/Designer";
@@ -34,7 +35,11 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
           {viewOnlyMode ? (
             "Bearbeiten"
           ) : (
-            <span onClick={() => setResetDrawing(!resetDrawing)}>
+            <span
+              onClick={() => {
+                setResetDrawing(!resetDrawing);
+              }}
+            >
               Abbrechen
             </span>
           )}
@@ -81,6 +86,8 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
       label: (
         <div
           onClick={() => {
+            setResetDrawing(!resetDrawing);
+            dispatch(storeTempSignsLibMode("none"));
             setViewOnlyMode(true);
             dispatch(
               addAnordnungAction({
