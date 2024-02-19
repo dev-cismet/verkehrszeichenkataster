@@ -193,11 +193,28 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
             <Text>durchgeführt.</Text>
           </View>
         </View>
-        {timeline.map((attachment) => {
-          if (attachment.vzk_attachment_typ.name.toLowerCase() === "file") {
-            return <Image key={attachment.uuid} src={attachment?.data?.file} />;
-          }
-        })}
+        <View break>
+          {timeline.map((attachment) => {
+            if (attachment.vzk_attachment_typ.name.toLowerCase() === "file") {
+              return (
+                <View style={{ flexDirection: "column" }}>
+                  {attachment?.data?.description && (
+                    <Text
+                      style={{
+                        paddingBottom: 8,
+                        fontWeight: 700,
+                        fontFamily: "Open Sans",
+                      }}
+                    >
+                      {attachment?.data?.description}
+                    </Text>
+                  )}
+                  <Image key={attachment.uuid} src={attachment?.data?.file} />
+                </View>
+              );
+            }
+          })}
+        </View>
 
         {timeline.map((attachment) => {
           if (
