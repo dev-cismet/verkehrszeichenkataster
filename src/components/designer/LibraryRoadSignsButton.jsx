@@ -55,7 +55,7 @@ const LibraryRoadSignsButton = ({
             onClick={() => {
               dispatch(storeTempSignsLibMode("timeline"));
               setCurrentMode("timeline");
-              setUrlParams({ channel: connectionId, mode: "timeline" });
+              // setUrlParams({ channel: connectionId, mode: "timeline" });
             }}
           >
             Timeline
@@ -71,7 +71,7 @@ const LibraryRoadSignsButton = ({
             onClick={() => {
               dispatch(storeTempSignsLibMode("overlay"));
               setCurrentMode("overlay");
-              setUrlParams({ channel: connectionId, mode: "overlay" });
+              // setUrlParams({ channel: connectionId, mode: "overlay" });
             }}
           >
             Overlay
@@ -87,7 +87,7 @@ const LibraryRoadSignsButton = ({
             onClick={() => {
               dispatch(storeTempSignsLibMode("inside"));
               setCurrentMode("inside");
-              setUrlParams({ channel: connectionId, mode: "inside" });
+              // setUrlParams({ channel: connectionId, mode: "inside" });
             }}
           >
             Inside
