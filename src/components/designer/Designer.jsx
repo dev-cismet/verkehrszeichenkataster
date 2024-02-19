@@ -171,7 +171,6 @@ const DesignerWrapper = ({
     event.stopPropagation();
     if (!viewOnlyMode) {
       const rect = event.currentTarget.getBoundingClientRect();
-
       const fileId = nanoid();
       const file = event.dataTransfer.files[0];
       const reader = new FileReader();
@@ -183,8 +182,11 @@ const DesignerWrapper = ({
           const calcWidth = determineWidth / 2;
           const calcHeight =
             ((determineWidth / img.naturalWidth) * img.naturalHeight) / 2;
-          const offsetX = event.clientX - rect.left - calcWidth;
-          const offsetY = event.clientY - rect.top - calcHeight;
+          console.log("xxx value", excalidrawAPI.getAppState().scrollY);
+          const scrollXCanvas = excalidrawAPI.getAppState().scrollX;
+          const scrollYCanvas = excalidrawAPI.getAppState().scrollY;
+          const offsetX = event.clientX - rect.left - calcWidth - scrollXCanvas;
+          const offsetY = event.clientY - rect.top - calcHeight - scrollYCanvas;
           createExcalidrawImageElement(
             fileId,
             img.naturalWidth,
