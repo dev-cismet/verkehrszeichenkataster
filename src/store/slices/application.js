@@ -77,6 +77,7 @@ const slice = createSlice({
               return {
                 ...value,
                 data: {
+                  ...value.data,
                   [property]: itemValue,
                 },
               };

@@ -1,20 +1,46 @@
-import { Card, Dropdown } from "antd";
-import { EllipsisOutlined } from "@ant-design/icons";
+import { Button, Card, Dropdown } from "antd";
+import {
+  CloseOutlined,
+  EllipsisOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import { deleteTimelineObject } from "../../store/slices/application";
+import {
+  deleteTimelineObject,
+  updateTimelineValues,
+} from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import { getDataTypeFromBase64 } from "../../tools/helper";
 import PdfViewer from "../pdfviewer/PdfViewer";
 import Title from "./Title";
 import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectAction";
+import { useState } from "react";
+import MdRedactor, { mdParser } from "../mdredactor/MdRedactor";
+import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 
 const File = ({ attachment, index }) => {
   const { id: applicationId } = useParams();
   const url = attachment?.data?.file;
 
+  const [showEditor, setShowEditor] = useState(false);
+  const [description, setDescription] = useState("");
+
   const dispatch = useDispatch();
 
   const items = [
+    {
+      label: (
+        <div
+          onClick={() => {
+            setShowEditor(true);
+          }}
+        >
+          Beschreibung{" "}
+          {attachment?.data?.description ? "bearbeiten" : "hinzufügen"}
+        </div>
+      ),
+      key: "0",
+    },
     {
       label: (
         <div
@@ -45,7 +71,7 @@ const File = ({ attachment, index }) => {
           Entfernen
         </div>
       ),
-      key: "0",
+      key: "1",
     },
   ];
 
@@ -72,6 +98,56 @@ const File = ({ attachment, index }) => {
           </div>
         }
       >
+        {showEditor && (
+          <div className="flex flex-col gap-2 mb-2">
+            <MdRedactor
+              mdDoc={attachment?.data?.description}
+              getDocument={(text) => setDescription(text)}
+            />
+            <div className="w-full flex items-center gap-2 justify-end">
+              <Button
+                icon={<CloseOutlined />}
+                onClick={() => setShowEditor(false)}
+              >
+                Abbrechen
+              </Button>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  dispatch(
+                    addAnordnungAction({
+                      className: "vzk_attachment_file",
+                      data: {
+                        description: description,
+                        uuid: attachment.fk_uuid,
+                      },
+                    })
+                  );
+                  dispatch(
+                    updateTimelineValues({
+                      timelineIndex: index,
+                      itemValue: description,
+                      property: "description",
+                      applicationId: applicationId,
+                    })
+                  );
+                  setShowEditor(false);
+                }}
+              >
+                Beschreibung{" "}
+                {attachment?.data?.description ? "bearbeiten" : "hinzufügen"}
+              </Button>
+            </div>
+          </div>
+        )}
+        {attachment?.data?.description && (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: mdParser.render(attachment?.data?.description || ""),
+            }}
+          />
+        )}
         {url && (
           <>
             {getDataTypeFromBase64(url) === "image" && (
