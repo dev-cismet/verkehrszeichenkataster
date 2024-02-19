@@ -74,6 +74,7 @@ const TimelinePage = () => {
         data: {
           file: file.url || file.preview,
           uuid: uuid,
+          description: "",
         },
       })
     );
