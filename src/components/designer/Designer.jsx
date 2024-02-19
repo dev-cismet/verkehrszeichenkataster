@@ -7,7 +7,7 @@ import { nanoid } from "nanoid";
 import TabsConnection from "./TabsConnection";
 import LibraryRoadSignsButton from "./LibraryRoadSignsButton";
 import SignsLibrary from "./SignsLibrary";
-import { storeTempSignsLibMode } from "../../store/slices/application";
+import { getTempSignsLibIconClicked } from "../../store/slices/application";
 import { useDispatch, useSelector } from "react-redux";
 
 const DesignerWrapper = ({
@@ -23,6 +23,7 @@ const DesignerWrapper = ({
   const canvasWidthRef = useRef(null);
   const [canvasUrl, setCanvasUrl] = useState(null);
   // const [currentId, setCurrentId] = useState(nanoid());
+  const clickedIcon = useSelector(getTempSignsLibIconClicked);
   const [currentId, setCurrentId] = useState("detached");
   const [currentMode, setCurrentMode] = useState(nanoid());
   const [signPath, setSignPath] = useState(null);
@@ -155,6 +156,11 @@ const DesignerWrapper = ({
       handleUpdateCanvas(signPath);
     }
   }, [signPath]);
+  useEffect(() => {
+    if (!viewOnlyMode && clickedIcon) {
+      handleUpdateCanvas(clickedIcon);
+    }
+  }, [clickedIcon]);
 
   const handleDragOver = (event) => {
     event.preventDefault();

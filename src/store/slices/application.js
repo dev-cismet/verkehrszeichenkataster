@@ -14,6 +14,7 @@ const initialState = {
   selectedApplications: [],
   currentApplication: {},
   tempSignsLibMode: "none",
+  tempSignsLibIconClicked: null,
   timeline: [
     {
       type: "antrag",
@@ -43,6 +44,10 @@ const slice = createSlice({
     },
     storeTempSignsLibMode(state, action) {
       state.tempSignsLibMode = action.payload;
+      return state;
+    },
+    storeTempSignsLibIconClicked(state, action) {
+      state.tempSignsLibIconClicked = action.payload;
       return state;
     },
     storeTimeline(state, action) {
@@ -192,10 +197,14 @@ export const {
   updateTimelineStatus,
   deleteTimelineObject,
   storeTempSignsLibMode,
+  storeTempSignsLibIconClicked,
 } = slice.actions;
 
 export const getTempSignsLibMode = (state) => {
   return state.application.tempSignsLibMode;
+};
+export const getTempSignsLibIconClicked = (state) => {
+  return state.application.tempSignsLibIconClicked;
 };
 export const getAllApplications = (state) => {
   return state.application.allApplications;

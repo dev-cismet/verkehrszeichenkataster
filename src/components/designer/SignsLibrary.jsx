@@ -2,7 +2,10 @@ import { libraryExtractor } from "./libraryExtractor";
 import signLocal from "./signLocal.json";
 import { useEffect, useState } from "react";
 import { Input, Collapse, Divider } from "antd";
-import { storeTempSignsLibMode } from "../../store/slices/application";
+import {
+  storeTempSignsLibMode,
+  storeTempSignsLibIconClicked,
+} from "../../store/slices/application";
 import { useDispatch } from "react-redux";
 import {
   CloseOutlined,
@@ -260,7 +263,14 @@ const SignsLibrary = ({
             <img
               src={icon.fileName}
               style={singleIconStyInternalStyle}
-              onClick={() => sendMessage(icon.fileName)}
+              onClick={() => {
+                const channelParam = urlParams.get("channel");
+                if (channelParam) {
+                  sendMessage(icon.fileName);
+                } else {
+                  dispatch(storeTempSignsLibIconClicked(icon.fileName));
+                }
+              }}
             />
           </div>
         ))}
