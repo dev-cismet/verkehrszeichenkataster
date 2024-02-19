@@ -43,6 +43,13 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
         <View fixed={true}>
           <Svg style={{ height: 46 }} x="0px" y="0px">
             <Path
+              style={{
+                transform: "scale(0.35 0.35)",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                padding: 0,
+              }}
               fill="rgb(0, 0, 0)"
               d="M69.6,38.5H0v0.1c0.2,3.6,3.1,6.5,6.7,6.5H63c0.9,0,1.8-0.2,2.6-0.6
 	C68,43.5,69.5,41.2,69.6,38.5 M57,36h12.6v-7.3H57V36z M42.7,36h12.6v-7.3H42.7V36z M28.5,36h12.6v-7.3H28.5V36z M14.2,36h12.6v-7.3
@@ -65,18 +72,18 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
           fixed
           style={{
             position: "absolute",
-            bottom: 0,
-            left: 0,
+            bottom: 16,
+            left: 16,
             padding: 10,
-            fontSize: 14,
+            fontSize: 12,
             flexDirection: "row",
             alignItems: "center",
           }}
         >
           <Text style={{ fontFamily: "Open Sans", fontWeight: "bold" }}>
-            Stadt Wuppertal /{" "}
+            STADT WUPPERTAL /{" "}
           </Text>
-          <Text>Strassen und Verkehr</Text>
+          <Text>STRASSEN UND VERKEHR</Text>
         </View>
         <View
           style={{
