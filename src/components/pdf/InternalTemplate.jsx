@@ -14,13 +14,15 @@ const BorderedText = ({ title, text }) => {
       style={{
         border: 1,
         textAlign: "left",
-        fontSize: 12,
-        padding: 4,
+        fontSize: 11,
+        padding: 2,
         gap: 6,
         marginBottom: 20,
       }}
     >
-      <Text style={{ fontFamily: "Open Sans", fontStyle: "italic" }}>
+      <Text
+        style={{ fontFamily: "Open Sans", fontStyle: "italic", fontSize: 11 }}
+      >
         {title}:
       </Text>
       <Text style={{ lineHeight: 1.6, fontSize: 11 }}>{text}</Text>
@@ -89,17 +91,17 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            paddingHorizontal: 44,
+            paddingHorizontal: 50,
           }}
         >
           <View
             style={{
               flexDirection: "column",
-              gap: 24,
+              gap: 20,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{requester}</Text>
-            <Text style={{ fontSize: 14 }}>{receiver}</Text>
+            <Text style={{ fontSize: 9 }}>{requester}</Text>
+            <Text style={{ fontSize: 11 }}>{receiver}</Text>
           </View>
           <View
             style={{
@@ -107,6 +109,7 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
               gap: 2,
               alignItems: "flex-end",
               fontFamily: "Open Sans",
+              fontSize: 9,
             }}
           >
             <Text>05.01.2023/ 563 5195</Text>
@@ -115,13 +118,15 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
         </View>
         <View
           style={{
-            paddingHorizontal: 40,
+            paddingHorizontal: 50,
+            fontSize: 11,
           }}
         >
           <Text
             style={{
               textAlign: "center",
               fontWeight: 700,
+              fontSize: 10,
               fontFamily: "Open Sans",
               paddingBottom: 12,
               paddingHorizontal: 4,
@@ -132,9 +137,9 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
           <Text
             style={{
               fontWeight: "bold",
-              fontSize: 12,
+              fontSize: 10,
               fontFamily: "Open Sans",
-              paddingBottom: 6,
+              paddingBottom: 2,
               paddingHorizontal: 4,
             }}
           >
@@ -151,15 +156,14 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
               );
             }
           })}
-          <Text style={{ paddingBottom: 16, fontSize: 12, lineHeight: 1.6 }}>
+          <Text style={{ paddingBottom: 14, lineHeight: 1.6 }}>
             Mit der Bitte, die vorstehende aufgeführte/n Maßnahme/n nach § 45
             Abs. 5 StVO zu veranlassen und den Tag der Durchführung auf der
             Durchschrift mit zu teilen.
           </Text>
           <Text
             style={{
-              paddingBottom: 16,
-              fontSize: 12,
+              paddingBottom: 14,
               fontWeight: 700,
               fontFamily: "Open Sans",
             }}
@@ -168,19 +172,16 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
           </Text>
           <Text
             style={{
-              paddingBottom: 16,
-              fontSize: 12,
+              paddingBottom: 14,
               fontWeight: 700,
               fontFamily: "Open Sans",
             }}
           >
             3 - z.V.
           </Text>
-          <Text style={{ paddingBottom: 16, fontSize: 12 }}>i.A.</Text>
-          <Text style={{ paddingBottom: 16, fontSize: 12 }}>
-            Max Mustermann
-          </Text>
-          <Text style={{ paddingBottom: 16, fontSize: 12 }}>An 104. 11</Text>
+          <Text style={{ paddingBottom: 14 }}>i.A.</Text>
+          <Text style={{ paddingBottom: 14 }}>Max Mustermann</Text>
+          <Text style={{ paddingBottom: 14 }}>An 104. 11</Text>
           <View
             style={{
               flexDirection: "row",
