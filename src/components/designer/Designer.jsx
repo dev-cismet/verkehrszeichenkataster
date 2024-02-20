@@ -7,7 +7,11 @@ import { nanoid } from "nanoid";
 import TabsConnection from "./TabsConnection";
 import LibraryRoadSignsButton from "./LibraryRoadSignsButton";
 import SignsLibrary from "./SignsLibrary";
-import { getTempSignsLibIconClicked } from "../../store/slices/application";
+import {
+  getTempSignsLibIconClicked,
+  storeTempEditingDrawing,
+  getTempEditingDrawing,
+} from "../../store/slices/application";
 import { useDispatch, useSelector } from "react-redux";
 
 const DesignerWrapper = ({
@@ -17,18 +21,26 @@ const DesignerWrapper = ({
   initialElements,
   getPreviewSrcLink = () => {},
   resetDrawing = 1,
+  setViewOnlyMode = () => {},
+  drawingId = null,
 }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const canvasWrapperRef = useRef(null);
   const canvasWidthRef = useRef(null);
   const [canvasUrl, setCanvasUrl] = useState(null);
-  // const [currentId, setCurrentId] = useState(nanoid());
   const clickedIcon = useSelector(getTempSignsLibIconClicked);
+  const currentDrawing = useSelector(getTempEditingDrawing);
   const [currentId, setCurrentId] = useState("detached");
   const [currentMode, setCurrentMode] = useState(nanoid());
   const [signPath, setSignPath] = useState(null);
   const [isDragging, setIsdragging] = useState(true);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!drawingId) {
+      dispatch(storeTempEditingDrawing(nanoid()));
+    }
+  }, []);
 
   useEffect(() => {
     if (excalidrawAPI) {
@@ -163,6 +175,16 @@ const DesignerWrapper = ({
       handleUpdateCanvas(clickedIcon);
     }
   }, [clickedIcon]);
+
+  useEffect(() => {
+    if (currentDrawing) {
+      if (currentDrawing === drawingId) {
+        // dispatch(storeTempEditingDrawing(drawingId));
+      } else {
+        setViewOnlyMode(true);
+      }
+    }
+  }, [currentDrawing]);
 
   const handleDragOver = (event) => {
     event.preventDefault();

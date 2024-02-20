@@ -6,6 +6,7 @@ import {
   getCurrentApplication,
   storeCurrentApplication,
   storeTempSignsLibMode,
+  storeTempEditingDrawing,
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import Designer from "../designer/Designer";
@@ -23,6 +24,7 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
   const [resetDrawing, setResetDrawing] = useState(false);
   const anordnung = useSelector(getCurrentApplication);
   const dispatch = useDispatch();
+  const drawingId = attachment?.data?.id;
 
   const items = [
     {
@@ -30,6 +32,7 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
         <div
           onClick={() => {
             setViewOnlyMode(!viewOnlyMode);
+            dispatch(storeTempEditingDrawing(drawingId));
           }}
         >
           {viewOnlyMode ? (
@@ -134,9 +137,7 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
     });
   }
 
-  useEffect(() => {
-    dispatch(storeTempSignsLibMode("overlay"));
-  }, []);
+  // dispatch(storeTempSignsLibMode("overlay"));
 
   return (
     <div className="w-full relative py-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]">
@@ -166,6 +167,8 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
             initialElements={JSON.parse(attachment.data.drawing)}
             viewOnlyMode={viewOnlyMode}
             getPreviewSrcLink={(preview) => setDrawing(preview)}
+            setViewOnlyMode={setViewOnlyMode}
+            drawingId={drawingId}
           />
         )}
       </Card>
