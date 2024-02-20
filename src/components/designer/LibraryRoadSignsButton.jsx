@@ -42,7 +42,7 @@ const LibraryRoadSignsButton = ({
               window.open(url, "_blank", "popup=yes");
             }}
           >
-            Detached
+            Getrennt
           </div>
         </>
       ),
@@ -58,7 +58,7 @@ const LibraryRoadSignsButton = ({
               // setUrlParams({ channel: connectionId, mode: "timeline" });
             }}
           >
-            Timeline
+            Zeitleiste
           </div>
         </>
       ),
@@ -90,7 +90,7 @@ const LibraryRoadSignsButton = ({
               // setUrlParams({ channel: connectionId, mode: "inside" });
             }}
           >
-            Inside
+            Innerhalb
           </div>
         </>
       ),
@@ -106,7 +106,7 @@ const LibraryRoadSignsButton = ({
               setUrlParams({ channel: connectionId, mode: "none" });
             }}
           >
-            Close
+            Schließen
           </div>
         </>
       ),
