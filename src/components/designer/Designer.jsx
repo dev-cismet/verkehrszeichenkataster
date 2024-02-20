@@ -47,6 +47,8 @@ const DesignerWrapper = ({
     offsetX,
     offsetY
   ) {
+    const scrollXCanvas = excalidrawAPI.getAppState().scrollX;
+    const scrollYCanvas = excalidrawAPI.getAppState().scrollY;
     const centerX = offsetX
       ? offsetX
       : canvasWrapperRef.current.clientWidth / 2;
