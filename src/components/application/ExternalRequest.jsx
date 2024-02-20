@@ -12,7 +12,9 @@ import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungA
 const RequestItem = ({ text, value, inputId, fullWidth, isEdit, onChange }) => {
   return (
     <div className={`flex flex-col ${fullWidth && "w-full"} gap-2`}>
-      <label htmlFor={inputId}>{text}</label>
+      <label htmlFor={inputId} className="font-[500]">
+        {text}
+      </label>
       {isEdit ? (
         <Input
           id={inputId}
@@ -23,7 +25,7 @@ const RequestItem = ({ text, value, inputId, fullWidth, isEdit, onChange }) => {
         <div
           className={`${
             fullWidth && "w-full"
-          } font-[500] text-lg py-1 min-w-[117.7px] min-h-[32px]`}
+          } text-lg py-1 min-w-[117.7px] min-h-[32px]`}
         >
           {value}
         </div>
