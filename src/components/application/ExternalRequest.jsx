@@ -7,6 +7,7 @@ import { Button, Card, Dropdown, Input } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateTimelineData } from "../../store/slices/application";
+import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 
 const RequestItem = ({ text, value, inputId, fullWidth, isEdit, onChange }) => {
   return (
@@ -220,6 +221,15 @@ const ExternalRequest = ({ attachment, index }) => {
                   updateTimelineData({
                     timelineIndex: index,
                     values: request,
+                  })
+                );
+                dispatch(
+                  addAnordnungAction({
+                    className: "vzk_attachment_request",
+                    data: {
+                      ...request,
+                      uuid: attachment.fk_uuid,
+                    },
                   })
                 );
                 setIsEdit(false);
