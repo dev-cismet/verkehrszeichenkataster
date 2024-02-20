@@ -182,7 +182,6 @@ const DesignerWrapper = ({
           const calcWidth = determineWidth / 2;
           const calcHeight =
             ((determineWidth / img.naturalWidth) * img.naturalHeight) / 2;
-          console.log("xxx value", excalidrawAPI.getAppState().scrollY);
           const scrollXCanvas = excalidrawAPI.getAppState().scrollX;
           const scrollYCanvas = excalidrawAPI.getAppState().scrollY;
           const offsetX = event.clientX - rect.left - calcWidth - scrollXCanvas;
@@ -224,14 +223,16 @@ const DesignerWrapper = ({
           viewOnlyMode ? "only-view-mode" : ""
         }`}
         style={{
-          height: "700px",
-          display: "flex",
           position: "relative",
         }}
         onDropCapture={(event) => handleDrop(event)}
         onDragOver={handleDragOver}
       >
-        <div className="w-full" ref={canvasWrapperRef}>
+        <div
+          className="w-full"
+          ref={canvasWrapperRef}
+          style={{ height: "700px" }}
+        >
           <Excalidraw
             excalidrawAPI={(api) => setExcalidrawAPI(api)}
             UIOptions={UIOptions}
@@ -289,9 +290,19 @@ const DesignerWrapper = ({
           </Excalidraw>
         </div>
         {currentMode === "inside" && !viewOnlyMode ? (
-          <div style={{ width: "320px" }}>
+          <div
+            style={{
+              width: "270px",
+              backgroundColor: "transparent",
+              position: "absolute",
+              top: 0,
+              right: 0,
+              height: "700px",
+              zIndex: 24,
+            }}
+          >
             <SignsLibrary
-              height="650px"
+              height="700px"
               iconSize="40px"
               closeCallBack={() => setCurrentMode("none")}
             />
