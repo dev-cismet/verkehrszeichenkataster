@@ -1,10 +1,15 @@
-import { EllipsisOutlined } from "@ant-design/icons";
-import { Card, Dropdown } from "antd";
+import {
+  CloseOutlined,
+  EllipsisOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
+import { Button, Card, Dropdown } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteTimelineObject,
   getCurrentApplication,
   storeCurrentApplication,
+  updateTimelineValues,
 } from "../../store/slices/application";
 import { useParams } from "react-router-dom";
 import Designer from "../designer/Designer";
@@ -12,6 +17,7 @@ import { useState } from "react";
 import Title from "./Title";
 import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectAction";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
+import MdRedactor, { mdParser } from "../mdredactor/MdRedactor";
 
 const DrawingCard = ({ attachment, index, changeTimeline }) => {
   const { id: applicationId } = useParams();
@@ -19,6 +25,9 @@ const DrawingCard = ({ attachment, index, changeTimeline }) => {
   const [drawElements, setDrawElements] = useState([]);
   const [drawFiles, setDrawFiles] = useState([]);
   const [drawing, setDrawing] = useState("");
+  const [showEditor, setShowEditor] = useState(false);
+  const [description, setDescription] = useState("");
+
   const anordnung = useSelector(getCurrentApplication);
   const dispatch = useDispatch();
 
@@ -34,6 +43,19 @@ const DrawingCard = ({ attachment, index, changeTimeline }) => {
         </div>
       ),
       key: "0",
+    },
+    {
+      label: (
+        <div
+          onClick={() => {
+            setShowEditor(true);
+          }}
+        >
+          Beschreibung{" "}
+          {attachment?.data?.description ? "bearbeiten" : "hinzufügen"}
+        </div>
+      ),
+      key: "1",
     },
     {
       label: (
@@ -65,7 +87,7 @@ const DrawingCard = ({ attachment, index, changeTimeline }) => {
           Entfernen
         </div>
       ),
-      key: "1",
+      key: "2",
     },
   ];
 
@@ -146,6 +168,56 @@ const DrawingCard = ({ attachment, index, changeTimeline }) => {
           </div>
         }
       >
+        {showEditor && (
+          <div className="flex flex-col gap-2 mb-2">
+            <MdRedactor
+              mdDoc={attachment?.data?.description}
+              getDocument={(text) => setDescription(text)}
+            />
+            <div className="w-full flex items-center gap-2 justify-end">
+              <Button
+                icon={<CloseOutlined />}
+                onClick={() => setShowEditor(false)}
+              >
+                Abbrechen
+              </Button>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  dispatch(
+                    addAnordnungAction({
+                      className: "vzk_attachment_drawing",
+                      data: {
+                        description: description,
+                        uuid: attachment.fk_uuid,
+                      },
+                    })
+                  );
+                  dispatch(
+                    updateTimelineValues({
+                      timelineIndex: index,
+                      itemValue: description,
+                      property: "description",
+                      applicationId: applicationId,
+                    })
+                  );
+                  setShowEditor(false);
+                }}
+              >
+                Beschreibung{" "}
+                {attachment?.data?.description ? "bearbeiten" : "hinzufügen"}
+              </Button>
+            </div>
+          </div>
+        )}
+        {attachment?.data?.description && (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: mdParser.render(attachment?.data?.description || ""),
+            }}
+          />
+        )}
         {attachment?.data?.drawing && (
           <Designer
             key={viewOnlyMode}
