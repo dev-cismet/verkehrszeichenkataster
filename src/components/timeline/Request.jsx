@@ -120,7 +120,7 @@ const Request = ({ attachment, index, isInternalRequest }) => {
           </Card>
         </>
       ) : (
-        <ExternalRequest attachment={attachment} />
+        <ExternalRequest attachment={attachment} index={index} />
         // <>
         //   <Card
         //     size="small"

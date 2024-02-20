@@ -6,7 +6,7 @@ import {
 import { Button, Card, Dropdown, Input } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateTimelineValues } from "../../store/slices/application";
+import { updateTimelineData } from "../../store/slices/application";
 
 const RequestItem = ({ text, value, inputId, fullWidth, isEdit, onChange }) => {
   return (
@@ -15,7 +15,7 @@ const RequestItem = ({ text, value, inputId, fullWidth, isEdit, onChange }) => {
       {isEdit ? (
         <Input
           id={inputId}
-          value={value}
+          defaultValue={value}
           onChange={(e) => onChange(e.target.value)}
         />
       ) : (
@@ -78,7 +78,7 @@ const ExternalRequest = ({ attachment, index }) => {
             <div className="flex gap-4 w-full">
               <RequestItem
                 text="Vorname"
-                value={attachment.data.firstname}
+                value={attachment.data?.firstname}
                 inputId="requester_first_name"
                 isEdit={isEdit}
                 onChange={(text) => setRequest({ ...request, firstname: text })}
@@ -86,7 +86,7 @@ const ExternalRequest = ({ attachment, index }) => {
               />
               <RequestItem
                 text="Nachname"
-                value={attachment.data.lastname}
+                value={attachment.data?.lastname}
                 inputId="requester_last_name"
                 isEdit={isEdit}
                 onChange={(text) => setRequest({ ...request, lastname: text })}
@@ -96,7 +96,7 @@ const ExternalRequest = ({ attachment, index }) => {
             <div className="flex gap-4 w-full">
               <RequestItem
                 text="Telefonnummer"
-                value={attachment.data.phone}
+                value={attachment.data?.phone}
                 inputId="requester_phone_number"
                 isEdit={isEdit}
                 onChange={(text) => setRequest({ ...request, phone: text })}
@@ -104,7 +104,7 @@ const ExternalRequest = ({ attachment, index }) => {
               />
               <RequestItem
                 text="E-Mail"
-                value={attachment.data.email}
+                value={attachment.data?.email}
                 inputId="reqeuster_mail"
                 isEdit={isEdit}
                 onChange={(text) => setRequest({ ...request, email: text })}
@@ -114,7 +114,7 @@ const ExternalRequest = ({ attachment, index }) => {
             <div className="flex gap-4 w-full">
               <RequestItem
                 text="Straße"
-                value={attachment.data.requester_street}
+                value={attachment.data?.requester_street}
                 inputId="requester_street"
                 isEdit={isEdit}
                 onChange={(text) =>
@@ -124,7 +124,7 @@ const ExternalRequest = ({ attachment, index }) => {
               />
               <RequestItem
                 text="Hausnummer"
-                value={attachment.data.requester_street_number}
+                value={attachment.data?.requester_street_number}
                 inputId="requester_street_number"
                 isEdit={isEdit}
                 onChange={(text) =>
@@ -135,7 +135,7 @@ const ExternalRequest = ({ attachment, index }) => {
             <div className="flex gap-4 w-full">
               <RequestItem
                 text="Postleitzahl"
-                value={attachment.data.requester_postalcode}
+                value={attachment.data?.requester_postalcode}
                 inputId="requester_postalcode"
                 isEdit={isEdit}
                 onChange={(text) =>
@@ -144,7 +144,7 @@ const ExternalRequest = ({ attachment, index }) => {
               />
               <RequestItem
                 text="Stadt"
-                value={attachment.data.requester_city}
+                value={attachment.data?.requester_city}
                 inputId="requester_city"
                 isEdit={isEdit}
                 onChange={(text) =>
@@ -159,7 +159,7 @@ const ExternalRequest = ({ attachment, index }) => {
             <div className="flex gap-4 w-full">
               <RequestItem
                 text="Straße"
-                value={attachment.data.billing_street}
+                value={attachment.data?.billing_street}
                 inputId="billing_street"
                 isEdit={isEdit}
                 onChange={(text) =>
@@ -169,7 +169,7 @@ const ExternalRequest = ({ attachment, index }) => {
               />
               <RequestItem
                 text="Hausnummer"
-                value={attachment.data.billing_street_number}
+                value={attachment.data?.billing_street_number}
                 inputId="billing_street_number"
                 isEdit={isEdit}
                 onChange={(text) =>
@@ -180,7 +180,7 @@ const ExternalRequest = ({ attachment, index }) => {
             <div className="flex gap-4 w-full">
               <RequestItem
                 text="Postleitzahl"
-                value={attachment.data.billing_postal_code}
+                value={attachment.data?.billing_postal_code}
                 inputId="billing_postal_code"
                 isEdit={isEdit}
                 onChange={(text) =>
@@ -189,7 +189,7 @@ const ExternalRequest = ({ attachment, index }) => {
               />
               <RequestItem
                 text="Stadt"
-                value={attachment.data.billing_city}
+                value={attachment.data?.billing_city}
                 inputId="billing_city"
                 isEdit={isEdit}
                 onChange={(text) =>
@@ -216,6 +216,12 @@ const ExternalRequest = ({ attachment, index }) => {
               type="primary"
               icon={<PlusOutlined />}
               onClick={() => {
+                dispatch(
+                  updateTimelineData({
+                    timelineIndex: index,
+                    values: request,
+                  })
+                );
                 setIsEdit(false);
                 setRequest({});
               }}

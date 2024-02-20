@@ -67,8 +67,7 @@ const slice = createSlice({
       };
     },
     updateTimelineValues(state, action) {
-      const { timelineIndex, itemValue, property, applicationId } =
-        action.payload;
+      const { timelineIndex, itemValue, property } = action.payload;
 
       const updatedCurrentApplicationTimeline =
         state.currentApplication.vzk_anordnung_timelineArrayRelationShip.map(
@@ -79,6 +78,34 @@ const slice = createSlice({
                 data: {
                   ...value.data,
                   [property]: itemValue,
+                },
+              };
+            }
+            return value;
+          }
+        );
+
+      return {
+        ...state,
+        currentApplication: {
+          ...state.currentApplication,
+          vzk_anordnung_timelineArrayRelationShip:
+            updatedCurrentApplicationTimeline,
+        },
+      };
+    },
+    updateTimelineData(state, action) {
+      const { timelineIndex, values } = action.payload;
+
+      const updatedCurrentApplicationTimeline =
+        state.currentApplication.vzk_anordnung_timelineArrayRelationShip.map(
+          (value, index) => {
+            if (index === timelineIndex) {
+              return {
+                ...value,
+                data: {
+                  ...value.data,
+                  ...values,
                 },
               };
             }
@@ -183,6 +210,7 @@ export const {
   storeSelectedRowKeys,
   storeTimeline,
   updateTimelineValues,
+  updateTimelineData,
   updateName,
   updateTimelineTitle,
   updateTimelineStatus,
