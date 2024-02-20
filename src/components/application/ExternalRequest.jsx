@@ -5,18 +5,37 @@ import {
 } from "@ant-design/icons";
 import { Button, Card, Dropdown, Input } from "antd";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateTimelineValues } from "../../store/slices/application";
 
-const RequestItem = ({ text, value, inputId, fullWidth, isEdit }) => {
+const RequestItem = ({ text, value, inputId, fullWidth, isEdit, onChange }) => {
   return (
     <div className={`flex flex-col ${fullWidth && "w-full"} gap-2`}>
       <label htmlFor={inputId}>{text}</label>
-      {isEdit ? <Input id={inputId} value={value} /> : <div>{value}</div>}
+      {isEdit ? (
+        <Input
+          id={inputId}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      ) : (
+        <div
+          className={`${
+            fullWidth && "w-full"
+          } font-[500] text-lg py-1 min-w-[117.7px] min-h-[32px]`}
+        >
+          {value}
+        </div>
+      )}
     </div>
   );
 };
 
-const ExternalRequest = ({ attachment }) => {
+const ExternalRequest = ({ attachment, index }) => {
   const [isEdit, setIsEdit] = useState(false);
+  const [request, setRequest] = useState({});
+
+  const dispatch = useDispatch();
 
   const items = [
     {
@@ -59,62 +78,78 @@ const ExternalRequest = ({ attachment }) => {
             <div className="flex gap-4 w-full">
               <RequestItem
                 text="Vorname"
-                value={attachment.firstname}
+                value={attachment.data.firstname}
                 inputId="requester_first_name"
                 isEdit={isEdit}
+                onChange={(text) => setRequest({ ...request, firstname: text })}
                 fullWidth
               />
               <RequestItem
                 text="Nachname"
-                value={attachment.lastname}
+                value={attachment.data.lastname}
                 inputId="requester_last_name"
                 isEdit={isEdit}
+                onChange={(text) => setRequest({ ...request, lastname: text })}
                 fullWidth
               />
             </div>
             <div className="flex gap-4 w-full">
               <RequestItem
                 text="Telefonnummer"
-                value={attachment.phone}
+                value={attachment.data.phone}
                 inputId="requester_phone_number"
                 isEdit={isEdit}
+                onChange={(text) => setRequest({ ...request, phone: text })}
                 fullWidth
               />
               <RequestItem
                 text="E-Mail"
-                value={attachment.email}
+                value={attachment.data.email}
                 inputId="reqeuster_mail"
                 isEdit={isEdit}
+                onChange={(text) => setRequest({ ...request, email: text })}
                 fullWidth
               />
             </div>
             <div className="flex gap-4 w-full">
               <RequestItem
                 text="Straße"
-                value={attachment.requester_street}
+                value={attachment.data.requester_street}
                 inputId="requester_street"
                 isEdit={isEdit}
+                onChange={(text) =>
+                  setRequest({ ...request, requester_street: text })
+                }
                 fullWidth
               />
               <RequestItem
                 text="Hausnummer"
-                value={attachment.requester_street_number}
+                value={attachment.data.requester_street_number}
                 inputId="requester_street_number"
                 isEdit={isEdit}
+                onChange={(text) =>
+                  setRequest({ ...request, requester_street_number: text })
+                }
               />
             </div>
             <div className="flex gap-4 w-full">
               <RequestItem
                 text="Postleitzahl"
-                value={attachment.requester_postalcode}
+                value={attachment.data.requester_postalcode}
                 inputId="requester_postalcode"
                 isEdit={isEdit}
+                onChange={(text) =>
+                  setRequest({ ...request, requester_postalcode: text })
+                }
               />
               <RequestItem
                 text="Stadt"
-                value={attachment.requester_city}
+                value={attachment.data.requester_city}
                 inputId="requester_city"
                 isEdit={isEdit}
+                onChange={(text) =>
+                  setRequest({ ...request, requester_city: text })
+                }
                 fullWidth
               />
             </div>
@@ -124,30 +159,42 @@ const ExternalRequest = ({ attachment }) => {
             <div className="flex gap-4 w-full">
               <RequestItem
                 text="Straße"
-                value={attachment.billing_street}
+                value={attachment.data.billing_street}
                 inputId="billing_street"
                 isEdit={isEdit}
+                onChange={(text) =>
+                  setRequest({ ...request, billing_street: text })
+                }
                 fullWidth
               />
               <RequestItem
                 text="Hausnummer"
-                value={attachment.billing_street_number}
+                value={attachment.data.billing_street_number}
                 inputId="billing_street_number"
                 isEdit={isEdit}
+                onChange={(text) =>
+                  setRequest({ ...request, billing_street_number: text })
+                }
               />
             </div>
             <div className="flex gap-4 w-full">
               <RequestItem
                 text="Postleitzahl"
-                value={attachment.billing_postal_code}
+                value={attachment.data.billing_postal_code}
                 inputId="billing_postal_code"
                 isEdit={isEdit}
+                onChange={(text) =>
+                  setRequest({ ...request, billing_postal_code: text })
+                }
               />
               <RequestItem
                 text="Stadt"
-                value={attachment.billing_city}
+                value={attachment.data.billing_city}
                 inputId="billing_city"
                 isEdit={isEdit}
+                onChange={(text) =>
+                  setRequest({ ...request, billing_city: text })
+                }
                 fullWidth
               />
             </div>
@@ -156,7 +203,13 @@ const ExternalRequest = ({ attachment }) => {
 
         {isEdit && (
           <div className="w-full flex items-center gap-2 justify-end">
-            <Button icon={<CloseOutlined />} onClick={() => setIsEdit(false)}>
+            <Button
+              icon={<CloseOutlined />}
+              onClick={() => {
+                setIsEdit(false);
+                setRequest({});
+              }}
+            >
               Abbrechen
             </Button>
             <Button
@@ -164,6 +217,7 @@ const ExternalRequest = ({ attachment }) => {
               icon={<PlusOutlined />}
               onClick={() => {
                 setIsEdit(false);
+                setRequest({});
               }}
             >
               Anfrage Bearbeiten
