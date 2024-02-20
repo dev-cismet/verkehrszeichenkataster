@@ -294,7 +294,7 @@ const DesignerWrapper = ({
         {currentMode === "inside" && !viewOnlyMode ? (
           <div
             style={{
-              width: "270px",
+              width: "346px",
               backgroundColor: "transparent",
               position: "absolute",
               top: 0,

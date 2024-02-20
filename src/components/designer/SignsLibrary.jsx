@@ -297,7 +297,14 @@ const SignsLibrary = ({
               <img
                 src={icon.fileName}
                 style={singleIconStyInternalStyleWithDescription}
-                onClick={() => sendMessage(icon.fileName)}
+                onClick={() => {
+                  const channelParam = urlParams.get("channel");
+                  if (channelParam) {
+                    sendMessage(icon.fileName);
+                  } else {
+                    dispatch(storeTempSignsLibIconClicked(icon.fileName));
+                  }
+                }}
               />
             </div>
             <span style={{ fontSize: "13px", lineHeight: "1.3em" }}>
