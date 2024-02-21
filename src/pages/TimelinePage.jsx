@@ -43,11 +43,13 @@ const getBase64 = (file) =>
 
 const TimelinePage = () => {
   const { id } = useParams();
+  const headingRef = useRef(null);
   const anordnung = useSelector(getCurrentApplication);
   const signLibMode = useSelector(getSignsLibMode);
   const containerRef = useRef(null);
 
   const [containerHeight, setContainerHeight] = useState(800);
+  const [headingHeight, setHeadingHeight] = useState(144);
 
   const currentTimeline = anordnung?.vzk_anordnung_timelineArrayRelationShip;
   const isInternalRequest = anordnung?.vzk_type?.name === "internal";
@@ -77,6 +79,7 @@ const TimelinePage = () => {
         data: {
           file: file.url || file.preview,
           uuid: uuid,
+          description: "",
         },
       })
     );
@@ -127,19 +130,25 @@ const TimelinePage = () => {
     getContainerScrollHeight();
   }, [containerRef.current]);
 
+  if (headingRef.current) {
+    if (headingHeight !== headingRef.current.offsetHeight) {
+      setHeadingHeight(headingRef.current.offsetHeight);
+    }
+  }
+
   return (
     <Card
       ref={containerRef}
       bodyStyle={{
         overflowY: "auto",
         overflowX: "clip",
-        maxHeight: "84%",
+        maxHeight: `calc(100% - ${headingHeight + 6}px)`,
         height: "100%",
         marginTop: "2px",
       }}
       className="h-full w-full"
       title={
-        <div style={{ whiteSpace: "wrap" }}>
+        <div ref={headingRef} style={{ whiteSpace: "wrap" }}>
           <Heading />
         </div>
       }
@@ -164,24 +173,41 @@ const TimelinePage = () => {
                   return (
                     <Request
                       attachment={attachment}
-                      key={i}
-                      i={i}
+                      key={attachment?.uuid}
+                      index={i}
                       isInternalRequest={isInternalRequest}
                     />
                   );
                 case "text":
-                  return <Text attachment={attachment} id={i} key={i} />;
+                  return (
+                    <Text
+                      attachment={attachment}
+                      index={i}
+                      key={attachment?.uuid}
+                    />
+                  );
                 case "decision":
-                  return <Decision key={i} id={i} attachment={attachment} />;
+                  return (
+                    <Decision
+                      key={attachment?.uuid}
+                      id={i}
+                      attachment={attachment}
+                    />
+                  );
                 case "file":
-                  return <File key={i} attachment={attachment} i={i} />;
+                  return (
+                    <File
+                      key={attachment?.uuid}
+                      attachment={attachment}
+                      index={i}
+                    />
+                  );
                 case "drawing":
                   return (
                     <DrawingCard
-                      key={i}
+                      key={attachment?.uuid}
                       attachment={attachment}
-                      id={i}
-                      changeTimeline={changeTimeline}
+                      index={i}
                     />
                   );
               }

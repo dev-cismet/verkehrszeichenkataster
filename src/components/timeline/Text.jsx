@@ -16,7 +16,7 @@ import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungA
 import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectAction";
 import Title from "./Title";
 
-const Text = ({ attachment, id }) => {
+const Text = ({ attachment, index }) => {
   const { id: applicationId } = useParams();
   const [isEdit, setIsEdit] = useState(false);
   const [text, setText] = useState(attachment?.data?.text || "");
@@ -57,7 +57,7 @@ const Text = ({ attachment, id }) => {
             );
             dispatch(
               deleteTimelineObject({
-                timelineIndex: id,
+                timelineIndex: index,
               })
             );
           }}
@@ -89,7 +89,10 @@ const Text = ({ attachment, id }) => {
   };
 
   return (
-    <div className="w-full relative py-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]">
+    <div
+      id={index}
+      className="w-full relative py-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]"
+    >
       <Card
         size="small"
         type="inner"
@@ -98,7 +101,7 @@ const Text = ({ attachment, id }) => {
         }}
         title={
           <div className="w-full flex">
-            <Title attachment={attachment} index={id} />
+            <Title attachment={attachment} index={index} />
             <Dropdown
               trigger={["click"]}
               menu={{ items }}
@@ -136,7 +139,7 @@ const Text = ({ attachment, id }) => {
                   );
                   dispatch(
                     updateTimelineValues({
-                      timelineIndex: id,
+                      timelineIndex: index,
                       itemValue: text,
                       property: "text",
                       applicationId: applicationId,

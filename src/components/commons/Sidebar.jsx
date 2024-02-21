@@ -31,53 +31,58 @@ const SidebarItem = ({
   isSidebarCollapsed,
   collapsable,
   customAction,
+  index,
   children,
 }) => {
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [showCustomAction, setShowCustomAction] = useState(false);
+
+  const scrollToItem = () => {
+    document.getElementById(index)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <>
-      <Link relative="path" to={link}>
-        <div
-          className={`flex gap-4 items-center relative py-2 px-3 hover:bg-zinc-100 cursor-pointer rounded-lg ${
-            location.pathname.includes(link) && "text-primary"
-          }`}
-          onMouseEnter={() => setShowCustomAction(true)}
-          onMouseLeave={() => setShowCustomAction(false)}
-        >
-          {icon}
-          {!isSidebarCollapsed && (
-            <h4 className="mb-0 w-full truncate">{text ? text : "Text"}</h4>
-          )}
-          {collapsable && (
-            <div className="flex w-fit items-center gap-1 justify-end">
-              {showCustomAction && (
-                <div className="p-1 hover:bg-zinc-200 rounded-lg">
-                  {customAction}
-                </div>
-              )}
+      <div
+        className={`flex gap-4 items-center relative py-2 px-3 hover:bg-zinc-100 cursor-pointer rounded-lg ${
+          location.pathname.includes(link) && "text-primary"
+        }`}
+        onMouseEnter={() => setShowCustomAction(true)}
+        onMouseLeave={() => setShowCustomAction(false)}
+        onClick={() => scrollToItem()}
+      >
+        {icon}
+        {!isSidebarCollapsed && (
+          <h4 className="mb-0 w-full truncate">{text ? text : "Text"}</h4>
+        )}
+        {collapsable && (
+          <div className="flex w-fit items-center gap-1 justify-end">
+            {showCustomAction && (
               <div className="p-1 hover:bg-zinc-200 rounded-lg">
-                {isCollapsed ? (
-                  <DownOutlined
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsCollapsed(false);
-                    }}
-                  />
-                ) : (
-                  <RightOutlined
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsCollapsed(true);
-                    }}
-                  />
-                )}
+                {customAction}
               </div>
+            )}
+            <div className="p-1 hover:bg-zinc-200 rounded-lg">
+              {isCollapsed ? (
+                <DownOutlined
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsCollapsed(false);
+                  }}
+                />
+              ) : (
+                <RightOutlined
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsCollapsed(true);
+                  }}
+                />
+              )}
             </div>
-          )}
-        </div>
-      </Link>
+          </div>
+        )}
+      </div>
       {collapsable && isCollapsed && (
         <div className="ml-3 flex flex-col gap-1">{children}</div>
       )}
@@ -155,6 +160,7 @@ const Sidebar = () => {
               : item.name
           }
           key={`sidebar_timeline_${i}`}
+          index={i}
         />
       ))}
 

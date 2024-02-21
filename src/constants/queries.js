@@ -62,6 +62,7 @@ queries.drawingById = `
 query MyQuery($id: String) {
   vzk_attachment_drawing(where: {uuid: {_eq: $id}}) {
     drawing
+    description
     id
     uuid
   }
