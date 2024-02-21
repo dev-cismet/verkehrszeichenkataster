@@ -3,7 +3,6 @@ import Timeline from "../components/application/Timeline";
 import Request from "../components/timeline/Request";
 import Text from "../components/timeline/Text";
 import Decision from "../components/timeline/Decision";
-
 import "./dragger.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,11 +22,14 @@ import {
   LockOutlined,
   UnlockOutlined,
 } from "@ant-design/icons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { titleCase } from "../tools/helper";
 import addAnordnungAction from "../store/slices/actionSubslices/addAnordnungAction";
 import { v4 as uuidv4 } from "uuid";
-import { nanoid } from "@reduxjs/toolkit";
+import FloatingSignLibButton from "../components/designer/FloatingSignLibButton";
+import LibSignDrawer from "../components/designer/LibSignDrawer";
+import SignsLibrary from "../components/designer/SignsLibrary";
+import { getSignsLibMode } from "../store/slices/signsLibrary";
 
 const { Dragger } = Upload;
 
@@ -43,6 +45,10 @@ const TimelinePage = () => {
   const { id } = useParams();
   const headingRef = useRef(null);
   const anordnung = useSelector(getCurrentApplication);
+  const signLibMode = useSelector(getSignsLibMode);
+  const containerRef = useRef(null);
+
+  const [containerHeight, setContainerHeight] = useState(800);
   const [headingHeight, setHeadingHeight] = useState(144);
 
   const currentTimeline = anordnung?.vzk_anordnung_timelineArrayRelationShip;
@@ -50,7 +56,6 @@ const TimelinePage = () => {
   const status = titleCase(anordnung?.vzk_status?.name);
 
   const dispatch = useDispatch();
-
   const changeTimeline = (item) => {
     dispatch(storeTimeline({ id: id, timeline: [...currentTimeline, item] }));
     setTimeout(() => {
@@ -113,6 +118,18 @@ const TimelinePage = () => {
     });
   };
 
+  useEffect(() => {
+    const getContainerScrollHeight = () => {
+      const visibleHeight = window.innerHeight;
+      if (containerRef.current) {
+        const scrollHeight = containerRef.current.scrollHeight;
+        setContainerHeight(scrollHeight + visibleHeight);
+      }
+    };
+
+    getContainerScrollHeight();
+  }, [containerRef.current]);
+
   if (headingRef.current) {
     if (headingHeight !== headingRef.current.offsetHeight) {
       setHeadingHeight(headingRef.current.offsetHeight);
@@ -121,6 +138,7 @@ const TimelinePage = () => {
 
   return (
     <Card
+      ref={containerRef}
       bodyStyle={{
         overflowY: "auto",
         overflowX: "clip",
@@ -136,14 +154,17 @@ const TimelinePage = () => {
       }
     >
       {/* <Dragger
-          openFileDialogOnClick={false}
-          className="h-full w-full"
-          beforeUpload={(file) => {
-            handleDrop(file);
-          }}
-          fileList={[]}
-        > */}
-      <div className="flex mx-auto justify-center">
+      openFileDialogOnClick={false}
+      className="h-full w-full"
+      beforeUpload={(file) => {
+        handleDrop(file);
+      }}
+      fileList={[]}
+    > */}
+      <div
+        className="flex mx-auto justify-center"
+        // style={{ height: `${containerHeight}px`, border: "1px solid red" }}
+      >
         <div className="flex flex-col min-[1020px]:flex-row justify-between gap-4">
           <div className="flex flex-col min-[1455px]:w-[800px]">
             {currentTimeline?.map((attachment, i) => {
@@ -253,6 +274,30 @@ const TimelinePage = () => {
                   {status === "Offen" ? "Abschließen" : "Wieder eröffnen"}
                 </span>
               </div>
+              {signLibMode === "timeline" && (
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: containerHeight,
+                  }}
+                >
+                  <div style={{ position: "sticky", top: 0 }}>
+                    <SignsLibrary
+                      // iconsGap="8px"
+                      iconsGap="8px"
+                      iconSize="40px"
+                      margins="20px 0 0 0"
+                      height="650px"
+                    />
+                  </div>
+                </div>
+              )}
+              {signLibMode === "overlay" && (
+                <>
+                  <FloatingSignLibButton /> <LibSignDrawer />
+                </>
+              )}
             </div>
           </div>
         </div>

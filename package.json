@@ -23,6 +23,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@uidotdev/usehooks": "^2.4.1",
     "antd": "^5.11.2",
+    "broadcast-channel": "^7.0.0",
     "clsx": "^2.1.0",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",

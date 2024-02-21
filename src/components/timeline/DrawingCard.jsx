@@ -11,9 +11,13 @@ import {
   storeCurrentApplication,
   updateTimelineValues,
 } from "../../store/slices/application";
+import {
+  storeEditingDrawing,
+  storeSignsLibMode,
+} from "../../store/slices/signsLibrary";
 import { useParams } from "react-router-dom";
 import Designer from "../designer/Designer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Title from "./Title";
 import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectAction";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
@@ -25,11 +29,13 @@ const DrawingCard = ({ attachment, index }) => {
   const [drawElements, setDrawElements] = useState([]);
   const [drawFiles, setDrawFiles] = useState([]);
   const [drawing, setDrawing] = useState("");
+  const [resetDrawing, setResetDrawing] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
   const [description, setDescription] = useState("");
 
   const anordnung = useSelector(getCurrentApplication);
   const dispatch = useDispatch();
+  const drawingId = attachment?.data?.id;
 
   const items = [
     {
@@ -37,9 +43,20 @@ const DrawingCard = ({ attachment, index }) => {
         <div
           onClick={() => {
             setViewOnlyMode(!viewOnlyMode);
+            dispatch(storeEditingDrawing(drawingId));
           }}
         >
-          {viewOnlyMode ? "Bearbeiten" : "Abbrechen"}
+          {viewOnlyMode ? (
+            "Bearbeiten"
+          ) : (
+            <span
+              onClick={() => {
+                setResetDrawing(!resetDrawing);
+              }}
+            >
+              Abbrechen
+            </span>
+          )}
         </div>
       ),
       key: "0",
@@ -96,9 +113,8 @@ const DrawingCard = ({ attachment, index }) => {
       label: (
         <div
           onClick={() => {
-            // dispatch(
-            //   deleteTimelineObject({ timelineIndex: index, applicationId: id })
-            // );
+            setResetDrawing(!resetDrawing);
+            dispatch(storeSignsLibMode("none"));
             setViewOnlyMode(true);
             dispatch(
               addAnordnungAction({
@@ -144,6 +160,8 @@ const DrawingCard = ({ attachment, index }) => {
       key: "3",
     });
   }
+
+  dispatch(storeSignsLibMode("overlay"));
 
   return (
     <div
@@ -220,12 +238,14 @@ const DrawingCard = ({ attachment, index }) => {
         )}
         {attachment?.data?.drawing && (
           <Designer
-            key={viewOnlyMode}
+            key={resetDrawing}
             getElements={(elements) => setDrawElements(elements)}
             getFiles={(files) => setDrawFiles(files)}
             initialElements={JSON.parse(attachment.data.drawing)}
             viewOnlyMode={viewOnlyMode}
             getPreviewSrcLink={(preview) => setDrawing(preview)}
+            setViewOnlyMode={setViewOnlyMode}
+            drawingId={drawingId}
           />
         )}
       </Card>
