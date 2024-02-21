@@ -8,7 +8,6 @@ import {
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
-import { useDebounce } from "@uidotdev/usehooks";
 import ExternalRequest from "../application/ExternalRequest";
 
 const Request = ({ attachment, index, isInternalRequest }) => {
@@ -21,9 +20,6 @@ const Request = ({ attachment, index, isInternalRequest }) => {
   const [receiver, setReceiver] = useState(
     currentApplication.department_name || ""
   );
-  const [externalRequest, setExternalRequest] = useState(attachment.data);
-
-  const debouncedRequest = useDebounce(externalRequest, 700);
 
   const updateValue = (value, property) => {
     dispatch(
@@ -49,21 +45,6 @@ const Request = ({ attachment, index, isInternalRequest }) => {
     );
     setReceiver(name);
   };
-
-  if (
-    debouncedRequest !== attachment.data &&
-    debouncedRequest === externalRequest
-  ) {
-    dispatch(
-      addAnordnungAction({
-        className: "vzk_attachment_request",
-        data: {
-          ...debouncedRequest,
-          uuid: attachment.fk_uuid,
-        },
-      })
-    );
-  }
 
   return (
     <div
