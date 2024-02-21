@@ -152,21 +152,39 @@ const TimelinePage = () => {
                   return (
                     <Request
                       attachment={attachment}
-                      key={i}
+                      key={attachment?.uuid}
                       index={i}
                       isInternalRequest={isInternalRequest}
                     />
                   );
                 case "text":
-                  return <Text attachment={attachment} index={i} key={i} />;
+                  return (
+                    <Text
+                      attachment={attachment}
+                      index={i}
+                      key={attachment?.uuid}
+                    />
+                  );
                 case "decision":
-                  return <Decision key={i} id={i} attachment={attachment} />;
+                  return (
+                    <Decision
+                      key={attachment?.uuid}
+                      id={i}
+                      attachment={attachment}
+                    />
+                  );
                 case "file":
-                  return <File key={i} attachment={attachment} index={i} />;
+                  return (
+                    <File
+                      key={attachment?.uuid}
+                      attachment={attachment}
+                      index={i}
+                    />
+                  );
                 case "drawing":
                   return (
                     <DrawingCard
-                      key={i}
+                      key={attachment?.uuid}
                       attachment={attachment}
                       index={i}
                       changeTimeline={changeTimeline}
