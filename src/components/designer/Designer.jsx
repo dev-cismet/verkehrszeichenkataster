@@ -8,10 +8,10 @@ import TabsConnection from "./TabsConnection";
 import LibraryRoadSignsButton from "./LibraryRoadSignsButton";
 import SignsLibrary from "./SignsLibrary";
 import {
-  getTempSignsLibIconClicked,
-  storeTempEditingDrawing,
-  getTempEditingDrawing,
-} from "../../store/slices/application";
+  getEditingDrawing,
+  storeEditingDrawing,
+  getSignsLibIconClicked,
+} from "../../store/slices/signsLibrary";
 import { useDispatch, useSelector } from "react-redux";
 
 const DesignerWrapper = ({
@@ -28,8 +28,8 @@ const DesignerWrapper = ({
   const canvasWrapperRef = useRef(null);
   const canvasWidthRef = useRef(null);
   const [canvasUrl, setCanvasUrl] = useState(null);
-  const clickedIcon = useSelector(getTempSignsLibIconClicked);
-  const currentDrawing = useSelector(getTempEditingDrawing);
+  const clickedIcon = useSelector(getSignsLibIconClicked);
+  const currentDrawing = useSelector(getEditingDrawing);
   const [currentId, setCurrentId] = useState("detached");
   const [currentMode, setCurrentMode] = useState(nanoid());
   const [signPath, setSignPath] = useState(null);
@@ -38,7 +38,7 @@ const DesignerWrapper = ({
 
   useEffect(() => {
     if (!drawingId) {
-      dispatch(storeTempEditingDrawing(nanoid()));
+      dispatch(storeEditingDrawing(nanoid()));
     }
   }, []);
 

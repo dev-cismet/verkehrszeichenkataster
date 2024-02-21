@@ -8,7 +8,7 @@ import mappingSlice from "./slices/mapping";
 import applicationSlice from "./slices/application";
 import offlineActionDbSlice from "./slices/offlineActionDb";
 import { APP_KEY, STORAGE_PREFIX } from "../constants/vkz";
-
+import signslib from "./slices/signsLibrary";
 console.log("store initializing ....");
 
 const devToolsEnabled =
@@ -85,6 +85,7 @@ export default configureStore({
     mapping: mappingSlice.reducer,
     application: persistReducer(applicationConfig, applicationSlice.reducer),
     offlineActionDb: offlineActionDbSlice.reducer,
+    signslib: signslib.reducer,
   },
   devTools: devToolsEnabled === true && inProduction === false,
   middleware,

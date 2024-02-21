@@ -5,9 +5,13 @@ import {
   deleteTimelineObject,
   getCurrentApplication,
   storeCurrentApplication,
-  storeTempSignsLibMode,
-  storeTempEditingDrawing,
+  // storeTempSignsLibMode,
+  // storeTempEditingDrawing,
 } from "../../store/slices/application";
+import {
+  storeEditingDrawing,
+  storeSignsLibMode,
+} from "../../store/slices/signsLibrary";
 import { useParams } from "react-router-dom";
 import Designer from "../designer/Designer";
 import { useState, useEffect } from "react";
@@ -32,7 +36,7 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
         <div
           onClick={() => {
             setViewOnlyMode(!viewOnlyMode);
-            dispatch(storeTempEditingDrawing(drawingId));
+            dispatch(storeEditingDrawing(drawingId));
           }}
         >
           {viewOnlyMode ? (
@@ -90,7 +94,7 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
         <div
           onClick={() => {
             setResetDrawing(!resetDrawing);
-            dispatch(storeTempSignsLibMode("none"));
+            dispatch(storeSignsLibMode("none"));
             setViewOnlyMode(true);
             dispatch(
               addAnordnungAction({
@@ -137,7 +141,7 @@ const DrawingCard = ({ attachment, id, changeTimeline }) => {
     });
   }
 
-  // dispatch(storeTempSignsLibMode("overlay"));
+  dispatch(storeSignsLibMode("overlay"));
 
   return (
     <div className="w-full relative py-4 before:bg-zinc-200 before:absolute before:bottom-0 before:content-[''] before:block before:left-4 before:top-0 before:w-[2px]">

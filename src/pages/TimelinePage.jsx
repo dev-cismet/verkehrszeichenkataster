@@ -9,7 +9,6 @@ import {
   getCurrentApplication,
   storeTimeline,
   updateTimelineStatus,
-  getTempSignsLibMode,
 } from "../store/slices/application";
 import File from "../components/timeline/File";
 import { useParams } from "react-router-dom";
@@ -30,6 +29,7 @@ import { v4 as uuidv4 } from "uuid";
 import FloatingSignLibButton from "../components/designer/FloatingSignLibButton";
 import LibSignDrawer from "../components/designer/LibSignDrawer";
 import SignsLibrary from "../components/designer/SignsLibrary";
+import { getSignsLibMode } from "../store/slices/signsLibrary";
 
 const { Dragger } = Upload;
 
@@ -44,7 +44,7 @@ const getBase64 = (file) =>
 const TimelinePage = () => {
   const { id } = useParams();
   const anordnung = useSelector(getCurrentApplication);
-  const signLibMode = useSelector(getTempSignsLibMode);
+  const signLibMode = useSelector(getSignsLibMode);
   const containerRef = useRef(null);
 
   const [containerHeight, setContainerHeight] = useState(800);

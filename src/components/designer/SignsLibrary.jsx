@@ -3,9 +3,9 @@ import signLocal from "./signLocal.json";
 import { useEffect, useState } from "react";
 import { Input, Collapse, Divider } from "antd";
 import {
-  storeTempSignsLibMode,
-  storeTempSignsLibIconClicked,
-} from "../../store/slices/application";
+  storeSignsLibMode,
+  storeSignsLibIconClicked,
+} from "../../store/slices/signsLibrary.js";
 import { useDispatch } from "react-redux";
 import {
   CloseOutlined,
@@ -268,7 +268,7 @@ const SignsLibrary = ({
                 if (channelParam) {
                   sendMessage(icon.fileName);
                 } else {
-                  dispatch(storeTempSignsLibIconClicked(icon.fileName));
+                  dispatch(storeSignsLibIconClicked(icon.fileName));
                 }
               }}
             />
@@ -302,7 +302,7 @@ const SignsLibrary = ({
                   if (channelParam) {
                     sendMessage(icon.fileName);
                   } else {
-                    dispatch(storeTempSignsLibIconClicked(icon.fileName));
+                    dispatch(storeSignsLibIconClicked(icon.fileName));
                   }
                 }}
               />
@@ -374,7 +374,7 @@ const SignsLibrary = ({
                     }
                     closeCallBack
                       ? closeCallBack()
-                      : dispatch(storeTempSignsLibMode("none"));
+                      : dispatch(storeSignsLibMode("none"));
                   }}
                   style={{
                     // color: colorPrimary,

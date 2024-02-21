@@ -3,7 +3,8 @@ import "./designer-style.css";
 import { Dropdown, Space } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import { storeTempSignsLibMode } from "../../store/slices/application";
+// import { storeTempSignsLibMode } from "../../store/slices/application";
+import { storeSignsLibMode } from "../../store/slices/signsLibrary";
 import { useSearchParams } from "react-router-dom";
 
 const LibraryRoadSignsButton = ({
@@ -32,7 +33,7 @@ const LibraryRoadSignsButton = ({
         <>
           <div
             onClick={() => {
-              dispatch(storeTempSignsLibMode("detached"));
+              dispatch(storeSignsLibMode("detached"));
               setCurrentMode("detached");
               setIsdragging(true);
               const url =
@@ -53,7 +54,7 @@ const LibraryRoadSignsButton = ({
         <>
           <div
             onClick={() => {
-              dispatch(storeTempSignsLibMode("timeline"));
+              dispatch(storeSignsLibMode("timeline"));
               setCurrentMode("timeline");
               // setUrlParams({ channel: connectionId, mode: "timeline" });
             }}
@@ -69,7 +70,7 @@ const LibraryRoadSignsButton = ({
         <>
           <div
             onClick={() => {
-              dispatch(storeTempSignsLibMode("overlay"));
+              dispatch(storeSignsLibMode("overlay"));
               setCurrentMode("overlay");
               // setUrlParams({ channel: connectionId, mode: "overlay" });
             }}
@@ -85,7 +86,7 @@ const LibraryRoadSignsButton = ({
         <>
           <div
             onClick={() => {
-              dispatch(storeTempSignsLibMode("inside"));
+              dispatch(storeSignsLibMode("inside"));
               setCurrentMode("inside");
               // setUrlParams({ channel: connectionId, mode: "inside" });
             }}
@@ -101,7 +102,7 @@ const LibraryRoadSignsButton = ({
         <>
           <div
             onClick={() => {
-              dispatch(storeTempSignsLibMode("none"));
+              dispatch(storeSignsLibMode("none"));
               setCurrentMode("none");
               setUrlParams({ channel: connectionId, mode: "none" });
             }}
