@@ -178,13 +178,11 @@ const DesignerWrapper = ({
 
   useEffect(() => {
     if (currentDrawing) {
-      if (currentDrawing === drawingId) {
-        // dispatch(storeTempEditingDrawing(drawingId));
-      } else {
+      if (currentDrawing !== drawingId && !viewOnlyMode) {
         setViewOnlyMode(true);
       }
     }
-  }, [currentDrawing]);
+  }, [currentDrawing, viewOnlyMode]);
 
   const handleDragOver = (event) => {
     event.preventDefault();

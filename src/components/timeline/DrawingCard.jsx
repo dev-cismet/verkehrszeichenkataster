@@ -161,7 +161,9 @@ const DrawingCard = ({ attachment, index }) => {
     });
   }
 
-  dispatch(storeSignsLibMode("overlay"));
+  useEffect(() => {
+    dispatch(storeSignsLibMode("overlay"));
+  }, []);
 
   return (
     <div
