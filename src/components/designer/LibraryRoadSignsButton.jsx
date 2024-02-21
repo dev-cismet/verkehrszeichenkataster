@@ -3,7 +3,6 @@ import "./designer-style.css";
 import { Dropdown, Space } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-// import { storeTempSignsLibMode } from "../../store/slices/application";
 import { storeSignsLibMode } from "../../store/slices/signsLibrary";
 import { useSearchParams } from "react-router-dom";
 
@@ -12,7 +11,6 @@ const LibraryRoadSignsButton = ({
   setCurrentMode,
   setIsdragging,
 }) => {
-  // const signLibMode = useSelector(getTempSignsLibMode);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [urlParams, setUrlParams] = useSearchParams();
@@ -56,7 +54,6 @@ const LibraryRoadSignsButton = ({
             onClick={() => {
               dispatch(storeSignsLibMode("timeline"));
               setCurrentMode("timeline");
-              // setUrlParams({ channel: connectionId, mode: "timeline" });
             }}
           >
             Zeitleiste
@@ -72,7 +69,6 @@ const LibraryRoadSignsButton = ({
             onClick={() => {
               dispatch(storeSignsLibMode("overlay"));
               setCurrentMode("overlay");
-              // setUrlParams({ channel: connectionId, mode: "overlay" });
             }}
           >
             Overlay
@@ -88,7 +84,6 @@ const LibraryRoadSignsButton = ({
             onClick={() => {
               dispatch(storeSignsLibMode("inside"));
               setCurrentMode("inside");
-              // setUrlParams({ channel: connectionId, mode: "inside" });
             }}
           >
             Innerhalb

@@ -5,8 +5,6 @@ import {
   deleteTimelineObject,
   getCurrentApplication,
   storeCurrentApplication,
-  // storeTempSignsLibMode,
-  // storeTempEditingDrawing,
 } from "../../store/slices/application";
 import {
   storeEditingDrawing,

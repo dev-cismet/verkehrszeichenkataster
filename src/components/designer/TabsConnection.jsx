@@ -8,7 +8,6 @@ const TabsConnection = ({ channelId, addImage }) => {
   useEffect(() => {
     const newChannel = new BroadcastChannel(channelId);
     const handleMessage = (newMessage) => {
-      console.log("Received message in TempTabsConnection", newMessage);
       setMessage(newMessage);
       addImage(newMessage);
     };

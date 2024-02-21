@@ -46,7 +46,6 @@ const SignsLibrary = ({
   dataIn: signLibrary = signLocal,
   extractor = libraryExtractor,
   height = "100%",
-  // margins = "15px 0 12px 4px",
   margins = "0",
   closeCallBack,
   width = "100%",
@@ -331,7 +330,6 @@ const SignsLibrary = ({
             height,
             background: "#ffff",
             color: "#1b1b1f",
-            // boxSizing: "content-box",
           }}
         >
           <div style={{ margin: "16px 0" }}>
@@ -377,7 +375,6 @@ const SignsLibrary = ({
                       : dispatch(storeSignsLibMode("none"));
                   }}
                   style={{
-                    // color: colorPrimary,
                     fontSize: "16px",
                     fontWeight: "medium",
                     color: "#1b1b1f",
@@ -387,7 +384,6 @@ const SignsLibrary = ({
             </div>
             <Divider style={{ margin: "22px 0px" }} />
             <div style={{ margin: "15px 0px" }}>
-              {/* <span style={libraryTitle}>Suche</span> */}
               <Input
                 size="large"
                 prefix={<SearchOutlined />}

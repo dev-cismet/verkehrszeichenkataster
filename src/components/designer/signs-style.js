@@ -2,7 +2,6 @@ export const colorPrimary = "#6965db";
 export const colorInactiv = "#a5a5a5";
 export const colorTextBlack = "#1b1b1f";
 export const iconWrapperSize = {
-  // width: "28px",
   aspectRatio: "1/1",
   padding: "8px",
   boxSizing: "content-box",

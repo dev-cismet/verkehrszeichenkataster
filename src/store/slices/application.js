@@ -186,9 +186,6 @@ export const {
   updateTimelineTitle,
   updateTimelineStatus,
   deleteTimelineObject,
-  // storeTempSignsLibMode,
-  // storeTempSignsLibIconClicked,
-  // storeTempEditingDrawing,
 } = slice.actions;
 
 export const getAllApplications = (state) => {
