@@ -5,9 +5,10 @@ const Contact = () => {
     <View
       style={{
         flexDirection: "column",
-        gap: 2,
+        gap: 1,
         paddingTop: 40,
         paddingBottom: 40,
+        fontSize: 10,
       }}
     >
       <Text style={{ fontSize: 6 }}>
