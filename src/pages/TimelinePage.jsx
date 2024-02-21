@@ -187,7 +187,6 @@ const TimelinePage = () => {
                       key={attachment?.uuid}
                       attachment={attachment}
                       index={i}
-                      changeTimeline={changeTimeline}
                     />
                   );
               }

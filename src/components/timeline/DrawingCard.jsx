@@ -19,7 +19,7 @@ import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectA
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 import MdRedactor, { mdParser } from "../mdredactor/MdRedactor";
 
-const DrawingCard = ({ attachment, index, changeTimeline }) => {
+const DrawingCard = ({ attachment, index }) => {
   const { id: applicationId } = useParams();
   const [viewOnlyMode, setViewOnlyMode] = useState(true);
   const [drawElements, setDrawElements] = useState([]);
