@@ -19,7 +19,9 @@ const TextWithTitle = ({ title, text }) => {
         </Text>
       )}
       <View style={{ maxWidth: "70%" }}>
-        <Html style={{ fontSize: 12 }}>{text && mdParser.render(text)}</Html>
+        <Html style={{ fontSize: 12 }}>
+          {text && mdParser.render(text).replace(/<\/?code>/g, "")}
+        </Html>
       </View>
     </View>
   );
