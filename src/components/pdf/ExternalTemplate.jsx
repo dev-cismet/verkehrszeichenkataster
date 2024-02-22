@@ -63,7 +63,7 @@ const TextWithTitle = ({ title, text }) => {
   );
 };
 
-const ExternalTemplate = ({ timeline, title }) => {
+const ExternalTemplate = ({ timeline, title, id }) => {
   const request = timeline?.find((obj) => obj.name === "Anfrage");
 
   return (
@@ -143,11 +143,12 @@ const ExternalTemplate = ({ timeline, title }) => {
                 fontFamily: "Open Sans",
                 fontWeight: 700,
                 fontSize: 11,
+                maxWidth: "76%",
               }}
             >
               {title}
             </Text>
-            <Text style={{ fontSize: 10 }}>(Anordnung Nr. 001/2024)</Text>
+            <Text style={{ fontSize: 10 }}>(Anordnung Nr. {id}/2024)</Text>
             {timeline?.map((attachment, i) => {
               if (attachment.vzk_attachment_typ.name.toLowerCase() === "text") {
                 return (
