@@ -120,6 +120,7 @@ const MdRedactor = ({
   return (
     <div ref={menuRef}>
       <MdEditor
+        autoFocus
         style={{ width, height }}
         plugins={pluginsListSplited}
         renderHTML={(text) => mdParser.render(text)}
