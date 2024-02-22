@@ -105,6 +105,7 @@ const MdRedactor = ({
   placeholder = "",
   width = "100%",
   height = "200px",
+  removeContent = false,
 }) => {
   const [mdText, setMdText] = useState(mdDoc);
   const menuRef = useRef(null);
@@ -117,6 +118,10 @@ const MdRedactor = ({
     setMdText(text);
   };
 
+  useEffect(() => {
+    setMdText("");
+  }, [removeContent]);
+
   return (
     <div ref={menuRef}>
       <MdEditor
@@ -126,7 +131,6 @@ const MdRedactor = ({
         renderHTML={(text) => mdParser.render(text)}
         value={mdText}
         onChange={handleEditorChange}
-        // onImageUpload={onImageUpload}
         shortcuts={true}
         placeholder={placeholder}
         view={{ menu: true, md: true, html: false }}

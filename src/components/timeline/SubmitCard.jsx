@@ -21,6 +21,7 @@ import { titleCase } from "../../tools/helper";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 
 const SubmitCard = ({ changeTimeline, handleDrop }) => {
+  const [isClearText, setIsClearText] = useState(false);
   const [text, setText] = useState("");
   const [name, setName] = useState("");
   const [drawElements, setDrawElements] = useState([]);
@@ -57,7 +58,10 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                 getPreviewSrcLink={(preview) => setDrawing(preview)}
               />
             ) : (
-              <MdRedactor getDocument={(text) => setText(text)} />
+              <MdRedactor
+                getDocument={(text) => setText(text)}
+                removeContent={isClearText}
+              />
             )}
             <div className="flex items-center gap-4">
               {!useDrawing && (
@@ -210,6 +214,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
               setName("");
               setDrawElements([]);
               setUseDrawing(false);
+              setIsClearText(!isClearText);
             }}
             disabled={!text && !(drawElements.length >= 0)}
             icon={<PlusOutlined />}
