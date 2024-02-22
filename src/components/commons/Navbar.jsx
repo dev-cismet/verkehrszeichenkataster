@@ -129,6 +129,14 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
     navigate({ pathname: getApplicationPath(id) });
   };
 
+  const truncateString = (str, maxLength) => {
+    if (str.length > maxLength) {
+      return str.substring(0, maxLength) + "...";
+    } else {
+      return str;
+    }
+  };
+
   return (
     <header
       className="flex flex-col gap-2 border-solid border-b-2 border-0 border-zinc-200 bg-[#00000005]"
@@ -225,7 +233,10 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
           items={selectedApplications.map((application) => {
             return {
               label: application?.title
-                ? "#" + application.id + " " + application.title
+                ? "#" +
+                  application.id +
+                  " " +
+                  truncateString(application.title, 30)
                 : "#" + application.id + " Anordnung",
               key: application?.uuid,
             };
