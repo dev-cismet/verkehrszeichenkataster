@@ -198,7 +198,13 @@ const TagList = ({ changeTimeline }) => {
             if (checked) {
               onSelect(
                 "Fachfirmavorbehalt",
-                "Für die Aufbringung der Markierung wenden Sie sich bitte an eine der nachstehen genannten Vertragsfirmen der Stadt Wuppertal."
+                `Für die Aufbringung der Markierung wenden Sie sich bitte an eine der nachstehen genannten Vertragsfirmen der Stadt Wuppertal.
+
+                Firma Tuschhoff                                              Firma Brüntrup
+                Heidestr. 32                                                    Rödiger Str. 40
+                42349 Wuppertal                                            42283 Wuppertal
+                Tel. (0202) 47 04 03                                        Tel. (0202) 55 40 16
+                FAX (0202) 47 19 32                                       FAX (0202) 55 40 17`
               );
             } else {
               const index = timeline.findIndex(
