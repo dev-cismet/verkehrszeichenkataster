@@ -23,6 +23,7 @@ const TextWithTitle = ({ title, text }) => {
       style={{
         textAlign: "left",
         fontSize: 10,
+        paddingBottom: 10,
       }}
     >
       {title !== "Fachfirmavorbehalt" && title !== "Kostennotiz" && (
@@ -38,9 +39,25 @@ const TextWithTitle = ({ title, text }) => {
       )}
 
       <View style={{ maxWidth: "76%" }}>
-        <Html style={{ fontSize: 10 }} stylesheet={stylesheet}>
+        <Text
+          style={{
+            lineHeight: 1.3,
+            fontSize: 9,
+            fontFamily: "Open Sans",
+            fontWeight: title === "Ort" || title === "Kostennotiz" ? 700 : 600,
+            paddingTop: title === "Kostennotiz" ? 10 : 0,
+          }}
+        >
+          {text}
+        </Text>
+        {/* <Html
+          style={{
+            fontSize: 10,
+          }}
+          stylesheet={stylesheet}
+        >
           {text && mdParser.render(text).replace(/<\/?code>/g, "")}
-        </Html>
+        </Html> */}
       </View>
     </View>
   );
@@ -52,26 +69,24 @@ const ExternalTemplate = ({ timeline, title }) => {
       <Page
         size="A4"
         style={{
-          flexDirection: "row",
-          padding: 76,
-          gap: 6,
+          paddingHorizontal: 72,
+          paddingTop: 78,
+          paddingBottom: 86,
           fontSize: 14,
-          justifyContent: "space-between",
         }}
       >
-        <View style={{ flexDirection: "column" }}>
-          <View fixed={true}>
-            <Svg style={{ height: 46 }} x="0px" y="0px">
-              <Path
-                style={{
-                  transform: "scale(0.35 0.35)",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  padding: 0,
-                }}
-                fill="rgb(0, 0, 0)"
-                d="M69.6,38.5H0v0.1c0.2,3.6,3.1,6.5,6.7,6.5H63c0.9,0,1.8-0.2,2.6-0.6
+        <View fixed={true}>
+          <Svg style={{ height: 46 }} x="0px" y="0px">
+            <Path
+              style={{
+                transform: "scale(0.35 0.35)",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                padding: 0,
+              }}
+              fill="rgb(0, 0, 0)"
+              d="M69.6,38.5H0v0.1c0.2,3.6,3.1,6.5,6.7,6.5H63c0.9,0,1.8-0.2,2.6-0.6
 	C68,43.5,69.5,41.2,69.6,38.5 M57,36h12.6v-7.3H57V36z M42.7,36h12.6v-7.3H42.7V36z M28.5,36h12.6v-7.3H28.5V36z M14.2,36h12.6v-7.3
 	H14.2V36z M12.6,28.8H0V36h12.6L12.6,28.8L12.6,28.8z M145.4,6.8h2.2V0.1h-2.2c-9.5,0.1-17,7.8-17,17.3v5.7h0v5.7
 	c0,0.8-0.6,1.4-1.4,1.5c-0.8,0-1.4-0.6-1.5-1.4c0,0,0,0,0,0v-5.7h0v-5.7C125.8,8,118.4,0.2,109,0c-9.4-0.2-17.2,7.2-17.4,16.6
@@ -85,63 +100,75 @@ const ExternalTemplate = ({ timeline, title }) => {
 	h13.9v0c0.8,0,1.4,0.7,1.4,1.5v5.7l0,0v5.7c-0.2,9.4,7.3,17.1,16.7,17.3c9.4,0.2,17.1-7.3,17.3-16.7c0-0.2,0-0.4,0-0.6v-5.7h0v-5.7
 	l0,0v0c0-0.8,0.6-1.4,1.4-1.5c0.8,0,1.4,0.6,1.5,1.4c0,0,0,0,0,0v5.7l0,0v5.7c-0.2,9.4,7.2,17.2,16.6,17.4
 	c9.4,0.2,17.2-7.2,17.4-16.6c0-0.3,0-0.5,0-0.8v-5.7h0v-5.7c0-0.8,0.6-1.4,1.4-1.5v0L147.6,15.9L147.6,15.9z"
-              />
-            </Svg>
-          </View>
-          <View
-            fixed
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              padding: 0,
-              fontSize: 12,
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ fontFamily: "Open Sans", fontWeight: "bold" }}>
-              STADT WUPPERTAL /{" "}
-            </Text>
-            <Text>STRASSEN UND VERKEHR</Text>
-          </View>
-          <Contact />
-          <View style={{ textAlign: "right", width: "80%", fontSize: 10 }}>
-            <Text>15.01.2024</Text>
-          </View>
-          <Text
-            style={{
-              textDecoration: "underline",
-              fontFamily: "Open Sans",
-              fontWeight: 700,
-              fontSize: 11,
-            }}
-          >
-            {title}
+            />
+          </Svg>
+        </View>
+        <View
+          fixed
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            padding: 0,
+            paddingHorizontal: 72,
+            paddingBottom: 73,
+            fontSize: 12,
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ fontFamily: "Open Sans", fontWeight: "bold" }}>
+            STADT WUPPERTAL /{" "}
           </Text>
-          <Text style={{ fontSize: 10 }}>(Anordnung Nr. 001/2024)</Text>
-          {timeline?.map((attachment, i) => {
-            if (attachment.vzk_attachment_typ.name.toLowerCase() === "text") {
-              return (
-                <TextWithTitle
-                  key={`pdf_` + i}
-                  title={attachment.name}
-                  text={attachment?.data?.text}
-                />
-              );
-            } else if (
-              attachment.vzk_attachment_typ.name.toLowerCase() === "file"
-            ) {
-              return <Image key={`pdf_` + i} src={attachment?.data?.file} />;
-            } else if (
-              attachment.vzk_attachment_typ.name.toLowerCase() === "drawing"
-            ) {
-              return <Image key={`pdf_` + i} src={attachment.preview} />;
-            }
-          })}
+          <Text>STRASSEN UND VERKEHR</Text>
         </View>
 
-        <ExternalSidebar />
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 6,
+            justifyContent: "space-between",
+          }}
+        >
+          <View style={{ flexDirection: "column" }}>
+            <Contact />
+            <View style={{ textAlign: "right", width: "78%", fontSize: 11 }}>
+              <Text>15.01.2024</Text>
+            </View>
+            <Text
+              style={{
+                textDecoration: "underline",
+                fontFamily: "Open Sans",
+                fontWeight: 700,
+                fontSize: 11,
+              }}
+            >
+              {title}
+            </Text>
+            <Text style={{ fontSize: 10 }}>(Anordnung Nr. 001/2024)</Text>
+            {timeline?.map((attachment, i) => {
+              if (attachment.vzk_attachment_typ.name.toLowerCase() === "text") {
+                return (
+                  <TextWithTitle
+                    key={`pdf_` + i}
+                    title={attachment.name}
+                    text={attachment?.data?.text}
+                  />
+                );
+              } else if (
+                attachment.vzk_attachment_typ.name.toLowerCase() === "file"
+              ) {
+                return <Image key={`pdf_` + i} src={attachment?.data?.file} />;
+              } else if (
+                attachment.vzk_attachment_typ.name.toLowerCase() === "drawing"
+              ) {
+                return <Image key={`pdf_` + i} src={attachment.preview} />;
+              }
+            })}
+          </View>
+
+          <ExternalSidebar />
+        </View>
       </Page>
     </Document>
   );

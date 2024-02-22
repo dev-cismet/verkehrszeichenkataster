@@ -9,6 +9,7 @@ const Contact = () => {
         paddingTop: 40,
         paddingBottom: 40,
         fontSize: 10,
+        lineHeight: 1,
       }}
     >
       <Text style={{ fontSize: 6 }}>
