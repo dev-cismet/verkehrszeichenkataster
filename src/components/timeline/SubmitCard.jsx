@@ -202,6 +202,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                     name: "Text",
                   },
                   name: name,
+                  fk_uuid: uuid,
                   data: { text: text },
                 });
               }

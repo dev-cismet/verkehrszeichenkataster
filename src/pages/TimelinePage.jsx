@@ -179,7 +179,7 @@ const TimelinePage = () => {
                   return (
                     <Request
                       attachment={attachment}
-                      key={attachment?.uuid}
+                      key={attachment?.fk_uuid}
                       index={i}
                       isInternalRequest={isInternalRequest}
                     />
@@ -189,14 +189,14 @@ const TimelinePage = () => {
                     <Text
                       attachment={attachment}
                       index={i}
-                      key={attachment?.uuid}
+                      key={attachment?.fk_uuid}
                       isNewText={i === newTextIndex}
                     />
                   );
                 case "decision":
                   return (
                     <Decision
-                      key={attachment?.uuid}
+                      key={attachment?.fk_uuid}
                       id={i}
                       attachment={attachment}
                     />
@@ -204,7 +204,7 @@ const TimelinePage = () => {
                 case "file":
                   return (
                     <File
-                      key={attachment?.uuid}
+                      key={attachment?.fk_uuid}
                       attachment={attachment}
                       index={i}
                     />
@@ -212,7 +212,7 @@ const TimelinePage = () => {
                 case "drawing":
                   return (
                     <DrawingCard
-                      key={attachment?.uuid}
+                      key={attachment?.fk_uuid}
                       attachment={attachment}
                       index={i}
                     />
