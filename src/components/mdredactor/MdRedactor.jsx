@@ -106,6 +106,7 @@ const MdRedactor = ({
   width = "100%",
   height = "200px",
   removeContent = false,
+  mode = "edit",
 }) => {
   const [mdText, setMdText] = useState(mdDoc);
   const menuRef = useRef(null);
@@ -119,8 +120,10 @@ const MdRedactor = ({
   };
 
   useEffect(() => {
-    setMdText("");
-  }, [removeContent]);
+    if (mode !== "edit") {
+      setMdText("");
+    }
+  }, [removeContent, mode]);
 
   return (
     <div ref={menuRef}>
