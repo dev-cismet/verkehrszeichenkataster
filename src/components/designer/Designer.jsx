@@ -139,19 +139,21 @@ const DesignerWrapper = ({
 
   const generatePreviewHandler = async (elements) => {
     let highestElement = 0;
+    let widestElement = 0;
     if (elements) {
       elements.forEach((el) => {
         if (el.height > highestElement) {
           highestElement = el.height;
+          widestElement = el.width;
         }
       });
+
       const exportCanvas = await exportToCanvas({
         elements: excalidrawAPI.getSceneElements(),
         appState: excalidrawAPI.getAppState(),
         getDimensions: () => {
           return {
-            width: canvasWidthRef.current.clientWidth - 20,
-            _height: canvasWrapperRef.current.clientHeight,
+            width: widestElement,
             height: highestElement,
           };
         },
