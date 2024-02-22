@@ -7,8 +7,39 @@ import {
   Svg,
   Path,
 } from "@react-pdf/renderer";
+import { Html } from "react-pdf-html";
+import { mdParser } from "../mdredactor/MdRedactor";
 
 const BorderedText = ({ title, text }) => {
+  const stylesheet = {
+    p: {
+      marginTop: 0,
+      marginBottom: 0,
+      paddingTop: 1,
+      paddingBottom: 0,
+      fontSize: 11,
+      lineHeight: 1.6,
+    },
+    "*": {
+      fontFamily: "Open Sans",
+    },
+    div: {
+      fontSize: 11,
+    },
+    li: {
+      fontSize: 11,
+      margin: 0,
+      padding: 0,
+    },
+    ol: {
+      margin: 0,
+      padding: 0,
+    },
+    pre: {
+      fontSize: 10,
+    },
+  };
+
   return (
     <View
       style={{
@@ -16,6 +47,7 @@ const BorderedText = ({ title, text }) => {
         textAlign: "left",
         fontSize: 11,
         padding: 2,
+        paddingHorizontal: 4,
         gap: 6,
         marginBottom: 20,
       }}
@@ -25,7 +57,10 @@ const BorderedText = ({ title, text }) => {
       >
         {title}:
       </Text>
-      <Text style={{ lineHeight: 1.6, fontSize: 11 }}>{text}</Text>
+      <Html stylesheet={stylesheet}>
+        {text && mdParser.render(text).replace(/<\/?code>/g, "")}
+      </Html>
+      {/* <Text style={{ lineHeight: 1.6, fontSize: 11 }}>{text}</Text> */}
     </View>
   );
 };
@@ -197,7 +232,7 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
           {timeline.map((attachment) => {
             if (attachment.vzk_attachment_typ.name.toLowerCase() === "file") {
               return (
-                <View style={{ flexDirection: "column" }}>
+                <View style={{ flexDirection: "column", paddingBottom: 2 }}>
                   {attachment?.data?.description && (
                     <Text
                       style={{
@@ -222,24 +257,26 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
                   key={attachment.uuid}
                   // style={{ width: "100%", border: "1px solid red" }}
                 >
-                  {attachment?.data?.description && (
-                    <Text
+                  <View style={{ flexDirection: "column", paddingBottom: 2 }}>
+                    {attachment?.data?.description && (
+                      <Text
+                        style={{
+                          paddingBottom: 8,
+                          fontWeight: 700,
+                          fontFamily: "Open Sans",
+                        }}
+                      >
+                        {attachment?.data?.description}
+                      </Text>
+                    )}
+                    <Image
+                      src={drawingObject.base64Preview}
                       style={{
-                        paddingBottom: 8,
-                        fontWeight: 700,
-                        fontFamily: "Open Sans",
+                        maxWidth: "100%",
+                        height: "auto",
                       }}
-                    >
-                      {attachment?.data?.description}
-                    </Text>
-                  )}
-                  <Image
-                    src={drawingObject.base64Preview}
-                    style={{
-                      maxWidth: "100%",
-                      height: "auto",
-                    }}
-                  />
+                    />
+                  </View>
                 </div>
               );
             }
