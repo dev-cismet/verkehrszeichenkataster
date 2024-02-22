@@ -50,6 +50,7 @@ const TimelinePage = () => {
 
   const [containerHeight, setContainerHeight] = useState(800);
   const [headingHeight, setHeadingHeight] = useState(144);
+  const [newTextIndex, setNewTextIndex] = useState(-1);
 
   const currentTimeline = anordnung?.vzk_anordnung_timelineArrayRelationShip;
   const isInternalRequest = anordnung?.vzk_type?.name === "internal";
@@ -57,12 +58,17 @@ const TimelinePage = () => {
 
   const dispatch = useDispatch();
   const changeTimeline = (item) => {
+    setNewTextIndex(-1);
     dispatch(storeTimeline({ id: id, timeline: [...currentTimeline, item] }));
     setTimeout(() => {
       document
         .getElementById(currentTimeline.length.toString())
         ?.scrollIntoView({ behavior: "smooth" });
     }, 5);
+
+    if (item.vzk_attachment_typ.id === 2 && !item.data.text) {
+      setNewTextIndex(currentTimeline.length);
+    }
   };
 
   const handleDrop = async (file) => {
@@ -184,6 +190,7 @@ const TimelinePage = () => {
                       attachment={attachment}
                       index={i}
                       key={attachment?.uuid}
+                      isNewText={i === newTextIndex}
                     />
                   );
                 case "decision":

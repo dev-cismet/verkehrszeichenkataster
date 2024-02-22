@@ -16,9 +16,9 @@ import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungA
 import deleteObjectAction from "../../store/slices/actionSubslices/deleteObjectAction";
 import Title from "./Title";
 
-const Text = ({ attachment, index }) => {
+const Text = ({ attachment, index, isNewText }) => {
   const { id: applicationId } = useParams();
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(isNewText);
   const [text, setText] = useState(attachment?.data?.text || "");
   const dispatch = useDispatch();
 
