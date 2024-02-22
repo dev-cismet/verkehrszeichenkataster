@@ -138,6 +138,7 @@ const DrawingCard = ({ attachment, index }) => {
                       return {
                         ...item,
                         data: {
+                          ...item.data,
                           drawing: JSON.stringify({
                             elements: drawElements,
                             files: drawFiles,
