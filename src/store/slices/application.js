@@ -165,6 +165,10 @@ const slice = createSlice({
       return {
         ...state,
         selectedApplications: updatedSelectedApplications,
+        currentApplication: {
+          ...state.currentApplication,
+          title: updatedTitle,
+        },
       };
     },
     updateTimelineStatus(state, action) {

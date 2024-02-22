@@ -39,6 +39,7 @@ const Heading = () => {
         <ExternalTemplate
           timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
           title={anordnung?.title}
+          id={anordnung?.id}
         />
       ),
   });
@@ -61,6 +62,7 @@ const Heading = () => {
         <ExternalTemplate
           timeline={anordnung?.vzk_anordnung_timelineArrayRelationShip}
           title={anordnung?.title}
+          id={anordnung?.id}
         />
       )
     );
