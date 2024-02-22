@@ -234,7 +234,7 @@ const TagList = ({ changeTimeline }) => {
             if (checked) {
               onSelect(
                 "Kostennotiz",
-                "Gem. § 16 Straßen- und Wegegesetz NW sind die Kosten der Aufbringung, Unterhaltung und Entfernung der Markierung von Ihnen als Antragsteller zu tragen."
+                "**Gem. § 16 Straßen- und Wegegesetz NW sind die Kosten der Aufbringung, Unterhaltung und Entfernung der Markierung von Ihnen als Antragsteller zu tragen.**"
               );
             } else {
               const index = timeline.findIndex(
