@@ -124,29 +124,7 @@ const Sidebar = () => {
   };
 
   return (
-    // <aside
-    //   className={`relative flex min-w-[120px] h-full ${
-    //     isCollapsed ? "w-16" : "w-72"
-    //   } ${
-    //     isResetting && "transition-all duration-300 ease-in-out"
-    //   } flex-col gap-4 overflow-y-auto bg-white p-2 text-lg`}
-    // >
-    <aside className="relative flex min-w-[175px] h-full transition-all duration-300 ease-in-out flex-col gap-4 overflow-y-auto bg-white p-2 text-lg">
-      <div
-        role="button"
-        onClick={() => {
-          setIsResetting(true);
-          setIsCollapsed(!isCollapsed);
-          setTimeout(() => setIsResetting(false), 200);
-        }}
-      >
-        {isCollapsed ? (
-          <RightOutlined className="absolute right-2 top-8 h-6 w-6 p-1 cursor-pointer hover:bg-zinc-100" />
-        ) : (
-          <LeftOutlined className="absolute right-2 top-8 h-6 w-6 p-1 cursor-pointer hover:bg-zinc-100" />
-        )}
-      </div>
-
+    <aside className="relative flex min-w-[175px] w-72 h-full transition-all duration-300 ease-in-out flex-col gap-4 overflow-y-auto bg-white p-2 text-lg">
       {currentTimeline?.map((item, i) => (
         <SidebarItem
           // link={"verlauf"}
