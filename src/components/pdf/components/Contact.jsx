@@ -19,7 +19,6 @@ const Contact = ({ request }) => {
       <Text>
         {request?.firstname} {request?.lastname}
       </Text>
-      <Text>Muster GmBH</Text>
       <Text>
         {request?.requester_street} {request?.requester_street_number}
       </Text>
