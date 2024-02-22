@@ -29,7 +29,7 @@ const TextWithTitle = ({ title, text }) => {
       {title !== "Fachfirmavorbehalt" && title !== "Kostennotiz" && (
         <Text
           style={{
-            textDecoration: "underline",
+            textDecoration: title !== "Mit freundlichen Grüßen" && "underline",
             paddingTop: 6,
             paddingBottom: 1,
           }}
