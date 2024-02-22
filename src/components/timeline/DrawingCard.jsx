@@ -31,11 +31,11 @@ const DrawingCard = ({ attachment, index }) => {
   const [drawing, setDrawing] = useState("");
   const [resetDrawing, setResetDrawing] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
+  const [drawingId, setDrawingId] = useState(null);
   const [description, setDescription] = useState("");
 
   const anordnung = useSelector(getCurrentApplication);
   const dispatch = useDispatch();
-  const drawingId = attachment?.data?.id;
 
   const items = [
     {
@@ -165,6 +165,50 @@ const DrawingCard = ({ attachment, index }) => {
     dispatch(storeSignsLibMode("overlay"));
   }, []);
 
+  useEffect(() => {
+    if (attachment?.data?.id) {
+      setDrawingId(attachment?.data?.id);
+    }
+  }, [attachment?.data?.id]);
+
+  function handlesaveDrawing() {
+    setViewOnlyMode(true);
+    dispatch(
+      addAnordnungAction({
+        className: "vzk_attachment_drawing",
+        data: {
+          drawing: JSON.stringify({
+            elements: drawElements,
+            files: drawFiles,
+            base64Preview: drawing,
+          }),
+          uuid: attachment?.fk_uuid,
+        },
+      })
+    );
+    const copyanordnung = {
+      ...anordnung,
+      vzk_anordnung_timelineArrayRelationShip:
+        anordnung.vzk_anordnung_timelineArrayRelationShip.map((item) => {
+          if (item.fk_uuid === attachment?.fk_uuid) {
+            return {
+              ...item,
+              data: {
+                drawing: JSON.stringify({
+                  elements: drawElements,
+                  files: drawFiles,
+                  base64Preview: drawing,
+                }),
+              },
+            };
+          } else {
+            return item;
+          }
+        }),
+    };
+    dispatch(storeCurrentApplication(copyanordnung));
+  }
+
   return (
     <div
       id={index}
@@ -246,7 +290,7 @@ const DrawingCard = ({ attachment, index }) => {
             initialElements={JSON.parse(attachment.data.drawing)}
             viewOnlyMode={viewOnlyMode}
             getPreviewSrcLink={(preview) => setDrawing(preview)}
-            setViewOnlyMode={setViewOnlyMode}
+            saveDrawing={handlesaveDrawing}
             drawingId={drawingId}
           />
         )}

@@ -21,7 +21,7 @@ const DesignerWrapper = ({
   initialElements,
   getPreviewSrcLink = () => {},
   resetDrawing = 1,
-  setViewOnlyMode = () => {},
+  saveDrawing = () => {},
   drawingId = null,
 }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
@@ -59,8 +59,6 @@ const DesignerWrapper = ({
     offsetX,
     offsetY
   ) {
-    const scrollXCanvas = excalidrawAPI.getAppState().scrollX;
-    const scrollYCanvas = excalidrawAPI.getAppState().scrollY;
     const centerX = offsetX
       ? offsetX
       : canvasWrapperRef.current.clientWidth / 2;
@@ -177,12 +175,12 @@ const DesignerWrapper = ({
   }, [clickedIcon]);
 
   useEffect(() => {
-    if (currentDrawing) {
+    if (currentDrawing && drawingId) {
       if (currentDrawing !== drawingId && !viewOnlyMode) {
-        setViewOnlyMode(true);
+        saveDrawing();
       }
     }
-  }, [currentDrawing, viewOnlyMode]);
+  }, [currentDrawing, drawingId]);
 
   const handleDragOver = (event) => {
     event.preventDefault();
