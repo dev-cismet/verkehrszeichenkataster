@@ -15,7 +15,7 @@ const stylesheet = {
     marginTop: 0,
     marginBottom: 0,
     paddingTop: 1,
-    paddingBottom: 0,
+    paddingBottom: 4,
     fontSize: 11,
     lineHeight: 1.6,
   },
@@ -29,6 +29,7 @@ const stylesheet = {
     fontSize: 11,
     margin: 0,
     padding: 0,
+    width: "90%",
   },
   ol: {
     margin: 0,
