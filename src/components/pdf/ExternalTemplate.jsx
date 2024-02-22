@@ -16,6 +16,27 @@ const TextWithTitle = ({ title, text }) => {
   const stylesheet = {
     p: {
       marginTop: 0,
+      marginBottom: 0,
+      paddingTop: 1,
+      paddingBottom: 10,
+      fontSize: 9,
+    },
+    "*": {
+      fontFamily: "Open Sans",
+    },
+    div: {
+      fontSize: 10,
+    },
+    li: {
+      margin: 0,
+      padding: 0,
+    },
+    ol: {
+      margin: 0,
+      padding: 0,
+    },
+    pre: {
+      fontSize: 10,
     },
   };
   return (
@@ -23,7 +44,6 @@ const TextWithTitle = ({ title, text }) => {
       style={{
         textAlign: "left",
         fontSize: 10,
-        paddingBottom: 10,
       }}
     >
       {title !== "Fachfirmavorbehalt" && title !== "Kostennotiz" && (
@@ -38,26 +58,10 @@ const TextWithTitle = ({ title, text }) => {
         </Text>
       )}
 
-      <View style={{ maxWidth: "76%" }}>
-        <Text
-          style={{
-            lineHeight: 1.3,
-            fontSize: 9,
-            fontFamily: "Open Sans",
-            fontWeight: title === "Ort" || title === "Kostennotiz" ? 700 : 600,
-            paddingTop: title === "Kostennotiz" ? 10 : 0,
-          }}
-        >
-          {text}
-        </Text>
-        {/* <Html
-          style={{
-            fontSize: 10,
-          }}
-          stylesheet={stylesheet}
-        >
+      <View style={{ maxWidth: "96%" }}>
+        <Html stylesheet={stylesheet}>
           {text && mdParser.render(text).replace(/<\/?code>/g, "")}
-        </Html> */}
+        </Html>
       </View>
     </View>
   );
@@ -132,9 +136,9 @@ const ExternalTemplate = ({ timeline, title, id }) => {
             justifyContent: "space-between",
           }}
         >
-          <View style={{ flexDirection: "column" }}>
+          <View style={{ flexDirection: "column", width: "100%" }}>
             <Contact request={request?.data} />
-            <View style={{ textAlign: "right", width: "78%", fontSize: 11 }}>
+            <View style={{ textAlign: "right", width: "100%", fontSize: 11 }}>
               <Text>15.01.2024</Text>
             </View>
             <Text
@@ -161,11 +165,53 @@ const ExternalTemplate = ({ timeline, title, id }) => {
               } else if (
                 attachment.vzk_attachment_typ.name.toLowerCase() === "file"
               ) {
-                return <Image key={`pdf_` + i} src={attachment?.data?.file} />;
+                return (
+                  <View style={{ flexDirection: "column" }}>
+                    {attachment?.data?.description && (
+                      <Text
+                        style={{
+                          paddingBottom: 8,
+                          fontWeight: 700,
+                          fontFamily: "Open Sans",
+                        }}
+                      >
+                        {attachment?.data?.description}
+                      </Text>
+                    )}
+                    <Image key={attachment.uuid} src={attachment?.data?.file} />
+                  </View>
+                );
               } else if (
-                attachment.vzk_attachment_typ.name.toLowerCase() === "drawing"
+                attachment.vzk_attachment_typ.name.toLowerCase() ===
+                  "drawing" &&
+                attachment?.data?.drawing
               ) {
-                return <Image key={`pdf_` + i} src={attachment.preview} />;
+                const drawingObject = JSON.parse(attachment.data.drawing);
+                return (
+                  <div
+                    key={attachment.uuid}
+                    // style={{ width: "100%", border: "1px solid red" }}
+                  >
+                    {attachment?.data?.description && (
+                      <Text
+                        style={{
+                          paddingBottom: 8,
+                          fontWeight: 700,
+                          fontFamily: "Open Sans",
+                        }}
+                      >
+                        {attachment?.data?.description}
+                      </Text>
+                    )}
+                    <Image
+                      src={drawingObject.base64Preview}
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto",
+                      }}
+                    />
+                  </div>
+                );
               }
             })}
           </View>

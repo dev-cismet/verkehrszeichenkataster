@@ -2,7 +2,15 @@ import { Text, View } from "@react-pdf/renderer";
 
 const ExternalSidebar = () => {
   return (
-    <View style={{ flexDirection: "column", gap: 17, fontSize: 8 }}>
+    <View
+      style={{
+        flexDirection: "column",
+        gap: 17,
+        fontSize: 8,
+        width: "30%",
+        height: "auto",
+      }}
+    >
       <View style={{ flexDirection: "column", gap: 1 }}>
         <Text style={{ fontFamily: "Open Sans", fontWeight: 700, fontSize: 9 }}>
           Stadt Wuppertal
