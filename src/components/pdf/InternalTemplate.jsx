@@ -10,36 +10,36 @@ import {
 import { Html } from "react-pdf-html";
 import { mdParser } from "../mdredactor/MdRedactor";
 
-const BorderedText = ({ title, text }) => {
-  const stylesheet = {
-    p: {
-      marginTop: 0,
-      marginBottom: 0,
-      paddingTop: 1,
-      paddingBottom: 0,
-      fontSize: 11,
-      lineHeight: 1.6,
-    },
-    "*": {
-      fontFamily: "Open Sans",
-    },
-    div: {
-      fontSize: 11,
-    },
-    li: {
-      fontSize: 11,
-      margin: 0,
-      padding: 0,
-    },
-    ol: {
-      margin: 0,
-      padding: 0,
-    },
-    pre: {
-      fontSize: 10,
-    },
-  };
+const stylesheet = {
+  p: {
+    marginTop: 0,
+    marginBottom: 0,
+    paddingTop: 1,
+    paddingBottom: 0,
+    fontSize: 11,
+    lineHeight: 1.6,
+  },
+  "*": {
+    fontFamily: "Open Sans",
+  },
+  div: {
+    fontSize: 11,
+  },
+  li: {
+    fontSize: 11,
+    margin: 0,
+    padding: 0,
+  },
+  ol: {
+    margin: 0,
+    padding: 0,
+  },
+  pre: {
+    fontSize: 10,
+  },
+};
 
+const BorderedText = ({ title, text }) => {
   return (
     <View
       style={{
@@ -59,7 +59,6 @@ const BorderedText = ({ title, text }) => {
       <Html stylesheet={stylesheet}>
         {text && mdParser.render(text).replace(/<\/?code>/g, "")}
       </Html>
-      {/* <Text style={{ lineHeight: 1.6, fontSize: 11 }}>{text}</Text> */}
     </View>
   );
 };
@@ -72,7 +71,7 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
         style={{
           paddingHorizontal: 30,
           paddingVertical: 30,
-          paddingBottom: 40,
+          paddingBottom: 46,
           fontSize: 12,
         }}
       >
@@ -262,15 +261,12 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
                   >
                     <View style={{ flexDirection: "column", paddingBottom: 2 }}>
                       {attachment?.data?.description && (
-                        <Text
-                          style={{
-                            paddingBottom: 8,
-                            fontWeight: 700,
-                            fontFamily: "Open Sans",
-                          }}
-                        >
-                          {attachment?.data?.description}
-                        </Text>
+                        <Html stylesheet={stylesheet}>
+                          {attachment?.data?.description &&
+                            mdParser
+                              .render(attachment?.data?.description)
+                              .replace(/<\/?code>/g, "")}
+                        </Html>
                       )}
                       <Image
                         src={drawingObject.base64Preview}
