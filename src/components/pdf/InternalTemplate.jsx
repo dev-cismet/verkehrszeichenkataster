@@ -212,32 +212,39 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
                   <Image key={attachment.uuid} src={attachment?.data?.file} />
                 </View>
               );
+            } else if (
+              attachment.vzk_attachment_typ.name.toLowerCase() === "drawing" &&
+              attachment?.data?.drawing
+            ) {
+              const drawingObject = JSON.parse(attachment.data.drawing);
+              return (
+                <div
+                  key={attachment.uuid}
+                  // style={{ width: "100%", border: "1px solid red" }}
+                >
+                  {attachment?.data?.description && (
+                    <Text
+                      style={{
+                        paddingBottom: 8,
+                        fontWeight: 700,
+                        fontFamily: "Open Sans",
+                      }}
+                    >
+                      {attachment?.data?.description}
+                    </Text>
+                  )}
+                  <Image
+                    src={drawingObject.base64Preview}
+                    style={{
+                      maxWidth: "100%",
+                      height: "auto",
+                    }}
+                  />
+                </div>
+              );
             }
           })}
         </View>
-
-        {timeline.map((attachment) => {
-          if (
-            attachment.vzk_attachment_typ.name.toLowerCase() === "drawing" &&
-            attachment?.data?.drawing
-          ) {
-            const drawingObject = JSON.parse(attachment.data.drawing);
-            return (
-              <div
-                key={attachment.uuid}
-                // style={{ width: "100%", border: "1px solid red" }}
-              >
-                <Image
-                  src={drawingObject.base64Preview}
-                  style={{
-                    maxWidth: "100%",
-                    height: "auto",
-                  }}
-                />
-              </div>
-            );
-          }
-        })}
       </Page>
     </Document>
   );
