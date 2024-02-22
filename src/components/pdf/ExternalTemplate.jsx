@@ -147,7 +147,7 @@ const ExternalTemplate = ({ timeline, title, id }) => {
                 fontFamily: "Open Sans",
                 fontWeight: 700,
                 fontSize: 11,
-                maxWidth: "76%",
+                maxWidth: "96%",
               }}
             >
               {title}
