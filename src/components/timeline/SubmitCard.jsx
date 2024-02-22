@@ -61,6 +61,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
               <MdRedactor
                 getDocument={(text) => setText(text)}
                 removeContent={isClearText}
+                mode="create"
               />
             )}
             <div className="flex items-center gap-4">
