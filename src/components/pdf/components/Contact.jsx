@@ -1,6 +1,6 @@
 import { Text, View } from "@react-pdf/renderer";
 
-const Contact = () => {
+const Contact = ({ request }) => {
   return (
     <View
       style={{
@@ -16,10 +16,16 @@ const Contact = () => {
         Stadt Wuppertal - 104.11 - 42269 Wuppertal
       </Text>
       <Text>Herr</Text>
-      <Text>Max Mustermann</Text>
+      <Text>
+        {request?.firstname} {request?.lastname}
+      </Text>
       <Text>Muster GmBH</Text>
-      <Text>Musterstraße 32</Text>
-      <Text>42285 Wuppertal</Text>
+      <Text>
+        {request?.requester_street} {request?.requester_street_number}
+      </Text>
+      <Text>
+        {request?.requester_postalcode} {request?.requester_city}
+      </Text>
     </View>
   );
 };

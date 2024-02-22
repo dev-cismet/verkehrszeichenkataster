@@ -64,6 +64,8 @@ const TextWithTitle = ({ title, text }) => {
 };
 
 const ExternalTemplate = ({ timeline, title }) => {
+  const request = timeline?.find((obj) => obj.name === "Anfrage");
+
   return (
     <Document>
       <Page
@@ -131,7 +133,7 @@ const ExternalTemplate = ({ timeline, title }) => {
           }}
         >
           <View style={{ flexDirection: "column" }}>
-            <Contact />
+            <Contact request={request?.data} />
             <View style={{ textAlign: "right", width: "78%", fontSize: 11 }}>
               <Text>15.01.2024</Text>
             </View>
