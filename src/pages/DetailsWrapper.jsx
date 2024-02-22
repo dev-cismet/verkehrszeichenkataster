@@ -33,7 +33,12 @@ const DetailsWrapper = () => {
       },
       {
         src: "https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-800.ttf",
-        fontWeight: 800,
+        fontWeight: "bold",
+      },
+      {
+        src: "https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-800italic.ttf",
+        fontWeight: "bold",
+        fontStyle: "italic",
       },
       {
         src: "https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-italic.ttf",
