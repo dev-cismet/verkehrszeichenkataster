@@ -151,7 +151,7 @@ const File = ({ attachment, index }) => {
         {url && (
           <>
             {getDataTypeFromBase64(url) === "image" && (
-              <div className="w-full rounded-lg">
+              <div className="w-full rounded-lg flex items-center justify-center">
                 <img
                   key={index}
                   alt={attachment?.name}
