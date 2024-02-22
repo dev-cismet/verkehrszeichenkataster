@@ -45,7 +45,6 @@ const BorderedText = ({ title, text }) => {
       style={{
         border: 1,
         textAlign: "left",
-        fontSize: 11,
         padding: 2,
         paddingHorizontal: 4,
         gap: 6,
@@ -71,9 +70,9 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
       <Page
         size="A4"
         style={{
-          flexDirection: "column",
-          padding: 20,
-          gap: 6,
+          paddingHorizontal: 30,
+          paddingVertical: 30,
+          paddingBottom: 40,
           fontSize: 12,
         }}
       >
@@ -109,9 +108,11 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
           fixed
           style={{
             position: "absolute",
-            bottom: 16,
-            left: 16,
-            padding: 10,
+            bottom: 0,
+            left: 0,
+            paddingHorizontal: 30,
+            paddingVertical: 30,
+            paddingBottom: 22,
             fontSize: 12,
             flexDirection: "row",
             alignItems: "center",
@@ -122,141 +123,117 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
           </Text>
           <Text>STRASSEN UND VERKEHR</Text>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingHorizontal: 50,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "column",
-              gap: 20,
-            }}
-          >
-            <Text style={{ fontSize: 9 }}>{requester}</Text>
-            <Text style={{ fontSize: 11 }}>{receiver}</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: "column",
-              gap: 2,
-              alignItems: "flex-end",
-              fontFamily: "Open Sans",
-              fontSize: 9,
-            }}
-          >
-            <Text>05.01.2023/ 563 5195</Text>
-            <Text>Max.Mustermann@stadt.wuppertal.de</Text>
-          </View>
-        </View>
-        <View
-          style={{
-            paddingHorizontal: 50,
-            fontSize: 11,
-          }}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              fontWeight: 700,
-              fontSize: 10,
-              fontFamily: "Open Sans",
-              paddingBottom: 12,
-              paddingHorizontal: 4,
-            }}
-          >
-            Nr.: {id}/2023 Prio:
-          </Text>
-          <Text
-            style={{
-              fontWeight: "bold",
-              fontSize: 10,
-              fontFamily: "Open Sans",
-              paddingBottom: 2,
-              paddingHorizontal: 4,
-            }}
-          >
-            {title}
-          </Text>
-          {timeline.map((attachment) => {
-            if (attachment.vzk_attachment_typ.name.toLowerCase() === "text") {
-              return (
-                <BorderedText
-                  key={attachment.uuid}
-                  title={attachment.name}
-                  text={attachment?.data?.text}
-                />
-              );
-            }
-          })}
-          <Text style={{ paddingBottom: 14, lineHeight: 1.6 }}>
-            Mit der Bitte, die vorstehende aufgeführte/n Maßnahme/n nach § 45
-            Abs. 5 StVO zu veranlassen und den Tag der Durchführung auf der
-            Durchschrift mit zu teilen.
-          </Text>
-          <Text
-            style={{
-              paddingBottom: 14,
-              fontWeight: 700,
-              fontFamily: "Open Sans",
-            }}
-          >
-            2 - Polizeipräsident / Direktion Verkehr - z.K.
-          </Text>
-          <Text
-            style={{
-              paddingBottom: 14,
-              fontWeight: 700,
-              fontFamily: "Open Sans",
-            }}
-          >
-            3 - z.V.
-          </Text>
-          <Text style={{ paddingBottom: 14 }}>i.A.</Text>
-          <Text style={{ paddingBottom: 14 }}>Max Mustermann</Text>
-          <Text style={{ paddingBottom: 14 }}>An 104. 11</Text>
+        <View style={{ flexDirection: "column", gap: 6 }}>
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              paddingBottom: 16,
+              paddingHorizontal: 50,
             }}
           >
-            <Text>Die angeordnete/n Maßnahme/n wurden/n am</Text>
-            <Text>durchgeführt.</Text>
+            <View
+              style={{
+                flexDirection: "column",
+                gap: 20,
+              }}
+            >
+              <Text style={{ fontSize: 9 }}>{requester}</Text>
+              <Text style={{ fontSize: 11 }}>{receiver}</Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "column",
+                gap: 2,
+                alignItems: "flex-end",
+                fontFamily: "Open Sans",
+                fontSize: 9,
+              }}
+            >
+              <Text>05.01.2023/ 563 5195</Text>
+              <Text>Max.Mustermann@stadt.wuppertal.de</Text>
+            </View>
           </View>
-        </View>
-        <View break>
-          {timeline.map((attachment) => {
-            if (attachment.vzk_attachment_typ.name.toLowerCase() === "file") {
-              return (
-                <View style={{ flexDirection: "column", paddingBottom: 2 }}>
-                  {attachment?.data?.description && (
-                    <Text
-                      style={{
-                        paddingBottom: 8,
-                        fontWeight: 700,
-                        fontFamily: "Open Sans",
-                      }}
-                    >
-                      {attachment?.data?.description}
-                    </Text>
-                  )}
-                  <Image key={attachment.uuid} src={attachment?.data?.file} />
-                </View>
-              );
-            } else if (
-              attachment.vzk_attachment_typ.name.toLowerCase() === "drawing" &&
-              attachment?.data?.drawing
-            ) {
-              const drawingObject = JSON.parse(attachment.data.drawing);
-              return (
-                <div
-                  key={attachment.uuid}
-                  // style={{ width: "100%", border: "1px solid red" }}
-                >
+          <View
+            style={{
+              paddingHorizontal: 34,
+              fontSize: 11,
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                fontWeight: 700,
+                fontSize: 10,
+                fontFamily: "Open Sans",
+                paddingBottom: 12,
+                paddingHorizontal: 4,
+              }}
+            >
+              Nr.: {id}/2023 Prio:
+            </Text>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 10,
+                fontFamily: "Open Sans",
+                paddingBottom: 2,
+                paddingHorizontal: 4,
+              }}
+            >
+              {title}
+            </Text>
+            {timeline.map((attachment) => {
+              if (attachment.vzk_attachment_typ.name.toLowerCase() === "text") {
+                return (
+                  <BorderedText
+                    key={attachment.uuid}
+                    title={attachment.name}
+                    text={attachment?.data?.text}
+                  />
+                );
+              }
+            })}
+            <Text style={{ paddingBottom: 14, lineHeight: 1.6 }}>
+              Mit der Bitte, die vorstehende aufgeführte/n Maßnahme/n nach § 45
+              Abs. 5 StVO zu veranlassen und den Tag der Durchführung auf der
+              Durchschrift mit zu teilen.
+            </Text>
+            <Text
+              style={{
+                paddingBottom: 14,
+                fontWeight: 700,
+                fontFamily: "Open Sans",
+              }}
+            >
+              2 - Polizeipräsident / Direktion Verkehr - z.K.
+            </Text>
+            <Text
+              style={{
+                paddingBottom: 14,
+                fontWeight: 700,
+                fontFamily: "Open Sans",
+              }}
+            >
+              3 - z.V.
+            </Text>
+            <Text style={{ paddingBottom: 14 }}>i.A.</Text>
+            <Text style={{ paddingBottom: 14 }}>Max Mustermann</Text>
+            <Text style={{ paddingBottom: 14 }}>An 104. 11</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingBottom: 16,
+              }}
+            >
+              <Text>Die angeordnete/n Maßnahme/n wurden/n am</Text>
+              <Text>durchgeführt.</Text>
+            </View>
+          </View>
+          <View break>
+            {timeline.map((attachment) => {
+              if (attachment.vzk_attachment_typ.name.toLowerCase() === "file") {
+                return (
                   <View style={{ flexDirection: "column", paddingBottom: 2 }}>
                     {attachment?.data?.description && (
                       <Text
@@ -269,18 +246,45 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
                         {attachment?.data?.description}
                       </Text>
                     )}
-                    <Image
-                      src={drawingObject.base64Preview}
-                      style={{
-                        maxWidth: "100%",
-                        height: "auto",
-                      }}
-                    />
+                    <Image key={attachment.uuid} src={attachment?.data?.file} />
                   </View>
-                </div>
-              );
-            }
-          })}
+                );
+              } else if (
+                attachment.vzk_attachment_typ.name.toLowerCase() ===
+                  "drawing" &&
+                attachment?.data?.drawing
+              ) {
+                const drawingObject = JSON.parse(attachment.data.drawing);
+                return (
+                  <div
+                    key={attachment.uuid}
+                    // style={{ width: "100%", border: "1px solid red" }}
+                  >
+                    <View style={{ flexDirection: "column", paddingBottom: 2 }}>
+                      {attachment?.data?.description && (
+                        <Text
+                          style={{
+                            paddingBottom: 8,
+                            fontWeight: 700,
+                            fontFamily: "Open Sans",
+                          }}
+                        >
+                          {attachment?.data?.description}
+                        </Text>
+                      )}
+                      <Image
+                        src={drawingObject.base64Preview}
+                        style={{
+                          maxWidth: "100%",
+                          height: "auto",
+                        }}
+                      />
+                    </View>
+                  </div>
+                );
+              }
+            })}
+          </View>
         </View>
       </Page>
     </Document>
