@@ -22,7 +22,12 @@ import {
 } from "../../store/slices/application";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faSignsPost } from "@fortawesome/free-solid-svg-icons";
-import { faFileLines } from "@fortawesome/free-regular-svg-icons";
+import {
+  faFileLines,
+  faFilePdf,
+  faImage,
+} from "@fortawesome/free-regular-svg-icons";
+import { getDataTypeFromBase64 } from "../../tools/helper";
 
 const SidebarItem = ({
   link,
@@ -98,7 +103,7 @@ const Sidebar = () => {
   const currentTimeline =
     selectedApplication?.vzk_anordnung_timelineArrayRelationShip;
 
-  const getIcon = (type, name) => {
+  const getIcon = (type, name, fileUrl) => {
     switch (name) {
       case "Ort":
         return <HomeOutlined className="text-lg" />;
@@ -117,7 +122,18 @@ const Sidebar = () => {
       case "text":
         return <FontAwesomeIcon icon={faFileLines} />;
       case "file":
-        return <FileOutlined className="text-lg" />;
+        if (!fileUrl) {
+          return <FileOutlined className="text-lg" />;
+        } else {
+          switch (getDataTypeFromBase64(fileUrl)) {
+            case "image":
+              return <FontAwesomeIcon icon={faImage} />;
+            case "pdf":
+              return <FontAwesomeIcon icon={faFilePdf} />;
+            default:
+              return <FileOutlined className="text-lg" />;
+          }
+        }
       case "drawing":
         return <FontAwesomeIcon icon={faPencil} />;
     }
@@ -128,7 +144,11 @@ const Sidebar = () => {
       {currentTimeline?.map((item, i) => (
         <SidebarItem
           // link={"verlauf"}
-          icon={getIcon(item.vzk_attachment_typ.name.toLowerCase(), item.name)}
+          icon={getIcon(
+            item.vzk_attachment_typ.name.toLowerCase(),
+            item.name,
+            item?.data?.file
+          )}
           isSidebarCollapsed={isCollapsed}
           text={
             item.vzk_attachment_typ.name.toLowerCase() === "request"
