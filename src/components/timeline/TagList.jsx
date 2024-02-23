@@ -82,22 +82,12 @@ const TagList = ({ changeTimeline }) => {
           checked={checkIfTimelineContainsText("Ort")}
           className={`${
             checkIfTimelineContainsText("Ort")
-              ? "bg-green-600 hover:bg-green-500"
+              ? "bg-green-600 hover:bg-green-500 cursor-not-allowed"
               : "bg-transparent"
           }`}
           onChange={(checked) => {
             if (checked) {
               onSelect("Ort", "");
-            } else {
-              const index = timeline.findIndex((obj) => obj.name === "Ort");
-              if (index >= 0) {
-                dispatch(
-                  deleteTimelineObject({
-                    timelineIndex: index,
-                    applicationId: id,
-                  })
-                );
-              }
             }
           }}
         >
@@ -107,24 +97,12 @@ const TagList = ({ changeTimeline }) => {
           checked={checkIfTimelineContainsText("Sachverhalt")}
           className={`${
             checkIfTimelineContainsText("Sachverhalt")
-              ? "bg-teal-600 hover:bg-teal-500"
+              ? "bg-teal-600 hover:bg-teal-500 cursor-not-allowed"
               : "bg-transparent"
           }`}
           onChange={(checked) => {
             if (checked) {
               onSelect("Sachverhalt", "");
-            } else {
-              const index = timeline.findIndex(
-                (obj) => obj.name === "Sachverhalt"
-              );
-              if (index >= 0) {
-                dispatch(
-                  deleteTimelineObject({
-                    timelineIndex: index,
-                    applicationId: id,
-                  })
-                );
-              }
             }
           }}
         >
@@ -134,24 +112,12 @@ const TagList = ({ changeTimeline }) => {
           checked={checkIfTimelineContainsText("Erforderliche Maßnahmen")}
           className={`${
             checkIfTimelineContainsText("Erforderliche Maßnahmen")
-              ? "bg-sky-600 hover:bg-sky-500"
+              ? "bg-sky-600 hover:bg-sky-500 cursor-not-allowed"
               : "bg-transparent"
           }`}
           onChange={(checked) => {
             if (checked) {
               onSelect("Erforderliche Maßnahmen", "");
-            } else {
-              const index = timeline.findIndex(
-                (obj) => obj.name === "Erforderliche Maßnahmen"
-              );
-              if (index >= 0) {
-                dispatch(
-                  deleteTimelineObject({
-                    timelineIndex: index,
-                    applicationId: id,
-                  })
-                );
-              }
             }
           }}
         >
@@ -161,7 +127,7 @@ const TagList = ({ changeTimeline }) => {
           checked={checkIfTimelineContainsText("Widerrufsvorbehalt")}
           className={`${
             checkIfTimelineContainsText("Widerrufsvorbehalt")
-              ? "bg-indigo-600 hover:bg-indigo-500"
+              ? "bg-indigo-600 hover:bg-indigo-500 cursor-not-allowed"
               : "bg-transparent"
           }`}
           onChange={(checked) => {
@@ -170,18 +136,6 @@ const TagList = ({ changeTimeline }) => {
                 "Widerrufsvorbehalt",
                 "Diese Genehmigung kann widerrufen werden; insbesondere wenn der zur Erteilung führende Grund wegfällt oder der Widerruf aus sonstigen Gründen geboten ist, z.B. weil sich die zugrundeliegende Sach- oder Rechtslage ändert."
               );
-            } else {
-              const index = timeline.findIndex(
-                (obj) => obj.name === "Widerrufsvorbehalt"
-              );
-              if (index >= 0) {
-                dispatch(
-                  deleteTimelineObject({
-                    timelineIndex: index,
-                    applicationId: id,
-                  })
-                );
-              }
             }
           }}
         >
@@ -191,7 +145,7 @@ const TagList = ({ changeTimeline }) => {
           checked={checkIfTimelineContainsText("Fachfirmavorbehalt")}
           className={`${
             checkIfTimelineContainsText("Fachfirmavorbehalt")
-              ? "bg-yellow-600 hover:bg-yellow-500"
+              ? "bg-yellow-600 hover:bg-yellow-500 cursor-not-allowed"
               : "bg-transparent"
           }`}
           onChange={(checked) => {
@@ -206,18 +160,6 @@ const TagList = ({ changeTimeline }) => {
                 Tel. (0202) 47 04 03                                        Tel. (0202) 55 40 16
                 FAX (0202) 47 19 32                                       FAX (0202) 55 40 17`
               );
-            } else {
-              const index = timeline.findIndex(
-                (obj) => obj.name === "Fachfirmavorbehalt"
-              );
-              if (index >= 0) {
-                dispatch(
-                  deleteTimelineObject({
-                    timelineIndex: index,
-                    applicationId: id,
-                  })
-                );
-              }
             }
           }}
         >
@@ -227,7 +169,7 @@ const TagList = ({ changeTimeline }) => {
           checked={checkIfTimelineContainsText("Kostennotiz")}
           className={`${
             checkIfTimelineContainsText("Kostennotiz")
-              ? "bg-pink-600 hover:bg-pink-500"
+              ? "bg-pink-600 hover:bg-pink-500 cursor-not-allowed"
               : "bg-transparent"
           }`}
           onChange={(checked) => {
@@ -236,18 +178,6 @@ const TagList = ({ changeTimeline }) => {
                 "Kostennotiz",
                 "**Gem. § 16 Straßen- und Wegegesetz NW sind die Kosten der Aufbringung, Unterhaltung und Entfernung der Markierung von Ihnen als Antragsteller zu tragen.**"
               );
-            } else {
-              const index = timeline.findIndex(
-                (obj) => obj.name === "Kostennotiz"
-              );
-              if (index >= 0) {
-                dispatch(
-                  deleteTimelineObject({
-                    timelineIndex: index,
-                    applicationId: id,
-                  })
-                );
-              }
             }
           }}
         >
@@ -257,24 +187,12 @@ const TagList = ({ changeTimeline }) => {
           checked={checkIfTimelineContainsText("Mit freundlichen Grüßen")}
           className={`${
             checkIfTimelineContainsText("Mit freundlichen Grüßen")
-              ? "bg-purple-600 hover:bg-purple-500"
+              ? "bg-purple-600 hover:bg-purple-500 cursor-not-allowed"
               : "bg-transparent"
           }`}
           onChange={(checked) => {
             if (checked) {
               onSelect("Mit freundlichen Grüßen", "");
-            } else {
-              const index = timeline.findIndex(
-                (obj) => obj.name === "Mit freundlichen Grüßen"
-              );
-              if (index >= 0) {
-                dispatch(
-                  deleteTimelineObject({
-                    timelineIndex: index,
-                    applicationId: id,
-                  })
-                );
-              }
             }
           }}
         >
