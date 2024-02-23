@@ -148,7 +148,7 @@ const Text = ({ attachment, index, isNewText }) => {
                   setIsEdit(false);
                 }}
               >
-                Text bearbeiten
+                Speichern
               </Button>
             </div>
           </div>
