@@ -128,6 +128,7 @@ const SubmitCard = ({ changeTimeline, handleDrop }) => {
                         elements: drawElements,
                         files: drawFiles,
                         base64Preview: drawing,
+                        description: "",
                       }),
                       uuid: uuid,
                     },
