@@ -11,8 +11,8 @@ import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungA
 
 const RequestItem = ({ text, value, inputId, fullWidth, isEdit, onChange }) => {
   return (
-    <div className={`flex flex-col ${fullWidth && "w-full"} gap-2`}>
-      <label htmlFor={inputId} className="font-[500]">
+    <div className={`flex flex-col ${fullWidth && "w-full"}`}>
+      <label htmlFor={inputId} className="font-[500] leading-tight">
         {text}
       </label>
       {isEdit ? (
@@ -76,7 +76,7 @@ const ExternalRequest = ({ attachment, index }) => {
     >
       <div className="flex flex-col w-full gap-2">
         <div className="w-full flex justify-between gap-10">
-          <div className="flex flex-col gap-4 text-start w-full">
+          <div className="flex flex-col gap-3 text-start w-full border border-solid border-black/10 h-fit rounded-md p-1">
             <span className="text-lg font-medium">Antragssteller</span>
             <div className="flex gap-4 w-full">
               <RequestItem
@@ -157,7 +157,7 @@ const ExternalRequest = ({ attachment, index }) => {
               />
             </div>
           </div>
-          <div className="flex flex-col gap-4 text-start w-full">
+          <div className="flex flex-col gap-3 text-start w-full border border-black/10 border-solid h-fit rounded-md p-1">
             <span className="text-lg font-medium">Rechnungsadresse</span>
             <div className="flex gap-4 w-full">
               <RequestItem
@@ -238,7 +238,7 @@ const ExternalRequest = ({ attachment, index }) => {
                 setRequest({});
               }}
             >
-              Anfrage Bearbeiten
+              Speichern
             </Button>
           </div>
         )}
