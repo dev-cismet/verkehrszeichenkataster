@@ -18,7 +18,7 @@ const TextWithTitle = ({ title, text }) => {
       marginTop: 0,
       marginBottom: 0,
       paddingTop: 1,
-      paddingBottom: 10,
+      paddingBottom: 4,
       fontSize: 9,
     },
     "*": {
