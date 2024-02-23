@@ -28,6 +28,8 @@ import Logo from "/cismet.svg";
 import "./input.css";
 import addAnordnungAction from "../../store/slices/actionSubslices/addAnordnungAction";
 import { getId } from "../../store/slices/offlineActionDb";
+import { faSignsPost } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const navLinks = () => {
   return [];
@@ -200,6 +202,17 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
           >
             Extern
           </Button>
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              const url =
+                window.location.origin +
+                "/verkehrszeichenkataster/#/verkehrszeichenbibliothek?channel=detached";
+              window.open(url, "_blank", "popup=yes");
+            }}
+          >
+            <FontAwesomeIcon icon={faSignsPost} />
+          </div>
           <LogoutOutlined
             className="text-2xl cursor-pointer pr-1"
             onClick={() => logout()}
