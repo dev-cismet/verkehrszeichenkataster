@@ -300,11 +300,8 @@ const TimelinePage = () => {
                   </div>
                 </div>
               )}
-              {signLibMode === "overlay" && (
-                <>
-                  <FloatingSignLibButton /> <LibSignDrawer />
-                </>
-              )}
+              <FloatingSignLibButton />
+              <LibSignDrawer />
             </div>
           </div>
         </div>
