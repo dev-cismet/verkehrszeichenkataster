@@ -1,6 +1,8 @@
 import { useState } from "react";
 import LibSignDrawer from "./LibSignDrawer";
 import { BookOutlined } from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignsPost } from "@fortawesome/free-solid-svg-icons";
 
 const floatingBtnStyle = {
   position: "fixed",
@@ -23,9 +25,14 @@ const FloatingSignLibButton = () => {
   const closeDrawerHandler = () => setOpen(false);
   return (
     <>
-      <button onClick={() => setOpen(!open)} style={floatingBtnStyle}>
-        <BookOutlined
-          style={{ fontSize: "14px", marginBottom: "15px", color: "#5B5B60" }}
+      <button
+        onClick={() => setOpen(!open)}
+        style={floatingBtnStyle}
+        className="flex items-center justify-center"
+      >
+        <FontAwesomeIcon
+          icon={faSignsPost}
+          className="text-base text-[#5B5B60]"
         />
       </button>
       <LibSignDrawer showDrawer={open} setShowDrawer={closeDrawerHandler} />
