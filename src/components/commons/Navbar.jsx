@@ -1,4 +1,4 @@
-import { Button, Input, Tabs } from "antd";
+import { Button, Input, Tabs, Tooltip } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import {
   DiffOutlined,
@@ -202,17 +202,19 @@ const NavBar = ({ width = "100%", height = 104, style, inStory }) => {
           >
             Extern
           </Button>
-          <div
-            className="cursor-pointer"
-            onClick={() => {
-              const url =
-                window.location.origin +
-                "/verkehrszeichenkataster/#/verkehrszeichenbibliothek?channel=detached";
-              window.open(url, "_blank", "popup=yes");
-            }}
-          >
-            <FontAwesomeIcon icon={faSignsPost} />
-          </div>
+          <Tooltip title="Externe Schilderbibliothek">
+            <div
+              className="cursor-pointer"
+              onClick={() => {
+                const url =
+                  window.location.origin +
+                  "/verkehrszeichenkataster/#/verkehrszeichenbibliothek?channel=detached";
+                window.open(url, "_blank", "popup=yes");
+              }}
+            >
+              <FontAwesomeIcon icon={faSignsPost} />
+            </div>
+          </Tooltip>
           <LogoutOutlined
             className="text-2xl cursor-pointer pr-1"
             onClick={() => logout()}
