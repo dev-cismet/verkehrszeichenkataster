@@ -30,85 +30,29 @@ const LibraryRoadSignsButton = ({
   const items = [
     {
       label: (
-        <>
-          <div
-            onClick={() => {
-              dispatch(storeSignsLibMode("detached"));
-              setCurrentMode("detached");
-              setIsdragging(true);
-              const url =
-                window.location.origin +
-                "/verkehrszeichenkataster/#/verkehrszeichenbibliothek" +
-                `?channel=${connectionId}`;
-              window.open(url, "_blank", "popup=yes");
-            }}
-          >
-            Getrennt
-          </div>
-        </>
+        <div
+          onClick={() => {
+            dispatch(storeSignsLibMode("timeline"));
+            setCurrentMode("timeline");
+          }}
+        >
+          Zeitleiste
+        </div>
       ),
       key: "1",
     },
     {
       label: (
-        <>
-          <div
-            onClick={() => {
-              dispatch(storeSignsLibMode("timeline"));
-              setCurrentMode("timeline");
-            }}
-          >
-            Zeitleiste
-          </div>
-        </>
+        <div
+          onClick={() => {
+            dispatch(storeSignsLibMode("inside"));
+            setCurrentMode("inside");
+          }}
+        >
+          Innerhalb
+        </div>
       ),
       key: "2",
-    },
-    {
-      label: (
-        <>
-          <div
-            onClick={() => {
-              dispatch(storeSignsLibMode("overlay"));
-              setCurrentMode("overlay");
-            }}
-          >
-            Overlay
-          </div>
-        </>
-      ),
-      key: "3",
-    },
-    {
-      label: (
-        <>
-          <div
-            onClick={() => {
-              dispatch(storeSignsLibMode("inside"));
-              setCurrentMode("inside");
-            }}
-          >
-            Innerhalb
-          </div>
-        </>
-      ),
-      key: "4",
-    },
-    {
-      label: (
-        <>
-          <div
-            onClick={() => {
-              dispatch(storeSignsLibMode("none"));
-              setCurrentMode("none");
-              setUrlParams({ channel: connectionId, mode: "none" });
-            }}
-          >
-            Schließen
-          </div>
-        </>
-      ),
-      key: "5",
     },
   ];
   return (
