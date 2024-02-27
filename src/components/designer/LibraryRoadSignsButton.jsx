@@ -64,6 +64,7 @@ const LibraryRoadSignsButton = ({
       onOpenChange={handleOpenChange}
       open={open}
       style={{ flexShrink: 0, marginLeft: "auto" }}
+      placement="bottomRight"
     >
       <div
         style={{
@@ -71,7 +72,7 @@ const LibraryRoadSignsButton = ({
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          padding: "1px",
+          padding: "17px",
           borderRadius: "7px",
           width: "33px",
           height: "33px",
