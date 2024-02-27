@@ -2,7 +2,11 @@ import { Excalidraw, MainMenu, exportToCanvas } from "@excalidraw/excalidraw";
 import { useEffect, useState, useRef } from "react";
 import "./designer-style.css";
 import { Divider } from "antd";
-import { DeleteOutlined, CameraOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  CameraOutlined,
+  ExpandOutlined,
+} from "@ant-design/icons";
 import { nanoid } from "nanoid";
 import TabsConnection from "./TabsConnection";
 import LibraryRoadSignsButton from "./LibraryRoadSignsButton";
@@ -287,6 +291,14 @@ const DesignerWrapper = ({
                 }
               >
                 <span>Vorschau erstellen</span>
+              </MainMenu.Item>
+              <MainMenu.Item
+                onSelect={() => {
+                  canvasWrapperRef.current.requestFullscreen();
+                }}
+                icon={<ExpandOutlined style={{ color: "#5B5B60" }} />}
+              >
+                <span>Vollbild</span>
               </MainMenu.Item>
               {!viewOnlyMode && (
                 <>
