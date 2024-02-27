@@ -5,6 +5,8 @@ import { SettingOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { storeSignsLibMode } from "../../store/slices/signsLibrary";
 import { useSearchParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignsPost } from "@fortawesome/free-solid-svg-icons";
 
 const LibraryRoadSignsButton = ({
   connectionId,
@@ -119,28 +121,24 @@ const LibraryRoadSignsButton = ({
       open={open}
       style={{ flexShrink: 0, marginLeft: "auto" }}
     >
-      <a onClick={(e) => e.preventDefault()}>
-        <Space>
-          <div
-            style={{
-              background: "#ECECF4",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: "1px",
-              borderRadius: "7px",
-              width: "33px",
-              height: "33px",
-              border: "1px solid white",
-              color: "#5B5B60",
-              fontSize: "12px",
-              cursor: "pointer",
-            }}
-          >
-            <SettingOutlined />
-          </div>
-        </Space>
-      </a>
+      <div
+        style={{
+          background: "#ECECF4",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "1px",
+          borderRadius: "7px",
+          width: "33px",
+          height: "33px",
+          border: "1px solid white",
+          color: "#5B5B60",
+          fontSize: "12px",
+          cursor: "pointer",
+        }}
+      >
+        <FontAwesomeIcon icon={faSignsPost} />
+      </div>
     </Dropdown>
   );
 };
