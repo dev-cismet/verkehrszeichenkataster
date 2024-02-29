@@ -126,15 +126,13 @@ const TimelinePage = () => {
 
   useEffect(() => {
     const getContainerScrollHeight = () => {
-      const visibleHeight = window.innerHeight;
       if (containerRef.current) {
-        const scrollHeight = containerRef.current.scrollHeight;
-        setContainerHeight(scrollHeight + visibleHeight);
+        setContainerHeight(containerRef.current.clientHeight);
       }
     };
 
     getContainerScrollHeight();
-  }, [containerRef.current]);
+  }, [containerRef.current, currentTimeline]);
 
   if (headingRef.current) {
     if (headingHeight !== headingRef.current.offsetHeight) {
@@ -144,7 +142,6 @@ const TimelinePage = () => {
 
   return (
     <Card
-      ref={containerRef}
       bodyStyle={{
         overflowY: "auto",
         overflowX: "clip",
@@ -172,7 +169,10 @@ const TimelinePage = () => {
         // style={{ height: `${containerHeight}px`, border: "1px solid red" }}
       >
         <div className="flex flex-col min-[1020px]:flex-row justify-between gap-4">
-          <div className="flex flex-col min-[1455px]:w-[800px]">
+          <div
+            className="flex flex-col min-[1455px]:w-[800px]"
+            ref={containerRef}
+          >
             {currentTimeline?.map((attachment, i) => {
               switch (attachment.vzk_attachment_typ?.name?.toLowerCase()) {
                 case "request":
@@ -228,78 +228,74 @@ const TimelinePage = () => {
 
           <div className="min-[1455px]:w-[370px]">
             <div className="flex flex-col w-full items-start">
-              <span className="font-semibold text-muted-foreground pb-2">
-                Zeitlicher Verlauf
-              </span>
-              <Timeline dataIn={currentTimeline} />
-              <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
-              <TagList changeTimeline={changeTimeline} />
-              <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
-              <span className="font-semibold text-muted-foreground pb-2">
-                Bearbeitung
-              </span>
               <div
-                role="button"
-                className="hover:text-primary flex gap-1 cursor-pointer font-medium"
-                onClick={() => {
-                  dispatch(
-                    addAnordnungAction({
-                      className: "vzk_anordnung",
-                      data: {
-                        vzk_status:
-                          status === "Offen"
-                            ? {
-                                id: 2,
-                                name: "geschlossen",
-                              }
-                            : {
-                                id: 1,
-                                name: "offen",
-                              },
-                        uuid: anordnung.uuid,
-                      },
-                    })
-                  );
-                  dispatch(
-                    updateTimelineStatus({
-                      updatedStatus:
-                        status === "Offen"
-                          ? {
-                              id: 2,
-                              name: "geschlossen",
-                            }
-                          : {
-                              id: 1,
-                              name: "offen",
-                            },
-                    })
-                  );
-                }}
+                className="relative w-full"
+                style={{ height: containerHeight }}
               >
-                {status === "Offen" ? <LockOutlined /> : <UnlockOutlined />}
-                <span>
-                  {status === "Offen" ? "Abschließen" : "Wieder eröffnen"}
-                </span>
-              </div>
-              {signLibMode === "timeline" && (
-                <div
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                    height: containerHeight,
-                  }}
-                >
-                  <div style={{ position: "sticky", top: 0 }}>
+                <div className="sticky top-0">
+                  <span className="font-semibold text-muted-foreground pb-2">
+                    Zeitlicher Verlauf
+                  </span>
+                  <Timeline dataIn={currentTimeline} />
+                  <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
+                  <TagList changeTimeline={changeTimeline} />
+                  <hr className="w-full border-t-[1px] border-solid border-zinc-200 my-4" />
+                  <span className="font-semibold text-muted-foreground pb-2">
+                    Bearbeitung
+                  </span>
+                  <div
+                    role="button"
+                    className="hover:text-primary flex gap-1 cursor-pointer font-medium"
+                    onClick={() => {
+                      dispatch(
+                        addAnordnungAction({
+                          className: "vzk_anordnung",
+                          data: {
+                            vzk_status:
+                              status === "Offen"
+                                ? {
+                                    id: 2,
+                                    name: "geschlossen",
+                                  }
+                                : {
+                                    id: 1,
+                                    name: "offen",
+                                  },
+                            uuid: anordnung.uuid,
+                          },
+                        })
+                      );
+                      dispatch(
+                        updateTimelineStatus({
+                          updatedStatus:
+                            status === "Offen"
+                              ? {
+                                  id: 2,
+                                  name: "geschlossen",
+                                }
+                              : {
+                                  id: 1,
+                                  name: "offen",
+                                },
+                        })
+                      );
+                    }}
+                  >
+                    {status === "Offen" ? <LockOutlined /> : <UnlockOutlined />}
+                    <span>
+                      {status === "Offen" ? "Abschließen" : "Wieder eröffnen"}
+                    </span>
+                  </div>
+                  {signLibMode === "timeline" && (
                     <SignsLibrary
-                      // iconsGap="8px"
                       iconsGap="8px"
                       iconSize="40px"
                       margins="20px 0 0 0"
                       height="650px"
                     />
-                  </div>
+                  )}
                 </div>
-              )}
+              </div>
               <FloatingSignLibButton />
               <LibSignDrawer />
             </div>
