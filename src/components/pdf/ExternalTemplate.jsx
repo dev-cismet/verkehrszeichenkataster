@@ -38,6 +38,10 @@ const TextWithTitle = ({ title, text }) => {
     pre: {
       fontSize: 10,
     },
+    table: {
+      fontSize: 9,
+      marginLeft: 54,
+    },
   };
   return (
     <View

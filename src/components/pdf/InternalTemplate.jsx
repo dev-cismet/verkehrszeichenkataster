@@ -38,6 +38,10 @@ const stylesheet = {
   pre: {
     fontSize: 10,
   },
+  table: {
+    fontSize: 9,
+    marginLeft: 54,
+  },
 };
 
 const BorderedText = ({ title, text }) => {
@@ -231,10 +235,13 @@ const InternalTemplate = ({ timeline, title, requester, receiver, id }) => {
             </View>
           </View>
           <View break>
-            {timeline.map((attachment) => {
+            {timeline.map((attachment, i) => {
               if (attachment.vzk_attachment_typ.name.toLowerCase() === "file") {
                 return (
-                  <View style={{ flexDirection: "column", paddingBottom: 2 }}>
+                  <View
+                    style={{ flexDirection: "column", paddingBottom: 2 }}
+                    key={`file_${i}`}
+                  >
                     {attachment?.data?.description && (
                       <Text
                         style={{
